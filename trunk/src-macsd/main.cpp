@@ -67,6 +67,7 @@ void leeFicheroDatos(const string& fichero, vector<shapes>& v, const unsigned in
                         break;
                     case 'e':
                     case 'd':
+                    case 'u':
     //                     d 1 3 on
                         aux = cadena.find(' ', 0);
                         aux1 = cadena.find(' ', aux + 1);
@@ -95,6 +96,8 @@ void leeFicheroDatos(const string& fichero, vector<shapes>& v, const unsigned in
 //     cout << endl;
     
     shapes s(n, e);
+
+    cout << "shapes() ended." << endl;
     
     arch.open(fichero.c_str());
 
@@ -103,7 +106,14 @@ void leeFicheroDatos(const string& fichero, vector<shapes>& v, const unsigned in
     }
     
     bool first = true;
+    int nlines = 0;
     while (!arch.eof()) {
+        nlines++;
+        if((nlines%1000)==0)
+        {
+                cout << ".";
+                fflush(stdout);
+        }
         getline(arch, cadena);
         if (!arch.eof()) {
             if (!cadena.empty()) {
@@ -116,6 +126,7 @@ void leeFicheroDatos(const string& fichero, vector<shapes>& v, const unsigned in
                         break;
                     case 'e':
                     case 'd':
+                    case 'u':
     //                     d 1 3 on
                         aux = cadena.find(' ', 0);
                         aux1 = cadena.find(' ', aux + 1);
@@ -145,17 +156,20 @@ void leeFicheroDatos(const string& fichero, vector<shapes>& v, const unsigned in
     }
 
     arch.close();
+    
+    cout << "Loop 2 ended." << endl;
 }
                
 // funcion MAIN del proyecto
 //-------------------------------------------------
-// ./exe rocio1 salida 1 10 10 0.1 0.2 0.5 0.4 0.5 1
+// ./exe rocio1 salida 1 10 10 0.1 0.2 0.5 0.4 0.5 1 5 3
 int main(int argc, char *argv[]){	
     Parametros params;
     NDominatedSet soluciones;
     unsigned int contadorArgumentos;
     string fichero;
     vector<shapes> baseDatos;
+    int num_nodes, num_edges;
         
     // almacenamiento de parametros        
     // -----------------------------
@@ -179,21 +193,32 @@ int main(int argc, char *argv[]){
     params.beta = atof(argv[contadorArgumentos++]);
     params.ro = atof(argv[contadorArgumentos++]);
     params.q0 = atof(argv[contadorArgumentos++]);
-    params.tau0 = atof(argv[contadorArgumentos++]);
+    params.tau0 = atof(argv[contadorArgumentos++]);			// NOT USED (only if pb with the 1st pareto set)
     params.gamma = atof(argv[contadorArgumentos++]);
-    params.multiheuristics = atoi(argv[contadorArgumentos++]);
-    params.alfaGrasp = params.alfaObj1 = -1.;
-    params.numColonias = 1;
+    params.multiheuristics = atoi(argv[contadorArgumentos++]);		// NOT USEFUL
+    params.alfaGrasp = params.alfaObj1 = -1.;				// NOT USEFUL
+    params.numColonias = 1;						// NOT USEFUL
+    
+    // paramters for the input file
+    num_nodes = atoi(argv[contadorArgumentos++]);
+    num_edges = atoi(argv[contadorArgumentos++]);
+    
+    // Initialize the random generator
+    srand(params.semilla);
 
     // leemos los datos del fichero de entrada
-    leeFicheroDatos (params.rutaEntrada, baseDatos, 5, 3);
+    leeFicheroDatos (params.rutaEntrada, baseDatos, num_nodes, num_edges);
     
-//     ofstream arch1("debug");
-//     for (int i = 0; i < baseDatos.size(); i++) {
-//         cout << i << endl;
-//         baseDatos[i].imprime(arch1);
-//     }
-//     arch1.close();
+     // DEBUG
+     //cout << "params.rutaEntrada=" << params.rutaEntrada << " baseDatos.size()=" << baseDatos.size() << endl;
+     
+     // DEBUG
+     /*ofstream arch1("debug");
+     for (int i = 0; i < baseDatos.size(); i++) {
+         cout << i << endl;
+         baseDatos[i].imprime(arch1);
+     }
+     arch1.close();*/
     
     // algoritmo de hormigas multi-objetivo MACS
 /*
@@ -208,9 +233,9 @@ int main(int argc, char *argv[]){
     cout << "El algoritmo MACS se esta ejecutando... " << endl;    
     MACS colonia(baseDatos, params);
                     
-    cout << "Base de datos:" << endl;
-    for (int i = 0; i < baseDatos.size(); i++)
-        cout << baseDatos[i];
+    //cout << "Base de datos:" << endl;
+    //for (int i = 0; i < baseDatos.size(); i++)
+    //    cout << baseDatos[i];
     
     soluciones = colonia.ejecuta(params.rutaSalida);      
 
@@ -224,7 +249,7 @@ int main(int argc, char *argv[]){
 //             BL::imprime(fichero);
         
     // -----------------------------------
-    // GENERACIoN DE FICHEROS DE RESULTADOS
+    // GENERACION DE FICHEROS DE RESULTADOS
 
     cout << soluciones.getNumElementos() << " elementos" << endl;
 
