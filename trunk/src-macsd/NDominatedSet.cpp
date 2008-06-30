@@ -72,8 +72,7 @@ void NDominatedSet::writePareto(ofstream &salida){
             i++;
 	}
         
-    salida << endl << "El frente de Pareto tiene " << (i-1) << " soluciones en
-total" << endl;
+    salida << endl << "El frente de Pareto tiene " << (i-1) << " soluciones en total" << endl;
 }
 
 //-------------------------------------------------------
