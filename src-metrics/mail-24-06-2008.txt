@@ -1,0 +1,9 @@
+Hello,
+
+Here I send you two scripts for the C and S metric:
+* calcular_metrica_cxx.pl has two input files (the two pareto files obtained
+from the ants execution).
+* calcular_metrica_s.pl has one input (the same as above).
+
+Cheers,
+Rocio.

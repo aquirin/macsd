@@ -1,0 +1,13 @@
+Hi, friends!
+
+Find attached the Excel sheet format where the C metric values from our MACSD experiments
+have to be dropped in order Sergio can perform the statistical test. Notice that:
+
+1) you only have to fill the "valor de C" cells, the "probabilidad de dominancia" ones are
+automatically computed according to the dominance threshold value in cell M1.
+
+2) You can import the data from the output files of the algorithms in csv style.
+
+If there is any doubt, just ask me! Cheers,
+
+Oscar.
