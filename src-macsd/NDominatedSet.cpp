@@ -48,6 +48,7 @@ bool NDominatedSet::add(Hormiga& solucion, bool preferencias, int &numDominancia
 	   // insertarlo
 	   Pareto.push_back(solucion);
         }
+	cout << "NDominatedSet size: " << getNumElementos() << endl;
 	return res;
 }
 
@@ -84,7 +85,8 @@ void NDominatedSet::writeObjsPareto(ofstream &salida){
         vector<Hormiga>::iterator x = Pareto.begin();
 	while (x != Pareto.end()) {
             for(unsigned int j=0; j<x->getNumObjetivos(); j++) {
-                salida << round(x->getCoste(j)*100)/100 << "\t" ;
+                //salida << round(x->getCoste(j)*100.0)/100.0 << "\t" ;
+		salida << x->getCoste(j) << "\t" ;
             }
             salida << endl;
             x++;
