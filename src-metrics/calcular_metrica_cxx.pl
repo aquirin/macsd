@@ -159,6 +159,11 @@ foreach my $i (sort keys %paretoA_cos) {
            if (jaccard($paretoB_sop{$set[$j]},$paretoA_sop{$i}) < 1) {
                 $domina = 0;
             }
+            else
+             {
+                        print "!$paretoB_sop{$set[$j]},$paretoA_sop{$i}!\n";
+                        print "!$paretoB_cos{$set[$j]},$paretoA_cos{$i}!\n\n";
+            }
         }
         $j++;
     }

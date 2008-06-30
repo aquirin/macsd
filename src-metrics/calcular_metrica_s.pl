@@ -6,12 +6,12 @@ use warnings;
 sub dominancia {
     my ($refA, $refB) = @_;
     
-    my @A = @$refA;
-    my @B = @$refB;
+    my @A = split(/\t/, $refA);
+    my @B = split(/\t/, $refB);
 #     print "@A\n@B\n";
     my $res = 0;
     
-    if (($A[0] > $B[0]) and ($A[1] > $B[1]) and (($A[0] >= $B[0]) or ($A[1] >= $B[1]))) {
+    if (($A[0] >= $B[0]) and ($A[1] >= $B[1]) and (($A[0] > $B[0]) or ($A[1] > $B[1]))) {
         $res = 1;
     }
     
@@ -23,8 +23,8 @@ my ($in) = @ARGV;
 # Cargo el pareto
 my $id = 0;
 my @data = ();
-my @soporte = ();
-my @costos = ();
+my $soporte;
+my $costos;
 my %pareto_sop = ();
 my %pareto_cos = ();
 open(IN, $in);
@@ -40,29 +40,29 @@ while (<IN>) {
     if (/\*\* Solucion no dominada (.*)\*\*/) {
         if ($first eq 0) {
             # Cargo datos
-            my @q = @soporte;
-            my @r = @costos;
-            $pareto_sop{$id} = \@q;
-            $pareto_cos{$id} = \@r;
+            $pareto_sop{$id} = $soporte;
+            $pareto_cos{$id} = $costos;
         }
         else {
             $first = 0;
         }
         $id = $1;
     }
-    elsif (/^[1-9]/) {
-        @soporte = split(/ /, $_);
+    elsif (/^[0-1].*\t/) {
+        my $f = $_;
+        chomp($f);
+        $costos = $f;
     }
-    elsif (/^[0-1]/) {
-        @costos = split(/\t/, $_);
+    elsif (/^[1-9]/) {
+        my $f = $_;
+        chomp($f);
+        $soporte = $f;
     }
 }
 close(IN);
 # Cargo datos
-my @q = @soporte;
-my @r = @costos;
-$pareto_sop{$id} = \@q;
-$pareto_cos{$id} = \@r;
+$pareto_sop{$id} = $soporte;
+$pareto_cos{$id} = $costos;
 
 # foreach my $i (keys %pareto_cos) {
 #     print "NO: $i $pareto_cos{$i}\n";
@@ -84,10 +84,7 @@ while ($i <= $#set) {
     }
     if (!$domina) {
 #         print "DOM\n";
-        my $ref = $pareto_cos{$set[$i]};
-        my @data = @$ref;
-        my $text = join(',', @data);
-        $pareto_sj{$text} = $pareto_cos{$set[$i]};
+        $pareto_sj{$pareto_cos{$set[$i]}} = $pareto_cos{$set[$i]};
     }
     $i++;
 }
@@ -104,8 +101,7 @@ while ($i <= $#set) {
 my $sum = 0.;
 my $ant = 0.;
 foreach my $i (sort keys %pareto_sj) {
-    my $ref = $pareto_sj{$i};
-    my @data = @$ref;
+    my @data = split(/\t/, $pareto_sj{$i});
     my $area = ($data[0] - $ant) * $data[1];
     $ant = $data[0];
     
