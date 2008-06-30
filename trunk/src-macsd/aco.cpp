@@ -164,7 +164,8 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     this->accionesFinalesHormiga();       
 
     // Iteration 1 to (hasta la condicion de parada)
-    while (this->maxTiempo > (fin - inicio)) {
+    while (this->maxTiempo > (fin - inicio)) {		// NOT FOR DEBUG!!!
+    //while (this->maxTiempo > this->numIteraciones) {		// NOT FOR PRODUCTION!!!
         cout << "Iteracion: " << numIteraciones + 1 << endl;
         this->numIteraciones++;
         
@@ -233,7 +234,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                             // elegir el eje mas conveniente segun informacion Greedy y feromona      			
                             tuplax3<unsigned int> arco = this->transicion(*(hormigas[nHormiga]), nHormiga, candidatas);
                                             
-                            cout << arco.first << ' ' << arco.second << ' ' << arco.third << endl;
+//                            cout << arco.first << ' ' << arco.second << ' ' << arco.third << endl;
                             
                             this->hormigas[nHormiga]->avanza(arco.first, arco.second, arco.third);
                                 
