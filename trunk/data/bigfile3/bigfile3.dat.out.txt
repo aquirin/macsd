@@ -1,0 +1,28 @@
+** Solucion no dominada 1** 
+Nodo: 36
+Ejes: 
+36 35 1
+283 36 1
+
+** Solucion no dominada 2** 
+Nodo: 103
+Ejes: 
+189 227 1
+227 103 1
+
+** Solucion no dominada 3** 
+Nodo: 125
+Ejes: 
+204 247 1
+247 248 1
+248 125 1
+
+** Solucion no dominada 4** 
+Nodo: 103
+Ejes: 
+189 124 1
+189 227 1
+227 103 1
+
+
+El frente de Pareto tiene 4 soluciones en total
