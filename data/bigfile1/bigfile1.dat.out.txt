@@ -1,0 +1,66 @@
+** Solucion no dominada 1** 
+Nodo: 232
+Ejes: 
+210 232 1
+
+** Solucion no dominada 2** 
+Nodo: 269
+Ejes: 
+269 249 1
+269 289 1
+
+** Solucion no dominada 3** 
+Nodo: 59
+Ejes: 
+43 59 1
+
+** Solucion no dominada 4** 
+Nodo: 99
+Ejes: 
+180 99 1
+238 180 1
+
+** Solucion no dominada 5** 
+Nodo: 227
+Ejes: 
+189 124 1
+189 227 1
+
+** Solucion no dominada 6** 
+Nodo: 164
+Ejes: 
+189 124 1
+189 208 1
+208 164 1
+
+** Solucion no dominada 7** 
+Nodo: 117
+Ejes: 
+51 160 1
+51 179 1
+179 244 1
+244 117 1
+
+** Solucion no dominada 8** 
+Nodo: 275
+Ejes: 
+238 97 1
+238 275 1
+
+** Solucion no dominada 9** 
+Nodo: 84
+Ejes: 
+204 84 1
+204 265 1
+
+** Solucion no dominada 10** 
+Nodo: 59
+Ejes: 
+30 10 1
+30 239 1
+43 59 1
+239 43 1
+239 240 1
+
+
+El frente de Pareto tiene 10 soluciones en total
