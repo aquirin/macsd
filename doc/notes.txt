@@ -1,0 +1,63 @@
+
+Hello Arnaud,
+
+Glad to meet you finally!
+
+I'm working on two separate problems: shapes and go. Each have different
+implementations (can't handle heredity well with c++).
+
+The first one (shapes) uses the same input as subdue, but with the
+restrictions that the edges (e.g., d 1 2) must be given in a consecutive
+order, that is, "d 1 2", "d 2 3" and "d 3 4", the order "d 1 2", "d 3 4" and
+"d 2 3" is not valid since the edge 3-4 those not originates from either 1 or 2.
+
+The second one (go) is an ontology set with a given hierarchy. It has a custom
+format file, I don't think it's gonna be good for your application... I'm
+having some trouble with this, since the pheromone matrix is huge!
+(18695x18695). I'm trying to store the matrix differently and it's driving me
+crazy since I have to change a lot of code.
+
+While I'm working on the go problem, I send you a beta release ;) of the
+shapes implementation so you can get used to the code. It's quite short so its
+attached to this mail.
+
+You probably have to make several changes since I'm maximizing the function,
+so you'll have to change the pheromone update and the dominance formula.
+
+To compile:
+
+g++ -g -c shapes.cpp
+g++ -g -c hormigas.cpp
+g++ -g -c NDominatedSet.cpp
+g++ -g -c macs.cpp
+g++ -g -c main.cpp
+g++ -g -c aco.cpp
+g++ -g -c utils.cpp
+g++ -o exe main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o
+
+To run:
+
+./exe rocio1 salida 1 10 10 0.1 0.2 0.5 0.4 0.5 0
+
+rocio1 is a toy graph I was playing with...
+
+Don't hesitate to ask if you have any problem.
+
+Regards,
+Rocio.
+
+Dra. Rocío C. Romero Zaliz
+Universidad de Granada
+España
+
+========================================================================================
+FORMAT OF THE INPUT FILE
+========================================================================================
+
+- It is a list of graphs, in the subdue format.
+- The edges have to be sorted using only already known nodes (1-2 2-4 4-6, ...)
+- The size of the dataset (# of != nodes, # of != links) have to be indicated on the command line
+- No loop
+- Strings allowed (for the identification of the nodes and the links), but if only one kind of links, we have to use the same string (for instance, "")
+- To use a graph with undirected links, we have to add them two times (u 1 2 and u 2 1)
+- A new line separate each graph in the file. At the end, there is two new line.
