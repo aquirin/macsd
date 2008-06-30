@@ -174,6 +174,7 @@ tuplax3<unsigned int> MACS::transicion(Hormiga &unaHormiga, unsigned int indice,
 float MACS::nuevaTau0(){
     float *medias, retorno;
     int i, numElementos;
+    float newTau0;
 
     if (this->conjuntoNoDominadas.begin() != this->conjuntoNoDominadas.end()) {
         medias = new float[this->nObj];
@@ -203,10 +204,15 @@ float MACS::nuevaTau0(){
     
         // liberamos el vector creado
         delete []medias;
-        return (1. / retorno);
+        newTau0 = (1. / retorno);
+	cout << "Tau0 initial: " << newTau0 << ", type: computed" << endl;
     }
     else
-        return (this->feromonaInicial);
+    {
+        newTau0 = (this->feromonaInicial);
+	cout << "Tau0 initial: " << newTau0 << ", type: user-provided" << endl;
+    }
+    return newTau0;
 }
 
 //---------------------------------------------------------
