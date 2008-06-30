@@ -1,7 +1,8 @@
 #include "hormigas.h"
 
 //-------------------------------------------------------------------------
-Hormiga::Hormiga (const unsigned int colonia, const vector<shapes>& base, const unsigned int numObjetivos = 2) : _subestructura(base[0].cantNodos(),base[0].cantEjes()), _costes(numObjetivos), _support(base.size(),true) {
+Hormiga::Hormiga (const unsigned int colonia, const vector<shapes>& base, const unsigned int numObjetivos = 2) : _costes(numObjetivos), _support(base.size(),true) {
+        _subestructura = shapes(base[0].cantNodos(),base[0].cantEjes());
         _ejesAsignados = 0;
         _colonias.push_back(colonia);
         _numObjetivos = numObjetivos;
@@ -104,9 +105,15 @@ bool Hormiga::Utilizado(const unsigned int id) const {
 }
  
 //-------------------------------------------------------------------------
+// TODO: optimization possible:
+// As ejesNoUtilizados() is used only here in all the code, and as it produces
+// a huge list, it could be better to directly manage the generation of 'lista'
+// in the shape class (to include the if() test 11 lines after and produce directly
+// a small list).
 vector< tuplax3<unsigned int> > Hormiga::getCandidatos() {
     vector< tuplax3<unsigned int> > lista;
     set< tuplax3<unsigned int> > aux = _subestructura.ejesNoUtilizados();
+    cout << "DEBUG getCandidatos " << aux.size();
     
     // Solo aquellos ejes que aparecen al menos una vez en la base de datos
     set< tuplax3<unsigned int> >::iterator it = aux.begin();
@@ -119,6 +126,7 @@ vector< tuplax3<unsigned int> > Hormiga::getCandidatos() {
             }
         it++;
     }
+    cout << " " << lista.size();
     
     // Solo me quedo con aquellos que tiene al menos uno de los nodos en la subestructura
     set<unsigned int> nu = _subestructura.nodosUtilizados();
@@ -134,6 +142,7 @@ vector< tuplax3<unsigned int> > Hormiga::getCandidatos() {
                 it1++;
         }
     }
+    cout << " " << lista.size() << endl;
         
     return lista;
 }
@@ -172,6 +181,7 @@ void Hormiga::calculaCostes() {
 }
 
 //-------------------------------------------------------------------------
+// Check the dominancy. 'x' and 'y' are not used!
 int Hormiga::dominancia(const Hormiga& v, bool x, int y) {
     calculaCostes();
     
@@ -193,10 +203,10 @@ int Hormiga::dominancia(const Hormiga& v, bool x, int y) {
         unsigned int unio = 0;
         for (unsigned int i = 0; i < _support.size(); i++)
             for (unsigned int j = 0; j < v._support.size(); j++) {
-                if ((_support[i] == _support[j]) && (_support[i])) {
+                if ((_support[i] == v._support[j]) && (_support[i])) {
                     inte++;
                 }
-                if (_support[i] || _support[j])
+                if (_support[i] || v._support[j])
                     unio++;
             }
                 
