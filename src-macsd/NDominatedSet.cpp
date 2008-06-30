@@ -59,12 +59,21 @@ void NDominatedSet::writePareto(ofstream &salida){
 	while (x != Pareto.end()) {
             salida << "** Solucion no dominada " << i << "** " << endl;
             (*x).imprime(salida);
+            vector<unsigned int> s = x->soporte();
+            for(unsigned int j=0; j<s.size(); j++) {
+                salida << s[j] + 1 << " " ;
+            }
+            salida << endl;
+            for(unsigned int j=0; j<x->getNumObjetivos(); j++) {
+                salida << x->getCoste(j) << "\t" ;
+            }
             salida << endl;
             x++;
             i++;
 	}
         
-    salida << endl << "El frente de Pareto tiene " << (i-1) << " soluciones en total" << endl;
+    salida << endl << "El frente de Pareto tiene " << (i-1) << " soluciones en
+total" << endl;
 }
 
 //-------------------------------------------------------
@@ -106,3 +115,4 @@ void NDominatedSet::writeObjsPareto(const char *ruta){
 	this->writeObjsPareto(fichero);        
 	fichero.close();
 }
+
