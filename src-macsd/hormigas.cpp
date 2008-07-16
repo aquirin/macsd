@@ -130,7 +130,8 @@ vector< tuplax3<unsigned int> > Hormiga::getCandidatos() {
     
     // Solo me quedo con aquellos que tiene al menos uno de los nodos en la subestructura
     set<unsigned int> nu = _subestructura.nodosUtilizados();
-    for (set<unsigned int>::iterator p = nu.begin(); p != nu.end(); p++) cout << *p << ' ';
+    //for (set<unsigned int>::iterator p = nu.begin(); p != nu.end(); p++) cout << *p << ' ';
+    //cout << endl;
     if (nu.size() > 0) {
         vector< tuplax3<unsigned int> >::iterator it1 = lista.begin();
         
