@@ -60,7 +60,7 @@ class Hormiga {
         /**
         * Soporte actual
         */
-        vector<bool> _support;
+        vector<unsigned int> _support;
         
         float _gamma;
         
@@ -142,6 +142,8 @@ class Hormiga {
         bool operator!= (const Hormiga & unaHormiga) {return (_subestructura != unaHormiga._subestructura);};
         
         float getAparicionesEje(const tuplax3<unsigned int>& eje);
+	
+	vector<unsigned int> soporte() const {return _support;};
 };
 
 #endif
