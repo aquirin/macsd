@@ -34,6 +34,7 @@ class shapes {
         set<unsigned int> nodosUtilizados() const;
         
         set< tuplax3<unsigned int> > ejesNoUtilizados() const;
+        vector< tuplax3<unsigned int> > ejesNoUtilizadosButIn(vector<shapes> _inst) const;
         
         unsigned int elNodo() const {return _nodo;};
         

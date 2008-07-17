@@ -110,10 +110,10 @@ bool Hormiga::Utilizado(const unsigned int id) const {
 // a huge list, it could be better to directly manage the generation of 'lista'
 // in the shape class (to include the if() test 11 lines after and produce directly
 // a small list).
-vector< tuplax3<unsigned int> > Hormiga::getCandidatos() {
+vector< tuplax3<unsigned int> > Hormiga::getCandidatos_original() {
     vector< tuplax3<unsigned int> > lista;
     set< tuplax3<unsigned int> > aux = _subestructura.ejesNoUtilizados();
-    cout << "DEBUG getCandidatos " << aux.size();
+    //cout << "DEBUG getCandidatos " << aux.size();
     
     // Solo aquellos ejes que aparecen al menos una vez en la base de datos
     set< tuplax3<unsigned int> >::iterator it = aux.begin();
@@ -126,7 +126,7 @@ vector< tuplax3<unsigned int> > Hormiga::getCandidatos() {
             }
         it++;
     }
-    cout << " " << lista.size();
+    //cout << " " << lista.size();
     
     // Solo me quedo con aquellos que tiene al menos uno de los nodos en la subestructura
     set<unsigned int> nu = _subestructura.nodosUtilizados();
@@ -143,9 +143,24 @@ vector< tuplax3<unsigned int> > Hormiga::getCandidatos() {
                 it1++;
         }
     }
-    cout << " " << lista.size() << endl;
+    //cout << " " << lista.size() << endl;
         
     return lista;
+}
+
+vector< tuplax3<unsigned int> > Hormiga::getCandidatos_optimized() {
+    return _subestructura.ejesNoUtilizadosButIn(_instancias);
+}
+
+vector< tuplax3<unsigned int> > Hormiga::getCandidatos() {
+    vector< tuplax3<unsigned int> > v;
+    //v = getCandidatos_original();
+    v = getCandidatos_optimized();
+    //cout << "DEBUG getCandidatos " << v.size() << endl;
+    //printf("DEBUG list-getCandidatos");
+    //for(int i=0;i<v.size();i++) printf(" (%d,%d,%d)", v[i].first, v[i].second, v[i].third);
+    //printf("\n");
+    return v;
 }
 
 //-------------------------------------------------------------------------

@@ -72,7 +72,8 @@ set<unsigned int> shapes::nodosUtilizados() const {
 }
 
 /**************************************************\
-Return the list of edges <Node1,Node2,EdgeType> that are NOT present in the graphs.
+Return the list of edges <Node1,Node2,EdgeType> that
+are NOT present in the graph.
 The values are 1-based.
 \**************************************************/
 set< tuplax3<unsigned int> > shapes::ejesNoUtilizados() const {
@@ -83,6 +84,39 @@ set< tuplax3<unsigned int> > shapes::ejesNoUtilizados() const {
             for (int k = 0; k < num_edges; k++) {
                 if (!_grafo[i][j][k]) {
                     lista.insert(tuplax3<unsigned int>(i+1, j+1, k+1));
+                }
+            }
+        }
+    }
+    return lista;
+}
+
+/**************************************************\
+Return the list of edges <Node1,Node2,EdgeType> that
+are NOT present in the graph, but for which Node1 and
+Node2 are present in the graph, and present at least
+one time in '_inst'.
+The values are 1-based.
+\**************************************************/
+vector< tuplax3<unsigned int> > shapes::ejesNoUtilizadosButIn(vector<shapes> _inst) const {
+    vector< tuplax3<unsigned int> > lista;
+    set<unsigned int> nu = nodosUtilizados();
+    
+    for (int i = 0; i < num_nodes; i++) {
+        bool iUsed = ((nu.size()==0) || (nu.find(i+1) != nu.end()));
+        for (int j = 0; j < num_nodes; j++) {
+	    bool jUsed = ((nu.size()==0) || (nu.find(j+1) != nu.end()));
+            for (int k = 0; k < num_edges; k++) {
+                tuplax3<unsigned int> p(i, j, k);
+		// Keep the edges not found in the substructure, but having at least one node in it
+                if ((iUsed || jUsed) && (!_grafo[i][j][k])) {
+		    bool found = false;
+                   for (unsigned int m = 0; !found && (m < _inst.size()); m++)
+                       if (_inst[m].ejeUsado(i+1,j+1,k+1)) {
+		           // Keep the edges found in the DB '_inst'
+			   lista.push_back(tuplax3<unsigned int>(i+1, j+1, k+1));
+                           found = true;
+                       }
                 }
             }
         }

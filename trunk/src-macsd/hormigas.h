@@ -101,6 +101,8 @@ class Hormiga {
         /**
         * devuelve el conjunto de candidatos posibles
         */
+        vector< tuplax3<unsigned int> > Hormiga::getCandidatos_original();
+        vector< tuplax3<unsigned int> > Hormiga::getCandidatos_optimized();
         vector< tuplax3<unsigned int> > getCandidatos();   
         
         /**
