@@ -1,6 +1,8 @@
 all:	clean debug release-set release-matrix release-vector
 
 debug:
+	cp shapes.set.cpp shapes.cpp
+	cp shapes.set.h shapes.h
 	gcc -g -O0 -c routines.c
 	g++ -g -O0 -c shapes.cpp
 	g++ -g -O0 -c hormigas.cpp
