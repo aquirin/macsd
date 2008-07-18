@@ -57,6 +57,6 @@ clean:
 	rm -f *.o exe exe-set exe-matrix exe-vector exe.dbg
 
 exe:
-	./exe rocio1 rocio1.out 1 10 10 0.1 0.2 0.5 0.4 0.5 0 5 3
-	./exe /home/ECSC/aquirin/AQUIRIN/program/VisualScienceMaps/maps/sjr/net.macsd/France-2000.net.pf.sub France-2000.out 1 10 10 0.1 0.2 0.5 0.4 0.5 0 295 1
-	valgrind -v --leak-check=yes --show-reachable=yes ./exe.dbg rocio1 rocio1.out 1 10 10 0.1 0.2 0.5 0.4 0.5 0 5 3
+	./exe rocio1 rocio1.out 1 10 10 0.1 0.2 0.5 0.4 0.5 5 3
+	./exe /home/ECSC/aquirin/AQUIRIN/program/VisualScienceMaps/maps/sjr/net.macsd/France-2000.net.pf.sub France-2000.out 1 10 10 0.1 0.2 0.5 0.4 0.5 295 1
+	valgrind -v --leak-check=yes --show-reachable=yes ./exe.dbg rocio1 rocio1.out 1 10 10 0.1 0.2 0.5 0.4 0.5 5 3

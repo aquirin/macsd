@@ -1,19 +1,22 @@
 #!/bin/bash
 
+# BASEDIR (local SVN)
+BASEDIR=/home/ECSC/aquirin/prog/macsd
+
+# BASEDIR (distant)
+#BASEDIR=/home/ECSC/aquirin/macsd
+
 # MACSD
-MACSD=/home/ECSC/aquirin/AQUIRIN/program/macsd/src/exe-set
-NET_DIR=/home/ECSC/aquirin/AQUIRIN/program/macsd/script/net
-RES_DIR=/home/ECSC/aquirin/AQUIRIN/program/macsd/script/res
+MACSD=$BASEDIR/src-macsd/exe-set
+#MACSD=$BASEDIR/src-macsd/exe-set5
+#MACSD=$BASEDIR/src-macsd/exe.dbg4
+NET_DIR=$BASEDIR/scripts/net
+RES_DIR=$BASEDIR/scripts/res
 
-# EXTRA (local)
-KFAST=/home/ECSC/aquirin/AQUIRIN/program/VisualScienceMaps/MST-Pathfinder/mst-pathfinder
-CHECKDB=/home/ECSC/aquirin/AQUIRIN/program/VisualScienceMaps/CheckDB/checkdb
-ORIG_NET_DIR=/home/ECSC/aquirin/AQUIRIN/program/VisualScienceMaps/maps/sjr
-
-# EXTRA (distant)
-#KFAST=/home/ECSC/aquirin/macsd/extra/MST-Pathfinder/mst-pathfinder
-#CHECKDB=/home/ECSC/aquirin/macsd/extra/CheckDB/checkdb
-#ORIG_NET_DIR=/home/ECSC/aquirin/macsd/extra/sjr
+# EXTRA
+KFAST=$BASEDIR/extra/MST-Pathfinder/mst-pathfinder
+CHECKDB=$BASEDIR/extra/CheckDB/checkdb
+ORIG_NET_DIR=$BASEDIR/extra/sjr
 
 TRUE="0 -lt 1"
 FALSE="1 -lt 1"
@@ -128,21 +131,22 @@ then
 	rm -f $RES_DIR/exe.1.log $RES_DIR/exe.1.err
 	#NUMNODES=`cat $RES_DIR/bigfile1.dat | grep "^v " | cut -f2 -d' ' | sort | uniq | wc -l`
 	#NUMEDGES=`cat $RES_DIR/bigfile1.dat | grep "^d " | cut -f4 -d' ' | sort | uniq | wc -l`
-	#echo $MACSD $RES_DIR/bigfile1.dat $RES_DIR/bigfile1.dat.out 1 1000 10 0.1 0.2 0.5 0.4 0.5 1 $NUMNODES $NUMEDGES
-	#( ( time $MACSD $RES_DIR/bigfile1.dat $RES_DIR/bigfile1.dat.out 1 1000 10 0.1 0.2 0.5 0.4 0.5 1 $NUMNODES $NUMEDGES ) > $RES_DIR/exe.1.log 2> $RES_DIR/exe.1.err ) &
+	echo $MACSD $RES_DIR/bigfile1.dat $RES_DIR/bigfile1.dat.out 1 100 10 0.1 0.2 0.5 0.4 0.5 $NUMNODES $NUMEDGES
+	( ( time $MACSD $RES_DIR/bigfile1.dat $RES_DIR/bigfile1.dat.out 1 100 10 0.1 0.2 0.5 0.4 0.5 $NUMNODES $NUMEDGES ) > $RES_DIR/exe.1.log 2> $RES_DIR/exe.1.err ) &
 	
 	rm -f $RES_DIR/exe.2.log $RES_DIR/exe.2.err
 	#NUMNODES=`cat $RES_DIR/bigfile2.dat | grep "^v " | cut -f2 -d' ' | sort | uniq | wc -l`
 	#NUMEDGES=`cat $RES_DIR/bigfile2.dat | grep "^d " | cut -f4 -d' ' | sort | uniq | wc -l`
-	#echo $MACSD $RES_DIR/bigfile2.dat $RES_DIR/bigfile2.dat.out 1 1000 10 0.1 0.2 0.5 0.4 0.5 1 $NUMNODES $NUMEDGES
-	#( ( time $MACSD $RES_DIR/bigfile2.dat $RES_DIR/bigfile2.dat.out 1 1000 10 0.1 0.2 0.5 0.4 0.5 1 $NUMNODES $NUMEDGES ) > $RES_DIR/exe.2.log 2> $RES_DIR/exe.2.err ) &
+	echo $MACSD $RES_DIR/bigfile2.dat $RES_DIR/bigfile2.dat.out 1 100 10 0.1 0.2 0.5 0.4 0.5 $NUMNODES $NUMEDGES
+	( ( time $MACSD $RES_DIR/bigfile2.dat $RES_DIR/bigfile2.dat.out 1 100 10 0.1 0.2 0.5 0.4 0.5 $NUMNODES $NUMEDGES ) > $RES_DIR/exe.2.log 2> $RES_DIR/exe.2.err ) &
 	
-	rm -f $RES_DIR/exe.3.*.log $RES_DIR/exe.3.*.err
+	#rm -f $RES_DIR/exe.3.*.log $RES_DIR/exe.3.*.err
 	#NUMNODES=`cat $RES_DIR/bigfile3.dat | grep "^v " | cut -f2 -d' ' | sort | uniq | wc -l`
 	#NUMEDGES=`cat $RES_DIR/bigfile3.dat | grep "^d " | cut -f4 -d' ' | sort | uniq | wc -l`
-	for run in `seq 1 1`
+	for run in `seq 5 5`
 	do
-		echo $MACSD $RES_DIR/bigfile3.dat $RES_DIR/bigfile3.dat.out $run 100 10 0.1 0.2 0.5 0.4 0.5 1 $NUMNODES $NUMEDGES
-		( ( time $MACSD $RES_DIR/bigfile3.dat $RES_DIR/bigfile3.dat.out.$run $run 100 10 0.1 0.2 0.5 0.4 0.5 1 $NUMNODES $NUMEDGES ) > $RES_DIR/exe.3.$run.log 2> $RES_DIR/exe.3.$run.err )
+		echo $MACSD $RES_DIR/bigfile3.dat $RES_DIR/bigfile3.dat.out.$run 1 10 10 0.1 0.2 0.5 0.4 0.5 $NUMNODES $NUMEDGES
+		#( ( time $MACSD $RES_DIR/bigfile3.dat $RES_DIR/bigfile3.dat.out.$run 1 10 10 0.1 0.2 0.5 0.4 0.5 $NUMNODES $NUMEDGES ) > $RES_DIR/exe.3.$run.log 2> $RES_DIR/exe.3.$run.err ) &
+		#( ( time valgrind -v --leak-check=yes --show-reachable=yes $MACSD $RES_DIR/bigfile3.dat $RES_DIR/bigfile3.dat.out.$run 1 10 10 0.1 0.2 0.5 0.4 0.5 $NUMNODES $NUMEDGES ) > $RES_DIR/exe.3.$run.log 2> $RES_DIR/exe.3.$run.err ) &
 	done
 fi
