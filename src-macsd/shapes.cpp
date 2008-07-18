@@ -1,65 +1,52 @@
 #include "shapes.h"
 
-/**************************************************\
-Constructor: takes the estimated number of different
-nodes and different edges.
-\**************************************************/
-shapes::shapes(const unsigned int x, const unsigned int l)
-{
-    _nodo = -1;
-    _num_nodes = x;
-    _num_edges = l;
-}
-
-/**************************************************\
-\**************************************************/
-shapes::shapes(const shapes& s)
-{
-    int i, j, k;
-    _nodo = s._nodo;
-    _num_nodes = s._num_nodes;
-    _num_edges = s._num_edges;
-    _nodes = s._nodes;
-    _edges = s._edges;
-}
-
-/**************************************************\
-\**************************************************/
-shapes::~shapes()
-{
-}
-
-/**************************************************\
-Return the list of nodes for which it exists at least one edge.
-The values are 1-based.
-\**************************************************/
 set<unsigned int> shapes::nodosUtilizados() const {
     set<unsigned int> candidatas;
     if (_nodo > -1) {
         candidatas.insert(_nodo+1);
-	
-	set< unsigned int >::iterator it = _nodes.begin();
-	while (it != _nodes.end())
-	{
-		candidatas.insert((*it)+1);
-		it++;
-	}
+        for (unsigned int i = 0; i < _grafo.size(); i++) {
+            bool full = false;
+            for (unsigned int j = 0; !full && (j < _grafo.size()); j++) {
+                if (i != j) {
+                    for (unsigned int l = 0; !full && (l < _grafo[0][0].size()); l++) {
+                        full = _grafo[i][j][l];
+                    }
+                }
+            }
+            if (full) {
+                candidatas.insert(i+1);
+            }
+        }
+        
+        for (unsigned int i = 0; i < _grafo.size(); i++) {
+            bool full = false;
+            for (unsigned int j = 0; !full && (j < _grafo.size()); j++) {
+                if (i != j) {
+                    for (unsigned int l = 0; !full && (l < _grafo[0][0].size()); l++) {
+                        full = _grafo[j][i][l];
+                    }
+                }
+            }
+            if (full) {
+                candidatas.insert(i+1);
+            }
+        }
     }
     return candidatas;
 }
 
 /**************************************************\
-Return the list of edges <Node1,Node2,EdgeType> that are NOT present in the graphs.
+Return the list of edges <Node1,Node2,EdgeType> that
+are NOT present in the graph.
 The values are 1-based.
 \**************************************************/
 set< tuplax3<unsigned int> > shapes::ejesNoUtilizados() const {
     set< tuplax3<unsigned int> > lista;
     
-    for (int i = 0; i < _num_nodes; i++) {
-        for (int j = 0; j < _num_nodes; j++) {
-            for (int k = 0; k < _num_edges; k++) {
-                tuplax3<unsigned int> p(i, j, k);
-                if (_edges.find(p) == _edges.end()) {
+    for (int i = 0; i < _grafo.size(); i++) {
+        for (int j = 0; j < _grafo.size(); j++) {
+            for (int k = 0; k < _grafo[0][0].size(); k++) {
+                if (!_grafo[i][j][k]) {
                     lista.insert(tuplax3<unsigned int>(i+1, j+1, k+1));
                 }
             }
@@ -69,78 +56,110 @@ set< tuplax3<unsigned int> > shapes::ejesNoUtilizados() const {
 }
 
 /**************************************************\
+Return the list of edges <Node1,Node2,EdgeType> that
+are NOT present in the graph, but for which Node1 and
+Node2 are present in the graph, and present at least
+one time in '_inst'.
+The values are 1-based.
 \**************************************************/
+vector< tuplax3<unsigned int> > shapes::ejesNoUtilizadosButIn(vector<shapes> _inst) const {
+    vector< tuplax3<unsigned int> > lista;
+    set<unsigned int> nu = nodosUtilizados();
+    
+    for (int i = 0; i < _grafo.size(); i++) {
+        bool iUsed = ((nu.size()==0) || (nu.find(i+1) != nu.end()));
+        for (int j = 0; j < _grafo.size(); j++) {
+	    bool jUsed = ((nu.size()==0) || (nu.find(j+1) != nu.end()));
+            for (int k = 0; k < _grafo[0][0].size(); k++) {
+                tuplax3<unsigned int> p(i, j, k);
+		// Keep the edges not found in the substructure, but having at least one node in it
+                if ((iUsed || jUsed) && (!_grafo[i][j][k])) {
+		    bool found = false;
+                   for (unsigned int m = 0; !found && (m < _inst.size()); m++)
+                       if (_inst[m].ejeUsado(i+1,j+1,k+1)) {
+		           // Keep the edges found in the DB '_inst'
+			   lista.push_back(tuplax3<unsigned int>(i+1, j+1, k+1));
+                           found = true;
+                       }
+                }
+            }
+        }
+    }
+    return lista;
+}
+
 void shapes::clear() {
-    _nodes.clear();
-    _edges.clear();
+    for (int i = 0; i < _grafo.size(); i++) {
+        for (int j = 0; j < _grafo.size(); j++) {
+            for (int k = 0; k < _grafo[0][0].size(); k++) {
+                _grafo[i][j][k] = false;
+            }
+        }
+    }
     _nodo = -1;
 }
 
-/**************************************************\
-Number of used edges + number of used nodes.
-\**************************************************/
 unsigned int shapes::size() const {
     unsigned int x = 0;
-    x += _edges.size();
-    x += nodosUtilizados().size();
+    
+    for (int i = 0; i < _grafo.size(); i++) {
+        for (int j = 0; j < _grafo.size(); j++) {
+            for (int k = 0; k < _grafo[0][0].size(); k++) {
+                if (_grafo[i][j][k]) {
+                    x++;
+                }
+            }
+        }
+    }
+    
+    x = x + nodosUtilizados().size();
     return x;
 }
 
-/**************************************************\
-\**************************************************/
 void shapes::imprime(ostream &salida) const {
      salida << "Nodo: " << _nodo + 1 << endl;
      salida << "Ejes: " << endl;
-     
-     set< tuplax3< unsigned int > >::iterator it = _edges.begin();
-     while (it != _edges.end())
-     {
-          salida << (*it).first+1 << ' ' << (*it).second+1 << ' ' << (*it).third+1 <<endl;
-	  it++;
-     }
+     for (int i = 0; i < _grafo.size(); i++) {
+        for (int j = 0; j < _grafo.size(); j++) {
+            for (int k = 0; k < _grafo[0][0].size(); k++) {
+                if (_grafo[i][j][k]) {
+                    salida << i + 1 << ' ' << j + 1 << ' ' << k + 1 <<endl;
+                }
+            }
+        }
+    }
 }
 
-/**************************************************\
-\**************************************************/
 ostream& operator<<(ostream& os, const shapes& s) {
    s.imprime(os);
    return os;
 }
 
-/**************************************************\
-\**************************************************/
-bool shapes::ejeUsado(const unsigned int ini, const unsigned int fin, const unsigned int s) const {
-    tuplax3<unsigned int> p(ini-1, fin-1, s-1);
-    bool b = (_edges.find(p) != _edges.end());
-    return b;
-}
-
-/**************************************************\
-Return true if the given node 'nod' is used (or is
-equal to _nodo) for any edge.
-'nod' is given 1-based.
-\**************************************************/
 bool shapes::nodoUsado(const unsigned int nod) const {
     assert(nod-1 < cantNodos());
-    bool res;
-    res = (_nodo == nod-1) || (_nodes.find(nod-1) != _nodes.end());
+    
+    bool res = (_nodo == nod-1);
+    if (!res) {
+        for (unsigned int i = 0; !res && (i < _grafo.size()); i++)
+            if (i != nod)
+                for (unsigned int j = 0; !res && (j < _grafo[0][0].size()); j++)
+                    res = _grafo[nod-1][i][j] || _grafo[i][nod-1][j];
+    }
     return res;
 }
 
-/**************************************************\
-Equality of two shapes.
-\**************************************************/
 bool shapes::operator==(const shapes& s) const {
     bool res = (size() == s.size());
-    res = res && (_edges == s._edges);
+    for (int i = 0; res && (i < _grafo.size()); i++) {
+        for (int j = 0; (j < _grafo.size()) && res; j++) {
+            for (int k = 0; (k < _grafo[0][0].size()) && res; k++) {
+                res = (_grafo[i][j][k] == s._grafo[i][j][k]);
+            }
+        }
+    }
     return res;
 }
 
-/**************************************************\
-Add the given edge. 'ini': starting node, 'fin': ending
-node, 's': edge type. 'ini', 'fin' and 's' are given
-1-based.
-\**************************************************/
 void shapes::agregarEje(const unsigned int ini, const unsigned int fin, const unsigned int s){
     // Verifico que alguno de los nodos del eje ya exista en el grafo
     set<unsigned int> x = nodosUtilizados();
@@ -153,25 +172,5 @@ void shapes::agregarEje(const unsigned int ini, const unsigned int fin, const un
      cout << endl << "ini=" << ini+1 << " fin=" << fin+1 << endl;*/
     assert((x.find(ini) != x.end()) || (x.find(fin) != x.end()));
     
-    if(ini != fin)
-    {
-        _nodes.insert(ini-1);
-        _nodes.insert(fin-1);
-    }
-    tuplax3<unsigned int> p(ini-1, fin-1, s-1);
-    _edges.insert(p);
+    _grafo[ini-1][fin-1][s-1] = true;
 };
-
-/**************************************************\
-\**************************************************/
-shapes & shapes::operator= (const shapes & aShape) {
-    if (this != &aShape) {
-        // Copy the structure
-        _nodo = aShape._nodo;
-        _num_nodes = aShape._num_nodes;
-        _num_edges = aShape._num_edges;
-        _nodes = aShape._nodes;
-        _edges = aShape._edges;
-    }
-    return *this;
-}

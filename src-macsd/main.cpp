@@ -170,6 +170,13 @@ int main(int argc, char *argv[]){
     string fichero;
     vector<shapes> baseDatos;
     int num_nodes, num_edges;
+    
+    if(argc!=13)
+    {
+    	fprintf(stderr, "Usage: %s <input file> <output file> <random seed> <max time> <num ants> <beta> <ro> <q0> <tau0> <gamma> <num nodes> <num edges>\n",
+		argv[0]);
+	exit(-1);
+    }
         
     // almacenamiento de parametros        
     // -----------------------------
@@ -195,7 +202,7 @@ int main(int argc, char *argv[]){
     params.q0 = atof(argv[contadorArgumentos++]);
     params.tau0 = atof(argv[contadorArgumentos++]);			// NOT USED (only if pb with the 1st pareto set)
     params.gamma = atof(argv[contadorArgumentos++]);
-    params.multiheuristics = atoi(argv[contadorArgumentos++]);		// NOT USEFUL
+    params.multiheuristics = 0; //atoi(argv[contadorArgumentos++]);		// NOT USEFUL
     params.alfaGrasp = params.alfaObj1 = -1.;				// NOT USEFUL
     params.numColonias = 1;						// NOT USEFUL
     
