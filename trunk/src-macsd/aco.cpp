@@ -109,7 +109,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         float x = ((this->hormigas[nHormiga]->getEjesAsignados() * 1.) / (stepSize * 1.)) + 1;
         bool done = false;
 
-        while (x > ((this->hormigas[nHormiga]->getEjesAsignados() * 1.) / (stepSize * 1.))) {
+        while (!done && (x > ((this->hormigas[nHormiga]->getEjesAsignados() * 1.) / (stepSize * 1.)))) {
                 x = ((rand() * 1.) / (RAND_MAX * 1.));
                 cout << this->hormigas[nHormiga]->getEjesAsignados() << ' ' << stepSize << endl;
                 cout << "Random: " << x << endl;
@@ -164,8 +164,8 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     this->accionesFinalesHormiga();       
 
     // Iteration 1 to (hasta la condicion de parada)
-    while (this->maxTiempo > (fin - inicio)) {		// NOT FOR DEBUG!!!
-    //while (this->maxTiempo > this->numIteraciones) {		// NOT FOR PRODUCTION!!!
+    while (this->maxTiempo > (fin - inicio)) {		// FOR PRODUCTION -- NOT FOR DEBUG!!!
+    //while (this->maxTiempo > this->numIteraciones) {		// FOR DEBUG -- NOT FOR PRODUCTION!!!
         cout << "Iteracion: " << numIteraciones + 1 << endl;
         this->numIteraciones++;
         
@@ -216,10 +216,10 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             float x = ((this->hormigas[nHormiga]->getEjesAsignados() * 1.) / (stepSize * 1.)) + 1;
             bool done = false;
 
-            while (x > ((this->hormigas[nHormiga]->getEjesAsignados() * 1.) / (stepSize * 1.))) {
+            while (!done && (x > ((this->hormigas[nHormiga]->getEjesAsignados() * 1.) / (stepSize * 1.)))) {
                     x = ((rand() * 1.) / (RAND_MAX * 1.));
                     cout << this->hormigas[nHormiga]->getEjesAsignados() << ' ' << stepSize << endl;
-                    cout << "Random: " << x << endl;
+                    cout << "Random: x=" << x << ", nHormiga=" << nHormiga << ", getEjesAsignados=" << this->hormigas[nHormiga]->getEjesAsignados() << ", stepSize=" << stepSize << endl;
                     // candidatas posibles a ser elegidas en este paso de la hormiga
                     candidatas = this->hormigas[nHormiga]->getCandidatos();
                     
