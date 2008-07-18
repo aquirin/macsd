@@ -1,0 +1,48 @@
+From: "Rocio Romero" <rocio@decsai.ugr.es>
+Subject: Re: Apriori para grafos
+Date: Fri, 27 Jun 2008 12:45:28 +0100
+
+Hello,
+
+Here I send you the AcGM code. It's very easy to run:
+
+acgm -subgraph -in DB.acgm -sup 0.0000001 -out
+
+The sup is for the support, a number between 0-1 but 0 is not interpreted so I
+give that :P. The code is not open, it's IBM's now... The oputput is very
+strange but its quite easy, the info is in the .zip. The results does not
+includes the instances just the number of instances, but there is a code
+somewhere to get them, I'll search for it.
+
+I also include a script to transform between subdue input files to acgm input
+files.
+
+Have fun!
+Rocio.
+
+==================================================
+
+Beware! AcGM input file must have the nodes in order.
+
+==================================================
+
+Hello,
+
+I couldn't help trying... I converted Arnaud's bigfile2.dat to the AcGM format
+and it crashes like my GO experiement... the dataset is too big for AcGM...
+
+Oscar, do I forget about shapes then? AcGM will win surely...
+
+Rocio.
+
+==================================================
+
+Hello!
+
+Here is the new script to convert subdue to acgm. This new version sorts the
+nodes and reduces the number of characters per node label to avoid problems.
+Any way it still cracks... not enough memory. You can try in your machine but
+I don't think it will get any better.
+
+Cheers!
+Rocio.
