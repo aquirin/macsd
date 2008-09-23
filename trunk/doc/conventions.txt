@@ -1,0 +1,12 @@
+CONVENTIONS:
+
+1. Used in the C++ source code to distinguish between several versions, using the #if/#elif/#endif
+
+	Name of the constant:  VERSION
+	=====================
+	
+	Code		Value	Comment
+	====		=====	=======
+	V_SHAPE		1	Shape version
+	V_GO		2	Gene Ontology version
+	V_SCIENCEMAP	3	Visual Science Map version
