@@ -123,9 +123,9 @@ class Hormiga {
         * devuelve el conjunto de candidatos posibles
         */
 #if VERSION == V_SCIENCEMAP
-        vector< CANDIDATE > Hormiga::getCandidatos_original();
-        vector< CANDIDATE > Hormiga::getCandidatos_optimized();
-        vector< CANDIDATE > Hormiga::getCandidatos_debug();
+        vector< CANDIDATE > getCandidatos_original();
+        vector< CANDIDATE > getCandidatos_optimized();
+        vector< CANDIDATE > getCandidatos_debug();
 #endif
         vector< CANDIDATE > getCandidatos();   
   
