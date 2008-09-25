@@ -156,7 +156,7 @@ foreach my $i (sort keys %paretoA_cos) {
         $domina = &dominancia($paretoB_cos{$set[$j]},$paretoA_cos{$i});
         if ($domina) {
 #            print "!$paretoB_sop{$set[$j]},$paretoA_sop{$i}!\n"; 
-           if (jaccard($paretoB_sop{$set[$j]},$paretoA_sop{$i}) < 1) {
+           if (jaccard($paretoB_sop{$set[$j]},$paretoA_sop{$i}) < 0.5) {
                 $domina = 0;
             }
             else
@@ -173,7 +173,7 @@ foreach my $i (sort keys %paretoA_cos) {
     }
 }
 
-my @set = sort keys %paretoB_cos;
+my @set = sort keys %paretoA_cos;
 print "C(X'',X')=", ($sum / ($#set + 1)), "\n";
 
 $sum = 0;
@@ -188,7 +188,7 @@ foreach my $i (sort keys %paretoB_cos) {
         $domina = &dominancia($paretoA_cos{$set[$j]},$paretoB_cos{$i});
         if ($domina) {
 #             print "!$paretoB_sop{$i},$paretoA_sop{$set[$j]}!\n";
-            if (jaccard($paretoA_sop{$set[$j]},$paretoB_sop{$i}) < 1) {
+            if (jaccard($paretoA_sop{$set[$j]},$paretoB_sop{$i}) < 0.5) {
                 $domina = 0;
             }
             else {
@@ -204,6 +204,6 @@ foreach my $i (sort keys %paretoB_cos) {
     }
 }
 
-@set = sort keys %paretoA_cos;
+@set = sort keys %paretoB_cos;
 print "C(X',X'')=", ($sum / ($#set + 1)), "\n";
 
