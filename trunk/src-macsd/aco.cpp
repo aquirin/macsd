@@ -71,10 +71,6 @@ void ACO::setUmbralesYHeuristicas (unsigned int multiheuristics) {
 //---------------------------------------------------------
 
 NDominatedSet & ACO::ejecuta (string &filename) {
-#if VERSION == V_SHAPE
-    bool first = true;		/* TODO: HARMONIZE */
-#endif
-
     // variables de control de tiempos y del algoritmo generico
     unsigned long inicio, fin, tiempoIteracionAnterior, inicioBL;
     string nombreFichero;
@@ -82,14 +78,78 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     
     // variables dependientes de los grafos
     vector< CANDIDATE > candidatas;
-
     
     nombreFichero = filename;
     tiempoTranscurrido = tiempoHastaUltimaIteracion = 0.;    
     this->inicioAlgoritmo = inicio = fin = tiempoIteracionAnterior = clock()/CLOCKS_PER_SEC;
 
-     // Iteration 1 to (hasta la condicion de parada)
+    // Iteration 1
+    for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++) {
+            cout << "Hormiga: " << nHormiga << endl;
+            this->hormigas[nHormiga]->posicionaInicialmente();
+            // Elijo cantidad de pasos
+            unsigned int x = intAzar(0, PARA.MOACO_stepSize);
+            cout << "Pasos " << x << endl;
+            for (unsigned int i = 0; i < x; i++) {
+                // candidatas posibles a ser elegidas en este paso de la hormiga
+                candidatas = this->hormigas[nHormiga]->getCandidatos();
+                    
+#if VERSION == V_SHAPE
+                cout << this->hormigas[nHormiga]->subEst();
 
+                cout << "Candidatas: ";
+                for (vector< CANDIDATE >::iterator p = candidatas.begin(); p != candidatas.end(); p++) {
+                    cout << '(' << (*p).first << ',' << (*p).second << ')' << endl;
+                }
+#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+                cout << this->hormigas[nHormiga]->subEst().second;
+#endif
+
+                // si hay una o mas candidatos seleccionamos la mejor
+                if (candidatas.size() > 0) {
+                    // elegir el eje mas conveniente segun informacion Greedy y feromona 
+		    CANDIDATE arco = this->transicion(*(hormigas[nHormiga]), nHormiga, candidatas);
+                
+#if VERSION == V_SHAPE
+                    cout << "ARCO: " << arco.first << ' ' << arco.second << endl;
+#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+                    cout << "ARCO: " << arco.first << ' ' << arco.second << ' ' << arco.third << endl;
+#endif
+
+#if VERSION == V_SHAPE
+                    this->hormigas[nHormiga]->avanza(arco.first, arco.second);
+#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+                    this->hormigas[nHormiga]->avanza(arco.first, arco.second, arco.third);
+#endif
+                            
+                                
+                    // tenemos que modificar la feromona en el arco nuevo
+                    // se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO
+/*#if VERSION == V_SHAPE
+                    this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second);
+#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+                    this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, arco.third);
+#endif        */                    
+                }
+            }
+            
+            for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++){
+            // obtenemos el fenotipo a partir del genotipo,
+            // que es la subestructura obtenida por la hormiga.
+            // Antes de hacer esto tenemos calcular los costes o valores de los objetivos 
+                this->hormigas[nHormiga]->calculaCostes();             
+                this->numEvaluaciones++; 
+                
+                // Actualiza el Pareto
+                this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);         
+            }
+            
+            // acciones finales de actualizacion de feromona y demas
+            // tras finalizar la iteracion 
+//             this->accionesFinalesHormiga();  
+    }
+    
+    // Iteraciones siguientes
 #ifdef ENABLE_ITERATION_COUNT
     while (PARA.GLOB_maxTiempo > this->numIteraciones) {		// FOR DEBUG -- NOT FOR PRODUCTION!!!
 #else
@@ -106,14 +166,6 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             float x = ((rand() * 1.) / (RAND_MAX));
             if (x > PARA.MOACO_gamma) {
         	this->hormigas[i]->posicionaInicialmente();
-#if VERSION == V_SHAPE
-                if (first) {		/* TODO: HARMONIZE */
-                    // Actualiza el Pareto
-                    this->conjuntoNoDominadas.addDominancia(*(this->hormigas[i]), this->preferencias, this->numDominanciasPorPreferencias);      
-                    first = false;
-                }
-#endif
-
             }
             else {
                 if ((conjuntoNoDominadas.getNumElementos() > 0) && (usados.size() < conjuntoNoDominadas.getNumElementos())) {
@@ -145,24 +197,17 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             // Elijo cantidad de pasos
             unsigned int x = intAzar(1, PARA.MOACO_stepSize);
             cout << "Pasos " << x << endl;
-            bool done = false;
-
-#if VERSION == V_SHAPE
-            for (unsigned int i = 0; (i < x) && !done; i++) {	/* TODO: HARMONIZE */
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
             for (unsigned int i = 0; i < x; i++) {
-#endif
-
                     // candidatas posibles a ser elegidas en este paso de la hormiga
                     candidatas = this->hormigas[nHormiga]->getCandidatos();
                     
 #if VERSION == V_SHAPE
                     cout << this->hormigas[nHormiga]->subEst();
 
-                    cout << "Candidatas: ";
-                    for (vector< CANDIDATE >::iterator p = candidatas.begin(); p != candidatas.end(); p++) {
-                        cout << '(' << (*p).first << ',' << (*p).second << ')' << endl;
-                    }
+//                     cout << "Candidatas: ";
+//                     for (vector< CANDIDATE >::iterator p = candidatas.begin(); p != candidatas.end(); p++) {
+//                         cout << '(' << (*p).first << ',' << (*p).second << ')' << endl;
+//                     }
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
                     cout << this->hormigas[nHormiga]->subEst().second;
 #endif
@@ -175,7 +220,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                     // si hay una o mas candidatos seleccionamos la mejor
                     if (candidatas.size() > 0) {
                             // elegir el eje mas conveniente segun informacion Greedy y feromona 
-							CANDIDATE arco = this->transicion(*(hormigas[nHormiga]), nHormiga, candidatas);
+			    CANDIDATE arco = this->transicion(*(hormigas[nHormiga]), nHormiga, candidatas);
                 
 #if VERSION == V_SHAPE
                             cout << "ARCO: " << arco.first << ' ' << arco.second << endl;
@@ -199,9 +244,6 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second);
 this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, arco.third);
 #endif                            
 
-                    }
-                    else {
-                        done = (candidatas.size() == 0);        
                     }                   
             }
         }    
@@ -235,7 +277,6 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, ar
         // operaciones de impresion en archivos de los resultados intermedios conseguidos
         // siempre que el flag este activado (los flags se guardan en el fichero utils.h)
         if (GUARDAR_RESULTADOS_INTERMEDIOS) {
-            
             if (tiempoTranscurrido >= 10. && tiempoHastaUltimaIteracion < 10.){
                     nombreFichero += "10s";
                     this->conjuntoNoDominadas.writePareto(nombreFichero.c_str());
@@ -257,32 +298,25 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, ar
             else if (tiempoTranscurrido >= 60. && tiempoHastaUltimaIteracion < 60.){
                     nombreFichero += "1m";
                     this->conjuntoNoDominadas.writePareto(nombreFichero.c_str());
-/* TODO: HARMONIZE (next line: you have -2, in my old code I have -3) */                    
-//nombreFichero.erase(nombreFichero.size()-2,3);
-
-nombreFichero.erase(nombreFichero.size()-3,3);
+                    nombreFichero.erase(nombreFichero.size()-2,3);
             }
 
             else if (tiempoTranscurrido >= 120. && tiempoHastaUltimaIteracion < 120.){
                     nombreFichero += "2m";
                     this->conjuntoNoDominadas.writePareto(nombreFichero.c_str());
-/* TODO: HARMONIZE (next line: you have -2, in my old code I have -3) */  
-//nombreFichero.erase(nombreFichero.size()-2,3);
-nombreFichero.erase(nombreFichero.size()-3,3);
+                    nombreFichero.erase(nombreFichero.size()-2,3);
             }
 
             else if (tiempoTranscurrido >= 300. && tiempoHastaUltimaIteracion < 300.){
                     nombreFichero += "5m";
                     this->conjuntoNoDominadas.writePareto(nombreFichero.c_str());
-                    /* TODO: HARMONIZE (next line: you have -2, in my old code I have -3) */
-//nombreFichero.erase(nombreFichero.size()-2,3);
-nombreFichero.erase(nombreFichero.size()-3,3);
+                    nombreFichero.erase(nombreFichero.size()-2,3);
             }
 
             else if (tiempoTranscurrido >= 600. && tiempoHastaUltimaIteracion < 600.){
                     nombreFichero += "10m";
                     this->conjuntoNoDominadas.writePareto(nombreFichero.c_str());
-                    nombreFichero.erase(nombreFichero.size()-3,3);
+                    nombreFichero.erase(nombreFichero.size()-2,3);
             }
         }          
                    

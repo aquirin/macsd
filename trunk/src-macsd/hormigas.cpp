@@ -66,6 +66,12 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
                 vector< vector<unsigned int> > v = _subestructura.darPosibilidades(_instancias[*p]);
                 posibilidades<unsigned int> op(v);
                 
+//                 for (int oo = 0; oo < v.size(); oo++) {
+//                     for (int pp = 0; pp < v[oo].size(); pp++)
+//                         cout << pp << ",";
+//                     cout << endl;
+//                 }
+//                 
                 bool done = false;
         
                 for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
@@ -97,8 +103,8 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
         _support = temp;
 #if (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
         }
-        calculaCostes();	/* TODO: HARMONIZE (not present in the shape version) */
 #endif
+        calculaCostes();
 }
 
 //-------------------------------------------------------------------------

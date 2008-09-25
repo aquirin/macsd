@@ -37,6 +37,7 @@ class shapes {
         vector< CANDIDATE > posibilidades_totales();
         vector< CANDIDATE > posibilidades_reales();
         unsigned int cantNodos() const {return _nodos.size();};
+        unsigned int cantObjetos() const;
         vector< vector<unsigned int> > darPosibilidades(const shapes& s) const;
         bool empty() const;
         
