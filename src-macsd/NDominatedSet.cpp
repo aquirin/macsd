@@ -5,7 +5,8 @@ bool NDominatedSet::addDominancia(Hormiga& solucion, bool preferencias, int &num
 	int dominancia;
         bool res = true;
         bool igual = false;
-     
+        solucion.calculaCostes();
+        
         vector<Hormiga>::iterator x = Pareto.begin();
 	while ((x != Pareto.end()) && res && !igual) {
             // Verificar que no este ya...

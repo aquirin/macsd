@@ -6,6 +6,7 @@ all-release:	release-set release-matrix release-vector
 
 
 debug-shape:	clean
+	cp -f shapes/config.txt config.txt
 	cp shapes/shapes.orig.cpp shapes/shapes.cpp
 	cp shapes/shapes.orig.h shapes/shapes.h
 	g++ -g -O0 -c -DVERSION=V_SHAPE shapes/shapes.cpp

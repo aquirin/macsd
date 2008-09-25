@@ -194,3 +194,11 @@ vector< vector<unsigned int> > shapes::darPosibilidades(const shapes& s) const {
     }
     return res;
 }
+
+unsigned int shapes::cantObjetos() const {
+    unsigned int cant = 0;
+    for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
+        if (_desc[*p] == "object") cant++;
+    }
+    return cant;
+}
