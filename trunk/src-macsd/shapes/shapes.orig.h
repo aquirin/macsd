@@ -18,6 +18,7 @@ using namespace std;
 
 class shapes {
     public:
+        shapes() {};
         shapes(const unsigned int maxobj, const vector<string> shap) {_nodo = 0; _mobj = maxobj; _shap = shap;};
         ~shapes() {};
         shapes(const shapes& s) : _nodos(s._nodos), _ejes(s._ejes), _desc(s._desc) {_nodo = s._nodo; _mobj = s._mobj; _shap = s._shap;};

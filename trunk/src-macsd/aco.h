@@ -25,19 +25,23 @@ using namespace std;
 class ACO : public AlgoritmoMO {
 	
 protected:
-
-	vector< SOLUTION > base;
+    vector< SOLUTION > base;
     /** 
      * el vector con las hormigas (es decir, las subestructuras)
      */
     vector <Hormiga *> hormigas;
+    
+        /**
+     * feromona inicial para la matriz de rastros de feromona
+     */
+    float feromonaInicial;
     
     /** 
      * tenemos un vector de matrices de feromona que contendran la feromona por nodo y enlace
      * tamanio n x n x l (n nodos, l enlaces)
      */
     // Es demasiado grande, solo voy a poner los validos
-	map<CANDIDATE,float> matricesFeromona;
+    map<CANDIDATE,float> matricesFeromona;
     
 
     /** 
@@ -66,7 +70,8 @@ protected:
 	 * @param multiheuristics entero que nos indica el tipo de heuristica utilizada
 	 */
 	void setUmbralesYHeuristicas(unsigned int multiheuristics);
-	
+        
+        map<CANDIDATE, double>* _aparEje;
 public:
 	
 	/** 

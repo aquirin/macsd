@@ -556,7 +556,7 @@ int main(int argc, char *argv[]){
     
     obtenerTau0MACS(coste1, coste2);
     
-    PARA.GLOB_tau0 = 1. / (coste1 * coste2);
+    PARA.GLOB_tau0 = (coste1 * coste2);
     */
     cout << "El algoritmo MACS se esta ejecutando... " << endl;    
     MACS colonia(baseDatos, params);

@@ -28,11 +28,6 @@ class MACS : public ACO {
      */
         vector <float> betaLambda, betaNoLambda;
     
-    /**
-     * feromona inicial para la matriz de rastros de feromona
-     */
-    float feromonaInicial;
-    
     
     // funciones miembro privadas -------------------------------
 

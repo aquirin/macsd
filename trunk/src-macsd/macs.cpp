@@ -220,7 +220,7 @@ float MACS::nuevaTau0(){
     
         // liberamos el vector creado
         delete []medias;
-        newTau0 = (1. / retorno);
+        newTau0 = retorno;
 	cout << "Tau0 initial: " << newTau0 << ", type: computed" << endl;
     }
     else
@@ -262,7 +262,7 @@ void MACS::modificaFeromona() {
     while (p != conjuntoNoDominadas.end()){
         t0 = 0.;
         for (int j = 0; j < (unsigned int) this->nObj; j++)
-            t0 += (*p).getCoste(j);
+            t0 *= (*p).getCoste(j);
         for (map<CANDIDATE,float>::iterator j = this->matricesFeromona.begin(); j != this->matricesFeromona.end(); j++) {   
             j->second *= (1. - PARA.MOACO_ro);
             j->second += (PARA.MOACO_ro * t0);
