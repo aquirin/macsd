@@ -24,7 +24,7 @@ ACO::ACO (vector< SOLUTION >& b, Parametros &params) : AlgoritmoMO (PARA.GLOB_BL
         Hormiga *sec = new Hormiga (0, base, PARA.GLOB_numObjs, params.aparEje);
         this->hormigas.push_back(sec);
     }
-  
+    _aparEje = params.aparEje;
 }
 
 //---------------------------------------------------------
@@ -84,70 +84,87 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     this->inicioAlgoritmo = inicio = fin = tiempoIteracionAnterior = clock()/CLOCKS_PER_SEC;
 
     // Iteration 1
-    for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++) {
-            cout << "Hormiga: " << nHormiga << endl;
-            this->hormigas[nHormiga]->posicionaInicialmente();
-            // Elijo cantidad de pasos
-            unsigned int x = intAzar(0, PARA.MOACO_stepSize);
-            cout << "Pasos " << x << endl;
-            for (unsigned int i = 0; i < x; i++) {
-                // candidatas posibles a ser elegidas en este paso de la hormiga
-                candidatas = this->hormigas[nHormiga]->getCandidatos();
-                    
-#if VERSION == V_SHAPE
-                cout << this->hormigas[nHormiga]->subEst();
-
-                cout << "Candidatas: ";
-                for (vector< CANDIDATE >::iterator p = candidatas.begin(); p != candidatas.end(); p++) {
-                    cout << '(' << (*p).first << ',' << (*p).second << ')' << endl;
-                }
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-                cout << this->hormigas[nHormiga]->subEst().second;
-#endif
-
-                // si hay una o mas candidatos seleccionamos la mejor
-                if (candidatas.size() > 0) {
-                    // elegir el eje mas conveniente segun informacion Greedy y feromona 
-		    CANDIDATE arco = this->transicion(*(hormigas[nHormiga]), nHormiga, candidatas);
+    vector <SOLUTION> inicial;
+    
+    // creamos las hormigas y les asignamos su colonia
+    for (unsigned int n = 0; n < PARA.MOACO_numHormigas * 10; n++) {
+        cout << "Inicial: " << n << endl;
+        vector < CANDIDATE > dondeir;
+        inicial.push_back(this->hormigas[0]->subEst());
+        inicial[n].clear();
+        #if VERSION == V_SHAPE
+            inicial[n].agregarNodo(1, "object");
+        #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+            // Nada
+        #endif
+        
+        // Elijo cantidad de pasos
+        unsigned int x = intAzar(0, PARA.MOACO_stepSize);
+        for (unsigned int i = 0; i < x; i++) {
+            // candidatas posibles a ser elegidas en este paso de la hormiga
+            candidatas = inicial[n].nodosNoUtilizados();
                 
-#if VERSION == V_SHAPE
-                    cout << "ARCO: " << arco.first << ' ' << arco.second << endl;
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-                    cout << "ARCO: " << arco.first << ' ' << arco.second << ' ' << arco.third << endl;
-#endif
-
-#if VERSION == V_SHAPE
-                    this->hormigas[nHormiga]->avanza(arco.first, arco.second);
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-                    this->hormigas[nHormiga]->avanza(arco.first, arco.second, arco.third);
-#endif
-                            
-                                
-                    // tenemos que modificar la feromona en el arco nuevo
-                    // se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO
-/*#if VERSION == V_SHAPE
-                    this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second);
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-                    this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, arco.third);
-#endif        */                    
-                }
+            // Elijo un candidato al azar
+            unsigned int y = intAzar(0, candidatas.size() - 1);
+            if (candidatas.size() > 0) {
+                #if VERSION == V_SHAPE
+                    cout << candidatas[y].first << "  " << candidatas[y].second << endl;
+                    int cual;
+                    if (candidatas[y].second == "object")
+                        cual = 1;
+                    else
+                        cual = 2;
+                    inicial[n].agregarNodo(inicial[n].cantNodos() + 1, candidatas[y].second);
+                    inicial[n].agregarEje(candidatas[y].first, inicial[n].cantNodos(), cual);
+                #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+                    inicial[n].agregarEje(candidatas[y].first, candidatas[y].second, candidatas[y].third);
+                #endif                
             }
-            
-            for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++){
-            // obtenemos el fenotipo a partir del genotipo,
-            // que es la subestructura obtenida por la hormiga.
-            // Antes de hacer esto tenemos calcular los costes o valores de los objetivos 
-                this->hormigas[nHormiga]->calculaCostes();             
-                this->numEvaluaciones++; 
-                
-                // Actualiza el Pareto
-                this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);         
+            else {
+                cout << "ERRRRRRRRRRRRRRRRRRRRRRROR!" << endl;
             }
-            
-            // acciones finales de actualizacion de feromona y demas
-            // tras finalizar la iteracion 
-//             this->accionesFinalesHormiga();  
+        }
     }
+        
+    for (unsigned int n = 0; n < PARA.MOACO_numHormigas * 10; n++){
+            // Pasamos cada SOLUCION a una hormiga
+            cout << inicial[n] << endl;
+            #if VERSION == V_SHAPE
+       	        Hormiga una(this->base, this->nObj, inicial[n]);
+            #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+                Hormiga una(1, this->base, this->nObj, this->_aparEje, inicial[n]);
+            #endif 
+            una.calculaCostes();             
+            
+            // Actualiza el Pareto
+            this->conjuntoNoDominadas.addDominancia(una, this->preferencias, this->numDominanciasPorPreferencias);         
+    }
+    
+        
+    // Actualizo feromona
+    vector<float> prom(this->nObj);
+    
+    for (int j = 0; j < (unsigned int) this->nObj; j++)
+        prom[j] = 0.;
+        
+    // pheromone global update
+    NDominatedSet::iterator p = this->conjuntoNoDominadas.begin();
+    
+    while (p != conjuntoNoDominadas.end()){
+        for (int j = 0; j < (unsigned int) this->nObj; j++) {
+            prom[j] += (*p).getCoste(j);
+        }
+                    
+        p++;
+    }
+    
+    float ntau = 1.;
+    for (int j = 0; j < (unsigned int) this->nObj; j++) {
+        ntau *= (prom[j] / this->conjuntoNoDominadas.getNumElementos());
+    }
+    
+    this->feromonaInicial = ntau;
+    cout << "Feromona incial: " << this->feromonaInicial << endl;
     
     // Iteraciones siguientes
 #ifdef ENABLE_ITERATION_COUNT
