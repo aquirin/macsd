@@ -86,7 +86,7 @@ class Hormiga {
 
         
 #if VERSION == V_SHAPE
-       	Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos, SOLUTION quien);
+       	Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION quien);
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
         Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION sub);
 #endif
@@ -187,6 +187,7 @@ class Hormiga {
         
         float getAparicionesEje(const CANDIDATE& eje);
 
+        bool extendible() {return (_candidatos.size() > 0);};
 };
 
 #endif

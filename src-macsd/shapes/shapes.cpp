@@ -101,16 +101,19 @@ ostream& operator<<(ostream& os, const shapes& s) {
 
 bool shapes::operator==(const shapes& s) const {
     bool done = false;
+//     cout << "EN==" << endl;
     if ((_nodos.size() == s._nodos.size()) && (_ejes.size() == s._ejes.size())) {
         shapes copia(s);
         vector< vector<unsigned int> > v = darPosibilidades(s);
         posibilidades<unsigned int> op(v);
             
+        cout << "Veamos... " << endl;
         for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
-    //         for (unsigned int j = 0; j < (*q).size(); j++)
-    //             cout << (*q)[j] << ' ';
-    //         cout << endl;
+            for (unsigned int j = 0; j < (*q).size(); j++)
+                cout << (*q)[j] << ' ';
+            cout << endl;
             shapes nueva_subestructura = copia.reasignarNodos(*q);
+            cout << *this << endl << s << endl << nueva_subestructura << endl;
             done = this->igual(nueva_subestructura);
         }
     }
@@ -151,15 +154,55 @@ shapes shapes::reasignarNodos(vector<unsigned int> v) {
     
     map<unsigned int, unsigned int> dicc;
             
+    for (unsigned int i = 0; i < v.size(); i++) {
+        set<unsigned int>::iterator p = _nodos.begin();
+        for (unsigned int j = 0; j < v[i] - 1; j++) p++;
+//         cout << v[i] << endl;
+        nuevo.agregarNodo(i + 1, _desc[*p]);
+        dicc[*p] = i + 1;
+    }
+    for (set< tuplax3<unsigned int> >::iterator p = _ejes.begin(); p != _ejes.end(); p++) {
+        cout << "D " << dicc[p->first] << " " << dicc[p->second] << " " << p->third << endl;
+        unsigned int uno, dos;
+        if (dicc.find(p->first) != dicc.end())
+            uno = dicc[p->first];
+        else
+            uno = p->first;
+        if (dicc.find(p->second) != dicc.end())
+            dos = dicc[p->second];
+        else
+            dos = p->second;
+        nuevo.agregarEje(uno, dos, p->third);
+    }
+    
+    return nuevo;
+}
+
+shapes shapes::reasignarNodosFijo(vector<unsigned int> v) {
+    shapes nuevo(_mobj, _shap);
+    
+    map<unsigned int, unsigned int> dicc;
+            
     unsigned int i = 0;
     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
-//         cout << v[i] << endl;
+        cout << *p << "-> " << v[i] << endl;
         nuevo.agregarNodo(v[i], _desc[*p]);
         dicc[*p] = v[i];
         i++;
     }
     for (set< tuplax3<unsigned int> >::iterator p = _ejes.begin(); p != _ejes.end(); p++) {
-        nuevo.agregarEje(dicc[p->first], dicc[p->second], p->third);
+        cout << "D " << p->first << " " << p->second << endl;
+        cout << "E " << dicc[p->first] << " " << dicc[p->second] << " " << p->third << endl;
+        unsigned int uno, dos;
+        if (dicc.find(p->first) != dicc.end())
+            uno = dicc[p->first];
+        else
+            uno = p->first;
+        if (dicc.find(p->second) != dicc.end())
+            dos = dicc[p->second];
+        else
+            dos = p->second;
+        nuevo.agregarEje(uno, dos, p->third);
     }
     
     return nuevo;

@@ -44,9 +44,9 @@ typename posibilidades<T>::iterator posibilidades<T>::iterator::operator++() {
             for (j = 0; (j < i) && !found; j++) {
                 found = (v[i] == v[j]);
             }
-            cout << _donde[i] << ',';
+//             cout << _donde[i] << ',';
         }
-        cout << endl;
+//         cout << endl;
         
 //         if (found) {
 //             ll = i - 1;

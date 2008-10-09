@@ -28,7 +28,7 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
 
 //------------------------------------------------------------------------
 #if VERSION == V_SHAPE
-Hormiga::Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos, SOLUTION quien) : _subestructura(quien), _costes(numObjetivos), _support(base.size(), 0) {
+Hormiga::Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos = 2, map<CANDIDATE, double>* ap = 0, SOLUTION quien = SOLUTION()) : _subestructura(quien), _costes(numObjetivos), _support(base.size(), 0) {
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
 Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos = 2, map<CANDIDATE, double>* ap = 0, SOLUTION sub = SOLUTION()) : _costes(numObjetivos), _support(base.size(), 0) {
         _ejesAsignados = 0;
@@ -38,9 +38,8 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
         _numObjetivos = numObjetivos;
         _costeValido = false;
         _instancias = base;
-#if (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-        _aparEje = ap;	/* TODO: HARMONIZE */
-#endif
+        _aparEje = ap;
+        
         for (unsigned int l = 0; l < _support.size(); l++)
             _support[l] = l;
         
@@ -58,25 +57,27 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
         vector<unsigned int>::iterator p = _support.begin();
 
 #if VERSION == V_SHAPE
-        int x = 0;
+        int x = 1;
         while (p != _support.end()) {
             // Tengo que probar las combinaciones de nodos para ver si cubre la subestructura (isomorfismo)
             cout << "Instancia: " << x++ << endl;
             if (_instancias[*p].cantNodos() >= _subestructura.cantNodos()) {
+                cout << _instancias[*p] << endl;
                 vector< vector<unsigned int> > v = _subestructura.darPosibilidades(_instancias[*p]);
                 posibilidades<unsigned int> op(v);
                 
-//                 for (int oo = 0; oo < v.size(); oo++) {
-//                     for (int pp = 0; pp < v[oo].size(); pp++)
-//                         cout << pp << ",";
-//                     cout << endl;
-//                 }
-//                 
+                for (int oo = 0; oo < v.size(); oo++) {
+                    for (int pp = 0; pp < v[oo].size(); pp++)
+                        cout << v[oo][pp] << ",";
+                    cout << endl;
+                }
+                
                 bool done = false;
         
                 for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
                     cout << "X" << endl;
-                    SOLUTION nueva_subestructura = _subestructura.reasignarNodos(*q);
+                    shapes copia(_subestructura);
+                    SOLUTION nueva_subestructura = copia.reasignarNodosFijo(*q);
                     cout << "Y" << endl;
                     cout << "Esta: " << nueva_subestructura << endl;
                     cout << "En: " << _instancias[*p] << endl;
@@ -174,7 +175,7 @@ void Hormiga::avanza(const unsigned int nodo1, const string nodo2) {
     
             for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
                 cout << "X" << endl;
-                SOLUTION nueva_subestructura = _subestructura.reasignarNodos(*q);
+                SOLUTION nueva_subestructura = _subestructura.reasignarNodosFijo(*q);
                 cout << "Y" << endl;
                 cout << "Esta: " << nueva_subestructura << endl;
                 cout << "En: " << _instancias[*p] << endl;

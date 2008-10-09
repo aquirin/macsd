@@ -34,7 +34,7 @@ class shapes {
         void imprime(ostream &salida) const;
         bool operator== (const shapes& s) const;   
         bool igual(const shapes& s) const;   
-        bool operator!= (const shapes& s) const {return !(*this==s);};
+        bool operator!= (const shapes& s) const {return !((*this)==s);};
         vector< CANDIDATE > posibilidades_totales();
         vector< CANDIDATE > posibilidades_reales();
         unsigned int cantNodos() const {return _nodos.size();};
@@ -42,6 +42,7 @@ class shapes {
         bool empty() const;
         
         shapes reasignarNodos(vector<unsigned int> v);
+        shapes reasignarNodosFijo(vector<unsigned int> v);
         bool cubiertoPor(const shapes& s) const;
         
     protected:
