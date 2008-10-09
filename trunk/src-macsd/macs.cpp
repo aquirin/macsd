@@ -215,8 +215,8 @@ float MACS::nuevaTau0(){
             medias[i] /= numElementos;
             retorno *= medias[i];
         }
-//         for (i = 0; i < this->nObj; i++)
-//             cout << "M:" << medias[i] << endl;
+        for (i = 0; i < this->nObj; i++)
+            cout << "M:" << medias[i] << endl;
     
         // liberamos el vector creado
         delete []medias;

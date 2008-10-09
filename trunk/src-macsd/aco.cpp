@@ -1,4 +1,5 @@
 #include "aco.h"
+#include <sstream>
 
 //---------------------------------------------------------
 ACO::ACO (vector< SOLUTION >& b, Parametros &params) : AlgoritmoMO (PARA.GLOB_BL, PARA.GLOB_numObjs, PARA.GLOB_preferencias), base(b) {      	
@@ -130,7 +131,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             // Pasamos cada SOLUCION a una hormiga
             cout << inicial[n] << endl;
             #if VERSION == V_SHAPE
-       	        Hormiga una(this->base, this->nObj, inicial[n]);
+       	        Hormiga una(this->base, this->nObj, this->_aparEje, inicial[n]);
             #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
                 Hormiga una(1, this->base, this->nObj, this->_aparEje, inicial[n]);
             #endif 
@@ -179,6 +180,10 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                 
         // inicializar cada hormiga reiniciando la asignacion de nodos
         set<unsigned int> usados;
+        unsigned int exito_cero = 0;
+        unsigned int exito_pareto = 0;
+        vector<bool> de_donde(PARA.MOACO_numHormigas, 0);
+        
         for (unsigned int i = 0; i < PARA.MOACO_numHormigas; i++) {
             float x = ((rand() * 1.) / (RAND_MAX));
             if (x > PARA.MOACO_gamma) {
@@ -193,10 +198,11 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 //                         usados.clear();
 //                     }
                     int xx = intAzar(0, this->conjuntoNoDominadas.getNumElementos() - 1);
-                    while (usados.find(xx) != usados.end()) {
+                    while ((usados.find(xx) != usados.end()) and (!this->conjuntoNoDominadas.getElemento(xx).extendible())) {
                         int xx = intAzar(0, this->conjuntoNoDominadas.getNumElementos() - 1);
                     }
                     *(this->hormigas[i]) = this->conjuntoNoDominadas.getElemento(xx);
+                    de_donde[i] = true;
                 }
                 else {
                     this->hormigas[i]->posicionaInicialmente();
@@ -212,7 +218,13 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             // las hormigas crean una subestructura, realizando ademas labores de actualizacion y deposito de feromona. La condicion de parada esta basada en una probabilidad de distribucion del tamanio de la subestructura (step_h/step_size)
             
             // Elijo cantidad de pasos
-            unsigned int x = intAzar(1, PARA.MOACO_stepSize);
+            unsigned int x = 0;
+            if (de_donde[nHormiga]) {
+                x = intAzar(1, PARA.MOACO_stepSize * 2);
+            }
+            else {
+                x = intAzar(1, PARA.MOACO_stepSize);
+            }
             cout << "Pasos " << x << endl;
             for (unsigned int i = 0; i < x; i++) {
                     // candidatas posibles a ser elegidas en este paso de la hormiga
@@ -276,7 +288,11 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, ar
             this->numEvaluaciones++; 
             
             // Actualiza el Pareto
-            this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);         
+            bool res = this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);         
+            if (res and de_donde[nHormiga])
+                exito_pareto++;
+            else if (res and !de_donde[nHormiga])
+                exito_cero++;
         }
         
         unsigned long dt = clock()/CLOCKS_PER_SEC;
@@ -291,8 +307,26 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, ar
         tiempoHastaUltimaIteracion = tiempoIteracionAnterior - inicio;
         tiempoTranscurrido = fin - inicio;
 
+        // Muestro datos de exito
+        unsigned int suma = 0;
+        for (unsigned int conta = 0; conta < de_donde.size(); conta++)
+            if (de_donde[conta]) suma++;
+        
+        cout << "Exito desde cero: " << exito_cero * 1.0 / (de_donde.size() * 1.0 - suma) << ":" << exito_cero << endl;
+        cout << "Exito desde Pareto: " << exito_pareto * 1.0 / suma << ":" << exito_pareto << endl;
+        
         // operaciones de impresion en archivos de los resultados intermedios conseguidos
         // siempre que el flag este activado (los flags se guardan en el fichero utils.h)
+        if (numIteraciones % 100 == 0) {
+            // Imprimo el Pareto cada 100 iteraciones
+            string temp = nombreFichero + "_ite_";
+            stringstream s;
+            s << numIteraciones;
+            temp += s.str();
+            
+            this->conjuntoNoDominadas.writePareto(temp.c_str());
+        }
+        
         if (GUARDAR_RESULTADOS_INTERMEDIOS) {
             if (tiempoTranscurrido >= 10. && tiempoHastaUltimaIteracion < 10.){
                     nombreFichero += "10s";
