@@ -21,7 +21,7 @@ class go : public shapes {
     public: 
         // Constructores y destructores
         go() {};
-        go(set<unsigned int>* bn, set< CANDIDATE >* be, map<unsigned int,string>* d);
+        go(string name, set<unsigned int>* bn, set< CANDIDATE >* be, map<unsigned int,string>* d);
         ~go() {};
         go(const go& s);
 
@@ -60,6 +60,7 @@ class go : public shapes {
         set<unsigned int>* _base_nodos;
         set< CANDIDATE >* _base_ejes;
         map<unsigned int, string>* _desc;
+        string _name;
 };
 
 ostream& operator<<(ostream& os, const go& s);

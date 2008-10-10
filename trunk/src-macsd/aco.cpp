@@ -13,7 +13,7 @@ ACO::ACO (vector< SOLUTION >& b, Parametros &params) : AlgoritmoMO (PARA.GLOB_BL
     for (vector< CANDIDATE >::iterator p = lista.begin(); p != lista.end(); p++)
         this->probabilidades[*p] = 0.;
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-    set< CANDIDATE >* tent = b[0].second.base_ejes();
+    set< CANDIDATE >* tent = b[0].base_ejes();
     set< CANDIDATE >::iterator p = tent->begin();
     for (; p != tent->end(); p++)
         this->probabilidades[CANDIDATE((*p).first,(*p).second,(*p).third)] = 0.;
@@ -89,7 +89,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     
     // creamos las hormigas y les asignamos su colonia
     for (unsigned int n = 0; n < PARA.MOACO_numHormigas * 10; n++) {
-        cout << "Inicial: " << n << endl;
+        cout << "Inicial: " << n + 1 << endl;
         vector < CANDIDATE > dondeir;
         inicial.push_back(this->hormigas[0]->subEst());
         inicial[n].clear();
@@ -103,7 +103,21 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         unsigned int x = intAzar(0, PARA.MOACO_stepSize);
         for (unsigned int i = 0; i < x; i++) {
             // candidatas posibles a ser elegidas en este paso de la hormiga
-            candidatas = inicial[n].nodosNoUtilizados();
+            #if VERSION == V_SHAPE
+                candidatas = inicial[n].nodosNoUtilizados();
+            #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+                candidatas.clear();
+                set<unsigned int> nu = inicial[n].nodosUtilizados();
+                vector< CANDIDATE > can = inicial[n].ejesNoUtilizados();
+                if (nu.size() > 0) {
+                    vector< CANDIDATE >::iterator it1 = can.begin();        
+                    while (it1 != can.end()) {
+                        if (nu.find((*it1).second) != nu.end())
+                            candidatas.push_back(*it1);
+                        it1++;
+                    }
+                }
+            #endif    
                 
             // Elijo un candidato al azar
             unsigned int y = intAzar(0, candidatas.size() - 1);
@@ -230,22 +244,13 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                     // candidatas posibles a ser elegidas en este paso de la hormiga
                     candidatas = this->hormigas[nHormiga]->getCandidatos();
                     
-#if VERSION == V_SHAPE
                     cout << this->hormigas[nHormiga]->subEst();
 
 //                     cout << "Candidatas: ";
 //                     for (vector< CANDIDATE >::iterator p = candidatas.begin(); p != candidatas.end(); p++) {
 //                         cout << '(' << (*p).first << ',' << (*p).second << ')' << endl;
-//                     }
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-                    cout << this->hormigas[nHormiga]->subEst().second;
-#endif
+//                     }              
 
-                   
-
-                    
-
-                    
                     // si hay una o mas candidatos seleccionamos la mejor
                     if (candidatas.size() > 0) {
                             // elegir el eje mas conveniente segun informacion Greedy y feromona 
