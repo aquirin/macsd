@@ -2,7 +2,7 @@
 
 //---------------------------------------------
 
-go::go(set<unsigned int>* bn, set< CANDIDATE >* be, map<unsigned int,string>* d) {
+go::go(string name, set<unsigned int>* bn, set< CANDIDATE >* be, map<unsigned int,string>* d) {
     _base_nodos = bn;
     _base_ejes = be;
     _desc = d;
@@ -12,6 +12,7 @@ go::go(set<unsigned int>* bn, set< CANDIDATE >* be, map<unsigned int,string>* d)
     agregarEje(5575,3673,0);
     agregarEje(8150,3673,0);
     _nodo = 3673;
+    _name = name;
 }
  
 //---------------------------------------------
@@ -29,11 +30,9 @@ go::go(const go& s) {
 void go::agregarEje(const unsigned int ini, const unsigned int fin, const unsigned int s) {
     if (!(_desc->find(ini) != _desc->end())) {
         cout << "ERROR: " << ini << endl;
-//         exit(1);
     }
     if (!(_desc->find(fin) != _desc->end())) {
         cout << "ERROR: " << fin << endl;
-//         exit(1);
     }
     
     assert((_desc->find(ini) != _desc->end()) && (_desc->find(fin) != _desc->end()) && (s == 0) && (_nodos.find(fin) != _nodos.end()));
@@ -191,6 +190,7 @@ vector< CANDIDATE > go::ejesNoUtilizados() const {
 //---------------------------------------------
  
 void go::imprime(ostream &salida) const {
+     salida << "Nombre: " << _name << endl;
      salida << "Nodos: " << endl;
      for (set<unsigned int>::const_iterator p = _nodos.begin(); p != _nodos.end(); p++)
          salida << *p << ' ';

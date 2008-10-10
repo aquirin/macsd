@@ -205,7 +205,7 @@ void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe
     leerEjes(fme, *ejes);
     leerEjes(cce, *ejes);
     
-    go info(nodos, ejes, desc);
+    go info("0", nodos, ejes, desc);
     
     // Leo todas las anotaciones a la vez y genero un go
     // Leo el conjunto de anotaciones
@@ -266,7 +266,7 @@ void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe
     set< CANDIDATE > *ejes1 = new set< CANDIDATE >;
     *nodos1 = info.nodos();
     *ejes1 = info.ejes();
-    go data(nodos1, ejes1, desc);
+    go data("0", nodos1, ejes1, desc);
     arch.open(fichero.c_str());
 
     if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
@@ -309,7 +309,7 @@ void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe
                     }
                 }
                 while (aux1 != string::npos);
-                v.push_back(SOLUTION(name,data));
+                v.push_back(SOLUTION(data));
             }
         }
     }
@@ -505,7 +505,7 @@ int main(int argc, char *argv[]){
             vector< CANDIDATE > tent = baseDatos[i].posibilidades_reales();
             vector< CANDIDATE >::iterator p = tent.begin();
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-            set< CANDIDATE > tent = baseDatos[i].second.ejes();
+            set< CANDIDATE > tent = baseDatos[i].ejes();
             set< CANDIDATE >::iterator p = tent.begin();
 #endif
 
@@ -539,13 +539,7 @@ int main(int argc, char *argv[]){
 
     ofstream arch1("debug");
     for (int i = 0; i < baseDatos.size(); i++) {
-#if VERSION == V_SHAPE
         baseDatos[i].imprime(arch1);
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-//         cout << i << ' ' << baseDatos[i].first << endl;
-        baseDatos[i].second.imprime(arch1);
-#endif
-
     }
     arch1.close();
     cout << "FIN" << endl;

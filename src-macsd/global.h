@@ -54,7 +54,7 @@ bool operator< (const tuplax3<T>& a, const tuplax3<T>& b) {
 //	#include "go/ontologia.h"
 //	class go;
 //	typedef pair<string,go> SOLUTION;
-	#define SOLUTION pair<string,go>
+	#define SOLUTION go
 #endif
 
 #endif // __GLOBAL_H__

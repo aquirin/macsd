@@ -24,7 +24,7 @@ MACS::MACS (vector<SOLUTION>& b, Parametros &params) : ACO (b, params) {
         this->matricesFeromona[*p] = this->feromonaInicial; 
     }
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-    for (set< CANDIDATE >::iterator j = b[0].second.base_ejes()->begin(); j != b[0].second.base_ejes()->end(); j++) {   
+    for (set< CANDIDATE >::iterator j = b[0].base_ejes()->begin(); j != b[0].base_ejes()->end(); j++) {   
         this->matricesFeromona[*j] = this->feromonaInicial; 
     }
 #endif

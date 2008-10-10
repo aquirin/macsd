@@ -162,28 +162,13 @@ class Hormiga {
 
 
         
-#if VERSION == V_SHAPE
         void imprime(ostream &salida) const {salida << _subestructura << endl;};
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-        void imprime(ostream &salida) const {salida << "Nombre: " << _subestructura.first << endl; _subestructura.second.imprime(salida);};
-#endif
-
         
         int getNumObjetivos() const {return _numObjetivos;};
         
-#if VERSION == V_SHAPE
         bool operator== (const Hormiga & unaHormiga) {return (_subestructura == unaHormiga._subestructura);};
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-        bool operator== (const Hormiga & unaHormiga) {return (_subestructura.second == unaHormiga._subestructura.second);};
-#endif
-
         
-#if VERSION == V_SHAPE
         bool operator!= (const Hormiga & unaHormiga) {return (_subestructura != unaHormiga._subestructura);};
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-        bool operator!= (const Hormiga & unaHormiga) {return (_subestructura.second != unaHormiga._subestructura.second);};
-#endif
-
         
         float getAparicionesEje(const CANDIDATE& eje);
 

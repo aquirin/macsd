@@ -44,7 +44,6 @@ debug-go:	clean
 	cp go/shapes.vector.h go/shapes.h
 	g++ -g -O0 -c -DVERSION=V_GO go/shapes.cpp
 	g++ -g -O0 -c -DVERSION=V_GO go/ontologia.cpp
-	g++ -g -O0 -c -DVERSION=V_GO go/load.cpp
 	gcc -g -O0 -c routines.c
 	g++ -g -O0 -c -DVERSION=V_GO hormigas.cpp
 	g++ -g -O0 -c -DVERSION=V_GO NDominatedSet.cpp
@@ -55,7 +54,8 @@ debug-go:	clean
 	g++ -g -O0 -c Parameter.cpp
 	g++ -o exe-go.dbg routines.o main.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o
 	echo "exe-go.dbg has been generated!"
-	g++ -o exe-load routines.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o load.o Parameter.o
+	g++ -g -O0 -c -DVERSION=V_GO go/load.cpp
+	g++ -o exe-load routines.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o load.o
 	echo "exe-load has been generated!"
 	
 	

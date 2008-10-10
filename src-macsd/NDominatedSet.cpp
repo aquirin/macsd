@@ -32,22 +32,13 @@ bool NDominatedSet::addDominancia(Hormiga& solucion, bool preferencias, int &num
         if (res && !igual) {
 	   // insertarlo
 	   Pareto.push_back(solucion);
-#if VERSION == V_SHAPE
            cout << "Add: " << solucion.subEst() << endl;
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-           cout << "Add: " << solucion.subEst().second << endl;
-#endif
 
            vector<Hormiga>::iterator x = Pareto.begin();
 	   while (x != Pareto.end()) {
             // Verificar que no este ya dominado...
-#if VERSION == V_SHAPE
             cout << "PPPPPPPP3" << solucion.subEst();
             cout << "PPPPPPPP4" << (*x).subEst();
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-            cout << "PPPPPPPP1" << solucion.subEst().second;
-            cout << "PPPPPPPP2" << (*x).subEst().second;
-#endif
 
                if (solucion.dominancia(*x, preferencias, numDominanciasPorPreferencias) == 1) {
 //                     cout << Pareto.size();
@@ -85,13 +76,8 @@ bool NDominatedSet::add(Hormiga& solucion, bool preferencias, int &numDominancia
         vector<Hormiga>::iterator x = Pareto.begin();
 	while ((x != Pareto.end()) && res) {
             // Verificar que no este ya...
-#if VERSION == V_SHAPE
             cout << "PPPPPPPP1" << solucion.subEst();
             cout << "PPPPPPPP2" << (*x).subEst();
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-            cout << "PPPPPPPP1" << solucion.subEst().second;
-            cout << "PPPPPPPP2" << (*x).subEst().second;
-#endif
 
             if (*x != solucion)
                 if (dominancia = solucion.dominancia(*x, preferencias, numDominanciasPorPreferencias) == 1) {
@@ -117,11 +103,7 @@ bool NDominatedSet::add(Hormiga& solucion, bool preferencias, int &numDominancia
         if (res) {
 	   // insertarlo
 	   Pareto.push_back(solucion);
-#if VERSION == V_SHAPE
            cout << "Add: " << solucion.subEst() << endl;
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-           cout << "Add: " << solucion.subEst().second << endl;
-#endif
 
         }
 	return res;
