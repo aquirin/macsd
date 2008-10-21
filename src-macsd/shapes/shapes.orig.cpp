@@ -81,6 +81,21 @@ unsigned int shapes::size() const {
     return (_nodos.size() + _ejes.size());
 }
 
+string shapes::graph_g(void) const {
+    cout << "XP" << endl;
+    for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
+         map<unsigned int, string>::const_iterator q = _desc.find(*p);
+         cout << "v " << *p << " " << (*q).second << endl;
+    }
+    for (set< tuplax3<unsigned int> >::iterator p = _ejes.begin(); p != _ejes.end(); p++)
+        if (p->third == 1)
+            cout << "e " << p->first << " " << p->second << " on" << endl;
+        else
+            cout << "e " << p->first << " " << p->second << " shape" << endl;
+    cout << endl;
+    return "";
+}
+
 void shapes::imprime(ostream &salida) const {
      salida << "Nodos: ";
      for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {

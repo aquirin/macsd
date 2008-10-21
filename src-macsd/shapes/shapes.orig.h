@@ -32,6 +32,7 @@ class shapes {
         set<unsigned int> nodosUtilizados() const;
         vector< CANDIDATE > nodosNoUtilizados() const;
         void imprime(ostream &salida) const;
+        string graph_g(void) const;
         bool operator== (const shapes& s) const;   
         bool igual(const shapes& s) const;   
         bool operator!= (const shapes& s) const {return !((*this)==s);};
