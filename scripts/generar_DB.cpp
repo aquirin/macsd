@@ -30,10 +30,10 @@ int main (int argc, char* argv[]) {
     for (unsigned int i = 0; i < CANT; i++) {
         shapes s(MAX, w);
         s.agregarNodo(1, "object");
-
+        
         int x = intAzar(1, MAX - 1);
         bool last = false;
-        string salida = "XP\n";
+        string salida = "XP\nv 1 object\n";
         for (unsigned int j = 0; j < x; j++) {
             unsigned int fig = 1;
             if (last) {
@@ -42,7 +42,8 @@ int main (int argc, char* argv[]) {
                 ssCadena << j + 2;
                 string sub;
                 ssCadena >> sub;
-                salida += "v " + sub + " object\n"; 
+                salida += "v " + sub + " object\n";
+                last = false;
             }
             else {
                 int y = intAzar(1, 2);
@@ -55,6 +56,7 @@ int main (int argc, char* argv[]) {
                     ssCadena >> sub;
                     salida += "v " + sub + " " + w[y-1] + "\n"; 
                     fig = 2;
+                    last = true;
                 }
                 else {
                     s.agregarNodo(j + 2, " object");
