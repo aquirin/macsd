@@ -1,8 +1,10 @@
 #include <iostream>
 #include "shapes.h"
+#include "global.h"
 #include "hormigas.h"
 #include "NDominatedSet.h"
 #include <stack>
+#define MAX 8
 
 using namespace std;
 
@@ -107,16 +109,19 @@ int main (int argc, char* argv[]) {
     don.push(q);
     int p = 0;
     vector<shapes> done;
+    vector<Hormiga> todas;
     ofstream file("debug");
     while (pila.size() > 0) {
         shapes n = pila.top();
+//         cout << n << endl;
         pila.pop();
         pair<int,bool> q = don.top();
         don.pop();
         if (find(done, n) == false) {
-            Hormiga h(base, 2, n);
+            Hormiga h(base, 2, 0, n);
             h.imprime(file);
-            pareto.addDominancia(h, false, p);
+            todas.push_back(h);
+//             pareto.addDominancia(h, false, p);
             done.push_back(n);
             
             shapes nn = n;
@@ -130,9 +135,9 @@ int main (int argc, char* argv[]) {
                 nn.agregarEje(eje - 2, eje, 1);
             }
             
-            if ((nn.cantNodos() <= 8) and (find(done, nn) == false)) {
-                Hormiga hh(base, 2, nn);
-                pareto.addDominancia(hh, false, p);
+            if ((nn.cantNodos() <= MAX) and (find(done, nn) == false)) {
+                Hormiga hh(base, 2, 0, nn);
+//                 pareto.addDominancia(hh, false, p);
                 pila.push(nn);
                 pair<int,bool> qqq(eje, true);
                 don.push(qqq);
@@ -146,9 +151,9 @@ int main (int argc, char* argv[]) {
                     unsigned int eje = q.first;
                     nn.agregarNodo(++eje, w[j]);          
                     nn.agregarEje(eje - 1, eje, 2);
-                    if ((nn.cantNodos() <= 8) and (find(done, nn) == false)) {
-                        Hormiga h(base, 2, nn);
-                        pareto.addDominancia(h, false, p);
+                    if ((nn.cantNodos() <= MAX) and (find(done, nn) == false)) {
+                        Hormiga h(base, 2, 0, nn);
+//                         pareto.addDominancia(h, false, p);
                         pila.push(nn);
                         pair<int,bool> qq(eje, false);
                         don.push(qq);                
@@ -158,10 +163,21 @@ int main (int argc, char* argv[]) {
         }
     }
     
-    string donde = "shapes_exhaustivo";
+    // Reviso dominancia
+    for (unsigned int i = 0; i < todas.size(); i++) {
+        bool dominada = false;
+        for (unsigned int j = 0; (j < todas.size()) and !dominada; j++) {
+            dominada = (todas[j].dominancia(todas[i], false, 0) == 1);
+        }
+        if (!dominada) {
+            pareto.addDominancia(todas[i], false, p);
+        }
+    }
+    
+    string donde = "shapes_exhaustivo1";
     donde += "(soloObj).txt";
     pareto.writeObjsPareto(donde.c_str());
-    donde = "shapes_exhaustivo";
+    donde = "shapes_exhaustivo1";
     donde += ".txt";
     pareto.writePareto(donde.c_str());   
     file.close();

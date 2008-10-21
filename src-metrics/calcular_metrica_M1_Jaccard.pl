@@ -3,6 +3,27 @@
 use strict;
 use warnings;
 
+sub jaccard {
+    my ($refA, $refB) = @_;
+    
+    my @A = split(/ /, $refA);
+    my @B = split(/ /, $refB);
+#     print "\tA @A\n\tB @B\n";
+    # Busco interseccion
+    my %hashB = ();
+    foreach my $i (@B) {
+        $hashB{$i} = 1;
+    }
+    my $inter = 0;
+    foreach my $i (@A) {
+        if (exists $hashB{$i}) {
+            $inter++;
+        }
+    }
+    
+    return ($inter / ($#A + 1 + $#B + 1 - $inter));
+}
+
 my ($a, $b) = @ARGV;
 
 # Cargo ambos paretos
@@ -112,12 +133,14 @@ foreach my $i (sort keys %paretoA_cos) {
     my @set = sort keys %paretoB_cos;
     my $min = 999999.0;
     foreach my $j (@set) {
-        my @info1 = split(/\t/, $paretoA_cos{$i});
-        my @info2 = split(/\t/, $paretoB_cos{$j});
-        my $x2 = ($info1[0] - $info2[0])*($info1[0] - $info2[0]);
-        my $y2 = ($info1[1] - $info2[1])*($info1[1] - $info2[1]);
-        if (sqrt($x2+$y2) <= $min) {
-            $min = sqrt($x2+$y2);
+        if (jaccard($paretoB_sop{$j},$paretoA_sop{$i}) >= 0.5) {                
+            my @info1 = split(/\t/, $paretoA_cos{$i});
+            my @info2 = split(/\t/, $paretoB_cos{$j});
+            my $x2 = ($info1[0] - $info2[0])*($info1[0] - $info2[0]);
+            my $y2 = ($info1[1] - $info2[1])*($info1[1] - $info2[1]);
+            if (sqrt($x2+$y2) <= $min) {
+                $min = sqrt($x2+$y2);
+            }
         }
     }
 #     print $min, "\n";

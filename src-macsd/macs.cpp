@@ -130,14 +130,14 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
     	// cogemos la primera de todas las candidatas    	
     	vector< CANDIDATE >::iterator it = candidatas.begin();   		
     	eleccion = *it;
-    	cout << "Suma0" << endl;
+//     	cout << "Suma0" << endl;
     	return eleccion;
     }
     
     // en el caso de que tengamos que elegir la de mayor probabilidad entre las tareas candidatas   
     
     if (probAleatoria < PARA.MOACO_q0) {
-        cout << "A" << endl;
+//         cout << "A" << endl;
         // si el numero aleatorio es menor que q0 elegimos el maximo de los numeradores, no hay aleatoriedad. 
     	vector< CANDIDATE >::iterator it = candidatas.begin();   		
     	eleccion = *it;
@@ -151,7 +151,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
         }
    		
     } else {
-    	cout << "B" << endl;
+//     	cout << "B" << endl;
         // en el caso de que el numero aleatorio sea mayor que q0 elegimos aleatoriamente por ruleta segun las probabilidades de cada eje elegible
     	        
         // calculamos las probabilidades acumuladas para poder aplicar una seleccion de ejes por ruleta
@@ -215,9 +215,9 @@ float MACS::nuevaTau0(){
             medias[i] /= numElementos;
             retorno *= medias[i];
         }
-        for (i = 0; i < this->nObj; i++)
-            cout << "M:" << medias[i] << endl;
-    
+//         for (i = 0; i < this->nObj; i++)
+//             cout << "M:" << medias[i] << endl;
+//     
         // liberamos el vector creado
         delete []medias;
         newTau0 = retorno;

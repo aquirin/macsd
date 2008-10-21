@@ -107,13 +107,13 @@ bool shapes::operator==(const shapes& s) const {
         vector< vector<unsigned int> > v = darPosibilidades(s);
         posibilidades<unsigned int> op(v);
             
-        cout << "Veamos... " << endl;
+//         cout << "Veamos... " << endl;
         for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
-            for (unsigned int j = 0; j < (*q).size(); j++)
-                cout << (*q)[j] << ' ';
-            cout << endl;
+//             for (unsigned int j = 0; j < (*q).size(); j++)
+//                 cout << (*q)[j] << ' ';
+//             cout << endl;
             shapes nueva_subestructura = copia.reasignarNodos(*q);
-            cout << *this << endl << s << endl << nueva_subestructura << endl;
+//             cout << *this << endl << s << endl << nueva_subestructura << endl;
             done = this->igual(nueva_subestructura);
         }
     }
@@ -162,7 +162,7 @@ shapes shapes::reasignarNodos(vector<unsigned int> v) {
         dicc[*p] = i + 1;
     }
     for (set< tuplax3<unsigned int> >::iterator p = _ejes.begin(); p != _ejes.end(); p++) {
-        cout << "D " << dicc[p->first] << " " << dicc[p->second] << " " << p->third << endl;
+//         cout << "D " << dicc[p->first] << " " << dicc[p->second] << " " << p->third << endl;
         unsigned int uno, dos;
         if (dicc.find(p->first) != dicc.end())
             uno = dicc[p->first];
@@ -185,14 +185,14 @@ shapes shapes::reasignarNodosFijo(vector<unsigned int> v) {
             
     unsigned int i = 0;
     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
-        cout << *p << "-> " << v[i] << endl;
+//         cout << *p << "-> " << v[i] << endl;
         nuevo.agregarNodo(v[i], _desc[*p]);
         dicc[*p] = v[i];
         i++;
     }
     for (set< tuplax3<unsigned int> >::iterator p = _ejes.begin(); p != _ejes.end(); p++) {
-        cout << "D " << p->first << " " << p->second << endl;
-        cout << "E " << dicc[p->first] << " " << dicc[p->second] << " " << p->third << endl;
+//         cout << "D " << p->first << " " << p->second << endl;
+//         cout << "E " << dicc[p->first] << " " << dicc[p->second] << " " << p->third << endl;
         unsigned int uno, dos;
         if (dicc.find(p->first) != dicc.end())
             uno = dicc[p->first];

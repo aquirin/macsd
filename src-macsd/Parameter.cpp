@@ -1,25 +1,25 @@
 /*
-Classe permettant de définir des paramètres arbitraires.
-Classe entièrement libre laissée en libre accès pour les modèles.
+Classe permettant de dï¿½inir des paramï¿½res arbitraires.
+Classe entiï¿½ement libre laissï¿½ en libre accï¿½ pour les modï¿½es.
 
 A initialiser avant l'utilisation de StartLearning().
 
-Pour ajouter un paramètre à cette classe, il faut définir une
-variable spécifique dans Parameter.h et enregistrer dans le
+Pour ajouter un paramï¿½re ï¿½cette classe, il faut dï¿½inir une
+variable spï¿½ifique dans Parameter.h et enregistrer dans le
 constructeur cette variable, son nom, son type et sa valeur
-par défaut.
+par dï¿½aut.
 
-Intérêt:
-Parce que chaque modèle est différent et qu'il peut être intéressant
-d'y injecter des paramètres spécifique au modèle considéré ou de
-retirer des stats précises spécifiques au modèle, cette classe statique
-peut être utilisée à cet effet.
+Intï¿½ï¿½:
+Parce que chaque modï¿½e est diffï¿½ent et qu'il peut ï¿½re intï¿½essant
+d'y injecter des paramï¿½res spï¿½ifique au modï¿½e considï¿½ï¿½ou de
+retirer des stats prï¿½ises spï¿½ifiques au modï¿½e, cette classe statique
+peut ï¿½re utilisï¿½ ï¿½cet effet.
 
-Gestion de fichiers de configuration avec commentaires (en lecture/écriture).
-Il est possible de partir à la découverte de tous les paramètres d'une méthode
-(nommage sous forme d'index numérique, conversion en chaîne de caractères).
-La sauvegarde de la configuration replace les commentaires de ligne (placés
-sur la même ligne qu'une variable, après '#').
+Gestion de fichiers de configuration avec commentaires (en lecture/ï¿½riture).
+Il est possible de partir ï¿½la dï¿½ouverte de tous les paramï¿½res d'une mï¿½hode
+(nommage sous forme d'index numï¿½ique, conversion en chaï¿½e de caractï¿½es).
+La sauvegarde de la configuration replace les commentaires de ligne (placï¿½
+sur la mï¿½e ligne qu'une variable, aprï¿½ '#').
 */
 
 #include "Parameter.h"
@@ -41,7 +41,7 @@ CParameter::CParameter()
 // Destructeur
 CParameter::~CParameter()
 {
-	// Détruit les chaînes
+	// Dï¿½ruit les chaï¿½es
 	int n;
 	for(n=0;n<param_list.size();n++)
 	{
@@ -87,6 +87,8 @@ void CParameter::RegisterAll(void)
 	RegisterParameter(&MOACO_numColonias, "MOACO_numColonias", UINTEGER_VALUE, 0);
 	RegisterParameter(&MOACO_nEstOptimo, "MOACO_nEstOptimo", UINTEGER_VALUE, 0);
 	RegisterParameter(&MOACO_stepSize, "MOACO_stepSize", UINTEGER_VALUE, 0);
+        RegisterParameter(&MOACO_maxTama, "MOACO_maxTama", UINTEGER_VALUE, 0);
+      	RegisterParameter(&MOACO_ranking, "MOACO_ranking", UINTEGER_VALUE, 0);
 	
 	// GO
 	RegisterParameter(&GO_bpn, "GO_bpn", STRING_VALUE, "");
@@ -105,9 +107,9 @@ void CParameter::RegisterAll(void)
 }
 
 /**************************************************\
-Enregistre un paramètre dans la base.
+Enregistre un paramï¿½re dans la base.
 Affecte au pointeur d'une variable de Parameter::
-donnée, un nom, un type et une valeur par défaut.
+donnï¿½, un nom, un type et une valeur par dï¿½aut.
 \**************************************************/
 void CParameter::RegisterParameter(void* param, char* name, DataTypeValue type, int value)
 {
@@ -149,7 +151,7 @@ void CParameter::RegisterParameter(void* param, char* name, DataTypeValue type, 
 }
 
 /**************************************************\
-Cherche un paramètre dans la liste.
+Cherche un paramï¿½re dans la liste.
 \**************************************************/
 int CParameter::GetIndexParameter(char* name)
 {
@@ -164,7 +166,7 @@ int CParameter::GetIndexParameter(char* name)
 
 
 /**************************************************\
-Renvoit la valeur du paramètre nommé 'name' dans
+Renvoit la valeur du paramï¿½re nommï¿½'name' dans
 'value'.
 \**************************************************/
 void CParameter::GetValueParameter(void* value, char* name)
@@ -180,7 +182,7 @@ void CParameter::GetValueParameter(void* value, char* name)
 }
 
 /**************************************************\
-Renvoit la valeur du paramètre numéro n dans
+Renvoit la valeur du paramï¿½re numï¿½o n dans
 'value'.
 \**************************************************/
 void CParameter::GetValueParameter(void* value, int n)
@@ -208,7 +210,7 @@ void CParameter::GetValueParameter(void* value, int n)
 }
 
 /**************************************************\
-Définit la valeur du paramètre nommé 'name'.
+Dï¿½init la valeur du paramï¿½re nommï¿½'name'.
 \**************************************************/
 void CParameter::SetValueParameter(void* value, char* name)
 {
@@ -223,7 +225,7 @@ void CParameter::SetValueParameter(void* value, char* name)
 }
 
 /**************************************************\
-Définit la valeur du paramètre numéro n.
+Dï¿½init la valeur du paramï¿½re numï¿½o n.
 \**************************************************/
 void CParameter::SetValueParameter(void* value, int n)
 {
@@ -253,7 +255,7 @@ void CParameter::SetValueParameter(void* value, int n)
 /**************************************************\
 Enregistre la configuration courante.
 
-TODO: les commentaires ne sont pas sauvés!
+TODO: les commentaires ne sont pas sauvï¿½!
 \**************************************************/
 int CParameter::WriteConfiguration(char* path)
 {
@@ -317,9 +319,9 @@ Lit/charge la configuration depuis un fichier.
 Syntaxe d'une ligne:
 Commentaires: '(espaces)# Commentaires'
 Ligne vide: '(espaces)'
-Paramètres:
+Paramï¿½res:
    '(espaces)NOM_PARAM = entier   # Commentaire'
-   '(espaces)NOM_PARAM = réel     # Commentaire'
+   '(espaces)NOM_PARAM = rï¿½l     # Commentaire'
 \**************************************************/
 int CParameter::ReadConfiguration(char* path)
 {
@@ -361,12 +363,11 @@ int CParameter::ReadConfiguration(char* path)
 /**************************************************\
 Traitement d'une ligne de fichier de config du type:
 PARAM_NAME = PARAM_VALUE
-Prend la ligne à traiter et si l'attribut recherché
-est présent dans la chaîne, enregistre sa valeur
-à l'aide de 'param_list', sinon ne fait rien. Une
-ligne commençant par '#' est considérée comme commentaire.
-On peut mettre des commentaires après la ligne, s'ils
-sont séparés par un '#', mais ils ne doivent pas
+Prend la ligne ï¿½traiter et si l'attribut recherchï¿½est prï¿½ent dans la chaï¿½e, enregistre sa valeur
+ï¿½l'aide de 'param_list', sinon ne fait rien. Une
+ligne commenï¿½nt par '#' est considï¿½ï¿½ comme commentaire.
+On peut mettre des commentaires aprï¿½ la ligne, s'ils
+sont sï¿½arï¿½ par un '#', mais ils ne doivent pas
 contenir un nouveau '#'.
 \**************************************************/
 void CParameter::TraitementLigne(char *ligne)
@@ -412,7 +413,7 @@ void CParameter::TraitementLigne(char *ligne)
 
 /**************************************************\
 Supprime les espaces et les tabulations avant et
-après la chaîne.
+aprï¿½ la chaï¿½e.
 \**************************************************/
 char* CParameter::TrimSpaces(char *ligne)
 {
@@ -426,7 +427,7 @@ char* CParameter::TrimSpaces(char *ligne)
 
 
 /**************************************************\
-Renvoit le nombre de paramètres.
+Renvoit le nombre de paramï¿½res.
 \**************************************************/
 int CParameter::GetNumberParameters(void)
 {
@@ -434,7 +435,7 @@ int CParameter::GetNumberParameters(void)
 }
 
 /**************************************************\
-Renvoit le nom du paramètre N.
+Renvoit le nom du paramï¿½re N.
 \**************************************************/
 char* CParameter::GetNameParameter(int n)
 {
@@ -447,7 +448,7 @@ char* CParameter::GetNameParameter(int n)
 }
 
 /**************************************************\
-Renvoit le type du paramètre N.
+Renvoit le type du paramï¿½re N.
 \**************************************************/
 DataTypeValue CParameter::GetTypeParameter(int n)
 {
@@ -460,7 +461,7 @@ DataTypeValue CParameter::GetTypeParameter(int n)
 }
 
 /**************************************************\
-Renvoit le commentaire du paramètre N.
+Renvoit le commentaire du paramï¿½re N.
 \**************************************************/
 char* CParameter::GetCommentParameter(int n)
 {
@@ -473,7 +474,7 @@ char* CParameter::GetCommentParameter(int n)
 }
 
 /**************************************************\
-Renvoit le pointeur du paramètre N.
+Renvoit le pointeur du paramï¿½re N.
 \**************************************************/
 void* CParameter::GetPointerParameter(int n)
 {
@@ -487,7 +488,7 @@ void* CParameter::GetPointerParameter(int n)
 
 /**************************************************\
 Importe un autre objet CParameter (duplication).
-Note: ne pas utiliser l'opérateur '=' car cela copie mal les pointeurs
+Note: ne pas utiliser l'opï¿½ateur '=' car cela copie mal les pointeurs
 \**************************************************/
 void CParameter::Import(CParameter *P)
 {
@@ -507,6 +508,6 @@ void CParameter::Import(CParameter *P)
 }
 
 /**************************************************\
-Paramètres globaux.
+Paramï¿½res globaux.
 \**************************************************/
 CParameter PARA;

@@ -7,7 +7,7 @@
 #include <vector>
 using std::vector;
 
-#define MAX_PARAMETER_SIZE 2000		// Taille maximale d'un champ de paramètre (notamment char[])
+#define MAX_PARAMETER_SIZE 2000		// Taille maximale d'un champ de paramï¿½re (notamment char[])
 
 enum DataTypeValue
 {
@@ -37,7 +37,7 @@ public:
 
 // Attributes
 private:
-	vector<ParameterRegister> param_list;		// Liste des paramètres
+	vector<ParameterRegister> param_list;		// Liste des paramï¿½res
 
 public:
 	bool used;
@@ -69,6 +69,8 @@ public:
 	unsigned int MOACO_numColonias;
 	unsigned int MOACO_nEstOptimo;
 	unsigned int MOACO_stepSize;
+        unsigned int MOACO_maxTama;
+        unsigned int MOACO_ranking;
 	
 	// GO
 	char GO_bpn[MAX_PARAMETER_SIZE];
