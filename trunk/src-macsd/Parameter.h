@@ -2,6 +2,8 @@
 #define _VPLAT_PARAM_H
 
 #include <string.h>
+#include <iostream>
+#include <stdlib.h>
 //#include "macros.h"
 
 #include <vector>
