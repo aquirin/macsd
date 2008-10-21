@@ -2,10 +2,9 @@
 #include "shapes.h"
 #include "global.h"
 #include "hormigas.h"
+#include "NDominatedSet.h"
 #include <stack>
-#include <sstream>
 #define MAX 15
-#define CANT 500
 
 using namespace std;
 
@@ -24,73 +23,70 @@ int main (int argc, char* argv[]) {
     w[2] = "ellipse";
     w[3] = "rectangle";
     w[4] = "circle";
-        
+    
+    stack<shapes> pila;
+//     stack<Hormiga> todas;
+    stack< pair<int,bool> > don;
+    shapes s(8,w);
+    s.agregarNodo(1, "object");
+    pila.push(s);
+    pair<int,bool> q(1, true);
+    don.push(q);
+    int p = 0;
     vector<shapes> done;
-    ofstream file("NewDB.g");
-    for (unsigned int i = 0; i < CANT; i++) {
-        shapes s(MAX, w);
-        s.agregarNodo(1, "object");
-        
-        int x = intAzar(1, MAX - 1);
-        bool last = false;
-        string salida = "XP\nv 1 object\n";
-        for (unsigned int j = 0; j < x; j++) {
-            unsigned int fig = 1;
-            if (last) {
-                s.agregarNodo(j + 2, " object");
-                stringstream ssCadena;
-                ssCadena << j + 2;
-                string sub;
-                ssCadena >> sub;
-                salida += "v " + sub + " object\n";
-                last = false;
+    while (pila.size() > 0) {
+        shapes n = pila.top();
+//         cout << n << endl;
+        pila.pop();
+        pair<int,bool> q = don.top();
+        don.pop();
+        if (find(done, n) == false) {
+//             Hormiga h(base, 2, 0, n);
+//             h.imprime(file);
+//             todas.push_back(h);
+            done.push_back(n);
+            string xx = n.graph_g();
+            
+            shapes nn = n;
+            nn = n;
+            unsigned int eje = q.first;
+            nn.agregarNodo(++eje, "object");
+            if (q.second) {
+                nn.agregarEje(eje - 1, eje, 1);
             }
             else {
-                int y = intAzar(1, 2);
-                if (y == 1) {
-                    int y = intAzar(1, 5);
-                    s.agregarNodo(j + 2, w[y-1]);
-                    stringstream ssCadena;
-                    ssCadena << j + 2;
-                    string sub;
-                    ssCadena >> sub;
-                    salida += "v " + sub + " " + w[y-1] + "\n"; 
-                    fig = 2;
-                    last = true;
-                }
-                else {
-                    s.agregarNodo(j + 2, " object");
-                    stringstream ssCadena;
-                    ssCadena << j + 2;
-                    string sub;
-                    ssCadena >> sub;
-                    salida += "v " + sub + " object\n"; 
+                nn.agregarEje(eje - 2, eje, 1);
+            }
+            
+            if ((nn.cantNodos() <= MAX) and (find(done, nn) == false)) {
+//                 Hormiga hh(base, 2, 0, nn);
+                pila.push(nn);
+                pair<int,bool> qqq(eje, true);
+                don.push(qqq);
+            }
+            
+            if (q.second) {
+                // Sin forma
+                for (unsigned int j = 0; j < w.size(); j++) {
+                    shapes nn = n;
+                    // Sin forma
+                    unsigned int eje = q.first;
+                    nn.agregarNodo(++eje, w[j]);          
+                    nn.agregarEje(eje - 1, eje, 2);
+                    if ((nn.cantNodos() <= MAX) and (find(done, nn) == false)) {
+//                         Hormiga h(base, 2, 0, nn);
+                        pila.push(nn);
+                        pair<int,bool> qq(eje, false);
+                        don.push(qq);                
+                    }
                 }
             }
-            s.agregarEje(j + 1, j + 2, fig);
-            stringstream ssCadena;
-            ssCadena << j + 1;
-            string sub;
-            ssCadena >> sub;
-            stringstream ssCadena1;
-            ssCadena1 << j + 2;
-            string sub1;
-            ssCadena1 >> sub1;
-            string que = "on";
-            if (fig == 2) que = "shape";
-            salida += "e " + sub + " " + sub1+ " " + que + "\n"; 
-        }
-        
-        salida += "\n";
-        
-        if (find(done, s) == false) {
-            done.push_back(s);
-            file << salida << endl;
-        }
-        else {
-            i--;
         }
     }
     
-    file.close();
+//     for (vector<shapes>::iterator p = done.begin(); p != done.end(); p++) {
+//         (*p).graph_g();
+//     }
+    
+//     file.close();
 }
