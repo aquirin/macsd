@@ -40,8 +40,7 @@ ACO::~ACO (){
 	this->umbrales = NULL;
         
 	delete [] (this->heuristicas);
-	this->heuristicas = NULL;
-	
+	this->heuristicas = NULL;        
 }
 
 //---------------------------------------------------------
@@ -88,8 +87,15 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     vector <SOLUTION> inicial;
     
     // creamos las hormigas y les asignamos su colonia
-    for (unsigned int n = 0; n < PARA.MOACO_numHormigas * 10; n++) {
-        cout << "Inicial: " << n + 1 << endl;
+    inicial.push_back(this->hormigas[0]->subEst());
+    inicial[0].clear();    
+    #if VERSION == V_SHAPE
+        inicial[0].agregarNodo(1, "object");
+    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+        // Nada
+    #endif
+    for (unsigned int n = 1; n < PARA.MOACO_numHormigas * 10; n++) {
+//         cout << "Inicial: " << n << endl;
         vector < CANDIDATE > dondeir;
         inicial.push_back(this->hormigas[0]->subEst());
         inicial[n].clear();
@@ -100,8 +106,13 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         #endif
         
         // Elijo cantidad de pasos
-        unsigned int x = intAzar(0, PARA.MOACO_stepSize);
+        unsigned int x;
+        if (PARA.MOACO_ranking)
+            x = ranking(PARA.MOACO_maxTama, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
+        else
+            x = intAzar(1, PARA.MOACO_stepSize);
         for (unsigned int i = 0; i < x; i++) {
+//             cout << "It: " << i << " " << x << endl;
             // candidatas posibles a ser elegidas en este paso de la hormiga
             #if VERSION == V_SHAPE
                 candidatas = inicial[n].nodosNoUtilizados();
@@ -123,7 +134,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             unsigned int y = intAzar(0, candidatas.size() - 1);
             if (candidatas.size() > 0) {
                 #if VERSION == V_SHAPE
-                    cout << candidatas[y].first << "  " << candidatas[y].second << endl;
+//                     cout << candidatas[y].first << "  " << candidatas[y].second << endl;
                     int cual;
                     if (candidatas[y].second == "object")
                         cual = 1;
@@ -136,14 +147,14 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                 #endif                
             }
             else {
-                cout << "ERRRRRRRRRRRRRRRRRRRRRRROR!" << endl;
+                cout << "No hay candidatos!" << endl;
             }
         }
     }
         
     for (unsigned int n = 0; n < PARA.MOACO_numHormigas * 10; n++){
             // Pasamos cada SOLUCION a una hormiga
-            cout << inicial[n] << endl;
+//             cout << inicial[n] << endl;
             #if VERSION == V_SHAPE
        	        Hormiga una(this->base, this->nObj, this->_aparEje, inicial[n]);
             #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
@@ -200,7 +211,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         
         for (unsigned int i = 0; i < PARA.MOACO_numHormigas; i++) {
             float x = ((rand() * 1.) / (RAND_MAX));
-            if (x > PARA.MOACO_gamma) {
+            if (x >= PARA.MOACO_gamma) {
         	this->hormigas[i]->posicionaInicialmente();
             }
             else {
@@ -234,17 +245,23 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             // Elijo cantidad de pasos
             unsigned int x = 0;
             if (de_donde[nHormiga]) {
-                x = intAzar(1, PARA.MOACO_stepSize * 2);
+                if (PARA.MOACO_ranking)
+                    x = ranking(PARA.MOACO_maxTama, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
+                else
+                    x = intAzar(1, PARA.MOACO_stepSize);
             }
             else {
-                x = intAzar(1, PARA.MOACO_stepSize);
+                 if (PARA.MOACO_ranking)
+                    x = ranking(PARA.MOACO_maxTama, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
+                else
+                    x = intAzar(1, PARA.MOACO_stepSize);
             }
             cout << "Pasos " << x << endl;
             for (unsigned int i = 0; i < x; i++) {
                     // candidatas posibles a ser elegidas en este paso de la hormiga
                     candidatas = this->hormigas[nHormiga]->getCandidatos();
                     
-                    cout << this->hormigas[nHormiga]->subEst();
+//                     cout << this->hormigas[nHormiga]->subEst();
 
 //                     cout << "Candidatas: ";
 //                     for (vector< CANDIDATE >::iterator p = candidatas.begin(); p != candidatas.end(); p++) {
@@ -256,11 +273,11 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                             // elegir el eje mas conveniente segun informacion Greedy y feromona 
 			    CANDIDATE arco = this->transicion(*(hormigas[nHormiga]), nHormiga, candidatas);
                 
-#if VERSION == V_SHAPE
-                            cout << "ARCO: " << arco.first << ' ' << arco.second << endl;
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-                            cout << "ARCO: " << arco.first << ' ' << arco.second << ' ' << arco.third << endl;
-#endif
+// #if VERSION == V_SHAPE
+//                             cout << "ARCO: " << arco.first << ' ' << arco.second << endl;
+// #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+//                             cout << "ARCO: " << arco.first << ' ' << arco.second << ' ' << arco.third << endl;
+// #endif
 
 
 #if VERSION == V_SHAPE
@@ -278,7 +295,10 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second);
 this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, arco.third);
 #endif                            
 
-                    }                   
+                    }
+                    else {
+                        cout << "No hay candidatos!" << endl;
+                    }            
             }
         }    
     
@@ -317,8 +337,8 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, ar
         for (unsigned int conta = 0; conta < de_donde.size(); conta++)
             if (de_donde[conta]) suma++;
         
-        cout << "Exito desde cero: " << exito_cero * 1.0 / (de_donde.size() * 1.0 - suma) << ":" << exito_cero << endl;
-        cout << "Exito desde Pareto: " << exito_pareto * 1.0 / suma << ":" << exito_pareto << endl;
+        cout << "Exito desde cero: " << exito_cero * 1.0 / (de_donde.size() * 1.0 - suma) << ":" << exito_cero << ":" << (de_donde.size() * 1.0 - suma) << endl;
+        cout << "Exito desde Pareto: " << exito_pareto * 1.0 / suma << ":" << exito_pareto << ":" << suma << endl;
         
         // operaciones de impresion en archivos de los resultados intermedios conseguidos
         // siempre que el flag este activado (los flags se guardan en el fichero utils.h)

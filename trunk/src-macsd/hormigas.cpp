@@ -60,35 +60,35 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
         int x = 1;
         while (p != _support.end()) {
             // Tengo que probar las combinaciones de nodos para ver si cubre la subestructura (isomorfismo)
-            cout << "Instancia: " << x++ << endl;
+//             cout << "Instancia: " << x++ << endl;
             if (_instancias[*p].cantNodos() >= _subestructura.cantNodos()) {
-                cout << _instancias[*p] << endl;
+//                 cout << _instancias[*p] << endl;
                 vector< vector<unsigned int> > v = _subestructura.darPosibilidades(_instancias[*p]);
                 posibilidades<unsigned int> op(v);
                 
-                for (int oo = 0; oo < v.size(); oo++) {
-                    for (int pp = 0; pp < v[oo].size(); pp++)
-                        cout << v[oo][pp] << ",";
-                    cout << endl;
-                }
+//                 for (int oo = 0; oo < v.size(); oo++) {
+//                     for (int pp = 0; pp < v[oo].size(); pp++)
+//                         cout << v[oo][pp] << ",";
+//                     cout << endl;
+//                 }
                 
                 bool done = false;
         
                 for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
-                    cout << "X" << endl;
+//                     cout << "X" << endl;
                     shapes copia(_subestructura);
                     SOLUTION nueva_subestructura = copia.reasignarNodosFijo(*q);
-                    cout << "Y" << endl;
-                    cout << "Esta: " << nueva_subestructura << endl;
-                    cout << "En: " << _instancias[*p] << endl;
+//                     cout << "Y" << endl;
+//                     cout << "Esta: " << nueva_subestructura << endl;
+//                     cout << "En: " << _instancias[*p] << endl;
                     if (_instancias[*p].cubiertoPor(nueva_subestructura)) {
                         done = true;
-                        cout << "SI" << endl;
+//                         cout << "SI" << endl;
                         temp.push_back(*p);
                     }
                 }
             }
-            cout << "FIN" << endl;
+//             cout << "FIN" << endl;
             p++;
         }
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
@@ -166,7 +166,7 @@ void Hormiga::avanza(const unsigned int nodo1, const string nodo2) {
     vector<unsigned int>::iterator p = _support.begin();
     while (p != _support.end()) {
         // Tengo que probar las combinaciones de nodos para ver si cubre la subestructura (isomorfismo)
-        cout << "Instancia " << pp++ << endl;
+//         cout << "Instancia " << pp++ << endl;
         if (_instancias[*p].cantNodos() >= _subestructura.cantNodos()) {
             vector< vector<unsigned int> > v = _subestructura.darPosibilidades(_instancias[*p]);
             posibilidades<unsigned int> op(v);
@@ -174,18 +174,18 @@ void Hormiga::avanza(const unsigned int nodo1, const string nodo2) {
             bool done = false;
     
             for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
-                cout << "X" << endl;
+//                 cout << "X" << endl;
                 SOLUTION nueva_subestructura = _subestructura.reasignarNodosFijo(*q);
-                cout << "Y" << endl;
-                cout << "Esta: " << nueva_subestructura << endl;
-                cout << "En: " << _instancias[*p] << endl;
+//                 cout << "Y" << endl;
+//                 cout << "Esta: " << nueva_subestructura << endl;
+//                 cout << "En: " << _instancias[*p] << endl;
                 if (_instancias[*p].cubiertoPor(nueva_subestructura)) {
                     done = true;
-                    cout << "SI" << endl;
+//                     cout << "SI" << endl;
                     temp.push_back(*p);
                 }
             }
-            cout << "FIN" << endl;
+//             cout << "FIN" << endl;
         }
         p++;
     }
@@ -413,7 +413,7 @@ void Hormiga::calculaCostes() {
 #if VERSION == V_SHAPE
 
         _costes[1] = _subestructura.sizeNorm();
-        cout << _subestructura << endl;
+//         cout << _subestructura << endl;
 
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
 
@@ -430,12 +430,12 @@ void Hormiga::calculaCostes() {
         else
             _costes[1] = 0;
             
-        cout << _subestructura << endl;
+//         cout << _subestructura << endl;
 
 #endif
 
 
-        cout << "Costo: " << _costes[0] << ' ' << _costes[1] << endl;
+//         cout << "Costo: " << _costes[0] << ' ' << _costes[1] << endl;
     }
 }
 
@@ -447,17 +447,17 @@ int Hormiga::dominancia(Hormiga& v, bool x, int y) {
 #endif
     int que;
     
-    cout << "A: " << _costes[0] << ' ' << _costes[1] << endl;
-    for (unsigned int i = 0; i < _support.size(); i++) {
-        cout << _support[i] << ' ';
-    }
-    cout << endl;
-    cout << "B: " << v._costes[0] << ' ' << v._costes[1] << endl;
-    for (unsigned int i = 0; i < v._support.size(); i++) {
-        cout << v._support[i] << ' ';
-    }
-    cout << endl;
-    
+//     cout << "A: " << _costes[0] << ' ' << _costes[1] << endl;
+//     for (unsigned int i = 0; i < _support.size(); i++) {
+//         cout << _support[i] << ' ';
+//     }
+//     cout << endl;
+//     cout << "B: " << v._costes[0] << ' ' << v._costes[1] << endl;
+//     for (unsigned int i = 0; i < v._support.size(); i++) {
+//         cout << v._support[i] << ' ';
+//     }
+//     cout << endl;
+//     
     if ((_costes[0] >= v._costes[0]) && (_costes[1] >= v._costes[1]) && ((_costes[0] > v._costes[0]) || (_costes[1] > v._costes[1]))) {
         que = 1;
     }
@@ -467,25 +467,25 @@ int Hormiga::dominancia(Hormiga& v, bool x, int y) {
     else que = 0;
     
     if ((_costes[0] != 0) && (v._costes[0] != 0)) {
-        // Nichos genotipicos
-        unsigned int inte = 0;
-        unsigned int unio = (_support.size() + v._support.size());
-        for (unsigned int i = 0; i < _support.size(); i++) {
-            bool found = false;
-            for (unsigned int j = 0; (j < v._support.size()) && !found; j++) {
-                if (_support[i] == v._support[j]) {
-                    found = true;
-                    inte++;
-                }
-            }
-        }
-                
-        unio -= (inte);
-        // Jaccard 0.5
-        if (((inte * 1.) / (unio * 1.)) < 0.5) {
-            que = 0;
-            cout << "ND" << endl;
-        }
+//         // Nichos genotipicos
+//         unsigned int inte = 0;
+//         unsigned int unio = (_support.size() + v._support.size());
+//         for (unsigned int i = 0; i < _support.size(); i++) {
+//             bool found = false;
+//             for (unsigned int j = 0; (j < v._support.size()) && !found; j++) {
+//                 if (_support[i] == v._support[j]) {
+//                     found = true;
+//                     inte++;
+//                 }
+//             }
+//         }
+//                 
+//         unio -= (inte);
+//         // Jaccard 0.5
+//         if (((inte * 1.) / (unio * 1.)) < 0.5) {
+//             que = 0;
+// //             cout << "ND" << endl;
+//         }
     }
     else {
         if (_costes[0] == 0)
@@ -493,7 +493,7 @@ int Hormiga::dominancia(Hormiga& v, bool x, int y) {
         else
             que = 1;
     }
-    cout << "QUE: " << que << endl;
+//     cout << "QUE: " << que << endl;
     return que;
 }
 

@@ -530,19 +530,19 @@ int main(int argc, char *argv[]){
                 
         for (map<CANDIDATE, double>::iterator pp = aparEje.begin(); pp != aparEje.end(); pp++) {
             (*pp).second /= (baseDatos.size() * 1.);
-            cout << "AP1: " << pp->first.first << ' ' << pp->first.second << '=' << pp->second << endl;
+//             cout << "AP1: " << pp->first.first << ' ' << pp->first.second << '=' << pp->second << endl;
         }
         
         params.aparEje = &aparEje;
     }
 //-------------------------------------------------------------------------
 
-    ofstream arch1("debug");
-    for (int i = 0; i < baseDatos.size(); i++) {
-        baseDatos[i].imprime(arch1);
-    }
-    arch1.close();
-    cout << "FIN" << endl;
+//     ofstream arch1("debug");
+//     for (int i = 0; i < baseDatos.size(); i++) {
+//         baseDatos[i].imprime(arch1);
+//     }
+//     arch1.close();
+//     cout << "FIN" << endl;
     // algoritmo de hormigas multi-objetivo MACS
 /*
     // Para obtener el tau0 de un ACO necesitamos conocer las medias de los costes de las soluciones greedies respecto a cada objetivo
@@ -574,7 +574,7 @@ int main(int argc, char *argv[]){
 //     -----------------------------------
 //     GENERACIoN DE FICHEROS DE RESULTADOS
 
-    cout << soluciones.getNumElementos() << " elementos" << endl;
+//     cout << soluciones.getNumElementos() << " elementos" << endl;
 
 //     impresion en fichero de los valores de los objetivos de todas las soluciones del Pareto tras terminar la ejecucion del algoritmo            
     string rutaFinal (str_rs + "(soloObj).txt");

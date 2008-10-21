@@ -65,12 +65,12 @@ template <typename T>
 vector<T> posibilidades<T>::iterator::operator*() {
    vector<T> res(_donde.size());
     
-   cout << "OPCION: ";
+//    cout << "OPCION: ";
    for (unsigned int i = 0; i < _donde.size(); i++) {
         res[i] = (*_cuales)[i][_donde[i]];
-        cout << res[i] << ' ';
+//         cout << res[i] << ' ';
    }
-   cout << endl;
+//    cout << endl;
     
    return res;
 }

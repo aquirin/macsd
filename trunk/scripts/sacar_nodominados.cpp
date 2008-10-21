@@ -187,7 +187,7 @@ int main (int argc, char* argv[]) {
 //                 temp_nodos.clear();
 //                 first = true;
 //                 v.push_back(s);
-                Hormiga h(base, 2, s);
+                Hormiga h(base, 2, 0, s);
                 int p = 0;
                 pareto.addDominancia(h, false, p);
 //                 cout << s << endl;

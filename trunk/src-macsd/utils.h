@@ -213,5 +213,7 @@ unsigned int posMaximo(float *vector, short *aUtilizar, unsigned int tamanio);
 void pesosAleatorios(float *vector, unsigned int tamanio);
 
 int intAzar(const int inicio, const int fin);
+
+int ranking(const int cant, const float nu_max, const float nu_min);
   
 #endif

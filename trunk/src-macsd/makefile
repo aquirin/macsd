@@ -20,7 +20,9 @@ debug-shape:	clean
 	g++ -g -O0 -c Parameter.cpp
 	g++ -o exe-shape.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o
 	echo "exe-shape.dbg has been generated!"
-	
+	g++ -g -O0 -c -DVERSION=V_SHAPE shapes/load.cpp
+	g++ -o exe-load_shape routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o
+	echo "exe-load_shape has been generated!"
 
 debug-vmap:	clean
 	cp go/shapes.set.cpp go/shapes.cpp
