@@ -5,6 +5,8 @@
 //#include "macros.h"
 
 #include <vector>
+#include <iostream>
+#include <stdlib.h>
 using std::vector;
 
 #define MAX_PARAMETER_SIZE 2000		// Taille maximale d'un champ de param�re (notamment char[])
