@@ -27,7 +27,7 @@ int main (int argc, char* argv[]) {
     stack<shapes> pila;
 //     stack<Hormiga> todas;
     stack< pair<int,bool> > don;
-    shapes s(8,w);
+    shapes s(15,w);
     s.agregarNodo(1, "object");
     pila.push(s);
     pair<int,bool> q(1, true);

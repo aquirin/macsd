@@ -150,10 +150,10 @@ int main(int argc, char *argv[]){
     ofstream arch1("debug");
     int kk;
     for (int i = 0; i < misub.size(); i++) {
-//         cout << i << ' ' << baseDatos[i].first << endl;
         misub[i].imprime(arch1);
         Hormiga una(baseDatos, 2, 0, misub[i]);
-        soluciones.addDominancia(una, false, kk);
+        cout << i << ' ' << misub[i] << endl;
+        cout << soluciones.addDominancia(una, false, kk) << endl;
     }
     arch1.close();
     cout << "FIN" << endl;
