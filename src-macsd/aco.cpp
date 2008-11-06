@@ -1,4 +1,5 @@
 #include "aco.h"
+#include <time.h>
 #include <sstream>
 
 //---------------------------------------------------------
@@ -72,16 +73,19 @@ void ACO::setUmbralesYHeuristicas (unsigned int multiheuristics) {
 
 NDominatedSet & ACO::ejecuta (string &filename) {
     // variables de control de tiempos y del algoritmo generico
-    unsigned long inicio, fin, tiempoIteracionAnterior, inicioBL;
+    time_t inicio, fin;
+    unsigned long tiempoIteracionAnterior, inicioBL;
     string nombreFichero;
-    double tiempoTranscurrido, tiempoHastaUltimaIteracion;    
+    unsigned long tiempoTranscurrido, tiempoHastaUltimaIteracion;    
     
     // variables dependientes de los grafos
     vector< CANDIDATE > candidatas;
     
     nombreFichero = filename;
-    tiempoTranscurrido = tiempoHastaUltimaIteracion = 0.;    
-    this->inicioAlgoritmo = inicio = fin = tiempoIteracionAnterior = clock()/CLOCKS_PER_SEC;
+    tiempoTranscurrido = tiempoHastaUltimaIteracion = 0.; 
+    inicio = time( NULL );
+    fin = time( NULL );
+    this->inicioAlgoritmo = tiempoIteracionAnterior = clock()/CLOCKS_PER_SEC;
 
     // Iteration 1
     vector <SOLUTION> inicial;
@@ -196,7 +200,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 #ifdef ENABLE_ITERATION_COUNT
     while (PARA.GLOB_maxTiempo > this->numIteraciones) {		// FOR DEBUG -- NOT FOR PRODUCTION!!!
 #else
-    while (PARA.GLOB_maxTiempo > (fin - inicio)) {		// FOR PRODUCTION -- NOT FOR DEBUG!!!
+    while (PARA.GLOB_maxTiempo > difftime(fin, inicio)) {		// FOR PRODUCTION -- NOT FOR DEBUG!!!
 #endif
 
         unsigned long at = clock()/CLOCKS_PER_SEC;
@@ -245,13 +249,15 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             // Elijo cantidad de pasos
             unsigned int x = 0;
             if (de_donde[nHormiga]) {
+                cout << "Del Pareto!" << endl;
                 if (PARA.MOACO_ranking)
                     x = ranking(PARA.MOACO_maxTama, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
                 else
                     x = intAzar(1, PARA.MOACO_stepSize);
             }
             else {
-                 if (PARA.MOACO_ranking)
+                cout << "Nuevo!" << endl;
+                if (PARA.MOACO_ranking)
                     x = ranking(PARA.MOACO_maxTama, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
                 else
                     x = intAzar(1, PARA.MOACO_stepSize);
@@ -261,12 +267,12 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                     // candidatas posibles a ser elegidas en este paso de la hormiga
                     candidatas = this->hormigas[nHormiga]->getCandidatos();
                     
-//                     cout << this->hormigas[nHormiga]->subEst();
+                    cout << this->hormigas[nHormiga]->subEst();
 
-//                     cout << "Candidatas: ";
-//                     for (vector< CANDIDATE >::iterator p = candidatas.begin(); p != candidatas.end(); p++) {
-//                         cout << '(' << (*p).first << ',' << (*p).second << ')' << endl;
-//                     }              
+                    cout << "Candidatas: ";
+                    for (vector< CANDIDATE >::iterator p = candidatas.begin(); p != candidatas.end(); p++) {
+                        cout << '(' << (*p).first << ',' << (*p).second << ')' << endl;
+                    }              
 
                     // si hay una o mas candidatos seleccionamos la mejor
                     if (candidatas.size() > 0) {
@@ -328,9 +334,10 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, ar
         this->accionesFinalesHormiga();       
                 		
         tiempoIteracionAnterior = fin;
-        fin = clock()/CLOCKS_PER_SEC;
+        fin = time( NULL );
         tiempoHastaUltimaIteracion = tiempoIteracionAnterior - inicio;
-        tiempoTranscurrido = fin - inicio;
+        tiempoTranscurrido = difftime(fin, inicio);
+        cout << "TT: " << difftime(fin, inicio) << endl;
 
         // Muestro datos de exito
         unsigned int suma = 0;
@@ -342,7 +349,7 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, ar
         
         // operaciones de impresion en archivos de los resultados intermedios conseguidos
         // siempre que el flag este activado (los flags se guardan en el fichero utils.h)
-        if (numIteraciones % 100 == 0) {
+        if (numIteraciones % 10 == 0) {
             // Imprimo el Pareto cada 100 iteraciones
             string temp = nombreFichero + "_ite_";
             stringstream s;
@@ -352,7 +359,7 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, ar
             this->conjuntoNoDominadas.writePareto(temp.c_str());
         }
         
-        if (GUARDAR_RESULTADOS_INTERMEDIOS) {
+       /* if (GUARDAR_RESULTADOS_INTERMEDIOS) {
             if (tiempoTranscurrido >= 10. && tiempoHastaUltimaIteracion < 10.){
                     nombreFichero += "10s";
                     this->conjuntoNoDominadas.writePareto(nombreFichero.c_str());
@@ -394,8 +401,7 @@ this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, ar
                     this->conjuntoNoDominadas.writePareto(nombreFichero.c_str());
                     nombreFichero.erase(nombreFichero.size()-2,3);
             }
-        }          
-                   
+        }      */                  
     }
     
     // almacenamiento del tiempo de finalizacion del algoritmo y del tiempo de la BL
