@@ -158,9 +158,11 @@ class Hormiga {
         */
         SOLUTION subEst() {return _subestructura;};
 
+	/* Modificado ROCIO x: TRUE = Jaccard, FALSE = Sin Jaccard */
         int dominancia(Hormiga& v, bool x, int y);
 
-
+	/* Agregado por ROCIO */
+	set<CANDIDATE> local_search() const;
         
         void imprime(ostream &salida) const {salida << _subestructura << endl;};
         
@@ -172,7 +174,7 @@ class Hormiga {
         
         float getAparicionesEje(const CANDIDATE& eje);
 
-        bool extendible() {return (_candidatos.size() > 0);};
+        bool extendible() {return ((_candidatos.size() > 0) and (_costes[1] < 1));};
 };
 
 #endif

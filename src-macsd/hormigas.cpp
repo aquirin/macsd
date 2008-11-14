@@ -104,6 +104,9 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
         _support = temp;
 #if (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
         }
+	_candidatos = _subestructura.ejesNoUtilizados();
+	// eliminamos de la lista de candidatos
+// 	_candidatos = getCandidatos();
 #endif
         calculaCostes();
 }
@@ -298,12 +301,12 @@ vector< CANDIDATE > Hormiga::getCandidatos() {
     
     // Solo me quedo con aquellos que tiene al menos uno de los nodos en la subestructura
     set<unsigned int> nu = _subestructura.nodosUtilizados();
-//     for (set<unsigned int>::iterator p = nu.begin(); p != nu.end(); p++) cout << *p << endl;
+//     for (set<unsigned int>::iterator p = nu.begin(); p != nu.end(); p++) cout << "MI: " << *p << endl;
     if (nu.size() > 0) {
         vector< CANDIDATE >::iterator it1 = _candidatos.begin();
         
         while (it1 != _candidatos.end()) {
-//             cout << (*it1).first << ' ' << (*it1).second << endl;
+//             cout << "CAN: " << (*it1).first << ' ' << (*it1).second << endl;
 //             if ((nu.find((*it1).first) == nu.end()) && (nu.find((*it1).second) == nu.end())) {
 //             }
 //             else {
@@ -467,25 +470,27 @@ int Hormiga::dominancia(Hormiga& v, bool x, int y) {
     else que = 0;
     
     if ((_costes[0] != 0) && (v._costes[0] != 0)) {
-//         // Nichos genotipicos
-//         unsigned int inte = 0;
-//         unsigned int unio = (_support.size() + v._support.size());
-//         for (unsigned int i = 0; i < _support.size(); i++) {
-//             bool found = false;
-//             for (unsigned int j = 0; (j < v._support.size()) && !found; j++) {
-//                 if (_support[i] == v._support[j]) {
-//                     found = true;
-//                     inte++;
-//                 }
-//             }
-//         }
-//                 
-//         unio -= (inte);
-//         // Jaccard 0.5
-//         if (((inte * 1.) / (unio * 1.)) < 0.5) {
-//             que = 0;
-// //             cout << "ND" << endl;
-//         }
+	if (x) {
+	    // Nichos genotipicos
+	    unsigned int inte = 0;
+	    unsigned int unio = (_support.size() + v._support.size());
+	    for (unsigned int i = 0; i < _support.size(); i++) {
+		bool found = false;
+		for (unsigned int j = 0; (j < v._support.size()) && !found; j++) {
+		    if (_support[i] == v._support[j]) {
+			found = true;
+			inte++;
+		    }
+		}
+	    }
+		    
+	    unio -= (inte);
+	    // Jaccard 0.5
+	    if (((inte * 1.) / (unio * 1.)) < 0.5) {
+		que = 0;
+    //             cout << "ND" << endl;
+	    }
+	}
     }
     else {
         if (_costes[0] == 0)
@@ -541,6 +546,46 @@ float Hormiga::getAparicionesEje(const CANDIDATE& eje) {
     return (*_aparEje)[eje];
 }
 
-
 #endif
 
+//-------------------------------------------------------------------------
+
+set<CANDIDATE> Hormiga::local_search() const {
+    set<CANDIDATE> tiene;
+    
+    #if VERSION == V_GO
+    
+    // Interseccion de todos
+    vector< set<CANDIDATE> > cadauno(_support.size());
+    set<CANDIDATE> tienen;
+    for (unsigned int i = 0; i < _support.size(); i++) {
+	set<CANDIDATE> sub_tiene = _instancias[_support[i]].ejes();
+	cadauno[i] = sub_tiene;
+	for (set<CANDIDATE>::iterator p = sub_tiene.begin(); p != sub_tiene.end(); p++)
+	    tienen.insert(*p);
+    }
+    for (set<CANDIDATE>::iterator p = tienen.begin(); p != tienen.end(); p++) {
+	bool found = true;
+	for (unsigned int i = 0; (i < _support.size()) and found; i++) {
+	    found = (cadauno[i].find(*p) != cadauno[i].end());
+	}
+	if (found)
+	    tiene.insert(*p);
+    }
+
+    // Ahora voy a eliminar de la lista aquellos que yo ya tengo
+    set<CANDIDATE> mios = _subestructura.ejes();
+    unsigned int items = mios.size();
+    while (items > 0) {
+	for (set<CANDIDATE>::iterator p = tiene.begin(); p != tiene.end(); p++) {
+	    if (mios.find(*p) != mios.end()) {
+		tiene.erase(p);
+		items--;
+	    }
+	}
+    }
+
+    #endif
+    
+    return tiene;
+}
