@@ -93,10 +93,8 @@ double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int i
     suma = this->calculaNumeradoresProbabilidades(unaHormiga, indice, candidatas);
 
     if (suma != 0.){
-
-         for (map<CANDIDATE,double>::iterator it = this->probabilidades.begin(); it != this->probabilidades.end(); ++it) {  
-        	(*it).second /= suma;         
-//                 cout << (*it).second << endl;
+	 for (unsigned int i = 0; i < candidatas.size(); i++) {
+        	this->probabilidades[candidatas[i]] /= suma;
          }
       
         return suma;
@@ -128,16 +126,18 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
     if (sumaNumeradores == 0){
     	
     	// cogemos la primera de todas las candidatas    	
-    	vector< CANDIDATE >::iterator it = candidatas.begin();   		
-    	eleccion = *it;
-//     	cout << "Suma0" << endl;
+	// Modificado ROCIO, elijo una al azar
+	unsigned int x = intAzar(0, candidatas.size() - 1);
+    	vector< CANDIDATE >::iterator it = candidatas.begin();
+    	eleccion = *(it + x);
+    	cout << "Suma0" << endl;
     	return eleccion;
     }
     
     // en el caso de que tengamos que elegir la de mayor probabilidad entre las tareas candidatas   
     
     if (probAleatoria < PARA.MOACO_q0) {
-//         cout << "A" << endl;
+        cout << "A" << endl;
         // si el numero aleatorio es menor que q0 elegimos el maximo de los numeradores, no hay aleatoriedad. 
     	vector< CANDIDATE >::iterator it = candidatas.begin();   		
     	eleccion = *it;
@@ -151,33 +151,31 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
         }
    		
     } else {
-//     	cout << "B" << endl;
+    	cout << "B" << endl;
         // en el caso de que el numero aleatorio sea mayor que q0 elegimos aleatoriamente por ruleta segun las probabilidades de cada eje elegible
     	        
         // calculamos las probabilidades acumuladas para poder aplicar una seleccion de ejes por ruleta
-    	sumaProb = new double[this->probabilidades.size()];        		        	
-        map<CANDIDATE,double>::iterator it = this->probabilidades.begin();
-        sumaProb[0] = (*it).second;
-        unsigned int i = 1;        	
-    	for (++it; it != this->probabilidades.end(); ++it) {
-    		sumaProb[i] = sumaProb[i-1] + (*it).second;
-                i++;
-        }		        		
-//     	    	cout << "@@@@@@@@" << sumaProb[i-1] << endl;
+    	sumaProb = new double[candidatas.size()];
+	sumaProb[0] = this->probabilidades[candidatas[0]];
+	cout << "@@@@0@@@@" << sumaProb[0] << endl;
+	for (unsigned int i = 1; i < candidatas.size(); i++) {
+		sumaProb[i] = sumaProb[i-1] + this->probabilidades[candidatas[i]];
+		cout << "@@@@" << i << "@@@@" << sumaProb[i] << endl;
+	}	
+	    	
     	do 
             probAleatoria = ((rand() * 1.) / (RAND_MAX * 1.)); 
         while (probAleatoria == 0);
+	cout << "Entonces: " << probAleatoria << endl;
         
         // recorremos las probabilidades acumuladas de todas los ejes para ver el eje elegido aleatoriamente
         int el = 0;
-        vector< CANDIDATE >::iterator it1 = candidatas.begin();
-        eleccion = *it1;
-        while((el < this->probabilidades.size()) && (probAleatoria > sumaProb[el]) && (it1 != candidatas.end())) {
+        while((el < candidatas.size()) && (probAleatoria >= sumaProb[el])) {
+// 		cout << "A: " << el << endl;
         	el++;
-                eleccion = *it1;
-                it1++;
         }
-//         cout << "@@@@@@@@@@@@" << el-1 << endl;
+        cout << "@@@@@@@@@@@@" << el << endl;
+	eleccion = candidatas[el];
         delete []sumaProb;
 
     }

@@ -25,6 +25,9 @@ protected:
     // Pareto
     NDominatedSet conjuntoNoDominadas;
     
+    // Poblacion intermedia
+    NDominatedSet conjuntoIntermedio;
+    
     /**
      * variable que cuenta el numero de evaluaciones realizadas
      */
