@@ -20,7 +20,7 @@ using namespace std;
 template <typename T>
 class tuplax3 {
     public:
-        tuplax3();
+        tuplax3() {};
         tuplax3(T a, T b, T c) {first = a; second = b; third = c;};
         bool operator==(const tuplax3<T>& o) const {return ((first == o.first) && (second == o.second) && (third == o.third));};
         
