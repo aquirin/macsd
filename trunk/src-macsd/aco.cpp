@@ -251,17 +251,21 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 	
         cout << "TIME 1: " << bt - at << endl;
         // para cada hormiga se genera constructivamente una asignacion de nodos
+	
+	vector<unsigned int> pasos(PARA.MOACO_numHormigas);
+	unsigned int max = 0;
+	// Elijo los pasos que va a dar cada una
         for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++) {
-            cout << "Hormiga: " << nHormiga << endl;
+//             cout << "Hormiga: " << nHormiga << endl;
             // las hormigas crean una subestructura, realizando ademas labores de actualizacion y deposito de feromona. La condicion de parada esta basada en una probabilidad de distribucion del tamanio de la subestructura (step_h/step_size)
             
             // Elijo cantidad de pasos
             unsigned int x = 0;
             if (de_donde[nHormiga]) {
                 cout << "Del Pareto!" << endl;
-                if (PARA.MOACO_ranking)
-                    x = ranking(PARA.MOACO_maxTama, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
-                else
+//                 if (PARA.MOACO_ranking)
+//                     x = ranking(PARA.MOACO_maxTama, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
+//                 else
                     x = intAzar(1, PARA.MOACO_stepSize);
             }
             else {
@@ -271,48 +275,45 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                 else
                     x = intAzar(1, PARA.MOACO_stepSize);
             }
-            cout << "Pasos " << x << endl;
-	    float soporte = 1;
-            for (unsigned int i = 0; (i < x) and (soporte > 0); i++) {
-                    // candidatas posibles a ser elegidas en este paso de la hormiga
+	    cout << "Pasos: " << x << endl;
+	    pasos[nHormiga] = x;
+	    if (x > max) {
+		max = x;
+	    }
+	}
+	
+	// Avanzo paso a paso
+	vector<bool> puedo(PARA.MOACO_numHormigas, true);
+	unsigned int i = 0;
+	while (i < max) {
+	    vector< pair<bool,CANDIDATE> > hice(PARA.MOACO_numHormigas, pair<bool,CANDIDATE>(false, CANDIDATE()));
+	    for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++) {
+		float complejidad = this->hormigas[nHormiga]->getCoste(1);
+		if (puedo[nHormiga] and (i < pasos[nHormiga]) and (complejidad < 1)) {
+		    cout << "Hormiga: " << nHormiga << " paso " << i << endl;
+		    float soporte = 1;
+		    // candidatas posibles a ser elegidas en este paso de la hormiga
+		    candidatas = this->hormigas[nHormiga]->getCandidatos();
 
-                    candidatas = this->hormigas[nHormiga]->getCandidatos();
+		    cout << "Antes: " << this->hormigas[nHormiga]->subEst();
+		    vector <float> coste(2);
+		    coste[0] = this->hormigas[nHormiga]->getCoste(0);
+		    coste[1] = this->hormigas[nHormiga]->getCoste(1);
+		    cout << "Costo: " << coste[0] << ' ' << coste[1] << endl;
 
-                    cout << "Numero: " << i << " " << this->hormigas[nHormiga]->subEst();
-	    vector <float> coste(2);
-	    coste[0] = this->hormigas[nHormiga]->getCoste(0);
-	    coste[1] = this->hormigas[nHormiga]->getCoste(1);
-	    cout << "Costo: " << coste[0] << ' ' << coste[1] << endl;
-//                     cout << "Candidatas: ";
-//                     for (vector< CANDIDATE >::iterator p = candidatas.begin(); p != candidatas.end(); p++) {
-//                         cout << '(' << (*p).first << ',' << (*p).second << ')' << endl;
-//                     }    
+		    // si hay una o mas candidatos seleccionamos la mejor
+		    if (candidatas.size() > 0) {
+			// elegir el eje mas conveniente segun informacion Greedy y feromona 
+			CANDIDATE arco = this->transicion(*(hormigas[nHormiga]), nHormiga, candidatas);
 
-                    // si hay una o mas candidatos seleccionamos la mejor
-                    if (candidatas.size() > 0) {
-                            // elegir el eje mas conveniente segun informacion Greedy y feromona 
-			    CANDIDATE arco = this->transicion(*(hormigas[nHormiga]), nHormiga, candidatas);
-                
-// #if VERSION == V_SHAPE
-//                             cout << "ARCO: " << arco.first << ' ' << arco.second << endl;
-// #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-//                             cout << "ARCO: " << arco.first << ' ' << arco.second << ' ' << arco.third << endl;
-// #endif
+			Hormiga copiar(*(hormigas[nHormiga]));
+			// cout << copiar.subEst() << endl;
+			#if VERSION == V_SHAPE
+			copiar.avanza(arco.first, arco.second);
+			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+			copiar.avanza(arco.first, arco.second, arco.third);
+			#endif
 
-Hormiga copiar(*(hormigas[nHormiga]));
-// cout << copiar.subEst() << endl;
-#if VERSION == V_SHAPE
-copiar.avanza(arco.first, arco.second);
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-copiar.avanza(arco.first, arco.second, arco.third);
-#endif
-cout << copiar.subEst() << endl;
-			copiar.calculaCostes();
-
-	    vector <float> cost(2);
-	    cost[0] = copiar.getCoste(0);
-	    cost[1] = copiar.getCoste(1);
-	    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
 			soporte = copiar.getCoste(1);
 			if (soporte > 0) {
 			    #if VERSION == V_SHAPE
@@ -321,77 +322,84 @@ cout << copiar.subEst() << endl;
 			    this->hormigas[nHormiga]->avanza(arco.first, arco.second, arco.third);
 			    #endif
 
-			    // tenemos que modificar la feromona en el arco nuevo
-			    // se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO
-			    #if VERSION == V_SHAPE
-			    this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second);
-			    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-			    this->accionesTrasDecision(this->hormigas[nHormiga], arco.first, arco.second, arco.third);
-			    #endif
-			    
-// 			    cout << "Un Paso: " << this->hormigas[nHormiga]->subEst();
-			}
-                    }
-                    else {
-                        cout << "No hay candidatos!" << endl;
-                    }
-            }
-	    
-	    // Aqui agrego el local search
-	    candidatas = this->hormigas[nHormiga]->getCandidatos();
-	    set<CANDIDATE> pasos = this->hormigas[nHormiga]->local_search();
-	    // pasos son todos los ejes que tengo que agregar
-// 	    for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
-// 		cout << pp->first << "," << pp->second << "," << pp->third << endl;
-// 	    }
-	    while (pasos.size() > 0) {
-		for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
-		    bool found = false;
-		    unsigned int q = 0;
-// 		    cout << "Las candidatas:" << endl;
-		    while ((q < candidatas.size()) and !found) {
-// 			cout << "Cand: " << candidatas[q].first << "," << candidatas[q].second << "," << candidatas[q].third << endl;
-			found = (candidatas[q] == *pp);
-			q++;
-		    }
-		    if (found) {
-			CANDIDATE ar = *pp;
-			#if VERSION == V_SHAPE
-			this->hormigas[nHormiga]->avanza(ar.first, ar.second);
-			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-			this->hormigas[nHormiga]->avanza(ar.first, ar.second, ar.third);
-			#endif
+			    hice[nHormiga] = pair<bool,CANDIDATE>(true, arco);
 
-			// tenemos que modificar la feromona en el arco nuevo
-			// se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO
-			#if VERSION == V_SHAPE
-			this->accionesTrasDecision(this->hormigas[nHormiga], ar.first, ar.second);
-			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-			this->accionesTrasDecision(this->hormigas[nHormiga], ar.first, ar.second, ar.third);
-			#endif
-			
-			candidatas = this->hormigas[nHormiga]->getCandidatos();
-			
-// 			cout << "Listo: " << pp->first << "," << pp->second << "," << pp->third << endl;
-			
-			pasos.erase(pp);
+ 			    cout << "Despues: " << this->hormigas[nHormiga]->subEst();
+			}
+			else {
+			    cout << "No hay candidatos!" << endl;
+			    puedo[nHormiga] = false;
+			}
 		    }
 		}
-// 		cout << "Inter: " << this->hormigas[nHormiga]->subEst();
-// 		cout << "Faltan: " << pasos.size() << endl;
-// 		for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
-// 		    cout << pp->first << "," << pp->second << "," << pp->third << endl;
-// 		}
-	    }
-	    
-	    cout << "Local Search: " << this->hormigas[nHormiga]->subEst();
-	    this->hormigas[nHormiga]->calculaCostes();
+	}
+		    
+	for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++) {
+		if (hice[nHormiga].first) {
+		    cout << "Hormiga: " << nHormiga << " avanzo" << endl;
+		    // tenemos que modificar la feromona en el arco nuevo
+		    // se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO
+		    #if VERSION == V_SHAPE
+		    this->accionesTrasDecision(this->hormigas[nHormiga], hice[nHormiga].second.first, hice[nHormiga].second.second);
+		    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+		    this->accionesTrasDecision(this->hormigas[nHormiga], hice[nHormiga].second.first, hice[nHormiga].second.second, hice[nHormiga].second.third);
+		    #endif
 
-	    vector <float> cost(2);
-	    cost[0] = this->hormigas[nHormiga]->getCoste(0);
-	    cost[1] = this->hormigas[nHormiga]->getCoste(1);
-	    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
-        }    
+		    // Aqui agrego el local search
+		    candidatas = this->hormigas[nHormiga]->getCandidatos();
+		    set<CANDIDATE> pasos = this->hormigas[nHormiga]->local_search();
+		    // pasos son todos los ejes que tengo que agregar
+		    while (pasos.size() > 0) {
+			for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
+			    bool found = false;
+			    unsigned int q = 0;
+	// 		    cout << "Las candidatas:" << endl;
+			    while ((q < candidatas.size()) and !found) {
+	// 			cout << "Cand: " << candidatas[q].first << "," << candidatas[q].second << "," << candidatas[q].third << endl;
+				found = (candidatas[q] == *pp);
+				q++;
+			    }
+			    if (found) {
+				CANDIDATE ar = *pp;
+				#if VERSION == V_SHAPE
+				this->hormigas[nHormiga]->avanza(ar.first, ar.second);
+				#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+				this->hormigas[nHormiga]->avanza(ar.first, ar.second, ar.third);
+				#endif
+
+				// tenemos que modificar la feromona en el arco nuevo
+				// se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO
+				#if VERSION == V_SHAPE
+				this->accionesTrasDecision(this->hormigas[nHormiga], ar.first, ar.second);
+				#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+				this->accionesTrasDecision(this->hormigas[nHormiga], ar.first, ar.second, ar.third);
+				#endif
+				
+				candidatas = this->hormigas[nHormiga]->getCandidatos();
+				
+	// 			cout << "Listo: " << pp->first << "," << pp->second << "," << pp->third << endl;
+				
+				pasos.erase(pp);
+			    }
+			}
+	// 		cout << "Inter: " << this->hormigas[nHormiga]->subEst();
+	// 		cout << "Faltan: " << pasos.size() << endl;
+	// 		for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
+	// 		    cout << pp->first << "," << pp->second << "," << pp->third << endl;
+	// 		}
+		    }
+		    
+		    cout << "Local Search: " << this->hormigas[nHormiga]->subEst();
+		    this->hormigas[nHormiga]->calculaCostes();
+
+		    vector <float> cost(2);
+		    cost[0] = this->hormigas[nHormiga]->getCoste(0);
+		    cost[1] = this->hormigas[nHormiga]->getCoste(1);
+		    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
+		}
+	    }
+	    i++;
+	}
     
         unsigned long ct = clock()/CLOCKS_PER_SEC;
         cout << "TIME 2: " << ct - bt << endl;
