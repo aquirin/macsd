@@ -111,7 +111,8 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         // Elijo cantidad de pasos
         unsigned int x;
         if (PARA.MOACO_ranking)
-            x = ranking(PARA.MOACO_maxTama, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
+//             x = ranking(PARA.MOACO_maxTama, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
+	    x = ranking(PARA.MOACO_stepSize, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
         else
             x = intAzar(1, PARA.MOACO_stepSize);
         for (unsigned int i = 0; i < x; i++) {
@@ -154,8 +155,9 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             }
         }
     }
+    unsigned int cuantos = 0;
         
-    for (unsigned int n = 0; n < PARA.MOACO_numHormigas * 10; n++){
+    for (unsigned int n = 0; n < PARA.MOACO_numHormigas * 10; n++) {
             // Pasamos cada SOLUCION a una hormiga
 //             cout << inicial[n] << endl;
             #if VERSION == V_SHAPE
@@ -163,7 +165,56 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
                 Hormiga una(1, this->base, this->nObj, this->_aparEje, inicial[n]);
             #endif
-            una.calculaCostes();
+
+	    cout << "Antes Local Search: " << una.subEst();
+	    una.calculaCostes();
+
+	    vector <float> cost1(2);
+	    cost1[0] = una.getCoste(0);
+	    cost1[1] = una.getCoste(1);
+	    cout << "Costo: " << cost1[0] << ' ' << cost1[1] << endl;
+
+	    if (cost1[0] > 0) {
+	    // Aqui agrego el local search
+	    candidatas = una.getCandidatos();
+	    set<CANDIDATE> pasos = una.local_search();
+	    // pasos son todos los ejes que tengo que agregar
+	    while (pasos.size() > 0) {
+		for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
+		    bool found = false;
+		    unsigned int q = 0;
+	    // 	cout << "Las candidatas:" << endl;
+		    while ((q < candidatas.size()) and !found) {
+	    //		cout << "Cand: " << candidatas[q].first << "," << candidatas[q].second << "," << candidatas[q].third << endl;
+			    found = (candidatas[q] == *pp);
+			    q++;
+		    }
+		    if (found) {
+			    CANDIDATE ar = *pp;
+			    #if VERSION == V_SHAPE
+			    una.avanza(ar.first, ar.second);
+			    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+			    una.avanza(ar.first, ar.second, ar.third);
+			    #endif
+
+			    candidatas = una.getCandidatos();
+			    
+    // 			cout << "Listo: " << pp->first << "," << pp->second << "," << pp->third << endl;
+			    
+			    pasos.erase(pp);
+		    }
+		}
+	    }
+	    }
+	    else cuantos++;
+	
+	    cout << "Local Search: " << una.subEst();
+	    una.calculaCostes();
+
+	    vector <float> cost(2);
+	    cost[0] = una.getCoste(0);
+	    cost[1] = una.getCoste(1);
+	    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
 
             // Actualiza el Pareto
             this->conjuntoNoDominadas.addDominancia(una, this->preferencias, this->numDominanciasPorPreferencias);         
@@ -171,7 +222,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 // 	    // Actualiza el conjunto intermedio
 //             bool res = this->conjuntoIntermedio.addDominancia(una, true, this->numDominanciasPorPreferencias);         
     }
-    
+    cout << "Inicial: " << (PARA.MOACO_numHormigas * 10) - cuantos << endl;
         
     // Actualizo feromona
     vector<float> prom(this->nObj);
@@ -332,9 +383,9 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 			}
 		    }
 		}
-	}
+	    }
 		    
-	for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++) {
+	    for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++) {
 		if (hice[nHormiga].first) {
 		    cout << "Hormiga: " << nHormiga << " avanzo" << endl;
 		    // tenemos que modificar la feromona en el arco nuevo

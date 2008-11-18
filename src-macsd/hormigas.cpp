@@ -300,6 +300,7 @@ vector< CANDIDATE > Hormiga::getCandidatos() {
 //     }
     
     // Solo me quedo con aquellos que tiene al menos uno de los nodos en la subestructura
+    // Y ademas pertenezcan a alguna de las instancias que cubre hasta el momento
     set<unsigned int> nu = _subestructura.nodosUtilizados();
 //     for (set<unsigned int>::iterator p = nu.begin(); p != nu.end(); p++) cout << "MI: " << *p << endl;
     if (nu.size() > 0) {
@@ -310,8 +311,16 @@ vector< CANDIDATE > Hormiga::getCandidatos() {
 //             if ((nu.find((*it1).first) == nu.end()) && (nu.find((*it1).second) == nu.end())) {
 //             }
 //             else {
-            if (nu.find((*it1).second) != nu.end())
-                lista.push_back(*it1);
+            if (nu.find((*it1).second) != nu.end()) {
+		bool found = false;
+		unsigned int i = 0;
+		while (!found and (i < _support.size())) {
+		    found = _instancias[_support[i]].ejeUsado(it1->first, it1->second, it1->third);
+		    i++;
+		}
+		if (found)
+		    lista.push_back(*it1);
+	    }
             it1++;
         }
     }
