@@ -214,7 +214,7 @@ int intAzar(const int inicio, const int fin) {
         return inicio;
     }
     else
-        return (rand() % fin + inicio);
+        return (rand() % (fin + 1) + inicio);
 }
 
 //-----------------------------------------------------------------------

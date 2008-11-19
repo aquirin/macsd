@@ -174,7 +174,7 @@ class Hormiga {
         
         float getAparicionesEje(const CANDIDATE& eje);
 
-        bool extendible() {return ((_candidatos.size() > 0) and (_costes[1] < 1));};
+        bool extendible() {calculaCostes(); return ((_candidatos.size() > 0) and (_costes[1] < 1));};
 };
 
 #endif

@@ -271,8 +271,18 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         	this->hormigas[i]->posicionaInicialmente();
             }
             else {
+		 // Reviso posiblidades
+                bool found = false;
+                unsigned int pp = 0;
+                while ((pp < conjuntoNoDominadas.getNumElementos()) and (!found)) {
+                        found = (this->conjuntoNoDominadas.getElemento(pp).extendible());
+                        if (found)
+                                cout << "Ext: " << pp << endl;
+                        p++;
+                }
+		cout << "Found " << found << endl;
 //                 if ((conjuntoIntermedio.getNumElementos() > 0) && (usados.size() < conjuntoIntermedio.getNumElementos())) {
-		if ((conjuntoNoDominadas.getNumElementos() > 0) && (usados.size() < conjuntoNoDominadas.getNumElementos())) {
+		if ((conjuntoNoDominadas.getNumElementos() > 0) and (found)) {
                     // Recupero desde el Pareto
                     // Sin reposicion
                     // a menos que no haya mas diferentes
@@ -285,8 +295,9 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 //                     }
 //                     *(this->hormigas[i]) = this->conjuntoIntermedio.getElemento(xx);
 		    int xx = intAzar(0, this->conjuntoNoDominadas.getNumElementos() - 1);
-                    while ((usados.find(xx) != usados.end()) and (!this->conjuntoNoDominadas.getElemento(xx).extendible())) {
-                        int xx = intAzar(0, this->conjuntoNoDominadas.getNumElementos() - 1);
+                    while (!this->conjuntoNoDominadas.getElemento(xx).extendible()) {
+                        xx = intAzar(0, this->conjuntoNoDominadas.getNumElementos() - 1);
+			cout << xx << " " << this->conjuntoNoDominadas.getNumElementos() - 1 << endl;
                     }
                     *(this->hormigas[i]) = this->conjuntoNoDominadas.getElemento(xx);
                     de_donde[i] = true;
