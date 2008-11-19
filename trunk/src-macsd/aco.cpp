@@ -116,7 +116,6 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         else
             x = intAzar(1, PARA.MOACO_stepSize);
         for (unsigned int i = 0; i < x; i++) {
-//             cout << "It: " << i << " " << x << endl;
             // candidatas posibles a ser elegidas en este paso de la hormiga
             #if VERSION == V_SHAPE
                 candidatas = inicial[n].nodosNoUtilizados();
@@ -219,8 +218,8 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             // Actualiza el Pareto
             this->conjuntoNoDominadas.addDominancia(una, this->preferencias, this->numDominanciasPorPreferencias);         
 	    
- 	    // Actualiza el conjunto intermedio
-//            bool res = this->conjuntoIntermedio.addDominancia(una, true, this->numDominanciasPorPreferencias);         
+// 	    // Actualiza el conjunto intermedio
+//             bool res = this->conjuntoIntermedio.addDominancia(una, true, this->numDominanciasPorPreferencias);         
     }
     cout << "Inicial: " << (PARA.MOACO_numHormigas * 10) - cuantos << endl;
         
@@ -272,34 +271,25 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         	this->hormigas[i]->posicionaInicialmente();
             }
             else {
-//                if ((conjuntoIntermedio.getNumElementos() > 0) && (usados.size() < conjuntoIntermedio.getNumElementos())) {
-//		if ((conjuntoNoDominadas.getNumElementos() > 0) && (usados.size() < conjuntoNoDominadas.getNumElementos())) {
-		if (conjuntoNoDominadas.getNumElementos() > 0) {
+//                 if ((conjuntoIntermedio.getNumElementos() > 0) && (usados.size() < conjuntoIntermedio.getNumElementos())) {
+		if ((conjuntoNoDominadas.getNumElementos() > 0) && (usados.size() < conjuntoNoDominadas.getNumElementos())) {
                     // Recupero desde el Pareto
                     // Sin reposicion
                     // a menos que no haya mas diferentes
-                     if (usados.size() == conjuntoNoDominadas.getNumElementos()) {
-                         usados.clear();
-                     }
-//                   int xx = intAzar(0, this->conjuntoIntermedio.getNumElementos() - 1);
-//                   while ((usados.find(xx) != usados.end()) and (!this->conjuntoIntermedio.getElemento(xx).extendible())) {
-//                       int xx = intAzar(0, this->conjuntoIntermedio.getNumElementos() - 1);
-//                   }
-//                   *(this->hormigas[i]) = this->conjuntoIntermedio.getElemento(xx);
+//                     if (usados.size() == conjuntoNoDominadas.getNumElementos()) {
+//                         usados.clear();
+//                     }
+//                     int xx = intAzar(0, this->conjuntoIntermedio.getNumElementos() - 1);
+//                     while ((usados.find(xx) != usados.end()) and (!this->conjuntoIntermedio.getElemento(xx).extendible())) {
+//                         int xx = intAzar(0, this->conjuntoIntermedio.getNumElementos() - 1);
+//                     }
+//                     *(this->hormigas[i]) = this->conjuntoIntermedio.getElemento(xx);
 		    int xx = intAzar(0, this->conjuntoNoDominadas.getNumElementos() - 1);
-		    unsigned int super = 0;
-                    while ((usados.find(xx) != usados.end()) and (!this->conjuntoNoDominadas.getElemento(xx).extendible()) and (super < 300)) {
-                       int xx = intAzar(0, this->conjuntoNoDominadas.getNumElementos() - 1);
-			super++;
+                    while ((usados.find(xx) != usados.end()) and (!this->conjuntoNoDominadas.getElemento(xx).extendible())) {
+                        int xx = intAzar(0, this->conjuntoNoDominadas.getNumElementos() - 1);
                     }
-		if (super < 300) {
-		    usados.insert(xx);
                     *(this->hormigas[i]) = this->conjuntoNoDominadas.getElemento(xx);
                     de_donde[i] = true;
-}
-else {
-	this->hormigas[i]->posicionaInicialmente();
-}
                 }
                 else {
                     this->hormigas[i]->posicionaInicialmente();
@@ -477,8 +467,8 @@ else {
             this->numEvaluaciones++; 
             
 // 	    // Actualiza el conjunto intermedio
-//            this->conjuntoIntermedio.addDominancia(*(this->hormigas[nHormiga]), true, this->numDominanciasPorPreferencias);
- 	    
+//             bool res = this->conjuntoIntermedio.addDominancia(*(this->hormigas[nHormiga]), true, this->numDominanciasPorPreferencias);
+// 	    
             // Actualiza el Pareto
             bool res = this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);         
 	    
