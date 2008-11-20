@@ -316,6 +316,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 	vector<unsigned int> pasos(PARA.MOACO_numHormigas);
 	unsigned int max = 0;
 	// Elijo los pasos que va a dar cada una
+	vector<Hormiga> caminos;
         for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++) {
 //             cout << "Hormiga: " << nHormiga << endl;
             // las hormigas crean una subestructura, realizando ademas labores de actualizacion y deposito de feromona. La condicion de parada esta basada en una probabilidad de distribucion del tamanio de la subestructura (step_h/step_size)
@@ -362,6 +363,11 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 		    coste[1] = this->hormigas[nHormiga]->getCoste(1);
 		    cout << "Costo: " << coste[0] << ' ' << coste[1] << endl;
 
+// 		    // Muestro los candidatos
+// 		    for (vector< CANDIDATE >::iterator it1 = candidatas.begin(); it1 != candidatas.end(); it1++) {
+// 	                 cout << "CAN: " << (*it1).first << ' ' << (*it1).second << endl;
+// 		    }
+
 		    // si hay una o mas candidatos seleccionamos la mejor
 		    if (candidatas.size() > 0) {
 			// elegir el eje mas conveniente segun informacion Greedy y feromona 
@@ -384,7 +390,8 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 			    #endif
 
 			    hice[nHormiga] = pair<bool,CANDIDATE>(true, arco);
-
+			    Hormiga qw(*(this->hormigas[nHormiga]));
+			    caminos.push_back(qw);
  			    cout << "Despues: " << this->hormigas[nHormiga]->subEst();
 			}
 			else {
@@ -461,6 +468,48 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 	    }
 	    i++;
 	}
+    
+// 	// Rocio: semi path relinking
+// 	for (vector<Hormiga>::iterator qq = caminos.begin(); qq != caminos.end(); qq++) {
+// 	    candidatas = (*qq).getCandidatos();
+// 	    set<CANDIDATE> pasos = (*qq).local_search();
+// 	    // pasos son todos los ejes que tengo que agregar
+// 	    while (pasos.size() > 0) {
+// 		for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
+// 		    bool found = false;
+// 		    unsigned int q = 0;
+// 	// 	    cout << "Las candidatas:" << endl;
+// 		    while ((q < candidatas.size()) and !found) {
+// 	// 		cout << "Cand: " << candidatas[q].first << "," << candidatas[q].second << "," << candidatas[q].third << endl;
+// 			found = (candidatas[q] == *pp);
+// 			q++;
+// 		    }
+//  		    if (found) {
+// 			CANDIDATE ar = *pp;
+// 			#if VERSION == V_SHAPE
+// 			(*qq).avanza(ar.first, ar.second);
+// 			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+// 			(*qq).avanza(ar.first, ar.second, ar.third);
+// 			#endif
+// 
+// 			candidatas = (*qq).getCandidatos();
+// 				
+// 	// 		cout << "Listo: " << pp->first << "," << pp->second << "," << pp->third << endl;
+// 				
+// 			pasos.erase(pp);
+// 		    }
+// 		}
+// 		// Actualiza el Pareto
+// 		bool res = this->conjuntoNoDominadas.addDominancia(*qq, this->preferencias, this->numDominanciasPorPreferencias);
+// 		if (res)
+// 		    cout << "Intermedio!" << endl;
+// 	// 		cout << "Inter: " << this->hormigas[nHormiga]->subEst();
+// 	// 		cout << "Faltan: " << pasos.size() << endl;
+// 	// 		for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
+// 	// 		    cout << pp->first << "," << pp->second << "," << pp->third << endl;
+// 	// 		}
+// 	    }
+// 	}
     
         unsigned long ct = clock()/CLOCKS_PER_SEC;
         cout << "TIME 2: " << ct - bt << endl;
