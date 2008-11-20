@@ -144,7 +144,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
         it++;
         
         while(it != candidatas.end()){
-//             cout << this->probabilidades[(*it)] << ' ';
+//             cout << this->probabilidades[(*it)] << ' ' << this->probabilidades[eleccion] << endl;
             if (this->probabilidades[(*it)] > this->probabilidades[eleccion])
                 eleccion = *it;
             it++;
