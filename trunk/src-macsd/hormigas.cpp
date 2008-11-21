@@ -22,8 +22,10 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
         _aparEje = ap;
         for (unsigned int l = 0; l < _support.size(); l++)
             _support[l] = l;
-        
-//         cout << "AAAAAAAAAAAAAA" << base.size() << endl;
+	#if (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+	    _candidatos = _subestructura.ejesNoUtilizados();
+	    calculaCostes();
+	#endif
 }
 
 //------------------------------------------------------------------------

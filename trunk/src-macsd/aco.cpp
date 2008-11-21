@@ -464,6 +464,11 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 		    cost[0] = this->hormigas[nHormiga]->getCoste(0);
 		    cost[1] = this->hormigas[nHormiga]->getCoste(1);
 		    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
+		    
+		    // Actualiza el Pareto
+		    // Intermedio...
+		    bool res = this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);
+		    cout << "Intermedio: " << res << endl;
 		}
 	    }
 	    i++;
