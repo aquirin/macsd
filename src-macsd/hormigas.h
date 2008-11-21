@@ -74,6 +74,8 @@ class Hormiga {
     public:
 	vector<unsigned int> soporte() const {return _support;};
         
+	Hormiga() {};
+	
 	/**
 	 * constructor
 	 * @param colonia un entero que indica la colonia a la que pertenece la hormiga

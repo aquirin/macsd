@@ -63,7 +63,7 @@ protected:
 	 */
 	unsigned int *heuristicas;
 		
-	
+// 	Hormiga _hormiga_basica;
 	/** 
 	 * funcion miembro para establecer umbrales y que cada hormiga funcione de forma distinta
 	 * de igual forma asocia una heuristica distinta a cada hormiga para un enfoque multicolony
