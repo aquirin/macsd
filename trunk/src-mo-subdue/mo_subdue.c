@@ -49,6 +49,7 @@ typedef struct
    float** pesos;		// The original weights for this graph (from the NET file)
    int nnodes;			// Number of nodes
    CentralityMatrices* cm;	// Some useful matrices
+   char type;			// Type of the instance (P=positive, N=negative)
 } GraphFile;
 
 
@@ -64,8 +65,10 @@ typedef struct
   Graph *graph;
 
   // coverage-based properties
-  int cov_num;		// Number of graph containing this substructure
-  char* cov_filenames[100];	// List of filenames of the graphs containing this substructure
+  int cov_num_pos;		// Number of positive graphs containing this substructure
+  int cov_num_neg;		// Number of negative graphs containing this substructure
+  char* cov_filenames_pos[100];	// List of filenames of the positive graphs containing this substructure
+  char* cov_filenames_neg[100];	// List of filenames of the negative graphs containing this substructure
   int pos_inst;		// Number of positive instances
   int neg_inst;		// Number of negative instances
   
@@ -125,7 +128,7 @@ void myPrintSubList(SubList *subList, Parameters *parameters, GraphFile* graphsD
 void myPrintSub(Substructure *sub, Parameters *parameters, GraphFile* graphsDatabase);
 GraphFile* LoadDatabase(char *filename, Parameters *parameters);
 void FreeDatabase(GraphFile* database);
-GraphFile LoadGraph(char *sub_filename, char *net_filename, Parameters *parameters);
+GraphFile LoadGraph(char typefile, char *sub_filename, char *net_filename, Parameters *parameters);
 void FreeGraphFile(GraphFile gf);
 Graph** GetCoverageSet(Graph* graph, GraphFile* database, Parameters *parameters);
 void GraphToMatrixRepresentation(Graph* in_graph, float ***out_matrix, int *out_size);
@@ -148,6 +151,8 @@ int KungSort(SubgraphObject* o1, SubgraphObject* o2);
 int KungCheckDomination(SubgraphObject* o1, SubgraphObject* o2, int n);
 SOList* KungNonDominatedSet(SOList* P);
 SOList* KungFront(SOList* P, Parameters *parameters);
+double Jaccard(SubgraphObject* o1, SubgraphObject* o2);
+double NegJaccard(SubgraphObject* o1, SubgraphObject* o2);
 
 //---------------------------------------------------------------------------
 // NAME:    main
@@ -1144,14 +1149,15 @@ void myPrintSub(Substructure *sub, Parameters *parameters, GraphFile* graphsData
 // RETURN: 
 //
 // PURPOSE: Load all the graphs listed in the file 'filename'. The format of
-//    this file for each line is: <file in Subdue's format> <file in NET's format>
+//    this file for each line is: <P/N> <file in Subdue's format> <file in NET's format>
 //    and return the table of graphs.
+//    'P' or 'N' is used to indicate a positive or a negative example.
 //---------------------------------------------------------------------------
 
 GraphFile* LoadDatabase(char *filename, Parameters *parameters)
 {
   FILE* fin;
-  char twofilenames[1024], subfilename[1024], netfilename[1024];;
+  char twofilenames[1024], subfilename[1024], netfilename[1024], typefile;
   int i=0, num=0;
   GraphFile* database;
   
@@ -1179,12 +1185,14 @@ GraphFile* LoadDatabase(char *filename, Parameters *parameters)
   {
     char* token, *seps=" \r\n";
     token = strtok(twofilenames, seps);
+    typefile = token[0];
+    token = strtok(NULL, seps);
     strcpy(subfilename, token);
     token = strtok(NULL, seps);
     strcpy(netfilename, token);
     
-    printf("Loading files %s and %s ...\n", subfilename, netfilename);
-    database[i] = LoadGraph(subfilename, netfilename, parameters);
+    printf("Loading files %s and %s (%s instance)...\n", subfilename, netfilename, (typefile=='P')?"positive":"negative");
+    database[i] = LoadGraph(typefile, subfilename, netfilename, parameters);
     i++;
    }
   database[i].graph = NULL;
@@ -1225,7 +1233,7 @@ void FreeDatabase(GraphFile* database)
 //    and return the table of graphs.
 //---------------------------------------------------------------------------
 
-GraphFile LoadGraph(char *sub_filename, char *net_filename, Parameters *parameters)
+GraphFile LoadGraph(char typefile, char *sub_filename, char *net_filename, Parameters *parameters)
 {
   GraphFile gf;
   int nnodes=0;
@@ -1236,6 +1244,7 @@ GraphFile LoadGraph(char *sub_filename, char *net_filename, Parameters *paramete
   gf.pesos = open_netfile(net_filename, &nnodes);
   gf.nnodes = nnodes;
   gf.cm = BuildCentralityMatrices(nnodes, gf.pesos);
+  gf.type = typefile;
 
   // DEBUG
   /*if(strstr(sub_filename, "ancia")!=NULL)
@@ -1796,7 +1805,8 @@ SubgraphObject* ComputeSubgraphObject(Substructure* sub, Parameters *parameters,
   so->normalized_sum_connected = 0;
   
   // Coverage-based properties
-  so->cov_num = 0;
+  so->cov_num_pos = 0;
+  so->cov_num_neg = 0;
   n=0;
   while((origgraph=database[n].graph) != NULL)		// For each graph (n) given by the user
   {
@@ -1854,8 +1864,19 @@ SubgraphObject* ComputeSubgraphObject(Substructure* sub, Parameters *parameters,
     if(numInstances>0)
     {
       // Found a graph containing the substructure
-      so->cov_filenames[so->cov_num] = strdup(database[n].sub_name);
-      (so->cov_num)++;
+      if(database[n].type == 'P')
+      {
+      	// Positive instance
+        so->cov_filenames_pos[so->cov_num_pos] = strdup(database[n].sub_name);
+        (so->cov_num_pos)++;
+      }
+      else
+      {
+        // Negative instance
+        so->cov_filenames_neg[so->cov_num_neg] = strdup(database[n].sub_name);
+        (so->cov_num_neg)++;
+
+      }
     }
     n++;
   }
@@ -1887,8 +1908,8 @@ SubgraphObject* ComputeSubgraphObject(Substructure* sub, Parameters *parameters,
   n = 0;
   // ** TODO: This part have to be customized
   /*// Default objective functions
-  so->objv[n] = so->cov_num;
-  so->objn[n++] = strdup("cov_num");
+  so->objv[n] = so->cov_num_pos;
+  so->objn[n++] = strdup("cov_num_pos");
   so->objv[n] = so->normalized_max_dist;
   so->objn[n++] = strdup("normalized_max_dist");*/
   /*// For testing
@@ -1901,11 +1922,23 @@ SubgraphObject* ComputeSubgraphObject(Substructure* sub, Parameters *parameters,
   so->objn[n++] = strdup("n_nodes");
   so->objv[n] = so->n_links;
   so->objn[n++] = strdup("n_links");*/
-  // For testing
+  /*// For testing
   so->objv[n] = so->normalized_num_connected;
   so->objn[n++] = strdup("normalized_num_connected");
   so->objv[n] = -so->normalized_sum_connected;
-  so->objn[n++] = strdup("-normalized_sum_connected");
+  so->objn[n++] = strdup("-normalized_sum_connected");*/
+  /*// Support/Complexity based (conservative approach)
+  so->objv[n] = so->cov_num_pos;
+  so->objn[n++] = strdup("cov_num_pos");
+  so->objv[n] = so->cov_num_neg;
+  so->objn[n++] = strdup("cov_num_neg");
+  so->objv[n] = so->n_nodes;
+  so->objn[n++] = strdup("n_nodes");*/
+  // Support/Complexity based (subdue approach)
+  so->objv[n] = so->cov_num_pos-so->cov_num_neg;
+  so->objn[n++] = strdup("cov_num_pos-neg");
+  so->objv[n] = so->n_nodes;
+  so->objn[n++] = strdup("n_nodes");
   // **********
   so->num_inst = 0;
   return so;
@@ -1930,8 +1963,10 @@ void FreeSO(SubgraphObject* so)
     int i;
     for(i=0;i<so->objv_size;i++)
       free(so->objn[i]);
-    for(i=0;i<so->cov_num;i++)
-      free(so->cov_filenames[i]);
+    for(i=0;i<so->cov_num_pos;i++)
+      free(so->cov_filenames_pos[i]);
+    for(i=0;i<so->cov_num_neg;i++)
+      free(so->cov_filenames_neg[i]);
     free(so->objv);
     free(so->objn);
     free(so);
@@ -2010,9 +2045,12 @@ void PrintSubgraphObjectInFile(FILE* _fin, SubgraphObject* so, Parameters *param
   fprintf(_fin, "BEGIN_OBJECT\n");
   
   // Write the coverage values
-  fprintf(_fin, "coverage_size=%d\n", so->cov_num);
-  for(i=0;i<so->cov_num;i++)
-    fprintf(_fin, "coverage_%d=%s\n", i+1, so->cov_filenames[i]);
+  fprintf(_fin, "coverage_pos_size=%d\n", so->cov_num_pos);
+  fprintf(_fin, "coverage_neg_size=%d\n", so->cov_num_neg);
+  for(i=0;i<so->cov_num_pos;i++)
+    fprintf(_fin, "coverage_pos_%d=%s\n", i+1, so->cov_filenames_pos[i]);
+  for(i=0;i<so->cov_num_neg;i++)
+    fprintf(_fin, "coverage_neg_%d=%s\n", i+1, so->cov_filenames_neg[i]);
   fprintf(_fin, "pos_instance=%d\n", so->pos_inst);
   fprintf(_fin, "neg_instance=%d\n", so->neg_inst);
   
@@ -2204,31 +2242,69 @@ int KungSort(SubgraphObject* o1, SubgraphObject* o2)
 // INPUTS: o1, o2, the objects to compare; n, the objective we start from
 //
 // RETURN: -1 if o2 dominates o1
-//          0 if o1 and o2 are equals
+//          0 if o1 and o2 are equals (same values for all the objectives)
 //          1 if o1 dominates o2
 //          2 if no one dominates
-//         Check start after the n-th component included.
+//         Check only these following objectives: from n (included) to MAX.
 //
 // PURPOSE: Kung et al.'s Efficient MO-Method.
 //    For more information, see the book "Multi-objective optimization using
 //    evolutionary algorithms" page 38.
+//
+// Notes on the Jaccard index.
+// The Jaccard index is used to mark as non dominating the objects having a
+// too much similar covering set of the instances. It is used as following:
+// IF Jaccard(o1,o2) < 0.5,
+// THEN non-dominance,
+// ELSE look the objective values to decide.
+//
+// For negatives instances, we consider two different measures:
+// - the conservative one, in which any dissimilarity inside the positive or
+//   the negative set will be considered as non-dominative (f.i. if the objects
+//   cover the same positive instances, but different negative instances, we
+//   consider these two objects as non-dominating)/
+//   ==> Jaccard(o1,o2) = MIN( PositiveJaccard(o1,o2) , NegativeJaccard(o1,o2) )
+//
+// - the positive one, in which negative instances as simply ignored. From the
+//   point of view of the user, objects found in the same positive instances
+//   could be viewed as similar, even if they cover different negative instances.
+//   ==> Jaccard(o1,o2) = PositiveJaccard(o1,o2)
+//
 //---------------------------------------------------------------------------
+#define CONSERVATIVE_JACCARD
+//#define POSITIVE_JACCARD
 int KungCheckDomination(SubgraphObject* o1, SubgraphObject* o2, int n)
 {
 	int k, flagO1=0, flagO2=0, flagEQ=0;
 	double v1, v2;
+	
+#ifdef POSITIVE_JACCARD
+	if(Jaccard(o1,o2)<0.5)
+		return 2;	// Save time: in this case, we consider o1/o2 as different, and non-dominating
+#endif
+	
+#ifdef CONSERVATIVE_JACCARD
+	if(Jaccard(o1,o2)<0.5)
+		return 2;
+	if(NegJaccard(o1,o2)<0.5)
+		return 2;
+#endif
+
+	if(NegJaccard(o1,o2)<0.5)
+		return 2;	// Save time: in this case, we consider o1/o2 as different, and non-dominators
+
 	for(k=n;k<o1->objv_size;k++)
 	{
 		v1 = o1->objv[k];
 		v2 = o2->objv[k];
-		if(v1>v2) flagO1=1;
-		else if(v1<v2) flagO2=1;
+		if(v1>v2) flagO1=1;		// O1 dominates for at least one objective
+		else if(v1<v2) flagO2=1;	// O2 dominates for at least one objective
 		else flagEQ=1;
 	}
 	if((flagO1==1) && (flagO2==1)) return 2;
 	else if(flagO1==1) return 1;
 	else if(flagO2==1) return -1;
-	else return 0;
+	else return 0;	// flagO1==0 && flagO2==0
 }
 
 
@@ -2376,4 +2452,88 @@ SOList* KungFront(SOList* P, Parameters *parameters)
   FreeSOL(nonB);
 
   return nonT;
+}
+
+
+//---------------------------------------------------------------------------
+// NAME: Jaccard(...)
+//
+// INPUTS: 
+//
+// RETURN: 
+//
+// PURPOSE: Return the Jaccard index of the two given objects.
+//
+//---------------------------------------------------------------------------
+
+double Jaccard(SubgraphObject* o1, SubgraphObject* o2)
+{
+  int i, j, _inclusion=0, _union=0;
+#if MODEBUG
+  printf("======================\n");
+  for(i=0;i<o1->cov_num_pos;i++)
+    printf("O1 POS %s\n", o1->cov_filenames_pos[i]);
+  for(i=0;i<o2->cov_num_pos;i++)
+    printf("O2 POS %s\n", o2->cov_filenames_pos[i]);
+#endif
+  // Count in one loop the number of maps in o2 included or not in the maps of o1
+  // That is, count inclusion(o1,o2) and union(o1,o2)
+  _union = o1->cov_num_pos;
+  for(j=0;j<o2->cov_num_pos;j++)
+  {
+    int flag = 0;
+    for(i=0;i<o1->cov_num_pos;i++)
+    {
+      if(!strcmp(o1->cov_filenames_pos[i],o2->cov_filenames_pos[j]))
+      {
+      	flag = 1;
+	break;
+      }
+    }
+    if(flag) _inclusion++;
+    else _union++;
+  }
+#if MODEBUG
+  printf("Jaccard(o1,o2) = %f\n", (double)_inclusion/_union);
+#endif
+  return (double)_inclusion/_union;
+}
+
+
+//---------------------------------------------------------------------------
+// NAME: NegJaccard(...)
+//
+// INPUTS: 
+//
+// RETURN: 
+//
+// PURPOSE: Return the Jaccard index of the two given objects (considering
+//          only the negative instances).
+//
+//---------------------------------------------------------------------------
+
+double NegJaccard(SubgraphObject* o1, SubgraphObject* o2)
+{
+  int i, j, _inclusion=0, _union=0;
+  // Count in one loop the number of maps in o2 included or not in the maps of o1
+  // That is, count inclusion(o1,o2) and union(o1,o2)
+  _union = o1->cov_num_neg;
+  for(j=0;j<o2->cov_num_neg;j++)
+  {
+    int flag = 0;
+    for(i=0;i<o1->cov_num_neg;i++)
+    {
+      if(!strcmp(o1->cov_filenames_neg[i],o2->cov_filenames_neg[j]))
+      {
+      	flag = 1;
+	break;
+      }
+    }
+    if(flag) _inclusion++;
+    else _union++;
+  }
+#if MODEBUG
+  printf("NegJaccard(o1,o2) = %f\n", (double)_inclusion/_union);
+#endif
+  return (double)_inclusion/_union;
 }

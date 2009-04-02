@@ -3,11 +3,11 @@
 # Subdue 5
 #
 CC =		gcc
-#CFLAGS =	-Wall -O3
-#LDFLAGS =	-O3
+CFLAGS =	-Wall -O3
+LDFLAGS =	-O3
 # debug CFLAGS and LDFLAGS
-CFLAGS =	-g -pg -Wall -DMODEBUG
-LDFLAGS =	-g -pg
+#CFLAGS =	-g -pg -Wall -DMODEBUG
+#LDFLAGS =	-g -pg
 
 MPICC =		mpicc
 MPICFLAGS = 	-Wall -O3
@@ -21,7 +21,7 @@ OBJS = 		compress.o discover.o dot.o evaluate.o extend.o graphmatch.o\
 TARGETS =	gm gprune graph2dot mdl mo_subdue sgiso subdue subs2dot test cvtest
 
 all: $(TARGETS)
-	cp $(TARGETS) ../bin
+	#cp $(TARGETS) ../bin
 
 gm: gm_main.o $(OBJS)
 	$(CC) $(LDFLAGS) -o gm gm_main.o $(OBJS) $(LDLIBS)
