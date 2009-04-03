@@ -337,7 +337,7 @@ vector< CANDIDATE > Hormiga::getCandidatos() {
 #if VERSION == V_SCIENCEMAP
 vector< CANDIDATE > Hormiga::getCandidatos_original() {
     vector< CANDIDATE > lista;
-    set< CANDIDATE > aux = ((shapes)(_subestructura.second)).ejesNoUtilizados();	/* TODO: The return type of ejesNoUtilizados() has changed between go and shapes */
+    set< CANDIDATE > aux = ((shapes)_subestructura).ejesNoUtilizados();	/* TODO: The return type of ejesNoUtilizados() has changed between go and shapes */
     //cout << "DEBUG getCandidatos " << aux.size();
     
     // Solo aquellos ejes que aparecen al menos una vez en la base de datos
@@ -345,7 +345,7 @@ vector< CANDIDATE > Hormiga::getCandidatos_original() {
     while (it != aux.end()) {
         bool found = false;
         for (unsigned int i = 0; !found && (i < _instancias.size()); i++)
-            if (_instancias[i].second.ejeUsado((*it).first,(*it).second,(*it).third)) {
+            if (_instancias[i].ejeUsado((*it).first,(*it).second,(*it).third)) {
                  lista.push_back(*it);
                  found = true;
             }
@@ -354,7 +354,7 @@ vector< CANDIDATE > Hormiga::getCandidatos_original() {
     //cout << " " << lista.size();
     
     // Solo me quedo con aquellos que tiene al menos uno de los nodos en la subestructura
-    set<unsigned int> nu = _subestructura.second.nodosUtilizados();
+    set<unsigned int> nu = _subestructura.nodosUtilizados();
     //for (set<unsigned int>::iterator p = nu.begin(); p != nu.end(); p++) cout << *p << ' ';
     //cout << endl;
     if (nu.size() > 0) {
