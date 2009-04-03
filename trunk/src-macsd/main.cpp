@@ -479,13 +479,13 @@ int main(int argc, char *argv[]){
     }*/
 #endif
 
-	// Initialize the random generator    
-	srand(PARA.GLOB_semilla);
-        
     // almacenamiento de parametros        
     // -----------------------------
     PARA.ReadConfiguration("./config.txt");
     
+    // Initialize the random generator    
+    srand(PARA.GLOB_semilla);
+        
     // leemos los datos del fichero de entrada
 #if VERSION == V_SHAPE
     leeFicheroDatos (PARA.GLOB_rutaEntrada, baseDatos);
