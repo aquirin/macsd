@@ -2,7 +2,7 @@
 
 //---------------------------------------------
 
-go::go(string name, set<unsigned int>* bn, set< CANDIDATE >* be, map<unsigned int,string>* d) {
+go::go(set<unsigned int>* bn, set< tuplax3<unsigned int> >* be, map<unsigned int,string>* d) {
     _base_nodos = bn;
     _base_ejes = be;
     _desc = d;
@@ -12,7 +12,6 @@ go::go(string name, set<unsigned int>* bn, set< CANDIDATE >* be, map<unsigned in
     agregarEje(5575,3673,0);
     agregarEje(8150,3673,0);
     _nodo = 3673;
-    _name = name;
 }
  
 //---------------------------------------------
@@ -30,9 +29,11 @@ go::go(const go& s) {
 void go::agregarEje(const unsigned int ini, const unsigned int fin, const unsigned int s) {
     if (!(_desc->find(ini) != _desc->end())) {
         cout << "ERROR: " << ini << endl;
+//         exit(1);
     }
     if (!(_desc->find(fin) != _desc->end())) {
         cout << "ERROR: " << fin << endl;
+//         exit(1);
     }
     
     assert((_desc->find(ini) != _desc->end()) && (_desc->find(fin) != _desc->end()) && (s == 0) && (_nodos.find(fin) != _nodos.end()));
@@ -40,7 +41,7 @@ void go::agregarEje(const unsigned int ini, const unsigned int fin, const unsign
     
     if (_nodos.find(ini) == _nodos.end()) {
         _nodos.insert(ini);
-        for (set< CANDIDATE >::const_iterator p = _base_ejes->begin(); p != _base_ejes->end(); p++) {
+        for (set< tuplax3<unsigned int> >::const_iterator p = _base_ejes->begin(); p != _base_ejes->end(); p++) {
             // n es el hijo y busco el padre
             if (p->first == ini) {
 //                 cout << p->first << ' ' << p->second << endl;
@@ -79,7 +80,7 @@ float go::nivelRelativo(const go& s) const {
     set<unsigned int> hojas_sub;
     for (set<unsigned int>::iterator p = s._nodos.begin(); p != s._nodos.end(); p++) {
         bool found = false;
-        for (set< CANDIDATE >::iterator q = s._ejes.begin(); (q != s._ejes.end()) && !found; q++) {
+        for (set< tuplax3<unsigned int> >::iterator q = s._ejes.begin(); (q != s._ejes.end()) && !found; q++) {
             found = (q->second == *p);
         }
         if (!found)
@@ -94,7 +95,7 @@ float go::nivelRelativo(const go& s) const {
         bool found = true;
         while (found) {
             found = false;
-            set< CANDIDATE >::iterator q;
+            set< tuplax3<unsigned int> >::iterator q;
             for (q = _ejes.begin(); (q != _ejes.end()) and !found; q++) {
                 found = (q->second == cual);
             }
@@ -110,7 +111,7 @@ float go::nivelRelativo(const go& s) const {
         unsigned int nivel_abs = 1;
         while (cual != 3673) {
             bool found = false;
-            set< CANDIDATE >::iterator q;
+            set< tuplax3<unsigned int> >::iterator q;
 //             cout << "CUAL: " << cual;
             for (q = _ejes.begin(); (q != _ejes.end()) and !found; q++) {
                 found = (q->first == cual);
@@ -155,7 +156,7 @@ double go::sizeNorm() const {
 bool go::ejeUsado(const unsigned int ini, const unsigned int fin, const unsigned int s) const {
     assert((_desc->find(ini) != _desc->end()) && (_desc->find(fin) != _desc->end()) && (s == 0));
     
-    return ((_nodos.find(ini) != _nodos.end()) && (_nodos.find(fin) != _nodos.end()) && (_ejes.find(CANDIDATE(ini,fin,s)) != _ejes.end()));
+    return ((_nodos.find(ini) != _nodos.end()) && (_nodos.find(fin) != _nodos.end()) && (_ejes.find(tuplax3<unsigned int>(ini,fin,s)) != _ejes.end()));
 }
 
 //---------------------------------------------
@@ -174,10 +175,10 @@ set<unsigned int> go::nodosUtilizados() const {
 
 //---------------------------------------------
 
-vector< CANDIDATE > go::ejesNoUtilizados() const {
-    vector< CANDIDATE > diff;
+vector< tuplax3<unsigned int> > go::ejesNoUtilizados() const {
+    vector< tuplax3<unsigned int> > diff;
     
-     for (set< CANDIDATE >::const_iterator p = _base_ejes->begin(); p != _base_ejes->end(); p++) {
+     for (set< tuplax3<unsigned int> >::const_iterator p = _base_ejes->begin(); p != _base_ejes->end(); p++) {
 //          cout << (*p).first << ' ' << (*p).second << endl;
 //          if ((_ejes.find(*p) == _ejes.end()) && (_nodos.find(p->second) != _nodos.end()))
          if (_ejes.find(*p) == _ejes.end())
@@ -190,12 +191,11 @@ vector< CANDIDATE > go::ejesNoUtilizados() const {
 //---------------------------------------------
  
 void go::imprime(ostream &salida) const {
-     salida << "Nombre: " << _name << endl;
      salida << "Nodos: " << endl;
      for (set<unsigned int>::const_iterator p = _nodos.begin(); p != _nodos.end(); p++)
          salida << *p << ' ';
      salida << endl << "Ejes: " << endl;
-     for (set< CANDIDATE >::const_iterator p = _ejes.begin(); p != _ejes.end(); p++)
+     for (set< tuplax3<unsigned int> >::const_iterator p = _ejes.begin(); p != _ejes.end(); p++)
          salida << '(' << p->first << ',' << p->second << ')';
      salida << endl << endl;
      for (set<unsigned int>::const_iterator p = _nodos.begin(); p != _nodos.end(); p++)
@@ -230,7 +230,7 @@ unsigned int go::cantEjes() const {
 //---------------------------------------------
 
 bool go::valido(const unsigned int ini, const unsigned int fin, const unsigned int s) const {
-    return (_base_ejes->find(CANDIDATE(ini,fin,s)) != _base_ejes->end());
+    return (_base_ejes->find(tuplax3<unsigned int>(ini,fin,s)) != _base_ejes->end());
 }
 
 //---------------------------------------------
