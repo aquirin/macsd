@@ -26,6 +26,8 @@ class NDominatedSet {
         vector<Hormiga> Pareto;
 
     public:
+	unsigned int size() const {return Pareto.size();};
+	
         typedef vector<Hormiga>::iterator iterator;
         
         iterator begin() {return Pareto.begin();};

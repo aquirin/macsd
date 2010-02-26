@@ -18,12 +18,12 @@ MACS::MACS (vector<SOLUTION>& b, Parametros &params) : ACO (b, params) {
     }
     
     // la matriz de feromona seria una matriz NxNXl
-#if VERSION == V_SHAPE
+#if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP)
     vector< CANDIDATE > lista = b[0].posibilidades_totales();
     for (vector< CANDIDATE >::iterator p = lista.begin(); p != lista.end(); p++) {   
         this->matricesFeromona[*p] = this->feromonaInicial; 
     }
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif VERSION == V_GO
     for (set< CANDIDATE >::iterator j = b[0].base_ejes()->begin(); j != b[0].base_ejes()->end(); j++) {   
         this->matricesFeromona[*j] = this->feromonaInicial; 
     }
@@ -33,7 +33,7 @@ MACS::MACS (vector<SOLUTION>& b, Parametros &params) : ACO (b, params) {
 }
 
 //---------------------------------------------------------
-double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int indice, vector< CANDIDATE > &candidatas){
+double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int indice, vector< CANDIDATE > &candidatas) {
     	
     double suma, baseA = -1., baseB = -1.;    
 
@@ -47,19 +47,23 @@ double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int
     // calculamos la probabilidad de los ejese puedan ser candidatos
     vector< CANDIDATE >::iterator it = candidatas.begin();
     
-    while(it != candidatas.end()){
+    while(it != candidatas.end()) {
+	CANDIDATE n = *it;
         Hormiga mas = *(this->hormigas[indice]);
     	switch (this->heuristicas[indice]) {
     		case 1:  // STATIC
-    			baseA = this->hormigas[indice]->getAparicionesEje(*it);
+			#if VERSION == V_SHAPE
+			  n.first = 1;
+			#endif
+    			baseA = this->hormigas[indice]->getAparicionesEje(n);
     			baseB = 1;  			   
     			break;
     		case 2:  // DYNAMIC
-#if VERSION == V_SHAPE
-mas.avanza((*it).first,(*it).second);
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-mas.avanza((*it).first,(*it).second,(*it).third);
-#endif                        
+			#if VERSION == V_SHAPE
+			mas.avanza(n.first,n.second);
+			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+			mas.avanza(n.first,n.second,n.third);
+			#endif                        
 
                         if (mas.getCoste(0) > 0)
     			    baseA = 1 - ((this->hormigas[indice]->getCoste(0) * 1.) - mas.getCoste(0));
@@ -75,9 +79,11 @@ mas.avanza((*it).first,(*it).second,(*it).third);
     			break;
     	}
 //     	cout << (*it).first-1 << ' ' << (*it).second-1 << ' ' << (*it).third-1 << '=' << this->matricesFeromona[(*it).first-1][(*it).second-1][(*it).third-1] << endl;
-    	this->probabilidades[(*it)] = this->matricesFeromona[(*it)] * pow(baseA, this->betaLambda[indice]) * pow(baseB, this->betaNoLambda[indice]); 
-        
-    	suma += this->probabilidades[(*it)];
+#if VERSION == V_SHAPE
+  n.first = 1;
+#endif
+    	this->probabilidades[n] = this->matricesFeromona[n] * pow(baseA, this->betaLambda[indice]) * pow(baseB, this->betaNoLambda[indice]); 
+    	suma += this->probabilidades[n];
         it++;
     }
             
@@ -85,22 +91,30 @@ mas.avanza((*it).first,(*it).second,(*it).third);
 }
 
 //---------------------------------------------------------
-double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int indice, 
-		vector< CANDIDATE > &candidatas){
+double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int indice, vector< CANDIDATE > &candidatas) {
 
-    double suma;
+    double suma = this->calculaNumeradoresProbabilidades(unaHormiga, indice, candidatas);
 
-    suma = this->calculaNumeradoresProbabilidades(unaHormiga, indice, candidatas);
-
-    if (suma != 0.){
+    #if VERSION == V_SHAPE
+      map<CANDIDATE,bool> done;
+    #endif
+    
+    if (suma > 0){
 	 for (unsigned int i = 0; i < candidatas.size(); i++) {
-        	this->probabilidades[candidatas[i]] /= suma;
-         }
-      
-        return suma;
+		CANDIDATE n = candidatas[i];
+		#if VERSION == V_SHAPE
+		  n.first = 1;
+		  if (done.find(n) == done.end()) {
+		#endif
+        	this->probabilidades[n] /= suma;
+		#if VERSION == V_SHAPE
+		    done[n] = true;
+		  }
+		#endif
+	 }	
     }
 
-    return 0.;
+    return suma;
 }
 
 //---------------------------------------------------------
@@ -108,6 +122,9 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
     
 #if VERSION == V_SHAPE
     CANDIDATE eleccion(0,"0");
+    cout << "Candidatos: " << endl;
+    for (vector<CANDIDATE>::iterator it = candidatas.begin(); it != candidatas.end(); ++it)
+      cout << it->first << ' ' << it->second << endl;
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
     CANDIDATE eleccion(0,0,0);
 #endif
@@ -123,65 +140,82 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
         
     // todas las candidatas que quedan tienen probabilidad 0, por lo que elegimos buscando el maximo    
     
-    if (sumaNumeradores == 0){
-    	
+    if (sumaNumeradores == 0) {
     	// cogemos la primera de todas las candidatas    	
 	// Modificado ROCIO, elijo una al azar
 	unsigned int x = intAzar(0, candidatas.size() - 1);
     	vector< CANDIDATE >::iterator it = candidatas.begin();
     	eleccion = *(it + x);
     	cout << "Suma0" << endl;
-    	return eleccion;
+    }
+    else {
+      // en el caso de que tengamos que elegir la de mayor probabilidad entre las tareas candidatas   
+      
+      if (probAleatoria < PARA.MOACO_q0) {
+	  cout << "A" << endl;
+	  // Si hay varios con el mismo valor elijo uno al azar
+	  vector<CANDIDATE> mejores;
+	  // si el numero aleatorio es menor que q0 elegimos el maximo de los numeradores, no hay aleatoriedad. 
+	  vector< CANDIDATE >::iterator it = candidatas.begin();  
+	  mejores.push_back(*it);
+	  it++;
+	  
+	  while (it != candidatas.end()) {
+	      CANDIDATE n = *it;
+	      CANDIDATE m = eleccion;
+	      #if VERSION == V_SHAPE
+		n.first = 1;
+		m.first = 1;
+	      #endif
+	      if (this->probabilidades[n] > this->probabilidades[m])
+		mejores.push_back(*it);
+	      it++;
+	  }
+	  unsigned int cual = intAzar(0, mejores.size()-1);
+	  eleccion = mejores[cual];
+		  
+      } else {
+	  cout << "B" << endl;
+	  // en el caso de que el numero aleatorio sea mayor que q0 elegimos aleatoriamente por ruleta segun las probabilidades de cada eje elegible
+		  
+	  // calculamos las probabilidades acumuladas para poder aplicar una seleccion de ejes por ruleta
+	  cout << "CC " <<  this->probabilidades.size() << endl;
+	  sumaProb = new double[candidatas.size()];
+	  CANDIDATE n = candidatas[0];
+	  #if VERSION == V_SHAPE
+	    n.first = 1;
+	  #endif
+
+	  sumaProb[0] = this->probabilidades[n];
+	  cout << "@@@@0@@@@" << sumaProb[0] << endl;
+	  for (unsigned int i = 1; i < candidatas.size(); i++) {
+		  n = candidatas[i];
+		  #if VERSION == V_SHAPE
+		    n.first = 1;
+		  #endif
+		  sumaProb[i] = sumaProb[i-1] + this->probabilidades[n];
+		  cout << "@@@@" << i << "@@@@" << this->probabilidades[n] << "@@@@" << sumaProb[i] << endl;
+	  }	
+		  
+	  do 
+	      probAleatoria = ((rand() * 1.) / (RAND_MAX * 1.)); 
+	  while (probAleatoria == 0);
+	  cout << "Entonces: " << probAleatoria << endl;
+	  
+	  // recorremos las probabilidades acumuladas de todas los ejes para ver el eje elegido aleatoriamente
+	  int el = 0;
+	  while((el < candidatas.size()) && (probAleatoria >= sumaProb[el])) {
+  // 		cout << "A: " << el << endl;
+		  el++;
+	  }
+	  cout << "@@@@@@@@@@@@" << el << endl;
+	  eleccion = candidatas[el];
+	  delete []sumaProb;
+
+      }
     }
     
-    // en el caso de que tengamos que elegir la de mayor probabilidad entre las tareas candidatas   
-    
-    if (probAleatoria < PARA.MOACO_q0) {
-        cout << "A" << endl;
-        // si el numero aleatorio es menor que q0 elegimos el maximo de los numeradores, no hay aleatoriedad. 
-    	vector< CANDIDATE >::iterator it = candidatas.begin();   		
-    	eleccion = *it;
-        it++;
-        
-        while(it != candidatas.end()){
-//             cout << this->probabilidades[(*it)] << ' ' << this->probabilidades[eleccion] << endl;
-            if (this->probabilidades[(*it)] > this->probabilidades[eleccion])
-                eleccion = *it;
-            it++;
-        }
-   		
-    } else {
-    	cout << "B" << endl;
-        // en el caso de que el numero aleatorio sea mayor que q0 elegimos aleatoriamente por ruleta segun las probabilidades de cada eje elegible
-    	        
-        // calculamos las probabilidades acumuladas para poder aplicar una seleccion de ejes por ruleta
-    	sumaProb = new double[candidatas.size()];
-	sumaProb[0] = this->probabilidades[candidatas[0]];
-	cout << "@@@@0@@@@" << sumaProb[0] << endl;
-	for (unsigned int i = 1; i < candidatas.size(); i++) {
-		sumaProb[i] = sumaProb[i-1] + this->probabilidades[candidatas[i]];
-		cout << "@@@@" << i << "@@@@" << sumaProb[i] << endl;
-	}	
-	    	
-    	do 
-            probAleatoria = ((rand() * 1.) / (RAND_MAX * 1.)); 
-        while (probAleatoria == 0);
-	cout << "Entonces: " << probAleatoria << endl;
-        
-        // recorremos las probabilidades acumuladas de todas los ejes para ver el eje elegido aleatoriamente
-        int el = 0;
-        while((el < candidatas.size()) && (probAleatoria >= sumaProb[el])) {
-// 		cout << "A: " << el << endl;
-        	el++;
-        }
-        cout << "@@@@@@@@@@@@" << el << endl;
-	eleccion = candidatas[el];
-        delete []sumaProb;
-
-    }
-
     return eleccion;
-    
 }
 
 //---------------------------------------------------------
@@ -190,7 +224,7 @@ float MACS::nuevaTau0(){
     int i, numElementos;
     float newTau0;
 
-    if (this->conjuntoNoDominadas.begin() != this->conjuntoNoDominadas.end()) {
+    if (this->conjuntoNoDominadas.size() > 0) {
         medias = new float[this->nObj];
         numElementos = 0;
     
