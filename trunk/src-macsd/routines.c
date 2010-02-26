@@ -926,6 +926,7 @@ Traitement des fichiers.
 // Une ligne vide renvoit '\n' et la fin d'un fichier renvoit NULL.
 #undef GETLINE_LINESIZE
 #define GETLINE_LINESIZE 1000	// Peut être changé à souhait [3;+oo]
+/*
 char* getline(FILE* in, int *size)
 {
 	char *buffer, line[GETLINE_LINESIZE], *ret;
@@ -955,4 +956,5 @@ char* getline(FILE* in, int *size)
 	(*size)+=2;
 	return buffer;
 }
+*/
 

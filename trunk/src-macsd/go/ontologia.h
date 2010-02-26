@@ -8,26 +8,29 @@
 #include <map>
 #include <cassert>
 #include <fstream>
-#include "utils.h"
+#include "../utils.h"
 #include "shapes.h"
 #include <iostream>
 
+
 using namespace std;
+//class shapes;
+//class CANDIDATE;
 
 class go : public shapes {
     public: 
         // Constructores y destructores
         go() {};
-        go(set<unsigned int>* bn, set< tuplax3<unsigned int> >* be, map<unsigned int,string>* d);
+        go(string name, set<unsigned int>* bn, set< CANDIDATE >* be, map<unsigned int,string>* d);
         ~go() {};
         go(const go& s);
 
         // Recuperacion de la informacion
         set<unsigned int>* base_nodos() const {return _base_nodos;};
-        set< tuplax3<unsigned int> >* base_ejes() const {return _base_ejes;};
+        set< CANDIDATE >* base_ejes() const {return _base_ejes;};
         map<unsigned int, string>* desc() const {return _desc;};
         set<unsigned int> nodos() const {return _nodos;};
-        set< tuplax3<unsigned int> > ejes() const {return _ejes;};
+        set< CANDIDATE > ejes() const {return _ejes;};
         
         // Consultas
         bool valido(const unsigned int ini, const unsigned int fin, const unsigned int s) const;
@@ -44,7 +47,7 @@ class go : public shapes {
         bool ejeUsado(const unsigned int ini, const unsigned int fin, const unsigned int s) const;
         bool nodoUsado(const unsigned int nod) const;  
         set<unsigned int> nodosUtilizados() const;      
-        vector< tuplax3<unsigned int> > ejesNoUtilizados() const;        
+        vector< CANDIDATE > ejesNoUtilizados() const;        
         unsigned int cantNodos() const;
         unsigned int cantEjes() const;
         void imprime(ostream &salida) const;        
@@ -52,11 +55,12 @@ class go : public shapes {
         bool operator!= (const go& s) const;
     private:
         set<unsigned int> _nodos;
-        set< tuplax3<unsigned int> > _ejes;
+        set< CANDIDATE > _ejes;
         
         set<unsigned int>* _base_nodos;
-        set< tuplax3<unsigned int> >* _base_ejes;
+        set< CANDIDATE >* _base_ejes;
         map<unsigned int, string>* _desc;
+        string _name;
 };
 
 ostream& operator<<(ostream& os, const go& s);

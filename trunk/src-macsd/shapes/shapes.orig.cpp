@@ -39,7 +39,7 @@ vector< CANDIDATE > shapes::nodosNoUtilizados() const {
         for (map<unsigned int, string>::const_iterator p = _desc.begin(); p != _desc.end(); p++) {
             if (p->second == "object") {
                 objetos.insert(p->first);
-                lista.push_back(CANDIDATE(p->first, "object"));
+//                 lista.push_back(CANDIDATE(p->first, "object"));
             }
         }
         
@@ -61,6 +61,17 @@ vector< CANDIDATE > shapes::nodosNoUtilizados() const {
                     lista.push_back(CANDIDATE(*p, _shap[i]));
                 }
             }
+        }
+
+//         Veo si tienen objeto
+	for (set<unsigned int>::iterator p = objetos.begin(); p != objetos.end(); p++) {
+	  bool found = false;
+	  for (set<unsigned int>::iterator q = objetos.begin(); (q != objetos.end()) and !found; q++) {
+            found = ejeUsado(*p,*q,1);
+	  }
+	  if (!found)
+            lista.push_back(CANDIDATE(*p, "object"));
+
         }
     }       
     return lista;
@@ -128,8 +139,11 @@ bool shapes::operator==(const shapes& s) const {
 //                 cout << (*q)[j] << ' ';
 //             cout << endl;
             shapes nueva_subestructura = copia.reasignarNodos(*q);
-//             cout << *this << endl << s << endl << nueva_subestructura << endl;
+            
             done = this->igual(nueva_subestructura);
+	    
+	    if (!igual(s) and done)
+	      cout << "==" << *this << endl << s << endl << nueva_subestructura << endl;
         }
     }
     
@@ -143,25 +157,23 @@ bool shapes::igual(const shapes& s) const {
 vector< CANDIDATE > shapes::posibilidades_totales() {
     vector< CANDIDATE > v;
     
-    for (unsigned int i = 0; i < _mobj; i++) {
-        v.push_back(CANDIDATE(i+1,"object"));
-        for (unsigned int j = 0; j < _shap.size(); j++) {
-            v.push_back(CANDIDATE(i+1,_shap[j]));
-        }
+    v.push_back(CANDIDATE(1,"object"));
+    for (unsigned int j = 0; j < _shap.size(); j++) {
+      v.push_back(CANDIDATE(j+2,_shap[j]));
     }
     
     return v;
 }
 
-vector< CANDIDATE > shapes::posibilidades_reales() {
-    vector< CANDIDATE > v;
-    
-    for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
-        v.push_back(CANDIDATE(*p,_desc[*p]));
-    }
-    
-    return v;
-}
+// vector< CANDIDATE > shapes::posibilidades_reales() {
+//     vector< CANDIDATE > v;
+//     
+//     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
+//         v.push_back(CANDIDATE(*p,_desc[*p]));
+//     }
+//     
+//     return v;
+// }
 
 
 shapes shapes::reasignarNodos(vector<unsigned int> v) {

@@ -5,7 +5,6 @@ bool NDominatedSet::addDominancia(Hormiga& solucion, bool preferencias, int &num
 	int dominancia;
         bool res = true;
         bool igual = false;
-        solucion.calculaCostes();
         
         vector<Hormiga>::iterator x = Pareto.begin();
 	while ((x != Pareto.end()) && res && !igual) {
@@ -32,7 +31,7 @@ bool NDominatedSet::addDominancia(Hormiga& solucion, bool preferencias, int &num
         if (res && !igual) {
 	   // insertarlo
 	   Pareto.push_back(solucion);
-//            cout << "Add: " << solucion.subEst() << endl;
+           cout << "Add: " << solucion.subEst() << endl;
 
            vector<Hormiga>::iterator x = Pareto.begin();
 	   while (x != Pareto.end()) {
@@ -43,6 +42,7 @@ bool NDominatedSet::addDominancia(Hormiga& solucion, bool preferencias, int &num
                if (solucion.dominancia(*x, preferencias, numDominanciasPorPreferencias) == 1) {
 //                     cout << Pareto.size();
                     Pareto.erase(x);
+// 		    x = Pareto.begin();
 //                     cout << "Borrado 2" << Pareto.size() << endl;
                 }
                 else

@@ -37,7 +37,7 @@ class shapes {
         bool igual(const shapes& s) const;   
         bool operator!= (const shapes& s) const {return !((*this)==s);};
         vector< CANDIDATE > posibilidades_totales();
-        vector< CANDIDATE > posibilidades_reales();
+//         vector< CANDIDATE > posibilidades_reales();
         unsigned int cantNodos() const {return _nodos.size();};
         vector< vector<unsigned int> > darPosibilidades(const shapes& s) const;
         bool empty() const;

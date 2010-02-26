@@ -6,7 +6,7 @@ all-release:	release-set release-matrix release-vector
 
 
 debug-shape:	clean
-	cp -f shapes/config.txt config.txt
+	#cp -f shapes/config.txt config.txt
 	cp shapes/shapes.orig.cpp shapes/shapes.cpp
 	cp shapes/shapes.orig.h shapes/shapes.h
 	g++ -g -O0 -c -DVERSION=V_SHAPE shapes/shapes.cpp
@@ -25,10 +25,10 @@ debug-shape:	clean
 	echo "exe-load_shape has been generated!"
 
 debug-vmap:	clean
-	cp go/shapes.set.cpp go/shapes.cpp
-	cp go/shapes.set.h go/shapes.h
-	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP go/shapes.cpp
-	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP go/ontologia.cpp
+	cp go/shapes.vector.cpp vmap/shapes.cpp
+	cp go/shapes.vector.h vmap/shapes.h
+	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap/shapes.cpp
+	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap/vmap.cpp
 	gcc -g -O0 -c routines.c
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP hormigas.cpp
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP NDominatedSet.cpp
@@ -37,7 +37,7 @@ debug-vmap:	clean
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP aco.cpp
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP utils.cpp
 	g++ -g -O0 -c Parameter.cpp
-	g++ -o exe-vmap.dbg routines.o main.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o
+	g++ -o exe-vmap.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o vmap.o
 	echo "exe-vmap.dbg has been generated!"
 
 	

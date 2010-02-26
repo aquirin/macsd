@@ -2,16 +2,20 @@
 
 //-------------------------------------------------------------------------
 Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos = 2, map<CANDIDATE, double>* ap = 0) :
-	_costes(numObjetivos),
+	_costes(numObjetivos, 0.0),
 	_support(base.size(), 0),
 	
 #if VERSION == V_SHAPE
 	_subestructura(base[0])
 	{
         _subestructura.clear();	/* TODO: HARMONIZE (no 'clear' in the GO version) */
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif VERSION == V_GO
 	_subestructura(SOLUTION("0", base[0].base_nodos(),base[0].base_ejes(),base[0].desc()))
 	{
+#elif VERSION == V_SCIENCEMAP
+	_subestructura(base[0])
+	{
+	_subestructura.clear();
 #endif
 
         _ejesAsignados = 0;
@@ -30,9 +34,9 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
 
 //------------------------------------------------------------------------
 #if VERSION == V_SHAPE
-Hormiga::Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos = 2, map<CANDIDATE, double>* ap = 0, SOLUTION quien = SOLUTION()) : _subestructura(quien), _costes(numObjetivos), _support(base.size(), 0) {
+Hormiga::Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos = 2, map<CANDIDATE, double>* ap = 0, SOLUTION sub = SOLUTION()) : _subestructura(sub), _costes(numObjetivos, 0.0), _support(base.size(), false) {
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos = 2, map<CANDIDATE, double>* ap = 0, SOLUTION sub = SOLUTION()) : _costes(numObjetivos), _support(base.size(), 0) {
+Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos = 2, map<CANDIDATE, double>* ap = 0, SOLUTION sub = SOLUTION()) : _costes(numObjetivos), _support(base.size(), false) {
         _ejesAsignados = 0;
         _colonias.push_back(colonia);
 #endif
@@ -58,7 +62,7 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
         vector<unsigned int> temp;
         vector<unsigned int>::iterator p = _support.begin();
 
-#if VERSION == V_SHAPE
+#if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP)
         int x = 1;
         while (p != _support.end()) {
             // Tengo que probar las combinaciones de nodos para ver si cubre la subestructura (isomorfismo)
@@ -78,7 +82,7 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
         
                 for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
 //                     cout << "X" << endl;
-                    shapes copia(_subestructura);
+                    SOLUTION copia(_subestructura);
                     SOLUTION nueva_subestructura = copia.reasignarNodosFijo(*q);
 //                     cout << "Y" << endl;
 //                     cout << "Esta: " << nueva_subestructura << endl;
@@ -93,7 +97,7 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
 //             cout << "FIN" << endl;
             p++;
         }
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif VERSION == V_GO
             while (p != _support.end()) {
                 if (_instancias[*p].ejeUsado(nodo1,nodo2,enlace)) {        
                     temp.push_back(*p);
@@ -104,11 +108,11 @@ Hormiga::Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, co
 
     
         _support = temp;
-#if (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#if VERSION == V_SHAPE
+    _candidatos = _subestructura.nodosNoUtilizados();
+#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
         }
 	_candidatos = _subestructura.ejesNoUtilizados();
-	// eliminamos de la lista de candidatos
-// 	_candidatos = getCandidatos();
 #endif
         calculaCostes();
 }
@@ -158,6 +162,7 @@ void Hormiga::posicionaInicialmente() {
 void Hormiga::avanza(const unsigned int nodo1, const string nodo2) {
     // avanzar la hormiga
 //     cout << nodo1 << '=' << nodo1 << endl;
+//     cout << "Antes: " << _subestructura << endl;
     _subestructura.agregarNodo(_subestructura.cantNodos() + 1, nodo2);
     unsigned int enlace;
     if (nodo2 == "object")
@@ -165,6 +170,7 @@ void Hormiga::avanza(const unsigned int nodo1, const string nodo2) {
     else
         enlace = 2;
     _subestructura.agregarEje(nodo1, _subestructura.cantNodos(), enlace);
+//     cout << _subestructura << endl;
     
     vector<unsigned int> temp;
     int pp = 1;
@@ -223,10 +229,11 @@ void Hormiga::avanza(const unsigned int nodo1, const string nodo2) {
 //             }
 //     }
     _candidatos = _subestructura.nodosNoUtilizados();
+//     cout << "Despues: " << _subestructura << endl;
 }
 
 
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif VERSION == V_GO
 
 void Hormiga::avanza(const unsigned int nodo1, const unsigned int nodo2, const unsigned int enlace) {
     // avanzar la hormiga
@@ -257,6 +264,76 @@ void Hormiga::avanza(const unsigned int nodo1, const unsigned int nodo2, const u
         }
 }
 
+#elif VERSION == V_SCIENCEMAP
+void Hormiga::avanza(const unsigned int nodo1, const unsigned int nodo2, const unsigned int enlace) {
+
+   // avanzar la hormiga
+//     cout << nodo1 << '=' << nodo1 << endl;
+//     cout << "Antes: " << _subestructura << endl;
+    _subestructura.agregarEje(nodo1, nodo2, enlace);
+    
+//     cout << _subestructura << endl;
+    
+    vector<unsigned int> temp;
+    int pp = 1;
+    vector<unsigned int>::iterator p = _support.begin();
+    while (p != _support.end()) {
+        // Tengo que probar las combinaciones de nodos para ver si cubre la subestructura (isomorfismo)
+//         cout << "Instancia " << pp++ << endl;
+        if (_instancias[*p].cantNodos() >= _subestructura.cantNodos()) {
+            vector< vector<unsigned int> > v = _subestructura.darPosibilidades(_instancias[*p]);
+            posibilidades<unsigned int> op(v);
+            
+            bool done = false;
+    
+            for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
+//                 cout << "X" << endl;
+                SOLUTION nueva_subestructura = _subestructura.reasignarNodosFijo(*q);
+//                 cout << "Y" << endl;
+//                 cout << "Esta: " << nueva_subestructura << endl;
+//                 cout << "En: " << _instancias[*p] << endl;
+                if (_instancias[*p].cubiertoPor(nueva_subestructura)) {
+                    done = true;
+//                     cout << "SI" << endl;
+                    temp.push_back(*p);
+                }
+            }
+//             cout << "FIN" << endl;
+        }
+        p++;
+    }
+
+    _support = temp;
+    _costeValido = false;         
+    
+    // aumentamos el numero de asignados si es que usamos nuevos
+    _ejesAsignados++;
+    
+    // eliminamos de la listtuplax3a de candidatos
+//     bool done = false;
+//     if (enlace == 2) {
+//         // Hay que eliminar todos los tipos de shapes asociados
+//         do {
+//             done = false;
+//             for (vector< CANDIDATE >::iterator it = _candidatos.begin(); !done && (it != _candidatos.end()); it++)
+//             if (((*it).first == nodo1) && ((*it).third == enlace)) {
+//                 _candidatos.erase(it);
+//                 done = true;
+//             }
+//         }
+//         while (done);
+//     }
+//     else {
+//         for (vector< CANDIDATE >::iterator it = _candidatos.begin(); !done && (it != _candidatos.end()); it++)
+//             if (((*it).first == nodo1) && ((*it).second == nodo2) && ((*it).third == enlace)) {
+//                 _candidatos.erase(it);
+//                 done = true;
+//             }
+//     }
+    _candidatos = _subestructura.ejesNoUtilizados();
+//     cout << "Despues: " << _subestructura << endl;
+}
+
 #endif
 
 
@@ -275,45 +352,18 @@ vector< CANDIDATE > Hormiga::getCandidatos() {
     return _subestructura.nodosNoUtilizados();
 }
 
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif VERSION == V_GO
 
 vector< CANDIDATE > Hormiga::getCandidatos() {
     vector< CANDIDATE > lista;
-//     set< CANDIDATE > aux;
-//     aux = _subestructura.second.ejesNoUtilizados();
-    
-/*    // Solo aquellos ejes que aparecen al menos una vez en la base de datos
-    set< CANDIDATE >::iterator it = aux.begin();
-    while (it != aux.end()) {
-        bool found = false;
-        for (unsigned int i = 0; !found && (i < _instancias.size()); i++)
-            if (_instancias[i].second.ejeUsado((*it).first,(*it).second,(*it).third)) {
-                 lista.push_back(*it);
-                 found = true;
-            }
-        it++;
-    }*/
-    
-//     set< CANDIDATE >::iterator it = aux.begin();
-//     while (it != aux.end()) {
-// //         cout << (*it).first << ' ' << (*it).second << endl;
-//         lista.push_back(*it);
-//         it++;
-//     }
-    
     // Solo me quedo con aquellos que tiene al menos uno de los nodos en la subestructura
     // Y ademas pertenezcan a alguna de las instancias que cubre hasta el momento
     set<unsigned int> nu = _subestructura.nodosUtilizados();
-//     for (set<unsigned int>::iterator p = nu.begin(); p != nu.end(); p++) cout << "MI: " << *p << endl;
     if (nu.size() > 0) {
         vector< CANDIDATE >::iterator it1 = _candidatos.begin();
         
         while (it1 != _candidatos.end()) {
-//             cout << "CAN: " << (*it1).first << ' ' << (*it1).second << endl;
-//             if ((nu.find((*it1).first) == nu.end()) && (nu.find((*it1).second) == nu.end())) {
-//             }
-//             else {
-            if (nu.find((*it1).second) != nu.end()) {
+          if (nu.find((*it1).second) != nu.end()) {
 		bool found = false;
 		unsigned int i = 0;
 		while (!found and (i < _support.size())) {
@@ -330,10 +380,15 @@ vector< CANDIDATE > Hormiga::getCandidatos() {
     return lista;
 }
 
+#elif VERSION == V_SCIENCEMAP
+
+vector< CANDIDATE > Hormiga::getCandidatos() {
+   return _subestructura.ejesNoUtilizados();
+}
+
 #endif
 
 //-------------------------------------------------------------------------
-// This is my old version, non-optimized (Arnaud). TODO: Delete it or keep it?
 #if VERSION == V_SCIENCEMAP
 vector< CANDIDATE > Hormiga::getCandidatos_original() {
     vector< CANDIDATE > lista;
@@ -424,12 +479,12 @@ void Hormiga::calculaCostes() {
         _costes[0] = ((_support.size() * 1.) / (_instancias.size() * 1.));
         
         // 1 = complexity
-#if VERSION == V_SHAPE
+#if (VERSION == V_SHAPE) ||  (VERSION == V_SCIENCEMAP)
 
         _costes[1] = _subestructura.sizeNorm();
 //         cout << _subestructura << endl;
 
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif VERSION == V_GO
 
 //         _costes[1] = _subestructura.second.sizeNorm();
         
@@ -456,9 +511,8 @@ void Hormiga::calculaCostes() {
 //-------------------------------------------------------------------------
 int Hormiga::dominancia(Hormiga& v, bool x, int y) {
     calculaCostes();
-#if VERSION == V_SHAPE
-    v.calculaCostes();		/* TODO: HARMONIZE (before 'v' was declared as const; and why x/y are not used??) */
-#endif
+    v.calculaCostes();
+
     int que;
     
 //     cout << "A: " << _costes[0] << ' ' << _costes[1] << endl;

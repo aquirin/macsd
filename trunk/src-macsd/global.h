@@ -23,6 +23,7 @@ class tuplax3 {
         tuplax3() {};
         tuplax3(T a, T b, T c) {first = a; second = b; third = c;};
         bool operator==(const tuplax3<T>& o) const {return ((first == o.first) && (second == o.second) && (third == o.third));};
+	tuplax3& operator=(const tuplax3<T>& o) { first = o.first; second = o.second; third = o.third; return *this;};
         
         T first;
         T second;
@@ -49,12 +50,14 @@ bool operator< (const tuplax3<T>& a, const tuplax3<T>& b) {
 //	class shapes;
 //	typedef shapes SOLUTION;
 	#define SOLUTION shapes
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif VERSION == V_GO
 //	#include "go/shapes.h"
 //	#include "go/ontologia.h"
 //	class go;
 //	typedef pair<string,go> SOLUTION;
 	#define SOLUTION go
+#elif VERSION == V_SCIENCEMAP
+	#define SOLUTION vmap
 #endif
 
 #endif // __GLOBAL_H__

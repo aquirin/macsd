@@ -214,7 +214,7 @@ int intAzar(const int inicio, const int fin) {
         return inicio;
     }
     else
-        return (rand() % (fin + 1) + inicio);
+        return ((rand() % (fin - inicio + 1)) + inicio);
 }
 
 //-----------------------------------------------------------------------
@@ -225,18 +225,18 @@ int ranking(const int cant, const float nu_max, const float nu_min) {
     proba[0] = 0.0;
     for (unsigned int i = 1; i <= cant; i++) {
         proba[i] = proba[i-1] + (1./cant)*(nu_min+(((nu_max-nu_min)*(i-1.))/(cant-1.)));
-//         cout << proba[i] << " ";
+         cout << proba[i] << " ";
     }
     cout << endl;
     
-//     cout << "RANDOM: " << random_entre_0_y_1 << endl;
+//      cout << "RANDOM: " << random_entre_0_y_1 << endl;
 //     float valor = 1+((((random_entre_0_y_1*cant)-nu_min)*(cant-1))/(nu_max-nu_min));
     unsigned int x = 0;
     while ((x <= cant) and (proba[x] < random_entre_0_y_1)) {
-//         cout << x << " " << proba[x] << endl;
+//          cout << x << " " << proba[x] << endl;
         x++;
     }
     if (x > cant) cout << "ERRRRRRRRRRRRRRRRRR!" << endl;
-//     cout << "Salir: " << (cant - x + 1) << endl;
+    cout << "Salir: " << (cant - x + 1) << endl;
     return (cant - x + 1);
 }

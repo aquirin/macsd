@@ -6,8 +6,10 @@
 #include "utils.h"
 #if VERSION == V_SHAPE
 #include "shapes/shapes.h"
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif (VERSION == V_GO)
 #include "go/ontologia.h"
+#elif (VERSION == V_SCIENCEMAP)
+#include "vmap/vmap.h"
 #endif
 
 /** 
@@ -89,7 +91,9 @@ class Hormiga {
         
 #if VERSION == V_SHAPE
        	Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION quien);
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif VERSION == V_GO
+        Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION sub);
+#elif VERSION == V_SCIENCEMAP
         Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION sub);
 #endif
 
