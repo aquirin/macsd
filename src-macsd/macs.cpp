@@ -54,6 +54,14 @@ double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int
     		case 1:  // STATIC
 			#if VERSION == V_SHAPE
 			  n.first = 1;
+			#elif VERSION == V_SCIENCEMAP
+			    // Search for the correct index for both nodes
+			    n.first = this->hormigas[indice]->subEst().mapear(it->first);
+			    n.second = this->hormigas[indice]->subEst().mapear(it->second);
+			    if (this->probabilidades.find(n) == this->probabilidades.end()) {
+			      n.second = this->hormigas[indice]->subEst().mapear(it->first);
+			      n.first = this->hormigas[indice]->subEst().mapear(it->second);
+			    }
 			#endif
     			baseA = this->hormigas[indice]->getAparicionesEje(n);
     			baseB = 1;  			   
@@ -81,6 +89,14 @@ double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int
 //     	cout << (*it).first-1 << ' ' << (*it).second-1 << ' ' << (*it).third-1 << '=' << this->matricesFeromona[(*it).first-1][(*it).second-1][(*it).third-1] << endl;
 #if VERSION == V_SHAPE
   n.first = 1;
+#elif VERSION == V_SCIENCEMAP
+  // Search for the correct index for both nodes
+  n.first = this->hormigas[indice]->subEst().mapear(it->first);
+  n.second = this->hormigas[indice]->subEst().mapear(it->second);
+  if (this->probabilidades.find(n) == this->probabilidades.end()) {
+    n.second = this->hormigas[indice]->subEst().mapear(it->first);
+    n.first = this->hormigas[indice]->subEst().mapear(it->second);
+  }
 #endif
     	this->probabilidades[n] = this->matricesFeromona[n] * pow(baseA, this->betaLambda[indice]) * pow(baseB, this->betaNoLambda[indice]); 
     	suma += this->probabilidades[n];
@@ -95,7 +111,7 @@ double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int i
 
     double suma = this->calculaNumeradoresProbabilidades(unaHormiga, indice, candidatas);
 
-    #if VERSION == V_SHAPE
+    #if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP)
       map<CANDIDATE,bool> done;
     #endif
     
@@ -105,9 +121,18 @@ double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int i
 		#if VERSION == V_SHAPE
 		  n.first = 1;
 		  if (done.find(n) == done.end()) {
+		#elif VERSION == V_SCIENCEMAP
+		   // Search for the correct index for both nodes
+		  n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
+		  n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
+		  if (this->probabilidades.find(n) == this->probabilidades.end()) {
+		    n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
+		    n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
+		  }
+		  if (done.find(n) == done.end()) {
 		#endif
         	this->probabilidades[n] /= suma;
-		#if VERSION == V_SHAPE
+		#if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP)
 		    done[n] = true;
 		  }
 		#endif
@@ -127,6 +152,9 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
       cout << it->first << ' ' << it->second << endl;
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
     CANDIDATE eleccion(0,0,0);
+//     cout << "Candidatos: " << endl;
+//     for (vector<CANDIDATE>::iterator it = candidatas.begin(); it != candidatas.end(); ++it)
+//       cout << it->first << ' ' << it->second << endl;
 #endif
 
     double sumaNumeradores, probAleatoria;
@@ -158,6 +186,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 	  // si el numero aleatorio es menor que q0 elegimos el maximo de los numeradores, no hay aleatoriedad. 
 	  vector< CANDIDATE >::iterator it = candidatas.begin();  
 	  mejores.push_back(*it);
+	  eleccion = *it;
 	  it++;
 	  
 	  while (it != candidatas.end()) {
@@ -166,6 +195,21 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 	      #if VERSION == V_SHAPE
 		n.first = 1;
 		m.first = 1;
+	      #elif VERSION == V_SCIENCEMAP
+		  // Search for the correct index for both nodes
+		  n.first = this->hormigas[indice]->subEst().mapear(it->first);
+		  n.second = this->hormigas[indice]->subEst().mapear(it->second);
+		  if (this->probabilidades.find(n) == this->probabilidades.end()) {
+		    n.second = this->hormigas[indice]->subEst().mapear(it->first);
+		    n.first = this->hormigas[indice]->subEst().mapear(it->second);
+		  }
+		  // Search for the correct index for both nodes
+		  m.first = this->hormigas[indice]->subEst().mapear(eleccion.first);
+		  m.second = this->hormigas[indice]->subEst().mapear(eleccion.second);
+		  if (this->probabilidades.find(m) == this->probabilidades.end()) {
+		    m.second = this->hormigas[indice]->subEst().mapear(eleccion.first);
+		    m.first = this->hormigas[indice]->subEst().mapear(eleccion.second);
+		  }
 	      #endif
 	      if (this->probabilidades[n] > this->probabilidades[m])
 		mejores.push_back(*it);
@@ -184,6 +228,14 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 	  CANDIDATE n = candidatas[0];
 	  #if VERSION == V_SHAPE
 	    n.first = 1;
+	  #elif VERSION == V_SCIENCEMAP
+	      // Search for the correct index for both nodes
+	      n.first = this->hormigas[indice]->subEst().mapear(candidatas[0].first);
+	      n.second = this->hormigas[indice]->subEst().mapear(candidatas[0].second);
+	      if (this->probabilidades.find(n) == this->probabilidades.end()) {
+		n.second = this->hormigas[indice]->subEst().mapear(candidatas[0].first);
+		n.first = this->hormigas[indice]->subEst().mapear(candidatas[0].second);
+	      }
 	  #endif
 
 	  sumaProb[0] = this->probabilidades[n];
@@ -192,6 +244,14 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 		  n = candidatas[i];
 		  #if VERSION == V_SHAPE
 		    n.first = 1;
+		  #elif VERSION == V_SCIENCEMAP
+		     // Search for the correct index for both nodes
+		      n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
+		      n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
+		      if (this->probabilidades.find(n) == this->probabilidades.end()) {
+			n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
+			n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
+		      }
 		  #endif
 		  sumaProb[i] = sumaProb[i-1] + this->probabilidades[n];
 		  cout << "@@@@" << i << "@@@@" << this->probabilidades[n] << "@@@@" << sumaProb[i] << endl;
