@@ -2,21 +2,23 @@
 
 //---------------------------------------------
 
-vmap::vmap(set<string>* bn, set< pair< pair<string,string>, unsigned int> >* be, const unsigned int& cant) {
+vmap::vmap(map<string,unsigned int>* bn, set< pair< pair<string,string>, unsigned int> >* be, const bool &azar) {
     _base_nodos = bn;
     _base_ejes = be;
-    _max_nodos = cant;
     
-    // Tomo un nodo al azar
-    unsigned int num = intAzar(1,_base_nodos->size());
-    unsigned int i = 1;
-    cout << "@ " << num << ' ' << _base_nodos->size() << endl;
-    set<string>::const_iterator it = _base_nodos->begin();
-    for (; (it != _base_nodos->end()) and (i < num); ++it, ++i);
-    if (it == _base_nodos->end()) {
-	cout << "Horrrorrr!" << endl;
+    if (azar) {
+      // Tomo un nodo al azar
+      unsigned int num = intAzar(1,_base_nodos->size());
+      cout << "@ " << num << ' ' << _base_nodos->size() << endl;
+      map<string,unsigned int>::const_iterator it = _base_nodos->begin();
+      while ((it != _base_nodos->end()) and (it->second != num)) ++it;
+      if (it == _base_nodos->end()) {
+	  cout << "Horrrorrr!" << endl;
+      }
+      agregarNodo(1,it->first);
     }
-    agregarNodo(1,*it);
+    
+    cout << "Tam! " << _base_nodos->size() << endl;
 }
  
 //---------------------------------------------
@@ -25,7 +27,6 @@ vmap::vmap(const vmap& s) {
     _ejes = s._ejes;
     _base_nodos = s._base_nodos;
     _base_ejes = s._base_ejes;
-    _max_nodos = s._max_nodos;
 }
  
 //---------------------------------------------
@@ -33,7 +34,7 @@ vmap::vmap(const vmap& s) {
 void vmap::agregarEje(const unsigned int& ini, const unsigned int& fin, const unsigned int& s) {
     unsigned int nini = ini;
     
-    if ((ini < _max_nodos) and !(_base_nodos->find(_nodos[ini]) != _base_nodos->end())) {
+    if ((ini < _base_nodos->size()) and !(_base_nodos->find(_nodos[ini]) != _base_nodos->end())) {
         cout << "ERROR: " << ini << endl;
     }
     if (!(_base_nodos->find(_nodos[fin]) != _base_nodos->end())) {
@@ -42,19 +43,18 @@ void vmap::agregarEje(const unsigned int& ini, const unsigned int& fin, const un
     
     cout << "Antes: " << *this << endl;
     
-    if (ini > _max_nodos) {
-      cout << "AB" << endl;
-      unsigned int i = 0;
-      nini = nini - _max_nodos - 1;
-      set<string>::const_iterator it = _base_nodos->begin();
-      for (; i < nini; ++it, ++i);
+    if (ini > _base_nodos->size()) {
+      nini = nini - _base_nodos->size();
+      map<string,unsigned int>::const_iterator it = _base_nodos->begin();
+      while ((it != _base_nodos->end()) and (it->second != nini)) ++it;
+      cout << "AB" << nini << ' ' << it->first << ' ' << it->second << endl;
       nini = _nodos.size() + 1;
-      agregarNodo(_nodos.size() + 1,*it);
+      agregarNodo(nini,it->first);
     }
     
-    assert((_base_nodos->find(_nodos[nini]) != _base_nodos->end()) && (_base_nodos->find(_nodos[fin]) != _base_nodos->end()) && (_nodos.find(nini) != _nodos.end()) && (_nodos.find(fin) != _nodos.end()));
-     
-    cout << '(' << nini << ',' << fin << ',' << s << ')' << endl;
+     cout << '(' << nini << ',' << fin << ',' << s << ')' << endl;
+    
+    assert((_base_nodos->find(_nodos[nini]) != _base_nodos->end()) && (_base_nodos->find(_nodos[fin]) != _base_nodos->end()) && (_nodos.find(nini) != _nodos.end()) && (_nodos.find(fin) != _nodos.end())); 
     
     if (valido(nini,fin,s)) {
       _ejes.insert(CANDIDATE(nini,fin,s));
@@ -71,13 +71,20 @@ void vmap::agregarEje(const unsigned int& ini, const unsigned int& fin, const un
 void vmap::clear() {
     _nodos.clear();
     _ejes.clear();
+}
+
+void vmap::azar() {
+  clear();
     
-    // Tomo un nodo al azar
-    unsigned int num = intAzar(1,_base_nodos->size());
-    unsigned int i = 0;
-    set<string>::const_iterator it = _base_nodos->begin();
-    for (; (it != _base_nodos->end()) and (i < num); ++it, ++i);
-    agregarNodo(1,*it);
+  // Tomo un nodo al azar
+  unsigned int num = intAzar(1,_base_nodos->size());
+  cout << "@ " << num << ' ' << _base_nodos->size() << endl;
+  map<string,unsigned int>::const_iterator it = _base_nodos->begin();
+  while ((it != _base_nodos->end()) and (it->second != num)) ++it;
+  if (it == _base_nodos->end()) {
+      cout << "horrrorrr!" << endl;
+  }
+  agregarNodo(1,it->first);
 }
 
 //---------------------------------------------
@@ -104,8 +111,8 @@ bool vmap::ejeUsado(const unsigned int& ini, const unsigned int& fin, const unsi
     // Revisar (i,f) y (f,i)
     map<unsigned int, string>::const_iterator i = _nodos.find(ini);
     map<unsigned int, string>::const_iterator f = _nodos.find(fin);
-    cout << "Ver: " << ini << ' ' << fin << endl;
-    cout << i->second << ' ' << f->second << endl;
+//     cout << "Ver: " << ini << ' ' << fin << endl;
+//     cout << i->second << ' ' << f->second << endl;
     assert((i != _nodos.end()) && (f != _nodos.end()) && (_base_nodos->find(i->second) != _base_nodos->end()) && (_base_nodos->find(f->second) != _base_nodos->end()));
     
     return ((_nodos.find(ini) != _nodos.end()) && (_nodos.find(fin) != _nodos.end()) && ((_ejes.find(CANDIDATE(ini,fin,s)) != _ejes.end()) or (_ejes.find(CANDIDATE(fin,ini,s)) != _ejes.end())));
@@ -147,11 +154,11 @@ vector< CANDIDATE > vmap::ejesNoUtilizados() const {
 	  
 	  // Agregar un nodo nuevo
 	  if (!found) {
-	    unsigned int i = 0;
-	    for (set<string>::const_iterator it = _base_nodos->begin(); *it != p->first.second; ++it, ++i);
-	    unsigned int value = _max_nodos + i + 1;
+	    map<string,unsigned int>::const_iterator it = _base_nodos->begin();
+	    while (it->first != p->first.second) ++it;
+	    unsigned int value = _base_nodos->size() + it->second;
 	    diff.push_back(CANDIDATE(value, q->first, p->second));
-	    cout << '(' << value << ',' << q->first << ',' << p->second << ')' << endl;
+	    cout << '(' << value << ',' << q->first << ',' << p->second << ')' << ' ' << it->second << ' ' << it->first << endl;
 	  }
 	}
 	
@@ -167,11 +174,11 @@ vector< CANDIDATE > vmap::ejesNoUtilizados() const {
 	  
 	  // Agregar un nodo nuevo
 	  if (!found) {
-	    unsigned int i = 0;
-	    for (set<string>::const_iterator it = _base_nodos->begin(); *it != p->first.first; ++it, ++i);
-	    unsigned int value = _max_nodos + i + 1;
+	    map<string,unsigned int>::const_iterator it = _base_nodos->begin();
+	    while (it->first != p->first.first) ++it;
+	    unsigned int value = _base_nodos->size() + it->second;
 	    diff.push_back(CANDIDATE(value, q->first, p->second));
-	    cout << '(' << value << ',' << q->first << ',' << p->second << ')' << endl;
+	    cout << '(' << value << ',' << q->first << ',' << p->second << ')' << ' ' << it->second << ' ' << it->first << endl;
 	  }
 	}  
       }
@@ -227,13 +234,11 @@ bool vmap::valido(const unsigned int& ini, const unsigned int& fin, const unsign
 vector< CANDIDATE > vmap::posibilidades_totales() const {
     vector< CANDIDATE > diff;
     
-    unsigned int n1 = 1;
-    for (set<string>::const_iterator p = _base_nodos->begin(); p != _base_nodos->end(); ++p, ++n1) {
-      unsigned int n2 = 1;
-      for (set<string>::const_iterator q = _base_nodos->begin(); q != _base_nodos->end(); ++q, ++n2) {
+    for (map<string,unsigned int>::const_iterator p = _base_nodos->begin(); p != _base_nodos->end(); ++p) {
+      for (map<string,unsigned int>::const_iterator q = _base_nodos->begin(); q != _base_nodos->end(); ++q) {
 	// Un solo tipo de eje
-	if (_base_ejes->find(pair< pair<string,string>, unsigned int>(pair<string,string>(*p,*q),0)) != _base_ejes->end()) {
-	  diff.push_back(CANDIDATE(n1,n2,0));
+	if (_base_ejes->find(pair< pair<string,string>, unsigned int>(pair<string,string>(p->first,q->first),0)) != _base_ejes->end()) {
+	  diff.push_back(CANDIDATE(p->second,q->second,0));
 	}
       }
     }
@@ -264,7 +269,10 @@ vector< vector<unsigned int> > vmap::darPosibilidades(const vmap& s) const {
 //---------------------------------------------
 
 vmap vmap::reasignarNodosFijo(const vector<unsigned int>& v) const {
-    vmap nuevo(_base_nodos, _base_ejes, _max_nodos);
+    vmap nuevo(_base_nodos, _base_ejes, false);
+    nuevo.clear();
+
+    cout << "ReasignarNF" << endl;
     
     map<unsigned int, unsigned int> dicc;
             
@@ -296,7 +304,10 @@ vmap vmap::reasignarNodosFijo(const vector<unsigned int>& v) const {
 //---------------------------------------------
 
 vmap vmap::reasignarNodos(vector<unsigned int> v) const {
-    vmap nuevo(_base_nodos, _base_ejes, _max_nodos);
+    vmap nuevo(_base_nodos, _base_ejes, false);
+    nuevo.clear();
+    
+    cout << "ReasignarN" << endl;
     
     map<unsigned int, unsigned int> dicc;
             
@@ -364,8 +375,28 @@ bool vmap::operator==(const vmap& s) const {
     return done;
 }
 
+//---------------------------------------------
+
 bool vmap::igual(const vmap& s) const {
     return ((_nodos == s._nodos) && (_ejes == s._ejes));
+}
+
+//---------------------------------------------
+
+unsigned int vmap::mapear(const unsigned int& i) const {
+  unsigned int res = 1;
+
+  if (i > _base_nodos->size()) {
+    res = i - _base_nodos->size();
+  }
+  else {
+    map<unsigned int,string>::const_iterator p = _nodos.find(i);
+    map<string,unsigned int>::const_iterator it = _base_nodos->find(p->second);
+//     cout << "==" << p->second << ' ' << it->first << endl;
+    res = it->second;
+  }
+    
+  return res;
 }
 
 //---------------------------------------------

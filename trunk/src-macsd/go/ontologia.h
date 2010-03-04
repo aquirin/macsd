@@ -7,6 +7,7 @@
 #include <set>
 #include <map>
 #include <cassert>
+#include <stack>
 #include <fstream>
 #include "../utils.h"
 #include "shapes.h"

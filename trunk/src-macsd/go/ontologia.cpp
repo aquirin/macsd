@@ -2,7 +2,7 @@
 
 //---------------------------------------------
 
-go::go(set<unsigned int>* bn, set< tuplax3<unsigned int> >* be, map<unsigned int,string>* d) {
+go::go(string name, set<unsigned int>* bn, set< tuplax3<unsigned int> >* be, map<unsigned int,string>* d) {
     _base_nodos = bn;
     _base_ejes = be;
     _desc = d;
@@ -27,34 +27,58 @@ go::go(const go& s) {
 //---------------------------------------------
  
 void go::agregarEje(const unsigned int ini, const unsigned int fin, const unsigned int s) {
-    if (!(_desc->find(ini) != _desc->end())) {
+    if (_desc->find(ini) == _desc->end()) {
         cout << "ERROR: " << ini << endl;
-//         exit(1);
+        exit(1);
     }
-    if (!(_desc->find(fin) != _desc->end())) {
+    if ((fin != 0) and (_desc->find(fin) == _desc->end())) {
         cout << "ERROR: " << fin << endl;
-//         exit(1);
+        exit(1);
     }
     
-    assert((_desc->find(ini) != _desc->end()) && (_desc->find(fin) != _desc->end()) && (s == 0) && (_nodos.find(fin) != _nodos.end()));
-     
+//     cout << ini << ' ' << fin << endl;
     
+    assert((_desc->find(ini) != _desc->end()) and ((fin == 0) or (_desc->find(fin) != _desc->end())));
+     
     if (_nodos.find(ini) == _nodos.end()) {
         _nodos.insert(ini);
-        for (set< tuplax3<unsigned int> >::const_iterator p = _base_ejes->begin(); p != _base_ejes->end(); p++) {
-            // n es el hijo y busco el padre
-            if (p->first == ini) {
-//                 cout << p->first << ' ' << p->second << endl;
-                _ejes.insert(*p);
-                if (_nodos.find(p->second) == _nodos.end()) {
-                    agregarEje(p->second,3673,0);
-                }
-            }
-        }
     }
-//     else {
-//         cerr << "YA ESTA" << endl;
-//     }
+    if ((fin != 0) and (_nodos.find(fin) == _nodos.end())) {
+        _nodos.insert(fin);
+    }
+    
+    if (fin != 0)
+      _ejes.insert(tuplax3<unsigned int>(ini,fin,s));
+        
+//     // Agrego padres...
+//     for (set< tuplax3<unsigned int> >::const_iterator p = _base_ejes->begin(); p != _base_ejes->end(); p++) {
+//       if ((p->first == ini) and (!ejeUsado(p->first,p->second,p->third))) {
+// 	// Los ejes son (hijo,padre)
+// // 	_nodos.insert(p->second);
+// // 	_ejes.insert(tuplax3<unsigned int>(p->first,p->second,p->third));
+// 	agregarEje(p->first,p->second,p->third);
+// 	cout << "+" << p->first << ' ' << p->second << endl;
+//       }
+//    }
+//    
+  int current;
+
+  stack<int> still_new;
+
+  still_new.push(ini);
+  
+  while (! still_new.empty()) {
+    current = still_new.top();
+//     cout << "+" << current << endl;
+    still_new.pop();
+    for (set< tuplax3<unsigned int> >::const_iterator p = _base_ejes->begin(); p != _base_ejes->end(); p++) {
+      if ((p->first == current) and (!ejeUsado(p->first,p->second,p->third))) {
+	// Los ejes son (hijo,padre)
+	agregarEje(p->first,p->second,p->third);
+	still_new.push(p->second);
+      }
+    }
+  }
 }
 
 //---------------------------------------------
@@ -118,6 +142,7 @@ float go::nivelRelativo(const go& s) const {
             }
             if (!found) {
                 cout << "ERROR: " << cual << endl;
+		exit(1);
             }
             q--;
             cual = q->second;
@@ -179,10 +204,12 @@ vector< tuplax3<unsigned int> > go::ejesNoUtilizados() const {
     vector< tuplax3<unsigned int> > diff;
     
      for (set< tuplax3<unsigned int> >::const_iterator p = _base_ejes->begin(); p != _base_ejes->end(); p++) {
-//          cout << (*p).first << ' ' << (*p).second << endl;
 //          if ((_ejes.find(*p) == _ejes.end()) && (_nodos.find(p->second) != _nodos.end()))
-         if (_ejes.find(*p) == _ejes.end())
+// 	              cout << "JJ: " << (*p).first << ' ' << (*p).second << endl;
+
+	 if (_ejes.find(*p) == _ejes.end()) {
              diff.push_back(*p);
+	 }
      }
          
     return diff;

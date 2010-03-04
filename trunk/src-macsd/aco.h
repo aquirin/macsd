@@ -30,8 +30,8 @@ protected:
      * el vector con las hormigas (es decir, las subestructuras)
      */
     vector <Hormiga *> hormigas;
-    
-        /**
+       
+    /**
      * feromona inicial para la matriz de rastros de feromona
      */
     float feromonaInicial;

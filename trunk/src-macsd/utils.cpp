@@ -225,9 +225,9 @@ int ranking(const int cant, const float nu_max, const float nu_min) {
     proba[0] = 0.0;
     for (unsigned int i = 1; i <= cant; i++) {
         proba[i] = proba[i-1] + (1./cant)*(nu_min+(((nu_max-nu_min)*(i-1.))/(cant-1.)));
-         cout << proba[i] << " ";
+//          cout << proba[i] << " ";
     }
-    cout << endl;
+//     cout << endl;
     
 //      cout << "RANDOM: " << random_entre_0_y_1 << endl;
 //     float valor = 1+((((random_entre_0_y_1*cant)-nu_min)*(cant-1))/(nu_max-nu_min));

@@ -39,7 +39,9 @@ debug-vmap:	clean
 	g++ -g -O0 -c Parameter.cpp
 	g++ -o exe-vmap.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o vmap.o
 	echo "exe-vmap.dbg has been generated!"
-
+	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap/load.cpp
+	g++ -o exe-load_vmap routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o vmap.o
+	echo "exe-load_vmap has been generated!"
 	
 debug-go:	clean
 	cp go/shapes.vector.cpp go/shapes.cpp
@@ -58,7 +60,7 @@ debug-go:	clean
 	echo "exe-go.dbg has been generated!"
 	g++ -g -O0 -c -DVERSION=V_GO go/load.cpp
 	g++ -o exe-load routines.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o load.o
-	echo "exe-load has been generated!"
+	echo "exe-load_go has been generated!"
 	
 	
 release-set:	clean
@@ -113,7 +115,7 @@ release-vector:	clean
 
 
 clean:
-	rm -f *.o exe exe-shape.dbg exe-vmap.dbg exe-go.dbg exe-load exe-set exe-matrix  exe-vector
+	rm -f *.o exe exe-shape.dbg exe-vmap.dbg exe-go.dbg exe-load exe-set exe-matrix exe-vector exe-load_vmap exe-load_shape
 
 
 exe-old:

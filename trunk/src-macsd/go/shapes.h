@@ -1,3 +1,6 @@
+///// DO NOT MODIFY shapes.cpp/h BUT shapes.*.cpp/h
+///// AS THESE FILES WILL BE ERASED BY THE MAKEFILE
+
 #ifndef __SHAPES_H__
 #define __SHAPES_H__
 
@@ -8,7 +11,7 @@
 #include <map>
 #include <cassert>
 #include <fstream>
-#include "utils.h"
+#include "../utils.h"
 #include <iostream>
 
 using namespace std;
@@ -21,18 +24,19 @@ class shapes {
         shapes(const shapes& s) : _grafo(s._grafo) {_nodo = s._nodo;};
         
         void agregarEje(const unsigned int ini, const unsigned int fin, const unsigned int s);
-        void agregarNodo(const int &nod) {assert((nod-1 < cantNodos()) && (_nodo == -1)); _nodo = nod-1;};
+        void agregarNodo(const int nod) {assert((nod-1 < cantNodos()) && (_nodo == -1)); _nodo = nod-1;};
         void clear();
                 
         unsigned int size() const;
         
         bool ejeUsado(const unsigned int ini, const unsigned int fin, const unsigned int s) const {return _grafo[ini-1][fin-1][s-1];};
         
-        bool nodoUsado(const int nod) const;
+        bool nodoUsado(const unsigned int nod) const;
         
         set<unsigned int> nodosUtilizados() const;
         
-        set< tuplax3<unsigned int> > ejesNoUtilizados() const;
+        set< CANDIDATE > ejesNoUtilizados() const;
+        vector< CANDIDATE > ejesNoUtilizadosButIn(vector<shapes> _inst) const;
         
         unsigned int elNodo() const {return _nodo;};
         

@@ -21,12 +21,12 @@ class vmap {
     public: 
         // Constructores y destructores
         vmap() {};
-        vmap(set<string>* bn, set< pair< pair<string,string>, unsigned int> >* be, const unsigned int& cant);
+        vmap(map<string,unsigned int>* bn, set< pair< pair<string,string>, unsigned int> >* be, const bool &azar);
         ~vmap() {};
         vmap(const vmap& s);
 
         // Recuperacion de la informacion
-        set<string>* base_nodos() const {return _base_nodos;};
+        map<string,unsigned int>* base_nodos() const {return _base_nodos;};
         set< pair< pair<string,string>, unsigned int> >* base_ejes() const {return _base_ejes;};
         map<unsigned int,string> nodos() const {return _nodos;};
         set< CANDIDATE > ejes() const {return _ejes;};
@@ -50,6 +50,8 @@ class vmap {
         bool operator!= (const vmap& s) const;
 	bool empty() const {return _nodos.empty();};
         bool igual(const vmap& s) const;   
+	unsigned int mapear(const unsigned int& i) const;
+	void azar();
 	
 	vector< CANDIDATE > posibilidades_totales() const;
 //         vector< CANDIDATE > posibilidades_reales() const;
@@ -61,10 +63,8 @@ class vmap {
         map<unsigned int,string> _nodos;
         set< CANDIDATE > _ejes;
         
-        set<string>* _base_nodos;
+        map<string,unsigned int>* _base_nodos;
         set< pair< pair<string,string>, unsigned int> >* _base_ejes;
-	
-	unsigned int _max_nodos;
 };
 
 ostream& operator<<(ostream& os, const vmap& s);

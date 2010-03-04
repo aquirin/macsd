@@ -14,7 +14,7 @@ using namespace std;
 #define V_SHAPE 1		// Shape version
 #define V_GO 2			// Gene Ontology version
 #define V_SCIENCEMAP 3		// Visual Science Map version
-
+#define V_WWW 4			// WWW version
 
 // *** Definition of the tuplax3 type
 template <typename T>
@@ -39,7 +39,7 @@ bool operator< (const tuplax3<T>& a, const tuplax3<T>& b) {
 // *** Definition of the CANDIDATE type
 #if VERSION == V_SHAPE
 	typedef pair<unsigned int, string> CANDIDATE;
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 	template <typename T> class tuplax3;
 	typedef tuplax3<unsigned int> CANDIDATE;
 #endif
@@ -58,6 +58,8 @@ bool operator< (const tuplax3<T>& a, const tuplax3<T>& b) {
 	#define SOLUTION go
 #elif VERSION == V_SCIENCEMAP
 	#define SOLUTION vmap
+#elif VERSION == V_WWW
+	#define SOLUTION www
 #endif
 
 #endif // __GLOBAL_H__
