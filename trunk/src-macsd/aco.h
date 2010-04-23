@@ -63,7 +63,6 @@ protected:
 	 */
 	unsigned int *heuristicas;
 		
-// 	Hormiga _hormiga_basica;
 	/** 
 	 * funcion miembro para establecer umbrales y que cada hormiga funcione de forma distinta
 	 * de igual forma asocia una heuristica distinta a cada hormiga para un enfoque multicolony
@@ -114,6 +113,8 @@ public:
 virtual void accionesTrasDecision (Hormiga *hormiga, const unsigned int nodo1, const string eje) = 0;
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
 virtual void accionesTrasDecision (Hormiga *hormiga, const unsigned int nodo1, const unsigned int nodo2, const unsigned int eje) = 0;
+#elif VERSION == V_WWW
+virtual void accionesTrasDecision (Hormiga *hormiga, const unsigned int nodo1, const unsigned int nodo2, const string eje) = 0;
 #endif
     
 

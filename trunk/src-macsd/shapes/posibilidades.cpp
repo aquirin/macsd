@@ -20,16 +20,22 @@ typename posibilidades<T>::iterator posibilidades<T>::iterator::operator++() {
     bool done = false; 
     bool found = false;       
     do {       
+      
+   cout << "OPCION: ";
+   for (unsigned int i = 0; i < _donde.size(); i++) {
+        cout << i << ' ' << (*_cuales)[i][_donde[i]] << endl;
+   }
+
 //         if (found) {
             _donde[ll]++;
             
             while (!done && (ll >= 0) && (_donde[ll] == (*_cuales)[ll].size())) {
-    //             cout << "ANTES: " << ll << ' ' << donde[ll] << endl;
+//                 cout << "ANTES: " << ll << ' ' << _donde[ll] << endl;
                 _donde[ll] = 0;
                 if (ll - 1 >= 0)
                     _donde[ll-1]++;
                 ll--;
-    //             cout << "DESPI: " << ll << ' ' << donde[ll] << endl;
+//                 cout << "DESPI: " << ll << ' ' << _donde[ll] << endl;
             }
             if (ll < 0) {
                 done = true;

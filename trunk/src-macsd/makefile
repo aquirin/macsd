@@ -17,16 +17,17 @@ debug-shape:	clean
 	g++ -g -O0 -c -DVERSION=V_SHAPE main.cpp
 	g++ -g -O0 -c -DVERSION=V_SHAPE aco.cpp
 	g++ -g -O0 -c -DVERSION=V_SHAPE utils.cpp
+	g++ -g -O0 -c -DVERSION=V_SHAPE global.cpp
 	g++ -g -O0 -c Parameter.cpp
-	g++ -o exe-shape.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o
+	g++ -o exe-shape.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o global.o
 	echo "exe-shape.dbg has been generated!"
 	g++ -g -O0 -c -DVERSION=V_SHAPE shapes/load.cpp
-	g++ -o exe-load_shape routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o
+	g++ -o exe-load_shape routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o
 	echo "exe-load_shape has been generated!"
 
 debug-vmap:	clean
-	cp go/shapes.vector.cpp vmap/shapes.cpp
-	cp go/shapes.vector.h vmap/shapes.h
+	cp vmap/shapes.vector.cpp vmap/shapes.cpp
+	cp vmap/shapes.vector.h vmap/shapes.h
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap/shapes.cpp
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap/vmap.cpp
 	gcc -g -O0 -c routines.c
@@ -36,13 +37,34 @@ debug-vmap:	clean
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP main.cpp
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP aco.cpp
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP utils.cpp
+	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP global.cpp
 	g++ -g -O0 -c Parameter.cpp
-	g++ -o exe-vmap.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o vmap.o
+	g++ -o exe-vmap.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o vmap.o global.o
 	echo "exe-vmap.dbg has been generated!"
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap/load.cpp
-	g++ -o exe-load_vmap routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o vmap.o
+	g++ -o exe-load_vmap routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o vmap.o global.o
 	echo "exe-load_vmap has been generated!"
 	
+debug-www:	clean
+	cp www/shapes.vector.cpp www/shapes.cpp
+	cp www/shapes.vector.h www/shapes.h
+# 	g++ -g -O0 -c -DVERSION=V_WWW www/shapes.cpp
+	g++ -g -O0 -c -DVERSION=V_WWW www/www.cpp
+	gcc -g -O0 -c routines.c
+	g++ -g -O0 -c -DVERSION=V_WWW hormigas.cpp
+	g++ -g -O0 -c -DVERSION=V_WWW NDominatedSet.cpp
+	g++ -g -O0 -c -DVERSION=V_WWW macs.cpp
+	g++ -g -O0 -c -DVERSION=V_WWW main.cpp
+	g++ -g -O0 -c -DVERSION=V_WWW aco.cpp
+	g++ -g -O0 -c -DVERSION=V_WWW utils.cpp
+	g++ -g -O0 -c -DVERSION=V_WWW global.cpp
+	g++ -g -O0 -c Parameter.cpp
+	g++ -o exe-www.dbg routines.o main.o macs.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o www.o global.o
+	echo "exe-www.dbg has been generated!"
+	g++ -g -O0 -c -DVERSION=V_WWW www/load.cpp
+	g++ -o exe-load_www routines.o macs.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o www.o global.o
+	echo "exe-load_www has been generated!"
+
 debug-go:	clean
 	cp go/shapes.vector.cpp go/shapes.cpp
 	cp go/shapes.vector.h go/shapes.h
@@ -55,11 +77,12 @@ debug-go:	clean
 	g++ -g -O0 -c -DVERSION=V_GO main.cpp
 	g++ -g -O0 -c -DVERSION=V_GO aco.cpp
 	g++ -g -O0 -c -DVERSION=V_GO utils.cpp
+	g++ -g -O0 -c -DVERSION=V_GO global.cpp
 	g++ -g -O0 -c Parameter.cpp
-	g++ -o exe-go.dbg routines.o main.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o
+	g++ -o exe-go.dbg routines.o main.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o global.o
 	echo "exe-go.dbg has been generated!"
 	g++ -g -O0 -c -DVERSION=V_GO go/load.cpp
-	g++ -o exe-load routines.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o load.o
+	g++ -o exe-load routines.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o
 	echo "exe-load_go has been generated!"
 	
 	

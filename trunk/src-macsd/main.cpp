@@ -18,32 +18,6 @@
 
 using namespace std;
 
-// void obtenerTau0MACS(float &coste1, float &coste2) {
-//     float sumaCostesGreedies, medias[2];
-//     
-//     // creamos una secuencia de tareas con 2 objetivos sobre la informacion creada
-//     SecTareas tareas(precedencias, infoTareas, areaPromedia, PARA.GLOB_tCiclo, 2);
-//     
-//     sumaCostesGreedies = 1.;
-// 	
-//     for (int i = 0; i < 2; i++)            
-//         medias[i] = 0.;
-// 
-//     for (int i = 0; i < 2; i++){
-//         tareas.circuitoGreedy(i);                
-//         cout << "El algoritmo Greedy (info. heur. " << i+1 << ") dio una solucion con costes " 
-//                 << tareas.getCoste(0) << " y " << tareas.getCoste(1) << endl;
-// 
-//         for (int j = 0; j < 2; j++)
-//         	medias[j] += tareas.getCoste(j); 
-//     }
-// 
-//     coste1 = (medias[0] / 2.);
-//     coste2 = (medias[1] / 2.);
-//                         
-// }
-
-//-------------------------------------------------------------------------
 
 #if VERSION == V_GO
 void leerNodos(const string& s, set<unsigned int>& nodos, map<unsigned int,string>& desc) {
@@ -72,11 +46,7 @@ void leerNodos(const string& s, set<unsigned int>& nodos, map<unsigned int,strin
 
     arch.close();
 }
-#endif
 
-//-------------------------------------------------------------------------
-
-#if VERSION == V_GO
 void leerEjes(const string& s, set< CANDIDATE >& ejes) {
 //     0009701:0009716;0009717;0046289;0009689
 // Los ejes son (hijo,padre)
@@ -109,91 +79,7 @@ void leerEjes(const string& s, set< CANDIDATE >& ejes) {
 
     arch.close();
 }
-#endif
 
-//-------------------------------------------------------------------------
-               
-#if VERSION == V_SHAPE
-void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
-    ifstream arch;
-    string cadena;
-    
-    unsigned int aux;
-    unsigned int aux1;
-    string desde, hasta;
-    vector<string> w(5);
-    w[0] = "square";
-    w[1] = "triangle";
-    w[2] = "ellipse";
-    w[3] = "rectangle";
-    w[4] = "circle";
-    SOLUTION s(8,w);
-    
-    arch.open(fichero.c_str());
-
-    if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
-        exit(1);
-    }
-    
-//     bool first = true;
-    string cad;
-    unsigned int codigo;
-    while (!arch.eof()) {
-        getline(arch, cadena);
-        if (!arch.eof()) {
-            if (!cadena.empty()) {
-                switch (cadena[0]) {
-                    case 'v':
-//                     v 1 object
-                        aux = cadena.rfind(' ', cadena.size());
-                        cad = cadena.substr(aux + 1, cadena.size() - aux);
-                        aux1 = cadena.find(' ', 0);
-                        desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
-//                         cout << desde << ' ' << cad << endl;
-                        s.agregarNodo(atoi(desde.c_str()), cad);
-                        break;
-                    case 'e':
-                    case 'd':
-    //                     d 1 3 on
-                        aux = cadena.find(' ', 0);
-                        aux1 = cadena.find(' ', aux + 1);
-                        desde = cadena.substr(aux + 1, aux1 - aux - 1);
-                        aux = cadena.rfind(' ', cadena.size());
-                        hasta = cadena.substr(aux1 + 1, aux - aux1 - 1);
-                        cadena = cadena.substr(aux + 1, cadena.size() - aux);
-                        
-//                         if (first) {
-//                             s.agregarNodo(atoi(desde.c_str()));
-//                             first = false;
-//                         }
-                        codigo = 1;
-                        if (cadena == "shape")
-                            codigo++;
-//                         cout << atoi(desde.c_str()) << ' ' << atoi(hasta.c_str()) << ' ' << codigo << endl;
-                        s.agregarEje(atoi(desde.c_str()), atoi(hasta.c_str()), codigo);
-                        break;
-                    case '%':
-                    default:
-                        break;
-                }
-            }
-            else {
-//                 temp_nodos.clear();
-//                 first = true;
-                v.push_back(s);
-                cout << s << endl;
-                s.clear();
-            }
-        }
-    }
-    if (!s.empty())
-        v.push_back(s);
-    
-    arch.close();
-}
-#endif
-
-#if VERSION == V_GO
 void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe, const string& fmn, const string& fme, const string& ccn, const string& cce, vector< SOLUTION >& v) {
     ifstream arch;
     string cadena;
@@ -323,6 +209,89 @@ void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe
 
     arch.close();
 }
+
+#endif
+
+//-------------------------------------------------------------------------
+               
+#if VERSION == V_SHAPE
+void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
+    ifstream arch;
+    string cadena;
+    
+    unsigned int aux;
+    unsigned int aux1;
+    string desde, hasta;
+    vector<string> w(5);
+    w[0] = "square";
+    w[1] = "triangle";
+    w[2] = "ellipse";
+    w[3] = "rectangle";
+    w[4] = "circle";
+    SOLUTION s(8,w);
+    
+    arch.open(fichero.c_str());
+
+    if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
+        exit(1);
+    }
+    
+//     bool first = true;
+    string cad;
+    unsigned int codigo;
+    while (!arch.eof()) {
+        getline(arch, cadena);
+        if (!arch.eof()) {
+            if (!cadena.empty()) {
+                switch (cadena[0]) {
+                    case 'v':
+//                     v 1 object
+                        aux = cadena.rfind(' ', cadena.size());
+                        cad = cadena.substr(aux + 1, cadena.size() - aux);
+                        aux1 = cadena.find(' ', 0);
+                        desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
+//                         cout << desde << ' ' << cad << endl;
+                        s.agregarNodo(atoi(desde.c_str()), cad);
+                        break;
+                    case 'e':
+                    case 'd':
+    //                     d 1 3 on
+                        aux = cadena.find(' ', 0);
+                        aux1 = cadena.find(' ', aux + 1);
+                        desde = cadena.substr(aux + 1, aux1 - aux - 1);
+                        aux = cadena.rfind(' ', cadena.size());
+                        hasta = cadena.substr(aux1 + 1, aux - aux1 - 1);
+                        cadena = cadena.substr(aux + 1, cadena.size() - aux);
+                        
+//                         if (first) {
+//                             s.agregarNodo(atoi(desde.c_str()));
+//                             first = false;
+//                         }
+                        codigo = 1;
+                        if (cadena == "shape")
+                            codigo++;
+//                         cout << atoi(desde.c_str()) << ' ' << atoi(hasta.c_str()) << ' ' << codigo << endl;
+                        s.agregarEje(atoi(desde.c_str()), atoi(hasta.c_str()), codigo);
+                        break;
+                    case '%':
+                    default:
+                        break;
+                }
+            }
+            else {
+//                 temp_nodos.clear();
+//                 first = true;
+                v.push_back(s);
+                cout << s << endl;
+                s.clear();
+            }
+        }
+    }
+    if (!s.empty())
+        v.push_back(s);
+    
+    arch.close();
+}
 #endif
 
 #if VERSION == V_SCIENCEMAP           
@@ -439,20 +408,124 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v, map<string,unsi
 }
 #endif
             
+
+#if VERSION == V_WWW         
+void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v, map<string,unsigned int>* nodos, set< pair< pair<string,string>, string> >* ejes, const unsigned int max) {
+    ifstream arch;
+    string cadena;
+    
+    unsigned int i = 1;
+    
+    unsigned int aux;
+    unsigned int aux1;
+    string desde, hasta;
+    
+    arch.open(fichero.c_str());
+
+    if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
+        exit(1);
+    }
+
+    map<unsigned int, string> quenodo;
+    string cad;
+    while (!arch.eof()) {
+        getline(arch, cadena);
+        if (!arch.eof()) {
+            if (!cadena.empty()) {
+                switch (cadena[0]) {
+                    case 'v':
+			//  v 1 page
+                        aux = cadena.rfind(' ', cadena.size());
+                        cad = cadena.substr(aux + 1, cadena.size() - aux);
+                        aux1 = cadena.find(' ', 0);
+                        desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
+			if (nodos->find(cad) == nodos->end())
+			  (*nodos)[cad] = i++;
+			quenodo[atoi(desde.c_str())] = cad;
+                        break;
+		    case 'd':
+			// d 1 25 word
+                        aux = cadena.find(' ', 0);
+                        aux1 = cadena.find(' ', aux + 1);
+                        desde = cadena.substr(aux + 1, aux1 - aux - 1);
+                        aux = cadena.rfind(' ', cadena.size());
+                        hasta = cadena.substr(aux1 + 1, aux - aux1 - 1);
+                        cadena = cadena.substr(aux + 1, cadena.size() - aux);
+                        
+			ejes->insert(pair< pair<string,string>, string>(pair<string,string>(quenodo[atoi(desde.c_str())],quenodo[atoi(hasta.c_str())]), cadena));
+                        break;
+		    default:
+		        break;
+                }
+            }
+	    else {
+		quenodo.clear();		
+            }
+        }
+    }
+   
+    arch.close();
+    
+    SOLUTION s(nodos,ejes,max);
+    
+    i = 1;
+    
+    arch.open(fichero.c_str());
+
+    if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
+        exit(1);
+    }
+    while (!arch.eof()) {
+        getline(arch, cadena);
+        if (!arch.eof()) {
+            if (!cadena.empty()) {
+                switch (cadena[0]) {
+                    case 'v':
+			//  v 1 page
+                        aux = cadena.rfind(' ', cadena.size());
+                        cad = cadena.substr(aux + 1, cadena.size() - aux);
+                        aux1 = cadena.find(' ', 0);
+                        desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
+			
+                        s.agregarNodo(atoi(desde.c_str()), cad);
+                        break;
+                    case 'd':
+			// d 1 25 word
+                        aux = cadena.find(' ', 0);
+                        aux1 = cadena.find(' ', aux + 1);
+                        desde = cadena.substr(aux + 1, aux1 - aux - 1);
+                        aux = cadena.rfind(' ', cadena.size());
+                        hasta = cadena.substr(aux1 + 1, aux - aux1 - 1);
+                        cadena = cadena.substr(aux + 1, cadena.size() - aux);
+                        
+                        s.agregarEje(atoi(desde.c_str()), atoi(hasta.c_str()), cadena);
+                        break;
+                    case '%':
+                    default:
+                        break;
+                }
+            }
+            else {
+		if (!s.empty()) {
+		  v.push_back(s);
+		  cout << "NUM " << i << s << endl;
+		  i++;
+		  s.clear();
+		}
+            }
+        }
+    }
+    if (!s.empty())
+        v.push_back(s);
+    
+    arch.close();
+}
+#endif
+
+	    
 //-------------------------------------------------------------------------
 
 // funcion MAIN del proyecto
-//-------------------------------------------------
-// SHAPE-version:
-// ./exe house3.g shapes 1 2 10 0.1 0.2 0.5 0.4 0.5 0
-
-// GO-version:
-// ./exe cluster20.csv process.nodes process.edges function.nodes function.edges cellular.nodes cellular.edges emo-cc 1 2 10 0.1 0.2 0.5 0.4 0.5 0
-
-// SCIENCEMAP-version:
-// ./exe rocio1 salida 1 10 10 0.1 0.2 0.5 0.4 0.5 1 5 3
-
-// 
 
 int main(int argc, char *argv[]){	
     Parametros params;
@@ -461,18 +534,8 @@ int main(int argc, char *argv[]){
     vector<SOLUTION> baseDatos;
     int num_nodes, num_edges;
   
-	/* TODO: HARMONIZE (OLD code) */
-#if VERSION == V_SCIENCEMAP
-	/*if(argc!=13)
-    {
-    	fprintf(stderr, "Usage: %s <input file> <output file> <random seed> <max time> <num ants> <beta> <ro> <q0> <tau0> <gamma> <num nodes> <num edges>\n",
-		argv[0]);
-	exit(-1);
-    }*/
-#endif
-
-	// Initialize the random generator    
-	srand(PARA.GLOB_semilla);
+    // Initialize the random generator    
+    srand(PARA.GLOB_semilla);
         
     // almacenamiento de parametros        
     // -----------------------------
@@ -487,10 +550,16 @@ int main(int argc, char *argv[]){
     map<string,unsigned int> nodos;
     set< pair< pair<string,string>, unsigned int> > ejes;
     leeFicheroDatos (PARA.GLOB_rutaEntrada, baseDatos, &nodos, &ejes);
+#elif VERSION == V_WWW
+    map<string,unsigned int> nodos;
+    set< pair< pair<string,string>, string> > ejes;
+    leeFicheroDatos (PARA.GLOB_rutaEntrada, baseDatos, &nodos, &ejes, PARA.MOACO_maxTama);
+    cout << "CUANTOS " << baseDatos.size() << endl;
 #endif
 
     
 //---------------------------------------------------------------------
+// Falta para WWW
     map <CANDIDATE,double> aparEje;
     if (PARA.MOACO_multiheuristics == 1) {
         // STATIC
@@ -503,7 +572,7 @@ int main(int argc, char *argv[]){
 	      already_in_instance[*it] = false;
 	    }	      
             vector< CANDIDATE >::iterator p = tent.begin();
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
             set< CANDIDATE > tent = baseDatos[i].ejes();
 	    for (set< CANDIDATE >::iterator it = tent.begin(); it != tent.end(); ++it) {
 	      already_in_instance[*it] = false;
@@ -538,40 +607,15 @@ int main(int argc, char *argv[]){
     }
 //-------------------------------------------------------------------------
 
-//     ofstream arch1("debug");
-//     for (int i = 0; i < baseDatos.size(); i++) {
-//         baseDatos[i].imprime(arch1);
-//     }
-//     arch1.close();
-//     cout << "FIN" << endl;
-    // algoritmo de hormigas multi-objetivo MACS
-/*
-    // Para obtener el tau0 de un ACO necesitamos conocer las medias de los costes de las soluciones greedies respecto a cada objetivo
-    float coste1, coste2;
-    
-    obtenerTau0MACS(coste1, coste2);
-    
-    PARA.GLOB_tau0 = (coste1 * coste2);
-    */
     cout << "El algoritmo MACS se esta ejecutando... " << endl;    
     MACS colonia(baseDatos, params);
-                    
- /*   cout << "Base de datos:" << endl;
-    for (int i = 0; i < baseDatos.size(); i++)
-        cout << baseDatos[i];
- */   
     string str_rs(PARA.GLOB_rutaSalida);
     soluciones = colonia.ejecuta(str_rs);      
 
-//     impresion en fichero HTML de informacion sobre la ejecucion (nº evaluaciones, tiempos ...)
+//  impresion en fichero HTML de informacion sobre la ejecucion (nº evaluaciones, tiempos ...)
     fichero = str_rs + ".htm";
     colonia.printInfo(fichero);
     
-//     impresion de informacion sobre busqueda local
-//     fichero = str_rs + "-BL.txt";                                
-//     if (PARA.GLOB_BL == true)
-//             BL::imprime(fichero);
-        
 //     -----------------------------------
 //     GENERACIoN DE FICHEROS DE RESULTADOS
 
@@ -591,9 +635,6 @@ int main(int argc, char *argv[]){
     
     eliminamos los objetos manualmente antes de que se destruya
     automaticamente el archivo de no dominados NDominatedSet*/
-#if VERSION == V_GO
-    soluciones.vacia();		/* TODO: HARMONIZE (not in the other version) */
-#endif
            
 //     -----------------------------------
     

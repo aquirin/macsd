@@ -4,8 +4,12 @@
 #include "aco.h"
 #if VERSION == V_SHAPE
 #include "shapes/shapes.h"
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+#elif VERSION == V_GO
 #include "go/ontologia.h"
+#elif VERSION == V_SCIENCEMAP
+#include "vmap/vmap.h"
+#elif VERSION == V_WWW
+#include "www/www.h"
 #endif
 
 
@@ -79,6 +83,8 @@ class MACS : public ACO {
     void modificaFeromonaPasoAPaso(unsigned int x, const string y);
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
     void modificaFeromonaPasoAPaso(unsigned int x, unsigned int y, unsigned int z);
+#elif VERSION == V_WWW
+    void modificaFeromonaPasoAPaso(unsigned int x, unsigned int y, string z);
 #endif
 
 
@@ -105,6 +111,8 @@ class MACS : public ACO {
     void accionesTrasDecision (Hormiga *hormiga, unsigned int x, const string y);
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
     void accionesTrasDecision (Hormiga *hormiga, unsigned int x, unsigned int y, unsigned int z);
+#elif VERSION == V_WWW
+    void accionesTrasDecision (Hormiga *hormiga, unsigned int x, unsigned int y, string z);
 #endif
 
 

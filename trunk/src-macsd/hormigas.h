@@ -10,6 +10,8 @@
 #include "go/ontologia.h"
 #elif (VERSION == V_SCIENCEMAP)
 #include "vmap/vmap.h"
+#elif (VERSION == V_WWW)
+#include "www/www.h"
 #endif
 
 /** 
@@ -91,9 +93,7 @@ class Hormiga {
         
 #if VERSION == V_SHAPE
        	Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION quien);
-#elif VERSION == V_GO
-        Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION sub);
-#elif VERSION == V_SCIENCEMAP
+#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
         Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION sub);
 #endif
 
@@ -116,6 +116,8 @@ class Hormiga {
         void avanza(const unsigned int nodo1, const string enlace);
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
         void avanza(const unsigned int nodo1, const unsigned int nodo2, const unsigned int enlace);
+#elif VERSION == V_WWW
+        void avanza(const unsigned int nodo1, const unsigned int nodo2, const string enlace);
 #endif
 
 
@@ -128,13 +130,8 @@ class Hormiga {
         /**
         * devuelve el conjunto de candidatos posibles
         */
-#if VERSION == V_SCIENCEMAP
-        vector< CANDIDATE > getCandidatos_original();
-        vector< CANDIDATE > getCandidatos_optimized();
-        vector< CANDIDATE > getCandidatos_debug();
-#endif
+
         vector< CANDIDATE > getCandidatos();   
-  
         
         /**
         * indica si un nodo ha sido ya utilizado o no
