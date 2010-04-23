@@ -7,66 +7,66 @@
 using namespace std;
 
 int main() {
-    vector<string> figuras(4);
-    figuras[0] = "circle";
-    figuras[1] = "square";
-    figuras[2] = "rectangle";
-    figuras[3] = "triangle";
-    shapes uno(4, figuras), dos(4, figuras);
-    
-    // Genero la primer figura
-    uno.agregarNodo(1, "object");
-    uno.agregarNodo(2, "triangle");
-    uno.agregarNodo(3, "object");
-    uno.agregarNodo(4, "circle");
-    uno.agregarNodo(5, "object");
-    uno.agregarEje(1,2,2);
-    uno.agregarEje(1,3,1);
-    uno.agregarEje(3,4,2);
-    uno.agregarEje(3,5,1);
-            
-    // Genero la segunda figura
-    dos.agregarNodo(1, "object");
-    dos.agregarNodo(2, "object");
-    dos.agregarNodo(3, "object");    
-    dos.agregarNodo(4, "circle");
-    dos.agregarNodo(5, "triangle");
-    dos.agregarEje(1,2,1);
-    dos.agregarEje(2,3,1);
-    dos.agregarEje(1,5,2);
-    dos.agregarEje(2,4,2);
-    
-    if (uno == dos)
-        cout << "Iguales" << endl;
-    else
-        cout << "Distintos" << endl;
-}
+//     vector<string> figuras(4);
+//     figuras[0] = "circle";
+//     figuras[1] = "square";
+//     figuras[2] = "rectangle";
+//     figuras[3] = "triangle";
+//     shapes uno(4, figuras), dos(4, figuras);
+//     
+//     // Genero la primer figura
+//     uno.agregarNodo(1, "object");
+//     uno.agregarNodo(2, "triangle");
+//     uno.agregarNodo(3, "object");
+//     uno.agregarNodo(4, "circle");
+//     uno.agregarNodo(5, "object");
+//     uno.agregarEje(1,2,2);
+//     uno.agregarEje(1,3,1);
+//     uno.agregarEje(3,4,2);
+//     uno.agregarEje(3,5,1);
+//             
+//     // Genero la segunda figura
+//     dos.agregarNodo(1, "object");
+//     dos.agregarNodo(2, "object");
+//     dos.agregarNodo(3, "object");    
+//     dos.agregarNodo(4, "circle");
+//     dos.agregarNodo(5, "triangle");
+//     dos.agregarEje(1,2,1);
+//     dos.agregarEje(2,3,1);
+//     dos.agregarEje(1,5,2);
+//     dos.agregarEje(2,4,2);
+//     
+//     if (uno == dos)
+//         cout << "Iguales" << endl;
+//     else
+//         cout << "Distintos" << endl;
+// }
 
 //     srand(1);
-//     vector< vector<unsigned int> > v(3);
-//     vector<unsigned int> r(2);
-//     r[0] = 1;
-//     r[1] = 3;
-//     v[0] = r;
-//     vector<unsigned int> t(2);
-//     t[0] = 1;
-//     t[1] = 3;
-//     v[1] = t;
-//     vector<unsigned int> y(2);
-//     y[0] = 2;
-//     y[1] = 4;
-//     v[2] = y;
-//     posibilidades<unsigned int> prob(v);
-//     for (posibilidades<unsigned int>::iterator p = prob.begin(); p != prob.end(); ++p) {
-//             cout << "OPCION: ";
-//             vector<unsigned int> x = *p;
-//             for (unsigned int i = 0; i < x.size(); i++) {
-//                 cout << x[i] << ' ';
-//             }
-//             cout << endl;
-//         }
-//     }
-//          
+    vector< vector<unsigned int> > v(3);
+    vector<unsigned int> r(2);
+    r[0] = 1;
+    r[1] = 3;
+    v[0] = r;
+    vector<unsigned int> t(2);
+    t[0] = 1;
+    t[1] = 3;
+    v[1] = t;
+    vector<unsigned int> y(2);
+    y[0] = 2;
+    y[1] = 4;
+    v[2] = y;
+    posibilidades<unsigned int> prob(v);
+    for (posibilidades<unsigned int>::iterator p = prob.begin(); p != prob.end(); ++p) {
+            cout << "OPCION: ";
+            vector<unsigned int> x = *p;
+            for (unsigned int i = 0; i < x.size(); i++) {
+                cout << x[i] << ' ';
+            }
+            cout << endl;
+        }
+    }
+         
 //     double at = clock()/CLOCKS_PER_SEC;
 //     srand(1);
 //       vector< vector<unsigned int> > v(3);

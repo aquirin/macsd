@@ -18,7 +18,7 @@ ACO::ACO (vector< SOLUTION >& b, Parametros &params) : AlgoritmoMO (PARA.GLOB_BL
     set< CANDIDATE >::iterator p = tent->begin();
     for (; p != tent->end(); p++)
         this->probabilidades[CANDIDATE((*p).first,(*p).second,(*p).third)] = 0.;
-#elif VERSION == V_SCIENCEMAP
+#elif (VERSION == V_SCIENCEMAP ) || (VERSION == V_WWW)
      vector< CANDIDATE > lista = b[0].posibilidades_totales();
      for (vector< CANDIDATE >::iterator p = lista.begin(); p != lista.end(); p++)
         this->probabilidades[*p] = 0.;
@@ -101,8 +101,8 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         inicial[0].agregarNodo(1, "object");
     #elif VERSION == V_GO
         // Nada
-    #elif VERSION == V_SCIENCEMAP
-        inicial[0].azar();
+    #elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
+        inicial[0].agregarNodo(1, "page");
     #endif
     for (unsigned int n = 1; n < PARA.MOACO_numHormigas * 10; n++) {
 //         cout << "Inicial: " << n << endl;
@@ -115,6 +115,8 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         // Nada
 	#elif VERSION == V_SCIENCEMAP
 	    inicial[n].azar();
+	#elif VERSION == V_WWW
+	    inicial[n].agregarNodo(1, "page");
         #endif
         
         // Elijo cantidad de pasos
@@ -142,9 +144,9 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                         it1++;
                     }
                 }
-	    #elif VERSION == V_SCIENCEMAP
+	    #elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
                 candidatas = inicial[n].ejesNoUtilizados();
-            #endif    
+	    #endif    
                 
             // Elijo un candidato al azar
             unsigned int y = intAzar(0, candidatas.size() - 1);
@@ -158,7 +160,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                         cual = 2;
                     inicial[n].agregarNodo(inicial[n].cantNodos() + 1, candidatas[y].second);
                     inicial[n].agregarEje(candidatas[y].first, inicial[n].cantNodos(), cual);
-                #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+                #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
                     inicial[n].agregarEje(candidatas[y].first, candidatas[y].second, candidatas[y].third);
 // 		    cout << inicial[n] << endl;
                 #endif                
@@ -172,7 +174,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         
     #if VERSION == V_SHAPE
 	Hormiga best(this->base, this->nObj, this->_aparEje, inicial[0]);
-    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 	Hormiga best(1, this->base, this->nObj, this->_aparEje, inicial[0]);
     #endif 
     
@@ -181,7 +183,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 //             cout << inicial[n] << endl;
             #if VERSION == V_SHAPE
        	        Hormiga una(this->base, this->nObj, this->_aparEje, inicial[n]);
-            #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+            #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
                 Hormiga una(1, this->base, this->nObj, this->_aparEje, inicial[n]);
             #endif
 	    
@@ -392,7 +394,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 			// cout << copiar.subEst() << endl;
 			#if VERSION == V_SHAPE
 			copiar.avanza(arco.first, arco.second);
-			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 			copiar.avanza(arco.first, arco.second, arco.third);
 			#endif
 
@@ -400,7 +402,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 			if (soporte > 0) {
 			    #if VERSION == V_SHAPE
 			    this->hormigas[nHormiga]->avanza(arco.first, arco.second);
-			    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+			    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 			    this->hormigas[nHormiga]->avanza(arco.first, arco.second, arco.third);
 			    #endif
 
@@ -424,7 +426,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 		    // se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO
 		    #if VERSION == V_SHAPE
 		    this->accionesTrasDecision(this->hormigas[nHormiga], hice[nHormiga].second.first, hice[nHormiga].second.second);
-		    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+		    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 		    this->accionesTrasDecision(this->hormigas[nHormiga], hice[nHormiga].second.first, hice[nHormiga].second.second, hice[nHormiga].second.third);
 		    #endif
 

@@ -18,7 +18,7 @@ MACS::MACS (vector<SOLUTION>& b, Parametros &params) : ACO (b, params) {
     }
     
     // la matriz de feromona seria una matriz NxNXl
-#if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP)
+#if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
     vector< CANDIDATE > lista = b[0].posibilidades_totales();
     for (vector< CANDIDATE >::iterator p = lista.begin(); p != lista.end(); p++) {   
         this->matricesFeromona[*p] = this->feromonaInicial; 
@@ -54,7 +54,7 @@ double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int
     		case 1:  // STATIC
 			#if VERSION == V_SHAPE
 			  n.first = 1;
-			#elif VERSION == V_SCIENCEMAP
+			#elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 			    // Search for the correct index for both nodes
 			    n.first = this->hormigas[indice]->subEst().mapear(it->first);
 			    n.second = this->hormigas[indice]->subEst().mapear(it->second);
@@ -69,7 +69,7 @@ double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int
     		case 2:  // DYNAMIC
 			#if VERSION == V_SHAPE
 			mas.avanza(n.first,n.second);
-			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 			mas.avanza(n.first,n.second,n.third);
 			#endif                        
 
@@ -89,7 +89,7 @@ double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int
 //     	cout << (*it).first-1 << ' ' << (*it).second-1 << ' ' << (*it).third-1 << '=' << this->matricesFeromona[(*it).first-1][(*it).second-1][(*it).third-1] << endl;
 #if VERSION == V_SHAPE
   n.first = 1;
-#elif VERSION == V_SCIENCEMAP
+#elif (VERSION == V_SCIENCEMAP)  || (VERSION == V_WWW)
   // Search for the correct index for both nodes
   n.first = this->hormigas[indice]->subEst().mapear(it->first);
   n.second = this->hormigas[indice]->subEst().mapear(it->second);
@@ -111,7 +111,7 @@ double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int i
 
     double suma = this->calculaNumeradoresProbabilidades(unaHormiga, indice, candidatas);
 
-    #if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP)
+    #if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
       map<CANDIDATE,bool> done;
     #endif
     
@@ -121,7 +121,7 @@ double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int i
 		#if VERSION == V_SHAPE
 		  n.first = 1;
 		  if (done.find(n) == done.end()) {
-		#elif VERSION == V_SCIENCEMAP
+		#elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 		   // Search for the correct index for both nodes
 		  n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
 		  n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
@@ -132,7 +132,7 @@ double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int i
 		  if (done.find(n) == done.end()) {
 		#endif
         	this->probabilidades[n] /= suma;
-		#if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP)
+		#if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 		    done[n] = true;
 		  }
 		#endif
@@ -155,6 +155,8 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 //     cout << "Candidatos: " << endl;
 //     for (vector<CANDIDATE>::iterator it = candidatas.begin(); it != candidatas.end(); ++it)
 //       cout << it->first << ' ' << it->second << endl;
+#elif VERSION == V_WWW
+    CANDIDATE eleccion(0,0,"0");
 #endif
 
     double sumaNumeradores, probAleatoria;
@@ -195,7 +197,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 	      #if VERSION == V_SHAPE
 		n.first = 1;
 		m.first = 1;
-	      #elif VERSION == V_SCIENCEMAP
+	      #elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 		  // Search for the correct index for both nodes
 		  n.first = this->hormigas[indice]->subEst().mapear(it->first);
 		  n.second = this->hormigas[indice]->subEst().mapear(it->second);
@@ -228,7 +230,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 	  CANDIDATE n = candidatas[0];
 	  #if VERSION == V_SHAPE
 	    n.first = 1;
-	  #elif VERSION == V_SCIENCEMAP
+	  #elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 	      // Search for the correct index for both nodes
 	      n.first = this->hormigas[indice]->subEst().mapear(candidatas[0].first);
 	      n.second = this->hormigas[indice]->subEst().mapear(candidatas[0].second);
@@ -244,7 +246,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 		  n = candidatas[i];
 		  #if VERSION == V_SHAPE
 		    n.first = 1;
-		  #elif VERSION == V_SCIENCEMAP
+		  #elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
 		     // Search for the correct index for both nodes
 		      n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
 		      n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
@@ -340,6 +342,10 @@ this->matricesFeromona[CANDIDATE(x,y)] = (1. - PARA.MOACO_ro) * this->matricesFe
 void MACS::modificaFeromonaPasoAPaso(unsigned int x, unsigned int y, unsigned int z){
     this->matricesFeromona[CANDIDATE(x,y,z)] = (1. - PARA.MOACO_ro) * this->matricesFeromona[CANDIDATE(x,y,z)] + PARA.MOACO_ro * this->feromonaInicial;
 }
+#elif VERSION == V_WWW
+void MACS::modificaFeromonaPasoAPaso(unsigned int x, unsigned int y, string z){
+    this->matricesFeromona[CANDIDATE(x,y,z)] = (1. - PARA.MOACO_ro) * this->matricesFeromona[CANDIDATE(x,y,z)] + PARA.MOACO_ro * this->feromonaInicial;
+}
 #endif
 
     
@@ -372,7 +378,11 @@ void MACS::accionesTrasDecision (Hormiga *hormiga, unsigned int x, const string 
 #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
 void MACS::accionesTrasDecision (Hormiga *hormiga, unsigned int x, unsigned int y, unsigned int z) {
 
-	this->modificaFeromonaPasoAPaso(x, y, z);       
+	this->modificaFeromonaPasoAPaso(x, y, z);      
+#elif VERSION == V_WWW
+void MACS::accionesTrasDecision (Hormiga *hormiga, unsigned int x, unsigned int y, string z) {
+
+	this->modificaFeromonaPasoAPaso(x, y, z); 
 #endif
       
 	
