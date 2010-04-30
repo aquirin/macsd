@@ -18,17 +18,10 @@ MACS::MACS (vector<SOLUTION>& b, Parametros &params) : ACO (b, params) {
     }
     
     // la matriz de feromona seria una matriz NxNXl
-#if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
     vector< CANDIDATE > lista = b[0].posibilidades_totales();
     for (vector< CANDIDATE >::iterator p = lista.begin(); p != lista.end(); p++) {   
         this->matricesFeromona[*p] = this->feromonaInicial; 
     }
-#elif VERSION == V_GO
-    for (set< CANDIDATE >::iterator j = b[0].base_ejes()->begin(); j != b[0].base_ejes()->end(); j++) {   
-        this->matricesFeromona[*j] = this->feromonaInicial; 
-    }
-#endif
-
 //     cout << "Feromonas: " << matricesFeromona.size() << ' ' << matricesFeromona.size() << ' ' << matricesFeromona[0][0].size() << endl;
 }
 
@@ -52,52 +45,38 @@ double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int
         Hormiga mas = *(this->hormigas[indice]);
     	switch (this->heuristicas[indice]) {
     		case 1:  // STATIC
-			#if VERSION == V_SHAPE
-			  n.first = 1;
-			#elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-			    // Search for the correct index for both nodes
-			    n.first = this->hormigas[indice]->subEst().mapear(it->first);
-			    n.second = this->hormigas[indice]->subEst().mapear(it->second);
-			    if (this->probabilidades.find(n) == this->probabilidades.end()) {
-			      n.second = this->hormigas[indice]->subEst().mapear(it->first);
-			      n.first = this->hormigas[indice]->subEst().mapear(it->second);
-			    }
-			#endif
+			// Search for the correct index for both nodes
+			n.first = this->hormigas[indice]->subEst().mapear(it->first);
+			n.second = this->hormigas[indice]->subEst().mapear(it->second);
+			if (this->probabilidades.find(n) == this->probabilidades.end()) {
+			  n.second = this->hormigas[indice]->subEst().mapear(it->first);
+			  n.first = this->hormigas[indice]->subEst().mapear(it->second);
+			}
     			baseA = this->hormigas[indice]->getAparicionesEje(n);
     			baseB = 1;  			   
     			break;
     		case 2:  // DYNAMIC
-			#if VERSION == V_SHAPE
-			mas.avanza(n.first,n.second);
-			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-			mas.avanza(n.first,n.second,n.third);
-			#endif                        
+			mas.avanza(n);
 
                         if (mas.getCoste(0) > 0)
     			    baseA = 1 - ((this->hormigas[indice]->getCoste(0) * 1.) - mas.getCoste(0));
                         else
                             baseA = 0;
-//                         baseA = 0.01; /* epsilon */
-//                         if (mas.getCoste(0) <= (this->hormigas[indice]->getCoste(0)))
-//                                 baseA += (mas.getCoste(0) - (this->hormigas[indice]->getCoste(0) * 1.));
-    			baseB = 1;	
+   			baseB = 1;	
     			break;
     		case 0:  // no se usan heuristicas, solo feromona en el MOACO
     			baseA = baseB = 1;
     			break;
     	}
 //     	cout << (*it).first-1 << ' ' << (*it).second-1 << ' ' << (*it).third-1 << '=' << this->matricesFeromona[(*it).first-1][(*it).second-1][(*it).third-1] << endl;
-#if VERSION == V_SHAPE
-  n.first = 1;
-#elif (VERSION == V_SCIENCEMAP)  || (VERSION == V_WWW)
-  // Search for the correct index for both nodes
-  n.first = this->hormigas[indice]->subEst().mapear(it->first);
-  n.second = this->hormigas[indice]->subEst().mapear(it->second);
-  if (this->probabilidades.find(n) == this->probabilidades.end()) {
-    n.second = this->hormigas[indice]->subEst().mapear(it->first);
-    n.first = this->hormigas[indice]->subEst().mapear(it->second);
-  }
-#endif
+
+	// Search for the correct index for both nodes
+	n.first = this->hormigas[indice]->subEst().mapear(it->first);
+	n.second = this->hormigas[indice]->subEst().mapear(it->second);
+	if (this->probabilidades.find(n) == this->probabilidades.end()) {
+	  n.second = this->hormigas[indice]->subEst().mapear(it->first);
+	  n.first = this->hormigas[indice]->subEst().mapear(it->second);
+	}
     	this->probabilidades[n] = this->matricesFeromona[n] * pow(baseA, this->betaLambda[indice]) * pow(baseB, this->betaNoLambda[indice]); 
     	suma += this->probabilidades[n];
         it++;
@@ -111,31 +90,23 @@ double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int i
 
     double suma = this->calculaNumeradoresProbabilidades(unaHormiga, indice, candidatas);
 
-    #if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-      map<CANDIDATE,bool> done;
-    #endif
+    map<CANDIDATE,bool> done;
     
     if (suma > 0){
 	 for (unsigned int i = 0; i < candidatas.size(); i++) {
-		CANDIDATE n = candidatas[i];
-		#if VERSION == V_SHAPE
-		  n.first = 1;
-		  if (done.find(n) == done.end()) {
-		#elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-		   // Search for the correct index for both nodes
-		  n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
-		  n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
-		  if (this->probabilidades.find(n) == this->probabilidades.end()) {
-		    n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
-		    n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
-		  }
-		  if (done.find(n) == done.end()) {
-		#endif
-        	this->probabilidades[n] /= suma;
-		#if (VERSION == V_SHAPE) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-		    done[n] = true;
-		  }
-		#endif
+	    CANDIDATE n = candidatas[i];
+	    
+	    // Search for the correct index for both nodes
+	    n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
+	    n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
+	    if (this->probabilidades.find(n) == this->probabilidades.end()) {
+	      n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
+	      n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
+	    }
+	    if (done.find(n) == done.end()) {
+	      this->probabilidades[n] /= suma;
+	      done[n] = true;
+	    }
 	 }	
     }
 
@@ -144,20 +115,7 @@ double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int i
 
 //---------------------------------------------------------
 CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CANDIDATE > &candidatas){
-    
-#if VERSION == V_SHAPE
-    CANDIDATE eleccion(0,"0");
-    cout << "Candidatos: " << endl;
-    for (vector<CANDIDATE>::iterator it = candidatas.begin(); it != candidatas.end(); ++it)
-      cout << it->first << ' ' << it->second << endl;
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-    CANDIDATE eleccion(0,0,0);
-//     cout << "Candidatos: " << endl;
-//     for (vector<CANDIDATE>::iterator it = candidatas.begin(); it != candidatas.end(); ++it)
-//       cout << it->first << ' ' << it->second << endl;
-#elif VERSION == V_WWW
-    CANDIDATE eleccion(0,0,"0");
-#endif
+   CANDIDATE eleccion(0,0,0);
 
     double sumaNumeradores, probAleatoria;
     double *sumaProb;
@@ -194,25 +152,22 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 	  while (it != candidatas.end()) {
 	      CANDIDATE n = *it;
 	      CANDIDATE m = eleccion;
-	      #if VERSION == V_SHAPE
-		n.first = 1;
-		m.first = 1;
-	      #elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-		  // Search for the correct index for both nodes
-		  n.first = this->hormigas[indice]->subEst().mapear(it->first);
-		  n.second = this->hormigas[indice]->subEst().mapear(it->second);
-		  if (this->probabilidades.find(n) == this->probabilidades.end()) {
-		    n.second = this->hormigas[indice]->subEst().mapear(it->first);
-		    n.first = this->hormigas[indice]->subEst().mapear(it->second);
-		  }
-		  // Search for the correct index for both nodes
-		  m.first = this->hormigas[indice]->subEst().mapear(eleccion.first);
-		  m.second = this->hormigas[indice]->subEst().mapear(eleccion.second);
-		  if (this->probabilidades.find(m) == this->probabilidades.end()) {
-		    m.second = this->hormigas[indice]->subEst().mapear(eleccion.first);
-		    m.first = this->hormigas[indice]->subEst().mapear(eleccion.second);
-		  }
-	      #endif
+	    
+	      // Search for the correct index for both nodes
+	      n.first = this->hormigas[indice]->subEst().mapear(it->first);
+	      n.second = this->hormigas[indice]->subEst().mapear(it->second);
+	      if (this->probabilidades.find(n) == this->probabilidades.end()) {
+		n.second = this->hormigas[indice]->subEst().mapear(it->first);
+		n.first = this->hormigas[indice]->subEst().mapear(it->second);
+	      }
+	      // Search for the correct index for both nodes
+	      m.first = this->hormigas[indice]->subEst().mapear(eleccion.first);
+	      m.second = this->hormigas[indice]->subEst().mapear(eleccion.second);
+	      if (this->probabilidades.find(m) == this->probabilidades.end()) {
+		m.second = this->hormigas[indice]->subEst().mapear(eleccion.first);
+		m.first = this->hormigas[indice]->subEst().mapear(eleccion.second);
+	      }
+	     
 	      if (this->probabilidades[n] > this->probabilidades[m])
 		mejores.push_back(*it);
 	      it++;
@@ -228,33 +183,27 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 	  cout << "CC " <<  this->probabilidades.size() << endl;
 	  sumaProb = new double[candidatas.size()];
 	  CANDIDATE n = candidatas[0];
-	  #if VERSION == V_SHAPE
-	    n.first = 1;
-	  #elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-	      // Search for the correct index for both nodes
-	      n.first = this->hormigas[indice]->subEst().mapear(candidatas[0].first);
-	      n.second = this->hormigas[indice]->subEst().mapear(candidatas[0].second);
-	      if (this->probabilidades.find(n) == this->probabilidades.end()) {
-		n.second = this->hormigas[indice]->subEst().mapear(candidatas[0].first);
-		n.first = this->hormigas[indice]->subEst().mapear(candidatas[0].second);
-	      }
-	  #endif
+	 
+	  // Search for the correct index for both nodes
+	  n.first = this->hormigas[indice]->subEst().mapear(candidatas[0].first);
+	  n.second = this->hormigas[indice]->subEst().mapear(candidatas[0].second);
+	  if (this->probabilidades.find(n) == this->probabilidades.end()) {
+	    n.second = this->hormigas[indice]->subEst().mapear(candidatas[0].first);
+	    n.first = this->hormigas[indice]->subEst().mapear(candidatas[0].second);
+	  }
 
 	  sumaProb[0] = this->probabilidades[n];
 	  cout << "@@@@0@@@@" << sumaProb[0] << endl;
 	  for (unsigned int i = 1; i < candidatas.size(); i++) {
 		  n = candidatas[i];
-		  #if VERSION == V_SHAPE
-		    n.first = 1;
-		  #elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-		     // Search for the correct index for both nodes
-		      n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
-		      n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
-		      if (this->probabilidades.find(n) == this->probabilidades.end()) {
-			n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
-			n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
-		      }
-		  #endif
+	      
+		  // Search for the correct index for both nodes
+		  n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
+		  n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
+		  if (this->probabilidades.find(n) == this->probabilidades.end()) {
+		    n.second = this->hormigas[indice]->subEst().mapear(candidatas[i].first);
+		    n.first = this->hormigas[indice]->subEst().mapear(candidatas[i].second);
+		  }
 		  sumaProb[i] = sumaProb[i-1] + this->probabilidades[n];
 		  cout << "@@@@" << i << "@@@@" << this->probabilidades[n] << "@@@@" << sumaProb[i] << endl;
 	  }	
@@ -334,21 +283,10 @@ void MACS::reinicializaMatriz(){
 }
 
 //---------------------------------------------------------
-#if VERSION == V_SHAPE
-void MACS::modificaFeromonaPasoAPaso(unsigned int x, const string y){
-this->matricesFeromona[CANDIDATE(x,y)] = (1. - PARA.MOACO_ro) * this->matricesFeromona[CANDIDATE(x,y)] + PARA.MOACO_ro * this->feromonaInicial;
-}
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
+
 void MACS::modificaFeromonaPasoAPaso(unsigned int x, unsigned int y, unsigned int z){
     this->matricesFeromona[CANDIDATE(x,y,z)] = (1. - PARA.MOACO_ro) * this->matricesFeromona[CANDIDATE(x,y,z)] + PARA.MOACO_ro * this->feromonaInicial;
 }
-#elif VERSION == V_WWW
-void MACS::modificaFeromonaPasoAPaso(unsigned int x, unsigned int y, string z){
-    this->matricesFeromona[CANDIDATE(x,y,z)] = (1. - PARA.MOACO_ro) * this->matricesFeromona[CANDIDATE(x,y,z)] + PARA.MOACO_ro * this->feromonaInicial;
-}
-#endif
-
-    
 
 //---------------------------------------------------------
 void MACS::modificaFeromona() {
@@ -371,21 +309,9 @@ void MACS::modificaFeromona() {
 }
 
 //---------------------------------------------------------
-#if VERSION == V_SHAPE
-void MACS::accionesTrasDecision (Hormiga *hormiga, unsigned int x, const string y) {
 
-	this->modificaFeromonaPasoAPaso(x, y); 
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
 void MACS::accionesTrasDecision (Hormiga *hormiga, unsigned int x, unsigned int y, unsigned int z) {
-
-	this->modificaFeromonaPasoAPaso(x, y, z);      
-#elif VERSION == V_WWW
-void MACS::accionesTrasDecision (Hormiga *hormiga, unsigned int x, unsigned int y, string z) {
-
-	this->modificaFeromonaPasoAPaso(x, y, z); 
-#endif
-      
-	
+	this->modificaFeromonaPasoAPaso(x, y, z);
 }
 
 //---------------------------------------------------------

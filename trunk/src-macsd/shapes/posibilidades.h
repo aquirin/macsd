@@ -38,6 +38,6 @@ class posibilidades {
         vector< vector<T> > _options;
 };
 
-#include "posibilidades.cpp"
+#include "posibilidades.template"
 
 #endif

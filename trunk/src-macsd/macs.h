@@ -3,13 +3,13 @@
 
 #include "aco.h"
 #if VERSION == V_SHAPE
-#include "shapes/shapes.h"
+#include "shapes.h"
 #elif VERSION == V_GO
-#include "go/ontologia.h"
+#include "ontologia.h"
 #elif VERSION == V_SCIENCEMAP
-#include "vmap/vmap.h"
+#include "vmap.h"
 #elif VERSION == V_WWW
-#include "www/www.h"
+#include "www.h"
 #endif
 
 
@@ -79,14 +79,8 @@ class MACS : public ACO {
      * @param numeroTarea el numero de tarea sobre el que se actualizara la feromona
      * @param numeroEstacion el numero de estacion sobre la que se actualizara la feromona
      */
-#if VERSION == V_SHAPE
-    void modificaFeromonaPasoAPaso(unsigned int x, const string y);
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-    void modificaFeromonaPasoAPaso(unsigned int x, unsigned int y, unsigned int z);
-#elif VERSION == V_WWW
-    void modificaFeromonaPasoAPaso(unsigned int x, unsigned int y, string z);
-#endif
 
+    void modificaFeromonaPasoAPaso(unsigned int x, unsigned int y, unsigned int z);
 
     /**
      * funcion que calcula la nueva feromona inicial
@@ -107,14 +101,8 @@ class MACS : public ACO {
      * @param tareaElegida la tarea elegida en el paso dado por la hormiga
      * @param numeroEstacion la estacion a la que se ha asignado la tarea en la decision 
      */
-#if VERSION == V_SHAPE
-    void accionesTrasDecision (Hormiga *hormiga, unsigned int x, const string y);
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-    void accionesTrasDecision (Hormiga *hormiga, unsigned int x, unsigned int y, unsigned int z);
-#elif VERSION == V_WWW
-    void accionesTrasDecision (Hormiga *hormiga, unsigned int x, unsigned int y, string z);
-#endif
 
+    void accionesTrasDecision (Hormiga *hormiga, unsigned int x, unsigned int y, unsigned int z);
 
     /**
      * implementacion sobre la funcion virtual original de la clase ACO

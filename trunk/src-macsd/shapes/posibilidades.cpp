@@ -1,15 +1,6 @@
 template <typename T>
 posibilidades<T>::posibilidades(const vector< vector<T> >& cuales) : _options(cuales.size()) {
    _options = cuales;
-//    sort(_options.begin(), _options.end());
-//    // DEBUG
-//    for (typename map<T,unsigned int>::iterator p = _dicc.begin(); p != _dicc.end(); p++)
-//        cout << (*p).first << ' ' << (*p).second << endl;
-//    for (unsigned int i = 0; i < cuales.size(); i++) {
-//        for (unsigned int j = 0; j < cuales[i].size(); j++)
-//            cout << _options[i][j] << ',';
-//        cout << endl;
-//    }
 }
         
 template <typename T>

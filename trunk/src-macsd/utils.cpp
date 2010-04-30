@@ -1,4 +1,3 @@
-//comentado
 #include "utils.h"
 
 //-----------------------------------------------
@@ -10,18 +9,6 @@ bool compDecreciente (TipoDatoOrdenacion a, TipoDatoOrdenacion b) {
 bool compCreciente (TipoDatoOrdenacion a, TipoDatoOrdenacion b) { 
 	return (a.dato < b.dato); 
 }
-
-// //-----------------------------------------------
-// double resta_tiempos (timeb t1, timeb t0)
-// {
-// 	/* Devuelve t1 - t0 */
-// 	double temp1, temp2;
-// 
-// 	temp1  = (double) t0.time + (t0.millitm/1000.0);
-// 	temp2 = (double) t1.time + (t1.millitm/1000.0);
-// 
-// 	return temp2-temp1;
-// }
 
 //-----------------------------------------------
 void **matriz(long nfilas, long ncolumnas, long bytesPorDato)
@@ -236,7 +223,7 @@ int ranking(const int cant, const float nu_max, const float nu_min) {
 //          cout << x << " " << proba[x] << endl;
         x++;
     }
-    if (x > cant) cout << "ERRRRRRRRRRRRRRRRRR!" << endl;
+    if (x > cant) cerr << "ERRRRRRRRRRRRRRRRRR!" << endl;
     cout << "Salir: " << (cant - x + 1) << endl;
     return (cant - x + 1);
 }

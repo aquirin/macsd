@@ -7,9 +7,6 @@
 #include <malloc.h>
 #include <string>
 #include <map>
-#if VERSION == V_SHAPE
-#include "shapes/posibilidades.h"
-#endif
 #include "global.h"
 #include "Parameter.h"
 

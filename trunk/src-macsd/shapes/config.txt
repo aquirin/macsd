@@ -9,7 +9,7 @@
 #
 
 GLOB_tCiclo = 0.0				# tiempo de ciclo permitido
-GLOB_maxTiempo = 10				# criterio de parada, el tiempo; variable que almacena el tiempo maximo permitido para la ejecucion del algoritmo
+GLOB_maxTiempo = 300				# criterio de parada, el tiempo; variable que almacena el tiempo maximo permitido para la ejecucion del algoritmo
 GLOB_areaMax = 0.0				# area maxima permitida (no se utiliza)
 GLOB_rutaEntrada = ../data/shapes/DB.g			# ruta del fichero de entrada (SHAPE version)
 GLOB_rutaSalida = ../data/shapes/shapes			# ruta del fichero de salida (SHAPE version)
@@ -31,8 +31,9 @@ MOACO_numHormigas = 10				# numero de hormigas del algoritmo
 MOACO_gamma = 0.5				# valor para seleccionar si genero una hormiga nueva o extiendo una existente /// ROCIO
 MOACO_nEstOptimo = 0				# parametro extra para BicriterionMC
 MOACO_stepSize = 3				# tamanio maximo de la subestructura en un paso
-MOACO_multiheuristics = 0               	# entero que nos indica el tipo de multiheuristics utilizado (0-->sin heuristica, 1--> heuristica estatica, 2--> heuristica dinamica)
-
+MOACO_maxTama = 7				# tamanio maximo que puede tomar una subestructura-1
+MOACO_ranking = 0				# booleano para la seleccion de la cantidad de pasos (0 --> azar, 1 --> ranking lineal)
+MOACO_multiheuristics = 0			# entero que nos indica el tipo de multiheuristics utilizado (0-->sin heuristica, 1--> heuristica estatica, 2--> heuristica dinamica)
 ##
 #  Specific to the Gene Ontology
 #

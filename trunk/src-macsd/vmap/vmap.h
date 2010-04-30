@@ -54,7 +54,6 @@ class vmap {
 	void azar();
 	
 	vector< CANDIDATE > posibilidades_totales() const;
-//         vector< CANDIDATE > posibilidades_reales() const;
         vector< vector<unsigned int> > darPosibilidades(const vmap& s) const;
 	vmap reasignarNodos(vector<unsigned int> v) const;
 	vmap reasignarNodosFijo(const vector<unsigned int>& v) const;

@@ -5,13 +5,13 @@
 #include <vector>
 #include "utils.h"
 #if VERSION == V_SHAPE
-#include "shapes/shapes.h"
+#include "shapes.h"
 #elif (VERSION == V_GO)
-#include "go/ontologia.h"
+#include "ontologia.h"
 #elif (VERSION == V_SCIENCEMAP)
-#include "vmap/vmap.h"
+#include "vmap.h"
 #elif (VERSION == V_WWW)
-#include "www/www.h"
+#include "www.h"
 #endif
 
 /** 
@@ -67,7 +67,6 @@ class Hormiga {
         */
         vector< SOLUTION > _instancias;
 
-        
         /**
         * Soporte actual
         */
@@ -81,22 +80,15 @@ class Hormiga {
 	Hormiga() {};
 	
 	/**
-	 * constructor
-	 * @param colonia un entero que indica la colonia a la que pertenece la hormiga
-       * @param base base de datos (instancias)
-       * @param numObjetivos el numero de objetivos 
-      */
+	* constructor
+	* @param colonia un entero que indica la colonia a la que pertenece la hormiga
+	* @param base base de datos (instancias)
+	* @param numObjetivos el numero de objetivos 
+	*/
     
-	Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje);
+	Hormiga (const vector< SOLUTION >& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje);
 
-
-        
-#if VERSION == V_SHAPE
-       	Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION quien);
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-        Hormiga (const unsigned int colonia, const vector< SOLUTION >& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION sub);
-#endif
-
+        Hormiga (const vector< SOLUTION >& base, const unsigned int numObjetivos, map<CANDIDATE, double>* aparEje, SOLUTION sub);
 
 	/**
 	 * constructor copia
@@ -112,14 +104,8 @@ class Hormiga {
         /**
         * avanza la hormiga a la posicion indicada
         */
-#if VERSION == V_SHAPE
-        void avanza(const unsigned int nodo1, const string enlace);
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-        void avanza(const unsigned int nodo1, const unsigned int nodo2, const unsigned int enlace);
-#elif VERSION == V_WWW
-        void avanza(const unsigned int nodo1, const unsigned int nodo2, const string enlace);
-#endif
 
+        void avanza(const CANDIDATE & nuevo);
 
         /**
         * devuelve el numero de ejes ya asignados

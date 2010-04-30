@@ -4,11 +4,7 @@
 #include <fstream>
 
 #include "utils.h"
-#if VERSION == V_SHAPE
-#include "shapes/shapes.h"
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-#include "go/shapes.h"
-#endif
+#include "shapes.h"
 #include "hormigas.h"
 
 using namespace std;
