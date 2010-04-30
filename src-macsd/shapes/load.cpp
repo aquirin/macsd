@@ -19,23 +19,32 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
     unsigned int aux;
     unsigned int aux1;
     string desde, hasta;
-    vector<string> w(5);
-    w[0] = "square";
-    w[1] = "triangle";
-    w[2] = "ellipse";
-    w[3] = "rectangle";
-    w[4] = "circle";
-    SOLUTION s(8,w);
-    
+    vector<string> w(6);
+    w[0] = "object";
+    w[1] = "square";
+    w[2] = "triangle";
+    w[3] = "ellipse";
+    w[4] = "rectangle";
+    w[5] = "circle";
+    vector<string> e(2);
+    e[0] = "on";
+    e[1] = "shape";
+    map<pair<string,string>, string> rela;
+    for (unsigned int i = 1; i < w.size(); ++i)
+      rela.insert(pair<pair<string,string>, string>(pair<string,string>("object",w[i]), "shape"));
+    rela.insert(pair<pair<string,string>, string>(pair<string,string>("object","object"), "on"));
+    SOLUTION s(string("1"), w, e, rela);
+            
     arch.open(fichero.c_str());
 
     if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
         exit(1);
     }
     
-//     bool first = true;
+    map<unsigned int,unsigned int> pos;
     string cad;
     unsigned int codigo;
+    unsigned int nn;
     while (!arch.eof()) {
         getline(arch, cadena);
         if (!arch.eof()) {
@@ -47,8 +56,9 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
                         cad = cadena.substr(aux + 1, cadena.size() - aux);
                         aux1 = cadena.find(' ', 0);
                         desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
-//                         cout << desde << ' ' << cad << endl;
-                        s.agregarNodo(atoi(desde.c_str()), cad);
+			
+                        nn = s.agregarNodo(cad);
+			pos.insert(pair<unsigned int,unsigned int>(atoi(desde.c_str()),nn));
                         break;
                     case 'e':
                     case 'd':
@@ -59,25 +69,15 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
                         aux = cadena.rfind(' ', cadena.size());
                         hasta = cadena.substr(aux1 + 1, aux - aux1 - 1);
                         cadena = cadena.substr(aux + 1, cadena.size() - aux);
-                        
-//                         if (first) {
-//                             s.agregarNodo(atoi(desde.c_str()));
-//                             first = false;
-//                         }
-                        codigo = 1;
-                        if (cadena == "shape")
-                            codigo++;
-//                         cout << atoi(desde.c_str()) << ' ' << atoi(hasta.c_str()) << ' ' << codigo << endl;
-                        s.agregarEje(atoi(desde.c_str()), atoi(hasta.c_str()), codigo);
+                
+                        s.agregarEje(atoi(desde.c_str()), atoi(hasta.c_str()), cadena);
                         break;
                     case '%':
                     default:
                         break;
                 }
             }
-            else {
-//                 temp_nodos.clear();
-//                 first = true;
+            else {;
                 v.push_back(s);
                 cout << s << endl;
                 s.clear();

@@ -9,26 +9,15 @@ ACO::ACO (vector< SOLUTION >& b, Parametros &params) : AlgoritmoMO (PARA.GLOB_BL
     
     // inicializamos a 0 las n probabilidades para movernos en cada nodo
     // un vector con n probabilidades, una por cada n-esima nodo
-#if VERSION == V_SHAPE
     vector< CANDIDATE > lista = b[0].posibilidades_totales();
     for (vector< CANDIDATE >::iterator p = lista.begin(); p != lista.end(); p++)
         this->probabilidades[*p] = 0.;
-#elif VERSION == V_GO
-    set< CANDIDATE >* tent = b[0].base_ejes();
-    set< CANDIDATE >::iterator p = tent->begin();
-    for (; p != tent->end(); p++)
-        this->probabilidades[CANDIDATE((*p).first,(*p).second,(*p).third)] = 0.;
-#elif (VERSION == V_SCIENCEMAP ) || (VERSION == V_WWW)
-     vector< CANDIDATE > lista = b[0].posibilidades_totales();
-     for (vector< CANDIDATE >::iterator p = lista.begin(); p != lista.end(); p++)
-        this->probabilidades[*p] = 0.;
-#endif
 
     cout << "CC " << this->probabilidades.size() << endl;
  
     // creamos las hormigas y les asignamos su colonia
     for(i = 0; i < PARA.MOACO_numHormigas; i++){
-        Hormiga *sec = new Hormiga (0, base, PARA.GLOB_numObjs, params.aparEje);
+        Hormiga *sec = new Hormiga (base, PARA.GLOB_numObjs, params.aparEje);
         this->hormigas.push_back(sec);
     }
     _aparEje = params.aparEje;
@@ -96,74 +85,33 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     
     // creamos las hormigas y les asignamos su colonia
     inicial.push_back(this->hormigas[0]->subEst());
-    inicial[0].clear();    
-    #if VERSION == V_SHAPE
-        inicial[0].agregarNodo(1, "object");
-    #elif VERSION == V_GO
-        // Nada
-    #elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-        inicial[0].agregarNodo(1, "page");
-    #endif
+    inicial[0].inicial();
+   
     for (unsigned int n = 1; n < PARA.MOACO_numHormigas * 10; n++) {
 //         cout << "Inicial: " << n << endl;
         vector < CANDIDATE > dondeir;
         inicial.push_back(this->hormigas[0]->subEst());
-        inicial[n].clear();
-        #if VERSION == V_SHAPE
-            inicial[n].agregarNodo(1, "object");
-        #elif VERSION == V_GO
-        // Nada
-	#elif VERSION == V_SCIENCEMAP
-	    inicial[n].azar();
-	#elif VERSION == V_WWW
-	    inicial[n].agregarNodo(1, "page");
-        #endif
-        
+	inicial[n].inicial();
+              
         // Elijo cantidad de pasos
         unsigned int x;
         if (PARA.MOACO_ranking)
-//             x = ranking(PARA.MOACO_stepSize, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
 	    x = ranking(PARA.MOACO_stepSize, /*nu_max*/ 1.99, /*nu_min*/ 0.01);
         else
             x = intAzar(1, PARA.MOACO_stepSize);
         for (unsigned int i = 0; i < x; i++) {
             // candidatas posibles a ser elegidas en este paso de la hormiga
-            #if VERSION == V_SHAPE
-                candidatas = inicial[n].nodosNoUtilizados();
-            #elif VERSION == V_GO
-                candidatas.clear();
-                set<unsigned int> nu = inicial[n].nodosUtilizados();
-                vector< CANDIDATE > can = inicial[n].ejesNoUtilizados();
-                if (nu.size() > 0) {
-// 		  cout << nu.size() << endl;
-                    vector< CANDIDATE >::iterator it1 = can.begin();        
-                    while (it1 != can.end()) {
-// 		      cout << it1->first << ' ' << it1->second << endl;
-                        if (nu.find(it1->second) != nu.end())
-                            candidatas.push_back(*it1);
-                        it1++;
-                    }
-                }
-	    #elif (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-                candidatas = inicial[n].ejesNoUtilizados();
-	    #endif    
-                
+            candidatas = inicial[n].ejesNoUtilizados();
+                         
+	    cout << inicial[n] << endl;
+	    for (vector<CANDIDATE>::iterator it = candidatas.begin(); it != candidatas.end(); ++it)
+	      cout << "C " << it->first << ' ' << it->second << ' ' << it->third << endl;
+	    cout << endl;
+	    
             // Elijo un candidato al azar
             unsigned int y = intAzar(0, candidatas.size() - 1);
             if (candidatas.size() > 0) {
-                #if VERSION == V_SHAPE
-//                     cout << candidatas[y].first << "  " << candidatas[y].second << endl;
-                    int cual;
-                    if (candidatas[y].second == "object")
-                        cual = 1;
-                    else
-                        cual = 2;
-                    inicial[n].agregarNodo(inicial[n].cantNodos() + 1, candidatas[y].second);
-                    inicial[n].agregarEje(candidatas[y].first, inicial[n].cantNodos(), cual);
-                #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-                    inicial[n].agregarEje(candidatas[y].first, candidatas[y].second, candidatas[y].third);
-// 		    cout << inicial[n] << endl;
-                #endif                
+	      inicial[n].agregarEje(candidatas[y].first, candidatas[y].second, candidatas[y].third);              
             }
             else {
                 cout << "No hay candidatos!" << endl;
@@ -172,22 +120,13 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     }
     unsigned int cuantos = 0;
         
-    #if VERSION == V_SHAPE
-	Hormiga best(this->base, this->nObj, this->_aparEje, inicial[0]);
-    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-	Hormiga best(1, this->base, this->nObj, this->_aparEje, inicial[0]);
-    #endif 
-    
+    Hormiga best(this->base, this->nObj, this->_aparEje, inicial[0]);
+      
     for (unsigned int n = 0; n < PARA.MOACO_numHormigas * 10; n++) {
             // Pasamos cada SOLUCION a una hormiga
-//             cout << inicial[n] << endl;
-            #if VERSION == V_SHAPE
-       	        Hormiga una(this->base, this->nObj, this->_aparEje, inicial[n]);
-            #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-                Hormiga una(1, this->base, this->nObj, this->_aparEje, inicial[n]);
-            #endif
-	    
-// 	    cout << "Antes Local Search: " << una.subEst();
+            Hormiga una(this->base, this->nObj, this->_aparEje, inicial[n]);
+            	    
+	    cout << "Antes Local Search: " << una.subEst();
 // 	    una.calculaCostes();
 // 
 // 	    vector <float> cost1(2);
@@ -391,20 +330,12 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 			CANDIDATE arco = this->transicion(*(hormigas[nHormiga]), nHormiga, candidatas);
 
 			Hormiga copiar(*(hormigas[nHormiga]));
-			// cout << copiar.subEst() << endl;
-			#if VERSION == V_SHAPE
-			copiar.avanza(arco.first, arco.second);
-			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-			copiar.avanza(arco.first, arco.second, arco.third);
-			#endif
+		
+			copiar.avanza(arco);
 
 			soporte = copiar.getCoste(0);
 			if (soporte > 0) {
-			    #if VERSION == V_SHAPE
-			    this->hormigas[nHormiga]->avanza(arco.first, arco.second);
-			    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
-			    this->hormigas[nHormiga]->avanza(arco.first, arco.second, arco.third);
-			    #endif
+			    this->hormigas[nHormiga]->avanza(arco);
 
 			    hice[nHormiga] = pair<bool,CANDIDATE>(true, arco);
 			    Hormiga qw(*(this->hormigas[nHormiga]));
@@ -423,12 +354,8 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 		if (hice[nHormiga].first) {
 		    cout << "Hormiga: " << nHormiga << " avanzo" << endl;
 		    // tenemos que modificar la feromona en el arco nuevo
-		    // se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO
-		    #if VERSION == V_SHAPE
-		    this->accionesTrasDecision(this->hormigas[nHormiga], hice[nHormiga].second.first, hice[nHormiga].second.second);
-		    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP) || (VERSION == V_WWW)
+		    // se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO   
 		    this->accionesTrasDecision(this->hormigas[nHormiga], hice[nHormiga].second.first, hice[nHormiga].second.second, hice[nHormiga].second.third);
-		    #endif
 
 // // 		    // Aqui agrego el local search
 // 		    candidatas = this->hormigas[nHormiga]->getCandidatos();

@@ -3,26 +3,121 @@
 
 #include "shapes.h"
 
-void shapes::agregarNodo(const unsigned int n, const string& s) {
-    assert(_desc.find(n) == _desc.end());
- 
-    if (_nodo == 0)
-        _nodo = n;
-    _nodos.insert(n);
-    _desc[n] = s;
-//     cout << n << ' ' << _desc[n] << endl;
+// Definición e inicialización de miembros estáticos
+set< CANDIDATE > shapes::_base_ejes = set< CANDIDATE >();
+map<unsigned int, string> shapes::_desc_nodo = map<unsigned int, string>();
+map<unsigned int, string> shapes::_desc_eje = map<unsigned int, string>();
+map<string, unsigned int> shapes::_rdesc_nodo = map<string, unsigned int>();
+map<string, unsigned int> shapes::_rdesc_eje = map<string, unsigned int>();
+
+shapes::shapes(const string & name, const vector<string> & shap, const vector<string> & link, const map<pair<string,string>, string> & rn) {
+  _name = name;
+  
+  for (unsigned int i = 0; i < shap.size(); ++i) {
+    _desc_nodo.insert(pair<unsigned int, string>(i+1, shap[i]));
+    _rdesc_nodo.insert(pair<string, unsigned int>(shap[i], i+1));
+  }
+
+  for (unsigned int i = 0; i < link.size(); ++i) {
+    _desc_eje.insert(pair<unsigned int, string>(i+1, link[i]));
+    _rdesc_eje.insert(pair<string, unsigned int>(link[i], i+1));
+  }
+  
+  for (map<pair<string,string>, string>::const_iterator it = rn.begin(); it != rn.end(); ++it) {
+     _base_ejes.insert(CANDIDATE(_rdesc_nodo.find(it->first.first)->second, _rdesc_nodo.find(it->first.second)->second, _rdesc_eje.find(it->second)->second));
+  }
 }
 
-void shapes::agregarEje(const unsigned int ini, const unsigned int fin, const unsigned int s){
-    // Verifico que alguno de los nodos del eje ya exista en el grafo
-    assert((_desc.find(ini) != _desc.end()) && (_desc.find(fin) != _desc.end()) && ((s == 1) || (s == 2)));
+shapes::shapes(const shapes & s) {
+  _name = s._name;
+  _nodos = s._nodos;
+  _ejes = s._ejes;
+  _relacion_nodos = s._relacion_nodos;
+  _base_ejes = s._base_ejes;
+  _desc_nodo = s._desc_nodo;
+  _desc_eje = s._desc_eje;
+  _rdesc_nodo = s._rdesc_nodo;
+  _rdesc_eje = s._rdesc_eje;  
+}
+
+float shapes::sizeNorm() const {
+  return ((size() * 1.) / (MAX *  _desc_nodo.size() * 1.));
+}
+
+unsigned int shapes::agregarNodo(const string & s) {
+    assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
+
+    unsigned int real = _rdesc_nodo.find(s)->second;
+    unsigned int nuevo = _nodos.size() + 1;
+    _nodos.insert(nuevo);
+    _relacion_nodos.insert(pair<unsigned int, unsigned int>(nuevo, real));
     
-    if (_ejes.find(tuplax3<unsigned int>(ini,fin,s)) == _ejes.end()) {
-        _ejes.insert(tuplax3<unsigned int>(ini,fin,s));
-//         cout << _desc[ini] << ' ' << _desc[fin] << endl;
+    return nuevo;
+}
+
+unsigned int shapes::agregarNodo(const unsigned int & s) {
+    assert(s > _desc_nodo.size());
+
+    unsigned int real = s - MAX;
+    unsigned int nuevo = _nodos.size() + 1;
+    _nodos.insert(nuevo);
+    _relacion_nodos.insert(pair<unsigned int, unsigned int>(nuevo, real));
+    
+    return nuevo;
+}
+
+unsigned int shapes::agregarNodoID(const unsigned int & n, const string & s) {
+    _nodos.insert(n);
+    _relacion_nodos.insert(pair<unsigned int, unsigned int>(n, _rdesc_nodo.find(s)->second));
+    
+    return n;
+}
+
+unsigned int shapes::mapear(const unsigned int& i) const {
+  unsigned int res = 0;
+
+  if (i > _desc_nodo.size()) {
+    res = i - MAX;
+  }
+  else {
+    res = _relacion_nodos.find(i)->second;
+  }
+    
+  return res;
+}
+
+void shapes::agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s){
+    // Verifico que alguno de los nodos del eje ya exista en el grafo
+    assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > _desc_nodo.size())) and (_rdesc_eje.find(s) != _rdesc_eje.end()));
+    
+    unsigned int segundo = fin;
+    if (_nodos.find(fin) == _nodos.end()) {
+      // Agrego un nuevo nodos
+      segundo = agregarNodo(fin);
+    }
+    unsigned int eleje = _rdesc_eje.find(s)->second;
+    if (_ejes.find(CANDIDATE(ini,segundo,eleje)) == _ejes.end()) {
+        _ejes.insert(CANDIDATE(ini,segundo,eleje));
     }
     else {
-        cout << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
+        cerr << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
+    }
+}
+
+void shapes::agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s){
+    // Verifico que alguno de los nodos del eje ya exista en el grafo
+    assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > _desc_nodo.size())) and (_desc_eje.find(s) != _desc_eje.end()));
+    
+    unsigned int segundo = fin;
+    if (_nodos.find(fin) == _nodos.end()) {      
+      // Agrego un nuevo nodos
+      segundo = agregarNodo(fin);
+    }
+    if (_ejes.find(CANDIDATE(ini,segundo,s)) == _ejes.end()) {
+        _ejes.insert(CANDIDATE(ini,segundo,s));
+    }
+    else {
+        cerr << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
     }
 }
 
@@ -30,62 +125,64 @@ set<unsigned int> shapes::nodosUtilizados() const {
     return _nodos;
 }
 
-vector< CANDIDATE > shapes::nodosNoUtilizados() const {
-    vector< CANDIDATE > lista;
+vector< CANDIDATE > shapes::ejesNoUtilizados() const {
+    vector< CANDIDATE > res;
+
+    if (_nodos.size() < MAX) {
+      // Busco ejes entre nodos ya existentes que no haya usado
+      for (set<unsigned int>::const_iterator p = _nodos.begin(); p != _nodos.end(); ++p)
+	for (set<unsigned int>::const_iterator q = _nodos.begin(); q != _nodos.end(); ++q)
+	  if (*p != *q)
+	    for (map<unsigned int, string>::const_iterator r = _desc_eje.begin(); r != _desc_eje.end(); ++r) {
+	      bool found = false;
+	      if (r->second == "shape") {
+		// Reviso que ho haya otro nodos shape ya asociado
+		for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+		  found = ((_desc_eje.find(it->third)->second == "shape") and (it->first == *p));
+		}
+		
+		// Reviso que el nodo shape al cual quiero asociar no tenga ya un objeto asociado
+		for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+		  found = ((_desc_eje.find(it->third)->second == "shape") and (it->second == *q));
+		}
+	      }
+	      else {
+		// Reviso que no tenga ya un enlace
+		found = (_ejes.find(CANDIDATE(*q, *p, r->first)) != _ejes.end());
+	      }
+	      
+	      if (!found and (_base_ejes.find(CANDIDATE(_relacion_nodos.find(*p)->second, _relacion_nodos.find(*q)->second, r->first)) != _base_ejes.end()) and (_ejes.find(CANDIDATE(*p, *q, r->first)) == _ejes.end()))
+		res.push_back(CANDIDATE(*p, *q, r->first));
+	    }
+      
+    // Busco ejes con un nodo nuevo que puede salir de cualquier nodo
+    for (set<unsigned int>::const_iterator p = _nodos.begin(); p != _nodos.end(); ++p)
+      for (map<unsigned int, string>::const_iterator q = _desc_nodo.begin(); q != _desc_nodo.end(); ++q)
+	for (map<unsigned int, string>::const_iterator r = _desc_eje.begin(); r != _desc_eje.end(); ++r) {
+	    bool found = false;
+	    if (r->second == "shape") {
+	      for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+		found = ((_desc_eje.find(it->third)->second == "shape") and (it->first == *p));
+	      }
+	    }
+	    
+	    if (!found and (_base_ejes.find(CANDIDATE(_relacion_nodos.find(*p)->second, q->first, r->first)) != _base_ejes.end()))
+	      res.push_back(CANDIDATE(*p, MAX + q->first, r->first));
+	}
+    }
     
-    // Cantidad nodos maxima
-    if (_nodos.size() < _mobj) {
-        set<unsigned int> objetos;
-        for (map<unsigned int, string>::const_iterator p = _desc.begin(); p != _desc.end(); p++) {
-            if (p->second == "object") {
-                objetos.insert(p->first);
-//                 lista.push_back(CANDIDATE(p->first, "object"));
-            }
-        }
-        
-//         if (objetos.size() > _mobj) {
-//             lista.clear();
-//         }
-        
-        for (set<unsigned int>::iterator p = objetos.begin(); p != objetos.end(); p++) {
-    //         Veo si tiene forma
-            bool found = false;
-            for (set< tuplax3<unsigned int> >::const_iterator q = _ejes.begin(); (q != _ejes.end()) && !found; q++){
-                found = ((q->first == *p) && (q->third == 2));
-                found = found || ((q->second == *p) && (q->third == 2));
-            }
-            if (!found) {
-    //             Ejes de formas
-                unsigned int j = _desc.size();
-                for (unsigned int i = 0; i < _shap.size(); i++) {
-                    lista.push_back(CANDIDATE(*p, _shap[i]));
-                }
-            }
-        }
-
-//         Veo si tienen objeto
-	for (set<unsigned int>::iterator p = objetos.begin(); p != objetos.end(); p++) {
-	  bool found = false;
-	  for (set<unsigned int>::iterator q = objetos.begin(); (q != objetos.end()) and !found; q++) {
-            found = ejeUsado(*p,*q,1);
-	  }
-	  if (!found)
-            lista.push_back(CANDIDATE(*p, "object"));
-
-        }
-    }       
-    return lista;
+    return res;
 }
 
 void shapes::clear() {
-    _nodo = 0 ;
-    _nodos.clear();
-    _ejes.clear();
-    _desc.clear();
+  _name = "";
+  _nodos.clear();
+  _ejes.clear();
+  _relacion_nodos.clear();
 }
 
 bool shapes::empty() const {
-    return ((_nodo == 0) && _nodos.empty() && _ejes.empty() && _desc.empty());
+    return (_nodos.empty());
 }
 
 unsigned int shapes::size() const {
@@ -95,28 +192,23 @@ unsigned int shapes::size() const {
 string shapes::graph_g(void) const {
     cout << "XP" << endl;
     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
-         map<unsigned int, string>::const_iterator q = _desc.find(*p);
-         cout << "v " << *p << " " << (*q).second << endl;
+      cout << "v " << *p << " " << _desc_nodo.find(_relacion_nodos.find(*p)->second)->second << endl;
     }
-    for (set< tuplax3<unsigned int> >::iterator p = _ejes.begin(); p != _ejes.end(); p++)
-        if (p->third == 1)
-            cout << "e " << p->first << " " << p->second << " on" << endl;
-        else
-            cout << "e " << p->first << " " << p->second << " shape" << endl;
+    for (set< CANDIDATE >::iterator p = _ejes.begin(); p != _ejes.end(); p++)
+      cout << "e " << p->first << " " << p->second << " " << _desc_eje.find(p->third)->second << endl;
     cout << endl;
     return "";
 }
 
 void shapes::imprime(ostream &salida) const {
      salida << "Nodos: ";
-     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
-         map<unsigned int, string>::const_iterator q = _desc.find(*p);
-         salida << '(' << *p << ',' << (*q).second << ')';
-     }
+     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++)
+         salida << '(' << *p << ',' << _desc_nodo.find(_relacion_nodos.find(*p)->second)->second << ')';
+     
      salida << endl;
      salida << "Ejes: ";
-     for (set< tuplax3<unsigned int> >::iterator p = _ejes.begin(); p != _ejes.end(); p++)
-         salida << '(' << p->first << ',' << p->second << ',' << p->third << ')';
+     for (set< CANDIDATE >::iterator p = _ejes.begin(); p != _ejes.end(); p++)
+         salida << '(' << p->first << ',' << p->second << ',' << _desc_eje.find(p->third)->second << ')';
      salida << endl;
 }
 
@@ -127,17 +219,12 @@ ostream& operator<<(ostream& os, const shapes& s) {
 
 bool shapes::operator==(const shapes& s) const {
     bool done = false;
-//     cout << "EN==" << endl;
-    if ((_nodos.size() == s._nodos.size()) && (_ejes.size() == s._ejes.size())) {
+    if ((_nodos.size() == s._nodos.size()) and (_ejes.size() == s._ejes.size())) {
         shapes copia(s);
         vector< vector<unsigned int> > v = darPosibilidades(s);
         posibilidades<unsigned int> op(v);
             
-//         cout << "Veamos... " << endl;
-        for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
-//             for (unsigned int j = 0; j < (*q).size(); j++)
-//                 cout << (*q)[j] << ' ';
-//             cout << endl;
+        for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) and !done; ++q) {
             shapes nueva_subestructura = copia.reasignarNodos(*q);
             
             done = this->igual(nueva_subestructura);
@@ -151,85 +238,31 @@ bool shapes::operator==(const shapes& s) const {
 }
 
 bool shapes::igual(const shapes& s) const {
-    return ((_nodo == s._nodo) && (_nodos == s._nodos) && (_ejes == s._ejes) && (_desc == s._desc));
+    return ((_nodos == s._nodos) and (_ejes == s._ejes) and (_relacion_nodos == s._relacion_nodos) and (_base_ejes == s._base_ejes) and (_desc_nodo == s._desc_nodo) and (_desc_eje == s._desc_eje) and (_rdesc_nodo == s._rdesc_nodo) and (_rdesc_eje == s._rdesc_eje));
 }
 
-vector< CANDIDATE > shapes::posibilidades_totales() {
+vector< CANDIDATE > shapes::posibilidades_totales() { // Candidatos unicos...
     vector< CANDIDATE > v;
     
-    v.push_back(CANDIDATE(1,"object"));
-    for (unsigned int j = 0; j < _shap.size(); j++) {
-      v.push_back(CANDIDATE(j+2,_shap[j]));
-    }
+    for (set< CANDIDATE >::const_iterator it = _base_ejes.begin(); it != _base_ejes.end(); ++it)
+      v.push_back(*it);
     
     return v;
 }
 
-// vector< CANDIDATE > shapes::posibilidades_reales() {
-//     vector< CANDIDATE > v;
-//     
-//     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
-//         v.push_back(CANDIDATE(*p,_desc[*p]));
-//     }
-//     
-//     return v;
-// }
-
-
-shapes shapes::reasignarNodos(vector<unsigned int> v) {
-    shapes nuevo(_mobj, _shap);
-    
-    map<unsigned int, unsigned int> dicc;
-            
-    for (unsigned int i = 0; i < v.size(); i++) {
-        set<unsigned int>::iterator p = _nodos.begin();
-        for (unsigned int j = 0; j < v[i] - 1; j++) p++;
-//         cout << v[i] << endl;
-        nuevo.agregarNodo(i + 1, _desc[*p]);
-        dicc[*p] = i + 1;
-    }
-    for (set< tuplax3<unsigned int> >::iterator p = _ejes.begin(); p != _ejes.end(); p++) {
-//         cout << "D " << dicc[p->first] << " " << dicc[p->second] << " " << p->third << endl;
-        unsigned int uno, dos;
-        if (dicc.find(p->first) != dicc.end())
-            uno = dicc[p->first];
-        else
-            uno = p->first;
-        if (dicc.find(p->second) != dicc.end())
-            dos = dicc[p->second];
-        else
-            dos = p->second;
-        nuevo.agregarEje(uno, dos, p->third);
-    }
-    
-    return nuevo;
-}
-
-shapes shapes::reasignarNodosFijo(vector<unsigned int> v) {
-    shapes nuevo(_mobj, _shap);
+shapes shapes::reasignarNodos(const vector<unsigned int> & v) {
+    shapes nuevo(*this);
+    nuevo.clear();
     
     map<unsigned int, unsigned int> dicc;
             
     unsigned int i = 0;
-    for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
-//         cout << *p << "-> " << v[i] << endl;
-        nuevo.agregarNodo(v[i], _desc[*p]);
-        dicc[*p] = v[i];
-        i++;
+    for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); ++p) {
+        dicc[*p] = nuevo.agregarNodoID(v[i], _desc_nodo.find(_relacion_nodos.find(*p)->second)->second);
+	++i;
     }
-    for (set< tuplax3<unsigned int> >::iterator p = _ejes.begin(); p != _ejes.end(); p++) {
-//         cout << "D " << p->first << " " << p->second << endl;
-//         cout << "E " << dicc[p->first] << " " << dicc[p->second] << " " << p->third << endl;
-        unsigned int uno, dos;
-        if (dicc.find(p->first) != dicc.end())
-            uno = dicc[p->first];
-        else
-            uno = p->first;
-        if (dicc.find(p->second) != dicc.end())
-            dos = dicc[p->second];
-        else
-            dos = p->second;
-        nuevo.agregarEje(uno, dos, p->third);
+    for (set< CANDIDATE >::iterator p = _ejes.begin(); p != _ejes.end(); p++) {
+        nuevo.agregarEje(dicc[p->first], dicc[p->second], p->third);
     }
     
     return nuevo;
@@ -238,11 +271,9 @@ shapes shapes::reasignarNodosFijo(vector<unsigned int> v) {
 bool shapes::cubiertoPor(const shapes& s) const {
     bool res = true;
     
-    for (set< tuplax3<unsigned int> >::const_iterator p = s._ejes.begin(); (p != s._ejes.end()) && res; p++) {
-        map<unsigned int, string>::const_iterator v = _desc.find(p->second);
-        map<unsigned int, string>::const_iterator w = s._desc.find(p->second);
-        res = (ejeUsado(p->first, p->second, p->third) && (*v == *w));
-    }
+    // Reviso ejes validos
+    for (set< CANDIDATE >::const_iterator p = s._ejes.begin(); (p != s._ejes.end()) and res; p++)
+        res = ((_ejes.find(CANDIDATE(p->first, p->second, p->third)) != _ejes.end()) and (_relacion_nodos.find(p->first)->second == s._relacion_nodos.find(p->first)->second) and (_relacion_nodos.find(p->second)->second == s._relacion_nodos.find(p->second)->second));
     
     return res;
 }
@@ -254,13 +285,12 @@ vector< vector<unsigned int> > shapes::darPosibilidades(const shapes& s) const {
     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
         vector<unsigned int> w;
         for (set<unsigned int>::const_iterator q = s._nodos.begin(); q != s._nodos.end(); q++) {
-            if ((*(_desc.find(*p))).second == (*(s._desc.find(*q))).second) {
+            if (_relacion_nodos.find(*p)->second == s._relacion_nodos.find(*q)->second) {
                 w.push_back(*q);
-//                 cout << *q;// '+' << *(s._desc.find(*q)) << endl;
             }
         }
         res[i] = w;
-        i++;
+        ++i;
     }
     return res;
 }

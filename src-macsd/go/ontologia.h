@@ -9,61 +9,33 @@
 #include <cassert>
 #include <stack>
 #include <fstream>
-#include "../utils.h"
 #include "shapes.h"
 #include <iostream>
-
+#include <sstream>
 
 using namespace std;
-//class shapes;
-//class CANDIDATE;
 
 class go : public shapes {
-    public: 
+  private:
+    void _reconstruir_arbol(const unsigned int & s);
+    
+  public: 
         // Constructores y destructores
-        go() {};
-        go(string name, set<unsigned int>* bn, set< CANDIDATE >* be, map<unsigned int,string>* d);
+        go(): shapes() {MAX = 1244;};
+        go(const string & name, const vector<string> & shap, const vector<string> & link, const multimap<pair<string,string>, string> & rn);
         ~go() {};
-        go(const go& s);
+        go(const go& s) : shapes(s) {MAX = 1244;};
+	go(const shapes& s) : shapes(s) {MAX = 1244;};
 
-        // Recuperacion de la informacion
-        set<unsigned int>* base_nodos() const {return _base_nodos;};
-        set< CANDIDATE >* base_ejes() const {return _base_ejes;};
-        map<unsigned int, string>* desc() const {return _desc;};
-        set<unsigned int> nodos() const {return _nodos;};
-        set< CANDIDATE > ejes() const {return _ejes;};
-        
-        // Consultas
-        bool valido(const unsigned int ini, const unsigned int fin, const unsigned int s) const;
-        
-        // Calculos
-        float nivelRelativo(const go& s) const;
-        
-        // Heredadas y redefinidas
-        void agregarEje(const unsigned int ini, const unsigned int fin, const unsigned int s);
-        void agregarNodo(const int nod);
-        void clear();           
-        unsigned int size() const;    
-        double sizeNorm() const;
-        bool ejeUsado(const unsigned int ini, const unsigned int fin, const unsigned int s) const;
-        bool nodoUsado(const unsigned int nod) const;  
-        set<unsigned int> nodosUtilizados() const;      
-        vector< CANDIDATE > ejesNoUtilizados() const;        
-        unsigned int cantNodos() const;
-        unsigned int cantEjes() const;
-        void imprime(ostream &salida) const;        
-        bool operator== (const go& s) const;
-        bool operator!= (const go& s) const;
-    private:
-        set<unsigned int> _nodos;
-        set< CANDIDATE > _ejes;
-        
-        set<unsigned int>* _base_nodos;
-        set< CANDIDATE >* _base_ejes;
-        map<unsigned int, string>* _desc;
-        string _name;
+        vector< CANDIDATE > ejesNoUtilizados() const;
+	void inicial();
+	float nivelRelativo(const go& s) const;
+	
+	unsigned int agregarNodo(const string & s);
+	unsigned int agregarNodo(const unsigned int & s);
+	unsigned int agregarNodoID(const unsigned int & n, const string & s);
+	
+	void agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s);
+	void agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s);
 };
-
-ostream& operator<<(ostream& os, const go& s);
-
 #endif

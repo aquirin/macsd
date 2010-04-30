@@ -11,7 +11,8 @@
 #include <map>
 #include <cassert>
 #include <fstream>
-#include "../utils.h"
+#include "utils.h"
+#include "posibilidades.h"
 #include <iostream>
 
 using namespace std;
@@ -19,42 +20,53 @@ using namespace std;
 class shapes {
     public:
         shapes() {};
-        shapes(const unsigned int maxobj, const vector<string> shap) {_nodo = 0; _mobj = maxobj; _shap = shap;};
         ~shapes() {};
-        shapes(const shapes& s) : _nodos(s._nodos), _ejes(s._ejes), _desc(s._desc) {_nodo = s._nodo; _mobj = s._mobj; _shap = s._shap;};
+
+        shapes(const string & name, const vector<string> & shap, const vector<string> & link, const multimap<pair<string,string>, string> & rn);
+        shapes(const shapes& s);
         
-        void agregarEje(const unsigned int ini, const unsigned int fin, const unsigned int s);
-        void agregarNodo(const unsigned int nod, const string& s);
+        void agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s);
+	void agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s);
+        unsigned int agregarNodo(const string & s);
+	unsigned int agregarNodo(const unsigned int & s);
+	unsigned int agregarNodoID(const unsigned int & n, const string & s);
         void clear();
         unsigned int size() const;
-        float sizeNorm() const {return ((size() * 1.) / (_mobj * _shap.size() * 1.));};
-        bool ejeUsado(const unsigned int ini, const unsigned int fin, const unsigned int s) const {return (_ejes.find(tuplax3<unsigned int>(ini,fin,s)) != _ejes.end());};    
+        float sizeNorm() const;
+        bool ejeUsado(const unsigned int ini, const unsigned int fin, const unsigned int s) const {return (_ejes.find(CANDIDATE(ini,fin,s)) != _ejes.end());};    
         set<unsigned int> nodosUtilizados() const;
-        vector< CANDIDATE > nodosNoUtilizados() const;
+        vector< CANDIDATE > ejesNoUtilizados() const;
         void imprime(ostream &salida) const;
         string graph_g(void) const;
         bool operator== (const shapes& s) const;   
         bool igual(const shapes& s) const;   
         bool operator!= (const shapes& s) const {return !((*this)==s);};
         vector< CANDIDATE > posibilidades_totales();
-//         vector< CANDIDATE > posibilidades_reales();
         unsigned int cantNodos() const {return _nodos.size();};
         vector< vector<unsigned int> > darPosibilidades(const shapes& s) const;
         bool empty() const;
+	unsigned int mapear(const unsigned int& i) const;
+	void inicial();
         
-        shapes reasignarNodos(vector<unsigned int> v);
-        shapes reasignarNodosFijo(vector<unsigned int> v);
+        shapes reasignarNodos(const vector<unsigned int> & v);
         bool cubiertoPor(const shapes& s) const;
         
     protected:
-        unsigned int _nodo;
-        set<unsigned int> _nodos;
-        set< tuplax3<unsigned int> > _ejes;
+	// Datos sobre nombre instancia, nodos y ejes
+        string _name;
+	set<unsigned int> _nodos;
+        set< CANDIDATE > _ejes;
         
-        map<unsigned int, string> _desc;
-        
-        unsigned int _mobj;
-        vector<string> _shap;
+	map<unsigned int,unsigned int> _relacion_nodos; // Numero de nodo, codigo de nodo
+
+	// Base de datos de ejes y nodos
+        static set< CANDIDATE > _base_ejes;
+        static map<unsigned int, string> _desc_nodo;
+	static map<unsigned int, string> _desc_eje;
+	static map<string, unsigned int> _rdesc_nodo;
+	static map<string, unsigned int> _rdesc_eje;
+	
+	static unsigned int MAX;
 };
 
 ostream& operator<<(ostream& os, const shapes& s);

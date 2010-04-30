@@ -109,14 +109,8 @@ public:
      * @param nodo2 el segundo nodo elegido en el paso dado por la hormiga
      * @param eje el eje que se aplicara en la decision 
      */
-#if VERSION == V_SHAPE
-virtual void accionesTrasDecision (Hormiga *hormiga, const unsigned int nodo1, const string eje) = 0;
-#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-virtual void accionesTrasDecision (Hormiga *hormiga, const unsigned int nodo1, const unsigned int nodo2, const unsigned int eje) = 0;
-#elif VERSION == V_WWW
-virtual void accionesTrasDecision (Hormiga *hormiga, const unsigned int nodo1, const unsigned int nodo2, const string eje) = 0;
-#endif
-    
+
+    virtual void accionesTrasDecision (Hormiga *hormiga, const unsigned int nodo1, const unsigned int nodo2, const unsigned int eje) = 0;    
 
     /** 
      * funcion que realiza las acciones necesarias dependiendo del tipo de ACO o

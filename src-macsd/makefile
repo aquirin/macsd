@@ -6,10 +6,12 @@ all-release:	release-set release-matrix release-vector
 
 
 debug-shape:	clean
-	#cp -f shapes/config.txt config.txt
-	cp shapes/shapes.orig.cpp shapes/shapes.cpp
-	cp shapes/shapes.orig.h shapes/shapes.h
-	g++ -g -O0 -c -DVERSION=V_SHAPE shapes/shapes.cpp
+	cp -f shapes/config.txt config.txt
+	cp shapes/shapes.orig.cpp shapes.cpp
+	cp shapes/shapes.orig.h shapes.h
+	cp shapes/posibilidades.template posibilidades.template
+	cp shapes/posibilidades.h posibilidades.h
+	g++ -g -O0 -c -DVERSION=V_SHAPE shapes.cpp
 	gcc -g -O0 -c routines.c
 	g++ -g -O0 -c -DVERSION=V_SHAPE hormigas.cpp
 	g++ -g -O0 -c -DVERSION=V_SHAPE NDominatedSet.cpp
@@ -21,9 +23,9 @@ debug-shape:	clean
 	g++ -g -O0 -c Parameter.cpp
 	g++ -o exe-shape.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o global.o
 	echo "exe-shape.dbg has been generated!"
-	g++ -g -O0 -c -DVERSION=V_SHAPE shapes/load.cpp
-	g++ -o exe-load_shape routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o
-	echo "exe-load_shape has been generated!"
+# 	g++ -g -O0 -c -DVERSION=V_SHAPE shapes/load.cpp
+# 	g++ -o exe-load_shape routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o
+# 	echo "exe-load_shape has been generated!"
 
 debug-vmap:	clean
 	cp vmap/shapes.vector.cpp vmap/shapes.cpp
@@ -46,10 +48,14 @@ debug-vmap:	clean
 	echo "exe-load_vmap has been generated!"
 	
 debug-www:	clean
-	cp www/shapes.vector.cpp www/shapes.cpp
-	cp www/shapes.vector.h www/shapes.h
-# 	g++ -g -O0 -c -DVERSION=V_WWW www/shapes.cpp
-	g++ -g -O0 -c -DVERSION=V_WWW www/www.cpp
+	cp shapes/shapes.orig.cpp shapes.cpp
+	cp shapes/shapes.orig.h shapes.h
+	cp shapes/posibilidades.template posibilidades.template
+	cp shapes/posibilidades.h posibilidades.h
+	cp www/www.h www.h
+	cp www/www.cpp www.cpp
+	g++ -g -O0 -c -DVERSION=V_WWW shapes.cpp
+	g++ -g -O0 -c -DVERSION=V_WWW www.cpp
 	gcc -g -O0 -c routines.c
 	g++ -g -O0 -c -DVERSION=V_WWW hormigas.cpp
 	g++ -g -O0 -c -DVERSION=V_WWW NDominatedSet.cpp
@@ -59,17 +65,21 @@ debug-www:	clean
 	g++ -g -O0 -c -DVERSION=V_WWW utils.cpp
 	g++ -g -O0 -c -DVERSION=V_WWW global.cpp
 	g++ -g -O0 -c Parameter.cpp
-	g++ -o exe-www.dbg routines.o main.o macs.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o www.o global.o
+	g++ -o exe-www.dbg routines.o main.o macs.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o www.o global.o shapes.o
 	echo "exe-www.dbg has been generated!"
-	g++ -g -O0 -c -DVERSION=V_WWW www/load.cpp
-	g++ -o exe-load_www routines.o macs.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o www.o global.o
-	echo "exe-load_www has been generated!"
+# 	g++ -g -O0 -c -DVERSION=V_WWW www/load.cpp
+# 	g++ -o exe-load_www routines.o macs.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o www.o global.o shapes.o
+# 	echo "exe-load_www has been generated!"
 
-debug-go:	clean
-	cp go/shapes.vector.cpp go/shapes.cpp
-	cp go/shapes.vector.h go/shapes.h
-	g++ -g -O0 -c -DVERSION=V_GO go/shapes.cpp
-	g++ -g -O0 -c -DVERSION=V_GO go/ontologia.cpp
+debug-go:	#clean
+	cp shapes/shapes.orig.cpp shapes.cpp
+	cp shapes/shapes.orig.h shapes.h
+	cp shapes/posibilidades.template posibilidades.template
+	cp shapes/posibilidades.h posibilidades.h
+	cp go/ontologia.h ontologia.h
+	cp go/ontologia.cpp ontologia.cpp
+	g++ -g -O0 -c -DVERSION=V_GO shapes.cpp
+	g++ -g -O0 -c -DVERSION=V_GO ontologia.cpp
 	gcc -g -O0 -c routines.c
 	g++ -g -O0 -c -DVERSION=V_GO hormigas.cpp
 	g++ -g -O0 -c -DVERSION=V_GO NDominatedSet.cpp
@@ -81,9 +91,9 @@ debug-go:	clean
 	g++ -g -O0 -c Parameter.cpp
 	g++ -o exe-go.dbg routines.o main.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o global.o
 	echo "exe-go.dbg has been generated!"
-	g++ -g -O0 -c -DVERSION=V_GO go/load.cpp
-	g++ -o exe-load routines.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o
-	echo "exe-load_go has been generated!"
+# 	g++ -g -O0 -c -DVERSION=V_GO go/load.cpp
+# 	g++ -o exe-load routines.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o
+# 	echo "exe-load_go has been generated!"
 	
 	
 release-set:	clean
