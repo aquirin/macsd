@@ -235,11 +235,32 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
 }
 #endif
 
-#if VERSION == V_SCIENCEMAP           
+/*#if VERSION == V_SCIENCEMAP           
 void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v, map<string,unsigned int>* nodos, set< pair< pair<string,string>, unsigned int> >* ejes) {
     ifstream arch;
     string cadena;
     
+    unsigned int aux;
+    unsigned int aux1;
+    string desde, hasta;
+    
+    arch.open(fichero.c_str());
+
+    if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
+        exit(1);
+    }
+    
+    // Primera pasada para poner los nodos
+    set<string> bw;
+    set<string> be;
+    multimap<pair<string,string>, string> rela;
+    bool found;
+    pair<multimap<pair<string,string>, string>::iterator, multimap<pair<string,string>, string>::iterator> pit;
+    
+    map<unsigned int,string> quenodo;
+    string cad;
+    
+ 
     unsigned int i = 1;
     
     unsigned int aux;
@@ -348,9 +369,9 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v, map<string,unsi
     arch.close();
 }
 #endif
-            
+         */   
 
-#if VERSION == V_WWW         
+#if (VERSION == V_WWW) || (VERSION == V_SCIENCEMAP)
 void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
     ifstream arch;
     string cadena;
@@ -512,14 +533,14 @@ int main(int argc, char *argv[]){
     PARA.ReadConfiguration("./config.txt");
     
     // leemos los datos del fichero de entrada
-#if (VERSION == V_SHAPE) || (VERSION == V_WWW)
+#if (VERSION == V_SHAPE) || (VERSION == V_WWW) || (VERSION == V_SCIENCEMAP)
     leeFicheroDatos (PARA.GLOB_rutaEntrada, baseDatos);
 #elif VERSION == V_GO
     leeFicheroDatos (PARA.GLOB_rutaEntrada, PARA.GO_bpn, PARA.GO_bpe, PARA.GO_fmn, PARA.GO_fme, PARA.GO_ccn, PARA.GO_cce, baseDatos);
-#elif VERSION == V_SCIENCEMAP
-    map<string,unsigned int> nodos;
-    set< pair< pair<string,string>, unsigned int> > ejes;
-    leeFicheroDatos (PARA.GLOB_rutaEntrada, baseDatos, &nodos, &ejes);
+// #elif VERSION == V_SCIENCEMAP
+//     map<string,unsigned int> nodos;
+//     set< pair< pair<string,string>, unsigned int> > ejes;
+//     leeFicheroDatos (PARA.GLOB_rutaEntrada, baseDatos, &nodos, &ejes);
 #endif
 
     

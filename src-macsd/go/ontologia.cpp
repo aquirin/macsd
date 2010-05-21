@@ -40,8 +40,8 @@ void go::inicial() {
 //---------------------------------------------
 
 void go::_reconstruir_arbol(const unsigned int & s) {
+  cout << "IC" << endl;
   for (set<CANDIDATE>::const_iterator p = _base_ejes.begin(); p != _base_ejes.end(); p++) {
-//     cout << "RA " << p->first << ' ' << p->second << ' ' << p->third << endl;
     if ((p->second == s) and (_nodos.find(p->first) == _nodos.end())) {
       // Los ejes son (padre,hijo)
       cout << "+ " << p->first << endl;
@@ -56,7 +56,7 @@ void go::_reconstruir_arbol(const unsigned int & s) {
 }
 
 unsigned int go::agregarNodo(const string & s) {
-  cout << s << endl;
+  cout << "an string " << s << endl;
   assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
 
   stringstream ss(s);
@@ -72,6 +72,8 @@ unsigned int go::agregarNodo(const string & s) {
 }
 
 unsigned int go::agregarNodo(const unsigned int & s) {
+  cout << "an int " << s << endl;
+
   _nodos.insert(s);
   _relacion_nodos.insert(pair<unsigned int, unsigned int>(s, s));
 
@@ -81,6 +83,8 @@ unsigned int go::agregarNodo(const unsigned int & s) {
 }
 
 unsigned int go::agregarNodoID(const unsigned int & n, const string & s) {
+  cout << "an id " << s << endl;
+
   stringstream ss(s);
   unsigned int nuevo;
   ss >> nuevo;

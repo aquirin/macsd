@@ -726,19 +726,19 @@ set<CANDIDATE> Hormiga::local_search() const {
     set<CANDIDATE> tiene;
     
     if (_support.size() > 0) {
-      #if VERSION == V_SCIENCEMAP
-      
-      // Interseccion de todos
-      set<CANDIDATE> primero = _instancias[_support[0]].ejes();
-      for (set<CANDIDATE>::const_iterator it = primero.begin(); it != primero.end(); ++it) {
-	bool found = true;
-	for (unsigned int i = 1; (i < _support.size()) and found; i++)
-	  found = _instancias[_support[i]].ejeUsado(it->first,it->second,it->third);
-	if (found)
-	  tiene.insert(*it);
-      }
-      cout << "FIN " << tiene.size() << endl;
-      #endif
+//       #if VERSION == V_SCIENCEMAP
+//       
+//       // Interseccion de todos
+//       set<CANDIDATE> primero = _instancias[_support[0]].ejes();
+//       for (set<CANDIDATE>::const_iterator it = primero.begin(); it != primero.end(); ++it) {
+// 	bool found = true;
+// 	for (unsigned int i = 1; (i < _support.size()) and found; i++)
+// 	  found = _instancias[_support[i]].ejeUsado(it->first,it->second,it->third);
+// 	if (found)
+// 	  tiene.insert(*it);
+//       }
+//       cout << "FIN " << tiene.size() << endl;
+//       #endif
     }
     return tiene;
 }
