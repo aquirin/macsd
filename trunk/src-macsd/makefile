@@ -28,10 +28,15 @@ debug-shape:	clean
 # 	echo "exe-load_shape has been generated!"
 
 debug-vmap:	clean
-	cp vmap/shapes.vector.cpp vmap/shapes.cpp
-	cp vmap/shapes.vector.h vmap/shapes.h
-	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap/shapes.cpp
-	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap/vmap.cpp
+# 	cp -f vmap/config.txt config.txt
+	cp shapes/shapes.orig.cpp shapes.cpp
+	cp shapes/shapes.orig.h shapes.h
+	cp shapes/posibilidades.template posibilidades.template
+	cp shapes/posibilidades.h posibilidades.h
+	cp vmap/vmap.cpp vmap.cpp
+	cp vmap/vmap.h vmap.h
+	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP shapes.cpp
+	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap.cpp
 	gcc -g -O0 -c routines.c
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP hormigas.cpp
 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP NDominatedSet.cpp
@@ -43,9 +48,9 @@ debug-vmap:	clean
 	g++ -g -O0 -c Parameter.cpp
 	g++ -o exe-vmap.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o vmap.o global.o
 	echo "exe-vmap.dbg has been generated!"
-	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap/load.cpp
-	g++ -o exe-load_vmap routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o vmap.o global.o
-	echo "exe-load_vmap has been generated!"
+# 	g++ -g -O0 -c -DVERSION=V_SCIENCEMAP vmap/load.cpp
+# 	g++ -o exe-load_vmap routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o vmap.o global.o
+# 	echo "exe-load_vmap has been generated!"
 	
 debug-www:	clean
 	cp shapes/shapes.orig.cpp shapes.cpp
