@@ -26,7 +26,7 @@ go::go(const string & name, const vector<string> & shap, const vector<string> & 
   }
   
 /*  cout << "Maximo " << _desc_nodo.size() + _desc_eje.size() << endl;*/
-  MAX = 1244;
+  MAX = 51275;
   inicial();
 }
 
@@ -40,23 +40,23 @@ void go::inicial() {
 //---------------------------------------------
 
 void go::_reconstruir_arbol(const unsigned int & s) {
-  cout << "IC" << endl;
+//   cout << "IC" << s << endl;
   for (set<CANDIDATE>::const_iterator p = _base_ejes.begin(); p != _base_ejes.end(); p++) {
     if ((p->second == s) and (_nodos.find(p->first) == _nodos.end())) {
       // Los ejes son (padre,hijo)
-      cout << "+ " << p->first << endl;
+//       cout << "+ " << p->first << endl;
       agregarNodo(p->first);
-      agregarEje(p->first,p->second,p->third);
+/*      agregarEje(p->first,p->second,p->third);*/
     }
-    else if ((_nodos.find(p->first) != _nodos.end()) and (_ejes.find(CANDIDATE(p->first,p->second,p->third)) == _ejes.end())) {
-      cout << "l " << p->first << endl;
+    else if ((_nodos.find(p->first) != _nodos.end()) and (_nodos.find(p->second) != _nodos.end()) and (_ejes.find(CANDIDATE(p->first,p->second,p->third)) == _ejes.end())) {
+//       cout << "l " << p->first << ' ' << p->second << endl;
       agregarEje(p->first,p->second,p->third);
     }
   }
 }
 
 unsigned int go::agregarNodo(const string & s) {
-  cout << "an string " << s << endl;
+//   cout << "an string " << s << endl;
   assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
 
   stringstream ss(s);
@@ -66,24 +66,29 @@ unsigned int go::agregarNodo(const string & s) {
   _nodos.insert(nuevo);
   _relacion_nodos.insert(pair<unsigned int, unsigned int>(nuevo, nuevo));
     
+  // Add ancestors
   _reconstruir_arbol(nuevo);
   
   return nuevo;
 }
 
 unsigned int go::agregarNodo(const unsigned int & s) {
-  cout << "an int " << s << endl;
+//   cout << "an int " << s << endl;
 
-  _nodos.insert(s);
-  _relacion_nodos.insert(pair<unsigned int, unsigned int>(s, s));
+  unsigned int nuevo = s;
+  if (nuevo > MAX) nuevo = s - MAX;
+  
+  _nodos.insert(nuevo);
+  _relacion_nodos.insert(pair<unsigned int, unsigned int>(nuevo, nuevo));
 
+  // Add ancestors
   _reconstruir_arbol(s);
   
-  return s;
+  return nuevo;
 }
 
 unsigned int go::agregarNodoID(const unsigned int & n, const string & s) {
-  cout << "an id " << s << endl;
+//   cout << "an id " << s << endl;
 
   stringstream ss(s);
   unsigned int nuevo;
@@ -94,6 +99,7 @@ unsigned int go::agregarNodoID(const unsigned int & n, const string & s) {
   _nodos.insert(nuevo);
   _relacion_nodos.insert(pair<unsigned int, unsigned int>(nuevo, nuevo));
 
+  // Add ancestors
   _reconstruir_arbol(nuevo);
   
   return nuevo;
@@ -103,20 +109,23 @@ unsigned int go::agregarNodoID(const unsigned int & n, const string & s) {
 
 void go::agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s) {
     // Verifico que alguno de los nodos del eje ya exista en el grafo
-    cout << ini << ' ' << fin << ' ' << s << endl;
+    cout << ini << ' ' << fin << ' ' << s << ' ' << MAX << endl;
     assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > MAX)) and (_desc_eje.find(s) != _desc_eje.end()));
     
-     unsigned int segundo = fin;
+    unsigned int segundo = fin;
     if (_nodos.find(fin) == _nodos.end()) {      
       // Agrego un nuevo nodos
       segundo = agregarNodo(fin);
+//       cout << "Add: " << fin << endl;
     }
     else {
       if (_ejes.find(CANDIDATE(ini,segundo,s)) == _ejes.end()) {
 	  _ejes.insert(CANDIDATE(ini,segundo,s));
+  // 	cout << "Agregado: " << ini << ' ' << segundo << ' ' << s << endl;
       }
       else {
 	  cerr << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
+	  exit(1);
       }
     }
 }
@@ -136,7 +145,8 @@ void go::agregarEje(const unsigned int & ini, const unsigned int & fin, const st
 	  _ejes.insert(CANDIDATE(ini,segundo,eleje));
       }
       else {
-	  cerr << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
+	  cerr << "ERRRRRRRRRRRRRROO " << ini << ' ' << fin << ' ' << s << endl;
+	  exit(1);
       }
     }
 }
@@ -203,9 +213,15 @@ vector<CANDIDATE> go::ejesNoUtilizados() const {
     vector<CANDIDATE> diff;
     
      for (set<CANDIDATE>::const_iterator p = _base_ejes.begin(); p != _base_ejes.end(); p++) {
-	 if (_ejes.find(*p) == _ejes.end()) {
-             diff.push_back(*p);
-	 }
+	if ((_nodos.find(p->first) != _nodos.end()) and (_nodos.find(p->second) != _nodos.end()) and (_ejes.find(*p) == _ejes.end())) {
+	  diff.push_back(*p);
+	}
+	else {
+	  if ((_nodos.find(p->first) != _nodos.end()) and (_nodos.find(p->second) == _nodos.end()))
+	    diff.push_back(CANDIDATE(p->first, p->second + MAX, p->third));
+	  else if ((_nodos.find(p->first) == _nodos.end()) and (_nodos.find(p->second) != _nodos.end()))
+	    diff.push_back(CANDIDATE(p->first + MAX, p->second, p->third));
+	}
      }
          
     return diff;

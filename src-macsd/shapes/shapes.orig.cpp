@@ -68,6 +68,20 @@ unsigned int shapes::agregarNodo(const string & s) {
     return nuevo;
 }
 
+string shapes::tipoNodo(const unsigned int x) const {
+  assert(_nodos.find(x) != _nodos.end());
+  
+  unsigned int cual = (*(_relacion_nodos.find(x))).second;
+  return _desc_nodo[cual];
+}
+
+unsigned int shapes::nuevo_codigo_nodo(const unsigned int x) const {
+    assert(_nodos.find(x) != _nodos.end());
+
+    unsigned int cual = (*(_relacion_nodos.find(x))).second;
+    return cual + MAX;
+}
+
 unsigned int shapes::agregarNodo(const unsigned int & s) {
     assert(s > MAX);
 
