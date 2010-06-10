@@ -117,23 +117,13 @@ void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe
                 // Data
                 do {
                     aux1 = cadena.find('/', aux + 1);
-                    aux2 = aux;
-                    unsigned int ant;
-                    do {
-                        ant = aux2;
-                        aux2 = cadena.find('|', ant + 1);
-                    }
-                    while ((aux2 != menos_uno) && (aux2 < aux1));
-                    aux2 = ant;
-                    if (aux2 < aux1)
-                        aux = aux2;
                     if (aux1 != menos_uno) {
                         codigo = atoi(cadena.substr(aux + 1, aux1 - aux - 1).c_str());
                         data.agregarNodo(cadena.substr(aux + 1, aux1 - aux - 1));
                         aux = aux1;
                         aux1 = cadena.find('@', aux + 1);
                         aux2 = cadena.find('|', aux + 1);
-                        if (aux2 < aux1)
+                        if ((aux1 < 0) or (aux2 < aux1))
                             aux1 = aux2;
                         aux = aux1;
                     }
@@ -520,7 +510,7 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
 
 int main(int argc, char *argv[]){	
     Parametros params;
-    NDominatedSet soluciones;
+        NDominatedSet soluciones;
     string fichero;
     vector<SOLUTION> baseDatos;
     int num_nodes, num_edges;
@@ -530,7 +520,7 @@ int main(int argc, char *argv[]){
         
     // almacenamiento de parametros        
     // -----------------------------
-    PARA.ReadConfiguration("./config.txt");
+    PARA.ReadConfiguration("config.txt");
     
     // leemos los datos del fichero de entrada
 #if (VERSION == V_SHAPE) || (VERSION == V_WWW) || (VERSION == V_SCIENCEMAP)

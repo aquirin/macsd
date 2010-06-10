@@ -76,7 +76,8 @@ debug-www:	clean
 # 	g++ -o exe-load_www routines.o macs.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o www.o global.o shapes.o
 # 	echo "exe-load_www has been generated!"
 
-debug-go:	#clean
+debug-go:	clean
+	cp -f go/config.txt config.txt
 	cp shapes/shapes.orig.cpp shapes.cpp
 	cp shapes/shapes.orig.h shapes.h
 	cp shapes/posibilidades.template posibilidades.template

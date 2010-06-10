@@ -127,56 +127,35 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             Hormiga una(this->base, this->nObj, this->_aparEje, inicial[n]);
             	    
 	    cout << "Antes Local Search: " << una.subEst();
-// 	    una.calculaCostes();
-// 
-// 	    vector <float> cost1(2);
-// 	    cost1[0] = una.getCoste(0);
-// 	    cost1[1] = una.getCoste(1);
-// 	    cout << "Costo: " << cost1[0] << ' ' << cost1[1] << endl;
-// 
-// // 	    if (cost1[0] > 0) {
-// 	    // Aqui agrego el local search
-// 	    candidatas = una.getCandidatos();
-// 	    set<CANDIDATE> pasos = una.local_search();
-// 	    // pasos son todos los ejes que tengo que agregar
-// 	    while (pasos.size() > 0) {
-// 		for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
-// 		    bool found = false;
-// 		    unsigned int q = 0;
-// 	    // 	cout << "Las candidatas:" << endl;
-// 		    while ((q < candidatas.size()) and !found) {
-// 	    //		cout << "Cand: " << candidatas[q].first << "," << candidatas[q].second << "," << candidatas[q].third << endl;
-// 			    found = ((candidatas[q] == *pp) or (candidatas[q] == CANDIDATE(q.second,q.first,q.third));
-// 			    q++;
-// 		    }
-// 		    if (found) {
-// 			    CANDIDATE ar = *pp;
-// 			    #if VERSION == V_SHAPE
-// 			    una.avanza(ar.first, ar.second);
-// 			    #elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-// 			    una.avanza(ar.first, ar.second, ar.third);
-// 			    #endif
-// 
-// 			    candidatas = una.getCandidatos();
-// 			    
-//     // 			cout << "Listo: " << pp->first << "," << pp->second << "," << pp->third << endl;
-// 			    
-// 			    pasos.erase(pp);
-// 			    pp = pasos.begin();
-// 		    }
-// 		}
-// 	    }
-// // 	    }
-// // 	    else cuantos++;
-// 	
-// 	    cout << "Local Search: " << una.subEst();
-// 	    una.calculaCostes();
-// 
-// 	    vector <float> cost(2);
-// 	    cost[0] = una.getCoste(0);
-// 	    cost[1] = una.getCoste(1);
-// 	    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
+	    una.calculaCostes();
+	    Hormiga old_una(una);
+	    
+	    vector <float> cost1(2);
+	    cost1[0] = una.getCoste(0);
+	    cost1[1] = una.getCoste(1);
+	    cout << "Costo: " << cost1[0] << ' ' << cost1[1] << endl;
 
+	    // Aqui agrego el local search
+	    una.local_search();
+// 	    // pasos son todos los ejes que tengo que agregar
+// 	    cout << una.subEst() << endl;
+// 	    for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
+// 	      cout << "PASO: " << pp->first << ' ' << pp->second << ' ' << pp->third << endl;
+// 	      una.avanza(*pp);
+// 	    }
+		    cout << "Despues Local Search: " << una.subEst();
+	    una.calculaCostes();
+
+	    vector <float> cost(2);
+	    cost[0] = una.getCoste(0);
+	    cost[1] = una.getCoste(1);
+	    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
+	    if (una != old_una) {
+	      cout << "MEJORA!" << endl;
+	      unsigned int x;
+// 	      cin >> x;
+	    }
+	    
            // Actualiza el Pareto
            this->conjuntoNoDominadas.addDominancia(una, this->preferencias, this->numDominanciasPorPreferencias);
 	   if ((una.getCoste(0) == 1) and (una.getCoste(1) < best.getCoste(1))) {

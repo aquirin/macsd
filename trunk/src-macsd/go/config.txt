@@ -9,15 +9,10 @@
 #
 
 GLOB_tCiclo = 0.0				# tiempo de ciclo permitido
-#GLOB_maxTiempo = 2				# criterio de parada, el tiempo; variable que almacena el tiempo maximo permitido para la ejecucion del algoritmo
-GLOB_maxTiempo = 10				# criterio de parada, el tiempo; variable que almacena el tiempo maximo permitido para la ejecucion del algoritmo
+GLOB_maxTiempo = 3600				# criterio de parada, el tiempo; variable que almacena el tiempo maximo permitido para la ejecucion del algoritmo
 GLOB_areaMax = 0.0				# area maxima permitida (no se utiliza)
-#GLOB_rutaEntrada = house3.g			# ruta del fichero de entrada (SHAPE version)
-#GLOB_rutaEntrada = cluster20.csv		# ruta del fichero de entrada (GO version)
-GLOB_rutaEntrada = ../data/rocio1/rocio1			# ruta del fichero de entrada (SHAPE version)
-#GLOB_rutaSalida = shapes			# ruta del fichero de salida (SHAPE version)
-#GLOB_rutaSalida = emo-cc			# ruta del fichero de salida (GO version)
-GLOB_rutaSalida = ../data/rocio1/rocio1.out			# ruta del fichero de salida (VMAP version)
+GLOB_rutaEntrada = ../data/GO/gnf1b-anntable.csv		# ruta del fichero de entrada (SHAPE version)
+GLOB_rutaSalida = ../data/GO/2010			# ruta del fichero de salida (VMAP version)
 GLOB_areaImplicita = 0				# booleana que indica si el area se consigue a partir de los tiempos (1) o no (0)
 GLOB_semilla = 1				# semilla para el generador de aleatorios
 GLOB_numObjs = 2				# numero de objetivos del problema
@@ -35,21 +30,20 @@ MOACO_q0 = 0.5					# valor q0 del MOACO (parametro de ejecucion q0 para la regla
 MOACO_numHormigas = 10				# numero de hormigas del algoritmo
 MOACO_gamma = 0.5				# valor para seleccionar si genero una hormiga nueva o extiendo una existente /// ROCIO
 MOACO_nEstOptimo = 0				# parametro extra para BicriterionMC
-MOACO_stepSize = 10				# tamanio maximo de la subestructura en un paso
-
+MOACO_stepSize = 3				# tamanio maximo de la subestructura en un paso
+MOACO_ranking = 0				# booleano para la seleccion de la cantidad de pasos (0 --> azar, 1 --> ranking lineal)
+MOACO_multiheuristics = 0               	# entero que nos indica el tipo de multiheuristics utilizado (0-->sin heuristica, 1--> heuristica estatica, 2--> heuristica dinamica)
 
 ##
 #  Specific to the Gene Ontology
 #
 
-GO_bpn = "process.nodes"
-GO_bpe = "process.edges"
-GO_fmn = "function.nodes"
-GO_fme = "function.edges"
-GO_ccn = "cellular.nodes"
-GO_cce = "cellular.edges"
-GO_x = ""					# Used in load.cpp
-
+GO_bpn = ../data/GO/process.nodes
+GO_bpe = ../data/GO/process.edges
+GO_fmn = ../data/GO/function.nodes
+GO_fme = ../data/GO/function.edges
+GO_ccn = ../data/GO/cellular.nodes
+GO_cce = ../data/GO/cellular.edges
 
 ##
 #  Specific to the Visual Science Maps

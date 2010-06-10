@@ -34,8 +34,12 @@ class shapes {
         unsigned int size() const;
         float sizeNorm() const;
         bool ejeUsado(const unsigned int ini, const unsigned int fin, const unsigned int s) const {return (_ejes.find(CANDIDATE(ini,fin,s)) != _ejes.end());};    
+	bool nodoUsado(const unsigned int ini) const {return (_nodos.find(ini) != _nodos.end());};  
         set<unsigned int> nodosUtilizados() const;
+	string tipoNodo(const unsigned int x) const;
+	unsigned int nuevo_codigo_nodo(const unsigned int x) const;
         vector< CANDIDATE > ejesNoUtilizados() const;
+	set< CANDIDATE > ejesUtilizados() const {return _ejes;};
         void imprime(ostream &salida) const;
         string graph_g(void) const;
         bool operator== (const shapes& s) const;   

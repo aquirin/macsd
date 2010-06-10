@@ -151,7 +151,7 @@ class Hormiga {
         int dominancia(Hormiga& v, bool x, int y);
 
 	/* Agregado por ROCIO */
-	set<CANDIDATE> local_search() const;
+	void local_search();
         
         void imprime(ostream &salida) const {salida << _subestructura << endl;};
         
