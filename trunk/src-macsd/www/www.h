@@ -18,7 +18,7 @@ class www : public shapes {
     public: 
         // Constructores y destructores
         www() : shapes() {MAX = 255;};
-        www(const string & name, const vector<string> & shap, const vector<string> & link, const multimap<pair<string,string>, string> & rn) : shapes(name,shap,link,rn) {MAX = 255;};
+        www(const string & name, const vector<string> & shap, const vector<string> & link, const multimap<pair<string,string>, string> & rn);
 	
        ~www() {};
         www(const www& s) : shapes(s) {MAX = 255;};

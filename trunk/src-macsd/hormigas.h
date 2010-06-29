@@ -30,17 +30,10 @@ class Hormiga {
         */
         unsigned int _ejesAsignados;
         
-        /** 
-        * subestructura que representa la hormiga
-        */
-        SOLUTION _subestructura;
-
-        
          /**
         *  conjunto auxiliar que nos servira para guardar las nodos candidatos
         */
         vector < CANDIDATE > _candidatos;
-
     
         /**
         *  numero de colonias a las que pertenence la solucion 
@@ -52,11 +45,6 @@ class Hormiga {
         */
         unsigned int _numObjetivos;
  
-         /**
-        * vector de coste en donde se almacenara en la posicion i, el coste respecto al objetivo i-esimo
-        */
-        vector<float> _costes;
-
         /**
         * flag para indicar si los costes almacenados estan actualizados o no
         */
@@ -66,14 +54,24 @@ class Hormiga {
         * Base de datos de instancias
         */
         vector< SOLUTION > _instancias;
-
-        /**
+        
+        map<CANDIDATE, double>* _aparEje;
+	
+	/** 
+        * subestructura que representa la hormiga
+        */
+        SOLUTION _subestructura;
+	
+	/**
         * Soporte actual
         */
         vector<unsigned int> _support;
+	
+        /**
+        * vector de coste en donde se almacenara en la posicion i, el coste respecto al objetivo i-esimo
+        */
+        vector<float> _costes;
         
-        map<CANDIDATE, double>* _aparEje;
-
     public:
 	vector<unsigned int> soporte() const {return _support;};
         
@@ -155,15 +153,15 @@ class Hormiga {
         
         void imprime(ostream &salida) const {salida << _subestructura << endl;};
         
-        int getNumObjetivos() const {return _numObjetivos;};
+        unsigned int getNumObjetivos() const {return _numObjetivos;};
         
-        bool operator== (const Hormiga & unaHormiga) {return (_subestructura == unaHormiga._subestructura);};
+        bool operator== (const Hormiga & unaHormiga);
         
-        bool operator!= (const Hormiga & unaHormiga) {return (_subestructura != unaHormiga._subestructura);};
+        bool operator!= (const Hormiga & unaHormiga) {return !(*this == unaHormiga);};
         
         float getAparicionesEje(const CANDIDATE& eje);
 
-        bool extendible() {calculaCostes(); return ((_candidatos.size() > 0) and (_costes[1] < 1));};
+        bool extendible();
 };
 
 #endif

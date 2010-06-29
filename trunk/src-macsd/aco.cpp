@@ -3,10 +3,7 @@
 #include <sstream>
 
 //---------------------------------------------------------
-ACO::ACO (vector< SOLUTION >& b, Parametros &params) : AlgoritmoMO (PARA.GLOB_BL, PARA.GLOB_numObjs, PARA.GLOB_preferencias), base(b) {      	
-    	
-    unsigned int i,j,k;
-    
+ACO::ACO (vector< SOLUTION >& b, Parametros &params) : AlgoritmoMO (PARA.GLOB_BL, PARA.GLOB_numObjs, PARA.GLOB_preferencias), base(b) {      	   
     // inicializamos a 0 las n probabilidades para movernos en cada nodo
     // un vector con n probabilidades, una por cada n-esima nodo
     vector< CANDIDATE > lista = b[0].posibilidades_totales();
@@ -16,7 +13,7 @@ ACO::ACO (vector< SOLUTION >& b, Parametros &params) : AlgoritmoMO (PARA.GLOB_BL
     cout << "CC " << this->probabilidades.size() << endl;
  
     // creamos las hormigas y les asignamos su colonia
-    for(i = 0; i < PARA.MOACO_numHormigas; i++){
+    for(unsigned int i = 0; i < PARA.MOACO_numHormigas; i++){
         Hormiga *sec = new Hormiga (base, PARA.GLOB_numObjs, params.aparEje);
         this->hormigas.push_back(sec);
     }
@@ -67,7 +64,7 @@ void ACO::setUmbralesYHeuristicas (unsigned int multiheuristics) {
 NDominatedSet & ACO::ejecuta (string &filename) {
     // variables de control de tiempos y del algoritmo generico
     time_t inicio, fin;
-    unsigned long tiempoIteracionAnterior, inicioBL;
+    unsigned long tiempoIteracionAnterior;
     string nombreFichero;
     unsigned long tiempoTranscurrido, tiempoHastaUltimaIteracion;
      
@@ -91,7 +88,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 //         cout << "Inicial: " << n << endl;
         vector < CANDIDATE > dondeir;
         inicial.push_back(this->hormigas[0]->subEst());
-	inicial[n].inicial();
+		inicial[n].inicial();
               
         // Elijo cantidad de pasos
         unsigned int x;
@@ -135,32 +132,32 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 	    cost1[1] = una.getCoste(1);
 	    cout << "Costo: " << cost1[0] << ' ' << cost1[1] << endl;
 
-	    // Aqui agrego el local search
-	    una.local_search();
-// 	    // pasos son todos los ejes que tengo que agregar
-// 	    cout << una.subEst() << endl;
-// 	    for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
-// 	      cout << "PASO: " << pp->first << ' ' << pp->second << ' ' << pp->third << endl;
-// 	      una.avanza(*pp);
-// 	    }
-		    cout << "Despues Local Search: " << una.subEst();
-	    una.calculaCostes();
+            if (cost1[1] != 0) {
+                // Aqui agrego el local search
+                una.local_search();
+    // 	    // pasos son todos los ejes que tengo que agregar
+    // 	    cout << una.subEst() << endl;
+    // 	    for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
+    // 	      cout << "PASO: " << pp->first << ' ' << pp->second << ' ' << pp->third << endl;
+    // 	      una.avanza(*pp);
+    // 	    }
+                cout << "Despues Local Search: " << una.subEst();
+                una.calculaCostes();
 
-	    vector <float> cost(2);
-	    cost[0] = una.getCoste(0);
-	    cost[1] = una.getCoste(1);
-	    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
-	    if (una != old_una) {
-	      cout << "MEJORA!" << endl;
-	      unsigned int x;
-// 	      cin >> x;
-	    }
-	    
-           // Actualiza el Pareto
-           this->conjuntoNoDominadas.addDominancia(una, this->preferencias, this->numDominanciasPorPreferencias);
-	   if ((una.getCoste(0) == 1) and (una.getCoste(1) < best.getCoste(1))) {
-	     best = una;
-	   }
+                vector <float> cost(2);
+                cost[0] = una.getCoste(0);
+                cost[1] = una.getCoste(1);
+                cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
+                if (una != old_una) {
+                  cout << "MEJORA!" << endl;
+                }
+
+               // Actualiza el Pareto
+               this->conjuntoNoDominadas.addDominancia(una, this->preferencias, this->numDominanciasPorPreferencias);
+               if ((una.getCoste(0) == 1) and (una.getCoste(1) < best.getCoste(1))) {
+                 best = una;
+               }
+            }
 // 	    
 // // 	    // Actualiza el conjunto intermedio
 // //             bool res = this->conjuntoIntermedio.addDominancia(una, true, this->numDominanciasPorPreferencias);         
@@ -171,14 +168,14 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     // Actualizo feromona
     vector<float> prom(this->nObj);
     
-    for (int j = 0; j < (unsigned int) this->nObj; j++)
+    for (unsigned int j = 0; j < (unsigned int) this->nObj; j++)
         prom[j] = 0.;
         
     // pheromone global update
     NDominatedSet::iterator p = this->conjuntoNoDominadas.begin();
     
     while (p != conjuntoNoDominadas.end()){
-        for (int j = 0; j < (unsigned int) this->nObj; j++) {
+        for (unsigned int j = 0; j < (unsigned int) this->nObj; j++) {
             prom[j] += (*p).getCoste(j);
         }
                     
@@ -186,7 +183,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     }
     
     float ntau = 1.;
-    for (int j = 0; j < (unsigned int) this->nObj; j++) {
+    for (unsigned int j = 0; j < (unsigned int) this->nObj; j++) {
         ntau *= (prom[j] / this->conjuntoNoDominadas.getNumElementos());
     }
     
@@ -226,11 +223,14 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                 while (pp < conjuntoNoDominadas.getNumElementos()) {
                         if (this->conjuntoNoDominadas.getElemento(pp).extendible())
 			  cuales.push_back(this->conjuntoNoDominadas.getElemento(pp));
+// 			else
+// 			  cout << "NO EXTENSIBLE " << endl <<  this->conjuntoNoDominadas.getElemento(pp).subEst() << endl;
 			pp++;
                 }
 		
 		if (cuales.size() > 0) {
                     int xx = intAzar(0, cuales.size() - 1);
+		    cout << "Elegida " << cuales[xx].subEst() << endl;
                     *(this->hormigas[i]) = cuales[xx];
                     de_donde[i] = true;
                 }
@@ -336,61 +336,34 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 		    // se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO   
 		    this->accionesTrasDecision(this->hormigas[nHormiga], hice[nHormiga].second.first, hice[nHormiga].second.second, hice[nHormiga].second.third);
 
-// // 		    // Aqui agrego el local search
-// 		    candidatas = this->hormigas[nHormiga]->getCandidatos();
-// 		    set<CANDIDATE> pasos = this->hormigas[nHormiga]->local_search();
-// 		    // pasos son todos los ejes que tengo que agregar
-// 		    while (pasos.size() > 0) {
-// 			for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
-// 			    bool found = false;
-// 			    unsigned int q = 0;
-// 	// 		    cout << "Las candidatas:" << endl;
-// 			    while ((q < candidatas.size()) and !found) {
-// 	// 			cout << "Cand: " << candidatas[q].first << "," << candidatas[q].second << "," << candidatas[q].third << endl;
-// 				found = (candidatas[q] == *pp);
-// 				q++;
-// 			    }
-// 			    if (found) {
-// 				CANDIDATE ar = *pp;
-// 				#if VERSION == V_SHAPE
-// 				this->hormigas[nHormiga]->avanza(ar.first, ar.second);
-// 				#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-// 				this->hormigas[nHormiga]->avanza(ar.first, ar.second, ar.third);
-// 				#endif
-// 
-// 				// tenemos que modificar la feromona en el arco nuevo
-// 				// se realizan modificaciones de feromona o no dependiendo del tipo de algoritmo ACO o MOACO que implemente la clase ACO
-// 				#if VERSION == V_SHAPE
-// 				this->accionesTrasDecision(this->hormigas[nHormiga], ar.first, ar.second);
-// 				#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-// 				this->accionesTrasDecision(this->hormigas[nHormiga], ar.first, ar.second, ar.third);
-// 				#endif
-// 				
-// 				candidatas = this->hormigas[nHormiga]->getCandidatos();
-// 				
-// 	// 			cout << "Listo: " << pp->first << "," << pp->second << "," << pp->third << endl;
-// 				
-// 				pasos.erase(pp);
-// 			    }
-// 			}
-// 			cout << "Inter: " << this->hormigas[nHormiga]->subEst();
-// 			cout << "Faltan: " << pasos.size() << endl;
-// // 			for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
-// // 			    cout << pp->first << "," << pp->second << "," << pp->third << endl;
-// // 			}
-// 		    }
-// 		    
-// 		    cout << "Local Search: " << this->hormigas[nHormiga]->subEst();
-// 		    this->hormigas[nHormiga]->calculaCostes();
-// 
-// 		    vector <float> cost(2);
-// 		    cost[0] = this->hormigas[nHormiga]->getCoste(0);
-// 		    cost[1] = this->hormigas[nHormiga]->getCoste(1);
-// 		    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
-		    
+                    cout << "Antes Local Search: " << this->hormigas[nHormiga]->subEst();
+
+                    Hormiga old_una = *(this->hormigas[nHormiga]);
+
+                    vector <float> cost1(2);
+                    cost1[0] = this->hormigas[nHormiga]->getCoste(0);
+                    cost1[1] = this->hormigas[nHormiga]->getCoste(1);
+                    cout << "Costo: " << cost1[0] << ' ' << cost1[1] << endl;
+
+                    if (cost1[1] != 0) {
+                        // Aqui agrego el local search
+                        this->hormigas[nHormiga]->local_search();
+                        cout << "Despues Local Search: " << this->hormigas[nHormiga]->subEst();
+                        this->hormigas[nHormiga]->calculaCostes();
+
+                        vector <float> cost(2);
+                        cost[0] = this->hormigas[nHormiga]->getCoste(0);
+                        cost[1] = this->hormigas[nHormiga]->getCoste(1);
+                        cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
+                        if (*(this->hormigas[nHormiga]) != old_una) {
+                          cout << "MEJORA!" << endl;
+                        }
+                    }
+  
 // 		    // Actualiza el Pareto
 // 		    // Intermedio...
-		    bool res = this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);
+		    cout << "Actualiza Pareto" << endl;
+		    this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);
 		    if ((this->hormigas[nHormiga]->getCoste(0) == 1) and (this->hormigas[nHormiga]->getCoste(1) < best.getCoste(1))) {
 		      best = *(this->hormigas[nHormiga]);
 		    }
@@ -399,48 +372,6 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 	    }
 	    i++;
 	}
-    
-// 	// Rocio: semi path relinking
-// 	for (vector<Hormiga>::iterator qq = caminos.begin(); qq != caminos.end(); qq++) {
-// 	    candidatas = (*qq).getCandidatos();
-// 	    set<CANDIDATE> pasos = (*qq).local_search();
-// 	    // pasos son todos los ejes que tengo que agregar
-// 	    while (pasos.size() > 0) {
-// 		for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
-// 		    bool found = false;
-// 		    unsigned int q = 0;
-// 	// 	    cout << "Las candidatas:" << endl;
-// 		    while ((q < candidatas.size()) and !found) {
-// 	// 		cout << "Cand: " << candidatas[q].first << "," << candidatas[q].second << "," << candidatas[q].third << endl;
-// 			found = (candidatas[q] == *pp);
-// 			q++;
-// 		    }
-//  		    if (found) {
-// 			CANDIDATE ar = *pp;
-// 			#if VERSION == V_SHAPE
-// 			(*qq).avanza(ar.first, ar.second);
-// 			#elif (VERSION == V_GO) || (VERSION == V_SCIENCEMAP)
-// 			(*qq).avanza(ar.first, ar.second, ar.third);
-// 			#endif
-// 
-// 			candidatas = (*qq).getCandidatos();
-// 				
-// 	// 		cout << "Listo: " << pp->first << "," << pp->second << "," << pp->third << endl;
-// 				
-// 			pasos.erase(pp);
-// 		    }
-// 		}
-// 		// Actualiza el Pareto
-// 		bool res = this->conjuntoNoDominadas.addDominancia(*qq, this->preferencias, this->numDominanciasPorPreferencias);
-// 		if (res)
-// 		    cout << "Intermedio!" << endl;
-// 	// 		cout << "Inter: " << this->hormigas[nHormiga]->subEst();
-// 	// 		cout << "Faltan: " << pasos.size() << endl;
-// 	// 		for (set<CANDIDATE>::iterator pp = pasos.begin(); pp != pasos.end(); pp++) {
-// 	// 		    cout << pp->first << "," << pp->second << "," << pp->third << endl;
-// 	// 		}
-// 	    }
-// 	}
     
         unsigned long ct = clock()/CLOCKS_PER_SEC;
         cout << "TIME 2: " << ct - bt << endl;

@@ -4,17 +4,16 @@
 
 #include "base.h"
 #include "routines.h"
+#include <math.h>
 
-
-// return error("ERREUR");
 int error(char *s)
 {
-	fprintf(stderr,s);
+	fprintf(stderr,"%s",s);
 	return -1;
 }
 void die(char *s)
 {
-	fprintf(stderr,s);
+	fprintf(stderr,"%s",s);
 	exit(-1);
 }
 void die2(int n)

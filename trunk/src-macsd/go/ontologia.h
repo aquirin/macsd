@@ -20,11 +20,11 @@ class go : public shapes {
     void _reconstruir_arbol(const unsigned int & s);
     
   public: 
-        go(): shapes() {MAX = 51275;};
+        go(): shapes() {MAX = 70000;};
         go(const string & name, const vector<string> & shap, const vector<string> & link, const multimap<pair<string,string>, string> & rn);
         ~go() {};
-        go(const go& s) : shapes(s) {MAX = 51275;};
-	go(const shapes& s) : shapes(s) {MAX = 51275;};
+        go(const go& s) : shapes(s) {MAX = 70000;};
+	go(const shapes& s) : shapes(s) {MAX = 70000;};
 
         vector< CANDIDATE > ejesNoUtilizados() const;
 	void inicial();

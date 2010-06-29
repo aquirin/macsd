@@ -26,7 +26,7 @@ go::go(const string & name, const vector<string> & shap, const vector<string> & 
   }
   
 /*  cout << "Maximo " << _desc_nodo.size() + _desc_eje.size() << endl;*/
-  MAX = 51275;
+  MAX = 70000;
   inicial();
 }
 
@@ -56,7 +56,7 @@ void go::_reconstruir_arbol(const unsigned int & s) {
 }
 
 unsigned int go::agregarNodo(const string & s) {
-//   cout << "an string " << s << endl;
+  cout << "an string " << s << endl;
   assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
 
   stringstream ss(s);
@@ -110,12 +110,17 @@ unsigned int go::agregarNodoID(const unsigned int & n, const string & s) {
 void go::agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s) {
     // Verifico que alguno de los nodos del eje ya exista en el grafo
     cout << ini << ' ' << fin << ' ' << s << ' ' << MAX << endl;
-    assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > MAX)) and (_desc_eje.find(s) != _desc_eje.end()));
+    assert(((_nodos.find(ini) != _nodos.end()) or (ini > MAX)) and ((_nodos.find(fin) != _nodos.end()) or (fin > MAX)) and (_desc_eje.find(s) != _desc_eje.end()));
     
     unsigned int segundo = fin;
     if (_nodos.find(fin) == _nodos.end()) {      
       // Agrego un nuevo nodos
       segundo = agregarNodo(fin);
+//       cout << "Add: " << fin << endl;
+    }
+    else if (_nodos.find(ini) == _nodos.end()) {
+       // Agrego un nuevo nodos
+      segundo = agregarNodo(ini);
 //       cout << "Add: " << fin << endl;
     }
     else {
@@ -132,12 +137,17 @@ void go::agregarEje(const unsigned int & ini, const unsigned int & fin, const un
 
 void go::agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s) {
     // Verifico que alguno de los nodos del eje ya exista en el grafo
-    assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > _desc_nodo.size())) and (_rdesc_eje.find(s) != _rdesc_eje.end()));
+    assert(((_nodos.find(ini) != _nodos.end()) or (ini > MAX)) and ((_nodos.find(fin) != _nodos.end()) or (fin > _desc_nodo.size())) and (_rdesc_eje.find(s) != _rdesc_eje.end()));
     
     unsigned int segundo = fin;
     if (_nodos.find(fin) == _nodos.end()) {
       // Agrego un nuevo nodos
       segundo = agregarNodo(fin);
+    }
+    else if (_nodos.find(ini) == _nodos.end()) {
+       // Agrego un nuevo nodos
+      segundo = agregarNodo(ini);
+//       cout << "Add: " << fin << endl;
     }
     else {
       unsigned int eleje = _rdesc_eje.find(s)->second;

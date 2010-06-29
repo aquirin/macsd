@@ -1,8 +1,9 @@
-#include "../global.h"
-#include "../utils.h"
+#include "global.h"
+#include "utils.h"
 #include "shapes.h"
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -43,7 +44,22 @@ int main() {
 // }
 
 //     srand(1);
-    vector< vector<unsigned int> > v(3);
+    map<unsigned int, vector<unsigned int> > v;
+//         vector<unsigned int> r(3);
+//         r[0] = 1;
+//         r[1] = 3;
+//         r[2] = 5;
+//         v[0] = r;
+//         vector<unsigned int> t(3);
+//         t[0] = 1;
+//         t[1] = 3;
+//         t[2] = 5;
+//         v[1] = t;
+//         vector<unsigned int> n(3);
+//         n[0] = 1;
+//         n[1] = 3;
+//         n[2] = 5;
+//         v[2] = n;
     vector<unsigned int> r(2);
     r[0] = 1;
     r[1] = 3;
@@ -59,9 +75,9 @@ int main() {
     posibilidades<unsigned int> prob(v);
     for (posibilidades<unsigned int>::iterator p = prob.begin(); p != prob.end(); ++p) {
             cout << "OPCION: ";
-            vector<unsigned int> x = *p;
-            for (unsigned int i = 0; i < x.size(); i++) {
-                cout << x[i] << ' ';
+            map<unsigned int, unsigned int> x = *p;
+            for (map<unsigned int, unsigned int>::iterator i = x.begin(); i != x.end(); i++) {
+                cout << (*i).first + 1 << " -> " << (*i).second << endl;
             }
             cout << endl;
         }

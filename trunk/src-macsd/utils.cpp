@@ -19,13 +19,13 @@ void **matriz(long nfilas, long ncolumnas, long bytesPorDato)
 	if (NULL == (salida = (void **)malloc (sizeof(void *) * nfilas)))
 	{
 		fprintf(stderr, "No se pudo reservar el vector de filas de la matriz\n"
-			"(%d,%d) de %d bytes por dato\n", nfilas, ncolumnas, bytesPorDato);
+			"(%ld,%ld) de %ld bytes por dato\n", nfilas, ncolumnas, bytesPorDato);
 		exit(1);
 	}
 
 	if (NULL == (salida[0] = malloc(bytesPorDato * nfilas * ncolumnas)))
 	{
-		fprintf(stderr, "No se pudo reservar la matriz (%d,%d) de %d bytes"
+		fprintf(stderr, "No se pudo reservar la matriz (%ld,%ld) de %ld bytes"
 			" por dato\n", nfilas, ncolumnas, bytesPorDato);
 		free(salida);
 		exit(1);
@@ -174,7 +174,7 @@ void escribeMatriz(FILE *salida, unsigned long **matriz, unsigned int tamanio)
 		fprintf(salida, "\n");
 
 		for(j = 0; j < tamanio; j++)
-			fprintf(salida, "%d ", matriz[i][j]);
+			fprintf(salida, "%ld ", matriz[i][j]);
 	}
 }
 
@@ -205,7 +205,7 @@ int intAzar(const int inicio, const int fin) {
 }
 
 //-----------------------------------------------------------------------
-int ranking(const int cant, const float nu_max, const float nu_min) {
+int ranking(const unsigned int cant, const float nu_max, const float nu_min) {
     float random_entre_0_y_1 = rand()/(float(RAND_MAX)+1); 
     vector<float> proba(cant+1);
     

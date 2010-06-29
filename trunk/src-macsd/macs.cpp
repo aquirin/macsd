@@ -2,7 +2,6 @@
 
 //---------------------------------------------------------
 MACS::MACS (vector<SOLUTION>& b, Parametros &params) : ACO (b, params) {
-    unsigned int i,j;
     vector <float> valoresLambda, valoresNoLambda;
     
     // inicializacion de umbrales y heuristicas para cada hormiga en un enfoque multiheuristics
@@ -10,7 +9,7 @@ MACS::MACS (vector<SOLUTION>& b, Parametros &params) : ACO (b, params) {
     
     this->feromonaInicial = PARA.MOACO_tau0;
     
-    for (i = 0; i < PARA.MOACO_numHormigas; i++){
+    for (unsigned int i = 0; i < PARA.MOACO_numHormigas; i++){
         valoresLambda.push_back(((float) i) / PARA.MOACO_numHormigas);
         valoresNoLambda.push_back(1. - valoresLambda[i]);
         this->betaLambda.push_back(PARA.MOACO_beta * valoresLambda[i]);  // en este vector se guarda el valor lambda*beta
@@ -214,7 +213,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 	  cout << "Entonces: " << probAleatoria << endl;
 	  
 	  // recorremos las probabilidades acumuladas de todas los ejes para ver el eje elegido aleatoriamente
-	  int el = 0;
+	  unsigned int el = 0;
 	  while((el < candidatas.size()) && (probAleatoria >= sumaProb[el])) {
   // 		cout << "A: " << el << endl;
 		  el++;
@@ -297,7 +296,7 @@ void MACS::modificaFeromona() {
     
     while (p != conjuntoNoDominadas.end()){
         t0 = 0.;
-        for (int j = 0; j < (unsigned int) this->nObj; j++)
+        for (unsigned int j = 0; j < (unsigned int) this->nObj; j++)
             t0 *= (*p).getCoste(j);
         for (map<CANDIDATE,float>::iterator j = this->matricesFeromona.begin(); j != this->matricesFeromona.end(); j++) {   
             j->second *= (1. - PARA.MOACO_ro);

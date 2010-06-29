@@ -18,7 +18,7 @@ class vmap : public shapes {
     public: 
         // Constructores y destructores
         vmap() : shapes() {MAX = 500;};
-	vmap(const string & name, const vector<string> & shap, const vector<string> & link, const multimap<pair<string,string>, string> & rn) : shapes(name,shap,link,rn) {MAX = 500;};
+	vmap(const string & name, const vector<string> & shap, const vector<string> & link, const multimap<pair<string,string>, string> & rn);
         ~vmap() {};
         vmap(const vmap& s) : shapes(s) {MAX = 500;};
 	vmap(const shapes& s) : shapes(s) {MAX = 500;};	
