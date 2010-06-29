@@ -115,6 +115,7 @@ unsigned int shapes::mapear(const unsigned int& i) const {
 
 void shapes::agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s){
     // Verifico que alguno de los nodos del eje ya exista en el grafo
+    cout << ini << ' ' << fin << ' ' << s << endl;
     assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > _desc_nodo.size())) and (_rdesc_eje.find(s) != _rdesc_eje.end()));
     
     unsigned int segundo = fin;
@@ -127,7 +128,7 @@ void shapes::agregarEje(const unsigned int & ini, const unsigned int & fin, cons
         _ejes.insert(CANDIDATE(ini,segundo,eleje));
     }
     else {
-        cerr << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
+        cout << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
     }
 }
 
@@ -144,7 +145,7 @@ void shapes::agregarEje(const unsigned int & ini, const unsigned int & fin, cons
         _ejes.insert(CANDIDATE(ini,segundo,s));
     }
     else {
-        cerr << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
+        cout << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
     }
 }
 
@@ -154,6 +155,8 @@ set<unsigned int> shapes::nodosUtilizados() const {
 
 vector< CANDIDATE > shapes::ejesNoUtilizados() const {
     vector< CANDIDATE > res;
+    
+    cout << "Ej_no_ut" << endl;
 
     if (_nodos.size() < MAX) {
       // Busco ejes entre nodos ya existentes que no haya usado
@@ -229,8 +232,15 @@ string shapes::graph_g(void) const {
 
 void shapes::imprime(ostream &salida) const {
      salida << "Nodos: ";
-     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++)
+     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
+	 if (_relacion_nodos.find(*p) == _relacion_nodos.end()) {
+	   cout << "ERROR1! no encontrado " << *p << endl;
+	 }
+	 else if (_desc_nodo.find(_relacion_nodos.find(*p)->second) == _desc_nodo.end()) {
+		cout << "ERROR2! no encontrado " << *p << ' ' << _relacion_nodos.find(*p)->second << endl;
+	 }
          salida << '(' << *p << ',' << _desc_nodo.find(_relacion_nodos.find(*p)->second)->second << ')';
+     }
      
      salida << endl;
      salida << "Ejes: ";
@@ -245,14 +255,20 @@ ostream& operator<<(ostream& os, const shapes& s) {
 }
 
 bool shapes::operator==(const shapes& s) const {
+    cout << "OP==" << endl << *this << endl << s << endl;
+  
     bool done = false;
     if ((_nodos.size() == s._nodos.size()) and (_ejes.size() == s._ejes.size())) {
         shapes copia(s);
-        vector< vector<unsigned int> > v = darPosibilidades(s);
+        map<unsigned int, vector<unsigned int> > v = darPosibilidades(s);
         posibilidades<unsigned int> op(v);
             
         for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) and !done; ++q) {
+	  	cout << "!" << endl;
+
             shapes nueva_subestructura = copia.reasignarNodos(*q);
+	    
+	    cout << copia << endl << nueva_subestructura << endl;
             
             done = this->igual(nueva_subestructura);
 	    
@@ -261,6 +277,8 @@ bool shapes::operator==(const shapes& s) const {
         }
     }
     
+     cout << "/OP==" << done << endl;
+
     return done;
 }
 
@@ -277,21 +295,26 @@ vector< CANDIDATE > shapes::posibilidades_totales() { // Candidatos unicos...
     return v;
 }
 
-shapes shapes::reasignarNodos(const vector<unsigned int> & v) {
+shapes shapes::reasignarNodos(const map<unsigned int, unsigned int> & v) {
     shapes nuevo(*this);
     nuevo.clear();
     
+    cout << "Reasignar" << endl;
+    
     map<unsigned int, unsigned int> dicc;
             
-    unsigned int i = 0;
-    for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); ++p) {
-        dicc[*p] = nuevo.agregarNodoID(v[i], _desc_nodo.find(_relacion_nodos.find(*p)->second)->second);
-	++i;
+    for (map<unsigned int, unsigned int>::const_iterator p = v.begin(); p != v.end(); ++p) {
+// 	cout << "L " << (*p).first << ' ' << (*p).second << endl;
+	unsigned int o = _relacion_nodos.find((*p).first)->second;
+// 	cout << o << endl;
+        dicc[(*p).first] = nuevo.agregarNodoID((*p).second, _desc_nodo.find(o)->second);
     }
     for (set< CANDIDATE >::iterator p = _ejes.begin(); p != _ejes.end(); p++) {
+// 	cout << "E " << dicc[p->first] << ' ' << dicc[p->second] << ' ' << p->third << endl;
         nuevo.agregarEje(dicc[p->first], dicc[p->second], p->third);
     }
     
+// 	cout << "done" << endl;
     return nuevo;
 }
 
@@ -305,19 +328,42 @@ bool shapes::cubiertoPor(const shapes& s) const {
     return res;
 }
 
-vector< vector<unsigned int> > shapes::darPosibilidades(const shapes& s) const {
-    vector< vector<unsigned int> > res(_nodos.size());
+map<unsigned int, vector<unsigned int> > shapes::darPosibilidades(const shapes& s) const {
+    map<unsigned int, vector<unsigned int> > res;
     
-    unsigned int i = 0;
+    cout << *this << endl;
     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
-        vector<unsigned int> w;
+        bool algo = false;
         for (set<unsigned int>::const_iterator q = s._nodos.begin(); q != s._nodos.end(); q++) {
             if (_relacion_nodos.find(*p)->second == s._relacion_nodos.find(*q)->second) {
-                w.push_back(*q);
+		cout << "dp " << *p << ' ' << *q << endl;
+		res[*p].push_back(*q);
+		algo = true;
             }
         }
-        res[i] = w;
-        ++i;
+	if (!algo) 
+	  res[*p] = vector<unsigned int>();
     }
+	
+// 	cout << "M " << res.size() << endl;
     return res;
+}
+
+vector<unsigned int> shapes::darPosibilidades(const shapes& donde, const string& s) const {
+    vector<unsigned int> res;
+
+    for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
+      bool algo = false;
+      if (_relacion_nodos.find(*p)->second == _rdesc_nodo.find(s)->second) {
+	for (set<unsigned int>::const_iterator q = donde._nodos.begin(); q != donde._nodos.end(); q++) {
+	    if (_relacion_nodos.find(*p)->second == donde._relacion_nodos.find(*q)->second) {
+		cout << "dp " << *p << ' ' << *q << endl;
+		res.push_back(*q);
+		algo = true;
+	    }
+	}
+      }
+    }
+  
+    return res;	
 }

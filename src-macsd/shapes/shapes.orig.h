@@ -47,14 +47,14 @@ class shapes {
         bool operator!= (const shapes& s) const {return !((*this)==s);};
         vector< CANDIDATE > posibilidades_totales();
         unsigned int cantNodos() const {return _nodos.size();};
-        vector< vector<unsigned int> > darPosibilidades(const shapes& s) const;
         bool empty() const;
 	unsigned int mapear(const unsigned int& i) const;
 	void inicial();
-        
-        shapes reasignarNodos(const vector<unsigned int> & v);
+
+	map<unsigned int, vector<unsigned int> > darPosibilidades(const shapes& s) const;
+	vector<unsigned int> darPosibilidades(const shapes& donde, const string& s) const;
+        shapes reasignarNodos(const map<unsigned int,unsigned int> & v);
         bool cubiertoPor(const shapes& s) const;
-        
     protected:
 	// Datos sobre nombre instancia, nodos y ejes
         string _name;
@@ -63,13 +63,13 @@ class shapes {
         
 	map<unsigned int,unsigned int> _relacion_nodos; // Numero de nodo, codigo de nodo
 
-	// Base de datos de ejes y nodos
+		// Base de datos de ejes y nodos
         static set< CANDIDATE > _base_ejes;
         static map<unsigned int, string> _desc_nodo;
 	static map<unsigned int, string> _desc_eje;
 	static map<string, unsigned int> _rdesc_nodo;
 	static map<string, unsigned int> _rdesc_eje;
-	
+
 	static unsigned int MAX;
 };
 

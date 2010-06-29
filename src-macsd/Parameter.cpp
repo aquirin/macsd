@@ -42,7 +42,7 @@ CParameter::CParameter()
 CParameter::~CParameter()
 {
 	// D�ruit les cha�es
-	int n;
+	unsigned int n;
 	for(n=0;n<param_list.size();n++)
 	{
 		if(param_list[n].comment)
@@ -61,48 +61,47 @@ void CParameter::RegisterAll(void)
 	// Set here the default values!!
 
 	// Global
-	RegisterParameter(&GLOB_tipoAlgoritmo, "GLOB_tipoAlgoritmo", INTEGER_VALUE, 0);
-	RegisterParameter(&GLOB_tCiclo, "GLOB_tCiclo", DOUBLE_VALUE, 0.0);
-	RegisterParameter(&GLOB_maxTiempo, "GLOB_maxTiempo", UINTEGER_VALUE, 0);
-	RegisterParameter(&GLOB_areaMax, "GLOB_areaMax", DOUBLE_VALUE, 0.0);
-	RegisterParameter(&GLOB_rutaEntrada, "GLOB_rutaEntrada", STRING_VALUE, "");
-	RegisterParameter(&GLOB_rutaSalida, "GLOB_rutaSalida", STRING_VALUE, "");
-	RegisterParameter(&GLOB_areaImplicita, "GLOB_areaImplicita", INTEGER_VALUE, 0);
-	RegisterParameter(&GLOB_BL, "GLOB_BL", INTEGER_VALUE, 0);
-	RegisterParameter(&GLOB_semilla, "GLOB_semilla", INTEGER_VALUE, 0);
-	RegisterParameter(&GLOB_numObjs, "GLOB_numObjs", UINTEGER_VALUE, 0);
-	RegisterParameter(&GLOB_preferencias, "GLOB_preferencias", UINTEGER_VALUE, 0);
+	RegisterParameter(&GLOB_tipoAlgoritmo, (char *)"GLOB_tipoAlgoritmo", INTEGER_VALUE, 0);
+	RegisterParameter(&GLOB_tCiclo, (char *)"GLOB_tCiclo", DOUBLE_VALUE, 0.0);
+	RegisterParameter(&GLOB_maxTiempo, (char *)"GLOB_maxTiempo", UINTEGER_VALUE, 0);
+	RegisterParameter(&GLOB_areaMax, (char *)"GLOB_areaMax", DOUBLE_VALUE, 0.0);
+	RegisterParameter(&GLOB_rutaEntrada, (char *)"GLOB_rutaEntrada", STRING_VALUE, (char *)"");
+	RegisterParameter(&GLOB_rutaSalida, (char *)"GLOB_rutaSalida", STRING_VALUE, (char *)"");
+	RegisterParameter(&GLOB_areaImplicita, (char *)"GLOB_areaImplicita", INTEGER_VALUE, 0);
+	RegisterParameter(&GLOB_BL, (char *)"GLOB_BL", INTEGER_VALUE, 0);
+	RegisterParameter(&GLOB_semilla, (char *)"GLOB_semilla", INTEGER_VALUE, 0);
+	RegisterParameter(&GLOB_numObjs, (char *)"GLOB_numObjs", UINTEGER_VALUE, 0);
+	RegisterParameter(&GLOB_preferencias, (char *)"GLOB_preferencias", UINTEGER_VALUE, 0);
 	
 	// MOACO
-	RegisterParameter(&MOACO_tau0, "MOACO_tau0", DOUBLE_VALUE, 0.0);
-	RegisterParameter(&MOACO_beta, "MOACO_beta", DOUBLE_VALUE, 0.0);
-	RegisterParameter(&MOACO_ro, "MOACO_ro", DOUBLE_VALUE, 0.0);
-	RegisterParameter(&MOACO_q0, "MOACO_q0", DOUBLE_VALUE, 0.0);
-	RegisterParameter(&MOACO_numHormigas, "MOACO_numHormigas", UINTEGER_VALUE, 0);
-	RegisterParameter(&MOACO_multiheuristics, "MOACO_multiheuristics", UINTEGER_VALUE, 0);
-	RegisterParameter(&MOACO_gamma, "MOACO_gamma", DOUBLE_VALUE, 0.0);
-	RegisterParameter(&MOACO_alfaGrasp, "MOACO_alfaGrasp", DOUBLE_VALUE, 0.0);
-	RegisterParameter(&MOACO_alfaObj1, "MOACO_alfaObj1", DOUBLE_VALUE, 0.0);
-	RegisterParameter(&MOACO_tau0Prima, "MOACO_tau0Prima", DOUBLE_VALUE, 0.0);
-	RegisterParameter(&MOACO_numColonias, "MOACO_numColonias", UINTEGER_VALUE, 0);
-	RegisterParameter(&MOACO_nEstOptimo, "MOACO_nEstOptimo", UINTEGER_VALUE, 0);
-	RegisterParameter(&MOACO_stepSize, "MOACO_stepSize", UINTEGER_VALUE, 0);
-        RegisterParameter(&MOACO_maxTama, "MOACO_maxTama", UINTEGER_VALUE, 0);
-      	RegisterParameter(&MOACO_ranking, "MOACO_ranking", UINTEGER_VALUE, 0);
+	RegisterParameter(&MOACO_tau0, (char *)"MOACO_tau0", DOUBLE_VALUE, 0.0);
+	RegisterParameter(&MOACO_beta, (char *)"MOACO_beta", DOUBLE_VALUE, 0.0);
+	RegisterParameter(&MOACO_ro, (char *)"MOACO_ro", DOUBLE_VALUE, 0.0);
+	RegisterParameter(&MOACO_q0, (char *)"MOACO_q0", DOUBLE_VALUE, 0.0);
+	RegisterParameter(&MOACO_numHormigas, (char *)"MOACO_numHormigas", UINTEGER_VALUE, 0);
+	RegisterParameter(&MOACO_multiheuristics, (char *)"MOACO_multiheuristics", UINTEGER_VALUE, 0);
+	RegisterParameter(&MOACO_gamma, (char *)"MOACO_gamma", DOUBLE_VALUE, 0.0);
+	RegisterParameter(&MOACO_alfaGrasp, (char *)"MOACO_alfaGrasp", DOUBLE_VALUE, 0.0);
+	RegisterParameter(&MOACO_alfaObj1, (char *)"MOACO_alfaObj1", DOUBLE_VALUE, 0.0);
+	RegisterParameter(&MOACO_tau0Prima, (char *)"MOACO_tau0Prima", DOUBLE_VALUE, 0.0);
+	RegisterParameter(&MOACO_numColonias, (char *)"MOACO_numColonias", UINTEGER_VALUE, 0);
+	RegisterParameter(&MOACO_nEstOptimo, (char *)"MOACO_nEstOptimo", UINTEGER_VALUE, 0);
+	RegisterParameter(&MOACO_stepSize, (char *)"MOACO_stepSize", UINTEGER_VALUE, 0);
+        RegisterParameter(&MOACO_maxTama, (char *)"MOACO_maxTama", UINTEGER_VALUE, 0);
+      	RegisterParameter(&MOACO_ranking, (char *)"MOACO_ranking", UINTEGER_VALUE, 0);
 	
 	// GO
-	RegisterParameter(&GO_bpn, "GO_bpn", STRING_VALUE, "");
-	RegisterParameter(&GO_bpe, "GO_bpe", STRING_VALUE, "");
-	RegisterParameter(&GO_fmn, "GO_fmn", STRING_VALUE, "");
-	RegisterParameter(&GO_fme, "GO_fme", STRING_VALUE, "");
-	RegisterParameter(&GO_ccn, "GO_ccn", STRING_VALUE, "");
-	RegisterParameter(&GO_cce, "GO_cce", STRING_VALUE, "");
-	RegisterParameter(&GO_x, "GO_x", STRING_VALUE, "");
+	RegisterParameter(&GO_bpn, (char *)"GO_bpn", STRING_VALUE, (char *)"");
+	RegisterParameter(&GO_bpe, (char *)"GO_bpe", STRING_VALUE, (char *)"");
+	RegisterParameter(&GO_fmn, (char *)"GO_fmn", STRING_VALUE, (char *)"");
+	RegisterParameter(&GO_fme, (char *)"GO_fme", STRING_VALUE, (char *)"");
+	RegisterParameter(&GO_ccn, (char *)"GO_ccn", STRING_VALUE, (char *)"");
+	RegisterParameter(&GO_cce,(char *) "GO_cce", STRING_VALUE, (char *)"");
+	RegisterParameter(&GO_x, (char *)"GO_x", STRING_VALUE, (char *)"");
 	
 	// VMAP
-		// VMAP
-	RegisterParameter(&VMAP_num_nodes, "VMAP_num_nodes", INTEGER_VALUE, "");
-	RegisterParameter(&VMAP_num_edges, "VMAP_num_edges", INTEGER_VALUE, "");
+	RegisterParameter(&VMAP_num_nodes, (char *)"VMAP_num_nodes", INTEGER_VALUE, (char *)"");
+	RegisterParameter(&VMAP_num_edges, (char *)"VMAP_num_edges", INTEGER_VALUE, (char *)"");
 
 }
 
@@ -155,7 +154,7 @@ Cherche un param�re dans la liste.
 \**************************************************/
 int CParameter::GetIndexParameter(char* name)
 {
-	int n;
+	unsigned int n;
 	for(n=0;n<param_list.size();n++)
 	{
 		if(!strcmp(param_list[n].name, name)) return n;
@@ -171,7 +170,7 @@ Renvoit la valeur du param�re nomm�'name' dans
 \**************************************************/
 void CParameter::GetValueParameter(void* value, char* name)
 {
-	int n = GetIndexParameter(name);
+	unsigned int n = GetIndexParameter(name);
 	if(n<0)
 	{
 		fprintf(stderr, "The parameter '%s' does not exist !\n", name);
@@ -187,7 +186,7 @@ Renvoit la valeur du param�re num�o n dans
 \**************************************************/
 void CParameter::GetValueParameter(void* value, int n)
 {
-	if(n>=param_list.size())
+	if(n>=(int)param_list.size())
 	{
 		fprintf(stderr, "The parameter number %d does not exist !\n", n);
 		value = NULL;
@@ -214,7 +213,7 @@ D�init la valeur du param�re nomm�'name'.
 \**************************************************/
 void CParameter::SetValueParameter(void* value, char* name)
 {
-	int n = GetIndexParameter(name);
+	unsigned int n = GetIndexParameter(name);
 	if(n<0)
 	{
 		fprintf(stderr, "The parameter '%s' does not exist !\n", name);
@@ -229,7 +228,7 @@ D�init la valeur du param�re num�o n.
 \**************************************************/
 void CParameter::SetValueParameter(void* value, int n)
 {
-	if(n>=param_list.size())
+	if(n>=(int)param_list.size())
 	{
 		fprintf(stderr, "The parameter number %d does not exist !\n", n);
 		value = NULL;
@@ -272,7 +271,7 @@ int CParameter::WriteConfiguration(char* path)
 
 	int n;
 	int ret = 0;
-	for(n=0;n<param_list.size();n++)
+	for(n=0;n<(int)param_list.size();n++)
 	{
 		if(param_list[n].type == INTEGER_VALUE) fprintf(in, "%s = %d", param_list[n].name, *((int*)(param_list[n].param)));
 		else if(param_list[n].type == UINTEGER_VALUE) fprintf(in, "%s = %u", param_list[n].name, *((unsigned int*)(param_list[n].param)));
@@ -296,7 +295,7 @@ void CParameter::PrintConfiguration(FILE* out, char* substring)
 {
 	//fprintf(out, "# VPlat 1.0 parameters.\n");
 
-	int n;
+	unsigned int n;
 	int ret = 0;
 	for(n=0;n<param_list.size();n++)
 	{
@@ -379,7 +378,7 @@ void CParameter::TraitementLigne(char *ligne)
 	if(lig[0]=='#') return;		// Commentaire
 
 	// Passe ' ... = ... # Commentaire'
-	char* seps = "=#";
+	char* seps = (char *)"=#";
 	char* token = strtok(lig, seps);
 	if(!token) return;					// Ligne invalide
 	char* pname = token;
@@ -439,7 +438,7 @@ Renvoit le nom du param�re N.
 \**************************************************/
 char* CParameter::GetNameParameter(int n)
 {
-	if(n>=param_list.size())
+	if(n>=(int)param_list.size())
 	{
 		fprintf(stderr, "The parameter number %d does not exist !\n", n);
 		return NULL;
@@ -452,7 +451,7 @@ Renvoit le type du param�re N.
 \**************************************************/
 DataTypeValue CParameter::GetTypeParameter(int n)
 {
-	if(n>=param_list.size())
+	if(n>=(int)param_list.size())
 	{
 		fprintf(stderr, "The parameter number %d does not exist !\n", n);
 		return MISSING_BOOL_VALUE;
@@ -465,7 +464,7 @@ Renvoit le commentaire du param�re N.
 \**************************************************/
 char* CParameter::GetCommentParameter(int n)
 {
-	if(n>=param_list.size())
+	if(n>=(int)param_list.size())
 	{
 		fprintf(stderr, "The parameter number %d does not exist !\n", n);
 		return NULL;
@@ -478,7 +477,7 @@ Renvoit le pointeur du param�re N.
 \**************************************************/
 void* CParameter::GetPointerParameter(int n)
 {
-	if(n>=param_list.size())
+	if(n>=(int)param_list.size())
 	{
 		fprintf(stderr, "The parameter number %d does not exist !\n", n);
 		return NULL;
@@ -495,7 +494,7 @@ void CParameter::Import(CParameter *P)
 	RegisterAll();
 	used = P->used;
 
-	int n;
+	unsigned int n;
 	void *value = malloc(MAX_PARAMETER_SIZE);
 
 	for(n=0;n<P->param_list.size();n++)

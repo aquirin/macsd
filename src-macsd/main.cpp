@@ -94,7 +94,7 @@ void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe
     for(set<string>::iterator it = ww.begin(); it != ww.end(); ++it)
       w.push_back(*it);
     
-    int aux, aux1, aux2, codigo;
+    unsigned int aux, aux1, aux2, codigo;
     unsigned int menos_uno = 0 - 1;
 
     SOLUTION data("1", w, e, rela);
@@ -166,6 +166,7 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
       rela.insert(pair<pair<string,string>, string>(pair<string,string>("object",w[i]), "shape"));
     rela.insert(pair<pair<string,string>, string>(pair<string,string>(w[0],w[0]), "on"));
     SOLUTION s("1", w, e, rela);
+    s.clear();
             
     arch.open(fichero.c_str());
 
@@ -175,7 +176,6 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
     
     map<unsigned int,unsigned int> pos;
     string cad;
-    unsigned int codigo;
     unsigned int nn;
     while (!arch.eof()) {
         getline(arch, cadena);
@@ -224,142 +224,6 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
     arch.close();
 }
 #endif
-
-/*#if VERSION == V_SCIENCEMAP           
-void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v, map<string,unsigned int>* nodos, set< pair< pair<string,string>, unsigned int> >* ejes) {
-    ifstream arch;
-    string cadena;
-    
-    unsigned int aux;
-    unsigned int aux1;
-    string desde, hasta;
-    
-    arch.open(fichero.c_str());
-
-    if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
-        exit(1);
-    }
-    
-    // Primera pasada para poner los nodos
-    set<string> bw;
-    set<string> be;
-    multimap<pair<string,string>, string> rela;
-    bool found;
-    pair<multimap<pair<string,string>, string>::iterator, multimap<pair<string,string>, string>::iterator> pit;
-    
-    map<unsigned int,string> quenodo;
-    string cad;
-    
- 
-    unsigned int i = 1;
-    
-    unsigned int aux;
-    unsigned int aux1;
-    string desde, hasta;
-    
-    arch.open(fichero.c_str());
-
-    if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
-        exit(1);
-    }
-
-    map<unsigned int, string> quenodo;
-    string cad;
-    while (!arch.eof()) {
-        getline(arch, cadena);
-        if (!arch.eof()) {
-            if (!cadena.empty()) {
-                switch (cadena[0]) {
-                    case 'v':
-			//  v 1 "\nMultidisciplinary\n"
-                        aux = cadena.rfind(' ', cadena.size());
-                        cad = cadena.substr(aux + 1, cadena.size() - aux);
-                        aux1 = cadena.find(' ', 0);
-                        desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
-			if (nodos->find(cad) == nodos->end())
-			  (*nodos)[cad] = i++;
-			quenodo[atoi(desde.c_str())] = cad;
-                        break;
-		    case 'e':
-		    case 'd':
-		    case 'u':
-			//  u 11 3 ""
-                        aux = cadena.find(' ', 0);
-                        aux1 = cadena.find(' ', aux + 1);
-                        desde = cadena.substr(aux + 1, aux1 - aux - 1);
-                        aux = cadena.rfind(' ', cadena.size());
-                        hasta = cadena.substr(aux1 + 1, aux - aux1 - 1);
-                        cadena = cadena.substr(aux + 1, cadena.size() - aux);
-                        
-			ejes->insert(pair< pair<string,string>, unsigned int>(pair<string,string>(quenodo[atoi(desde.c_str())],quenodo[atoi(hasta.c_str())]), 0));
-                        break;
-		    default:
-		        break;
-                }
-            }
-	    else {
-		quenodo.clear();		
-            }
-        }
-    }
-   
-    arch.close();
-    
-    SOLUTION s(nodos,ejes,false);
-    
-    arch.open(fichero.c_str());
-
-    if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
-        exit(1);
-    }
-    while (!arch.eof()) {
-        getline(arch, cadena);
-        if (!arch.eof()) {
-            if (!cadena.empty()) {
-                switch (cadena[0]) {
-                    case 'v':
-// 	  	        v 1 "\nMultidisciplinary\n"
-                        aux = cadena.rfind(' ', cadena.size());
-                        cad = cadena.substr(aux + 1, cadena.size() - aux);
-                        aux1 = cadena.find(' ', 0);
-                        desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
-			
-                        s.agregarNodo(atoi(desde.c_str()), cad);
-                        break;
-                    case 'e':
-                    case 'd':
-		    case 'u':
-// 		        u 11 3 ""
-                        aux = cadena.find(' ', 0);
-                        aux1 = cadena.find(' ', aux + 1);
-                        desde = cadena.substr(aux + 1, aux1 - aux - 1);
-                        aux = cadena.rfind(' ', cadena.size());
-                        hasta = cadena.substr(aux1 + 1, aux - aux1 - 1);
-                        cadena = cadena.substr(aux + 1, cadena.size() - aux);
-                        
-                        s.agregarEje(atoi(desde.c_str()), atoi(hasta.c_str()), 0);
-                        break;
-                    case '%':
-                    default:
-                        break;
-                }
-            }
-            else {
-		if (!s.empty()) {
-		  v.push_back(s);
-		  cout << s << endl;
-		  s.clear();
-		}
-            }
-        }
-    }
-    if (!s.empty())
-        v.push_back(s);
-    
-    arch.close();
-}
-#endif
-         */   
 
 #if (VERSION == V_WWW) || (VERSION == V_SCIENCEMAP)
 void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
@@ -439,14 +303,16 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
     }
    
     arch.close();
-    
+
     vector<string> w;
     for(set<string>::iterator it = bw.begin(); it != bw.end(); ++it) w.push_back(*it);
     
     vector<string> e;
     for(set<string>::iterator it = be.begin(); it != be.end(); ++it) e.push_back(*it);
-    
+
     SOLUTION s("1", w, e, rela);    
+
+    s.clear();
     
     arch.open(fichero.c_str());
 
@@ -463,16 +329,20 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
                 switch (cadena[0]) {
                     case 'v':
 			//  v 1 page
+						cout << cadena << endl;
+
                         aux = cadena.rfind(' ', cadena.size());
                         cad = cadena.substr(aux + 1, cadena.size() - aux);
                         aux1 = cadena.find(' ', 0);
                         desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
-			
+
 			nn = s.agregarNodo(cad);
+			cout << cad << ' ' << nn << endl;
                         pos.insert(pair<unsigned int,unsigned int>(atoi(desde.c_str()),nn));
                         break;
                     case 'd':
 			// d 1 25 word
+			cout << cadena << endl;
                         aux = cadena.find(' ', 0);
                         aux1 = cadena.find(' ', aux + 1);
                         desde = cadena.substr(aux + 1, aux1 - aux - 1);
@@ -492,6 +362,7 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
 		  v.push_back(s);
 		  cout << s << endl;
 		  s.clear();
+		  pos.clear();
 		}
             }
         }
@@ -502,7 +373,6 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
     arch.close();
 }
 #endif
-
 	    
 //-------------------------------------------------------------------------
 
@@ -513,18 +383,19 @@ int main(int argc, char *argv[]){
         NDominatedSet soluciones;
     string fichero;
     vector<SOLUTION> baseDatos;
-    int num_nodes, num_edges;
   
     // Initialize the random generator    
     srand(PARA.GLOB_semilla);
         
     // almacenamiento de parametros        
     // -----------------------------
-    PARA.ReadConfiguration("config.txt");
+    PARA.ReadConfiguration((char *)"config.txt");
     
     // leemos los datos del fichero de entrada
 #if (VERSION == V_SHAPE) || (VERSION == V_WWW) || (VERSION == V_SCIENCEMAP)
     leeFicheroDatos (PARA.GLOB_rutaEntrada, baseDatos);
+        cout << "Leido" << endl;
+
 #elif VERSION == V_GO
     leeFicheroDatos (PARA.GLOB_rutaEntrada, PARA.GO_bpn, PARA.GO_bpe, PARA.GO_fmn, PARA.GO_fme, PARA.GO_ccn, PARA.GO_cce, baseDatos);
 // #elif VERSION == V_SCIENCEMAP

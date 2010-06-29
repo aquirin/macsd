@@ -1,5 +1,31 @@
 #include "www.h"
 
+www::www(const string & name, const vector<string> & shap, const vector<string> & link, const multimap<pair<string,string>, string> & rn) {
+	_name = name;
+	
+	for (unsigned int i = 0; i < shap.size(); ++i) {
+		_desc_nodo.insert(pair<unsigned int, string>(i+1, shap[i]));
+		_rdesc_nodo.insert(pair<string, unsigned int>(shap[i], i+1));
+		/*    cout << i+1 << ' ' << shap[i] << endl;*/
+	}
+	
+	for (unsigned int i = 0; i < link.size(); ++i) {
+		_desc_eje.insert(pair<unsigned int, string>(i+1, link[i]));
+		_rdesc_eje.insert(pair<string, unsigned int>(link[i], i+1));
+		//     cout << i+1 << ' ' << link[i] << endl;
+	}
+	
+	for (map<pair<string,string>, string>::const_iterator it = rn.begin(); it != rn.end(); ++it) {
+		//       cout << it->first.first << ' ' << it->first.second << ' ' << it->second << endl;
+		_base_ejes.insert(CANDIDATE(_rdesc_nodo.find(it->first.first)->second, _rdesc_nodo.find(it->first.second)->second, _rdesc_eje.find(it->second)->second));
+		//      cout << _rdesc_nodo.find(it->first.first)->second << ' ' << _rdesc_nodo.find(it->first.second)->second << ' ' << _rdesc_eje.find(it->second)->second << endl;
+	}
+	
+	/*  cout << "Maximo " << _desc_nodo.size() + _desc_eje.size() << endl;*/
+	inicial();
+	MAX = 255;
+}
+
 void www::inicial() {
   clear();
   agregarNodo("page");
