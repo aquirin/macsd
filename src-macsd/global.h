@@ -11,8 +11,6 @@ using namespace std;
 
 // *** VERSION of the code
 // Constants
-#define ISOMORFISM 5		// Isomorfism needed
-
 #define V_SHAPE 1		// Shape version
 #define V_GO 2			// Gene Ontology version
 #define V_SCIENCEMAP 3		// Visual Science Map version
@@ -43,11 +41,13 @@ typedef tuplax3<unsigned int> CANDIDATE;
 
 // *** Definition of the SOLUTION type
 #if VERSION == V_SHAPE
-	#define SOLUTION shapes
+	#define SOLUTION shapes	
 #elif VERSION == V_GO
 	#define SOLUTION go
+	#define NO_ISOMORFISM 5
 #elif VERSION == V_SCIENCEMAP
 	#define SOLUTION vmap
+	#define NO_ISOMORFISM 5
 #elif VERSION == V_WWW
 	#define SOLUTION www
 #endif

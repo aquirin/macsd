@@ -23,7 +23,7 @@ vmap::vmap(const string & name, const vector<string> & shap, const vector<string
 	
 	/*  cout << "Maximo " << _desc_nodo.size() + _desc_eje.size() << endl;*/
 	inicial();
-	MAX = 500;
+	MAX = 999;
 }
 
 void vmap::inicial() {
@@ -47,10 +47,84 @@ vector< CANDIDATE > vmap::ejesNoUtilizados() const {
     for (set<unsigned int>::const_iterator p = _nodos.begin(); p != _nodos.end(); ++p)
       for (map<unsigned int, string>::const_iterator q = _desc_nodo.begin(); q != _desc_nodo.end(); ++q)
 	for (map<unsigned int, string>::const_iterator r = _desc_eje.begin(); r != _desc_eje.end(); ++r) {
-	  if ((_base_ejes.find(CANDIDATE(_relacion_nodos.find(*p)->second, q->first, r->first)) != _base_ejes.end()))
+	  if ((_base_ejes.find(CANDIDATE(_relacion_nodos.find(*p)->second, q->first, r->first)) != _base_ejes.end()) and (_ejes.find(CANDIDATE(*p, q->first, r->first)) == _ejes.end()))
 	      res.push_back(CANDIDATE(*p, MAX + q->first, r->first));
 	}
     }
     
     return res;
+}
+
+unsigned int vmap::agregarNodo(const string & s) {
+  cout << "an string " << s << endl;
+  assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
+
+  map<string, unsigned int>::const_iterator it = _rdesc_nodo.find(s);
+
+  _nodos.insert((*it).second);
+  _relacion_nodos.insert(pair<unsigned int, unsigned int>((*it).second, (*it).second));
+
+  return (*it).second;
+}
+
+unsigned int vmap::agregarNodo(const unsigned int & s) {
+  cout << "an int " << s << endl;
+
+  unsigned int nuevo = s;
+  if (nuevo > MAX) nuevo = s - MAX;
+
+  _nodos.insert(nuevo);
+  _relacion_nodos.insert(pair<unsigned int, unsigned int>(nuevo, nuevo));
+
+  return nuevo;
+}
+
+unsigned int vmap::agregarNodoID(const unsigned int & n, const string & s) {
+  assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
+
+  map<string, unsigned int>::const_iterator it = _rdesc_nodo.find(s);
+
+  assert(n == (*it).second);
+
+  _nodos.insert((*it).second);
+  _relacion_nodos.insert(pair<unsigned int, unsigned int>((*it).second, (*it).second));
+
+  return (*it).second;
+}
+
+void vmap::agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s){
+    // Verifico que alguno de los nodos del eje ya exista en el grafo
+    cout << ini << ' ' << fin << ' ' << s << endl;
+    assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > _desc_nodo.size())) and (_rdesc_eje.find(s) != _rdesc_eje.end()));
+
+    unsigned int segundo = fin;
+    if (_nodos.find(fin) == _nodos.end()) {
+      // Agrego un nuevo nodos
+      segundo = agregarNodo(fin);
+    }
+    unsigned int eleje = _rdesc_eje.find(s)->second;
+    if (_ejes.find(CANDIDATE(ini,segundo,eleje)) == _ejes.end()) {
+        _ejes.insert(CANDIDATE(ini,segundo,eleje));
+    }
+    else {
+        cout << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
+    }
+}
+
+void vmap::agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s){
+    // Verifico que alguno de los nodos del eje ya exista en el grafo
+    cout << ini << ' ' << fin << ' ' << s << endl;
+    assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > MAX)) and (_desc_eje.find(s) != _desc_eje.end()));
+
+    unsigned int segundo = fin;
+    if (_nodos.find(fin) == _nodos.end()) {
+      // Agrego un nuevo nodos
+      segundo = agregarNodo(fin);
+    }
+    if (_ejes.find(CANDIDATE(ini,segundo,s)) == _ejes.end()) {
+        _ejes.insert(CANDIDATE(ini,segundo,s));
+    }
+    else {
+        cout << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
+    }
 }

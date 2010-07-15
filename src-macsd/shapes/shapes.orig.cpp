@@ -134,6 +134,7 @@ void shapes::agregarEje(const unsigned int & ini, const unsigned int & fin, cons
 
 void shapes::agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s){
     // Verifico que alguno de los nodos del eje ya exista en el grafo
+    cout << ini << ' ' << fin << ' ' << s << endl;
     assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > MAX)) and (_desc_eje.find(s) != _desc_eje.end()));
     
      unsigned int segundo = fin;
@@ -254,28 +255,52 @@ ostream& operator<<(ostream& os, const shapes& s) {
    return os;
 }
 
+multimap<unsigned int, pair<unsigned int, unsigned int> > shapes::ejes_a_multimap() const {
+  multimap<unsigned int, pair<unsigned int, unsigned int> > res;
+  
+  for (set< CANDIDATE >::const_iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+    res.insert(pair<unsigned int, pair<unsigned int, unsigned int> >(it->first, pair<unsigned int, unsigned int>(it->second,it->third)));
+  }
+  
+  return res;
+}
+
 bool shapes::operator==(const shapes& s) const {
     cout << "OP==" << endl << *this << endl << s << endl;
-  
-    bool done = false;
-    if ((_nodos.size() == s._nodos.size()) and (_ejes.size() == s._ejes.size())) {
-        shapes copia(s);
-        map<unsigned int, vector<unsigned int> > v = darPosibilidades(s);
-        posibilidades<unsigned int> op(v);
-            
-        for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) and !done; ++q) {
-	  	cout << "!" << endl;
 
-            shapes nueva_subestructura = copia.reasignarNodos(*q);
-	    
-	    cout << copia << endl << nueva_subestructura << endl;
-            
-            done = this->igual(nueva_subestructura);
-	    
-	    if (!igual(s) and done)
-	      cout << "==" << *this << endl << s << endl << nueva_subestructura << endl;
+    #ifndef NO_ISOMORFISM
+
+        bool done = false;
+        if ((_nodos.size() == s._nodos.size()) and (_ejes.size() == s._ejes.size())) {
+            shapes copia(s);
+            map<unsigned int, vector<unsigned int> > v = darPosibilidades(s);
+
+            multimap<unsigned int, pair<unsigned int, unsigned int> > a = ejes_a_multimap(), b = s.ejes_a_multimap();
+
+            posibilidades<unsigned int> op(v, a, b);
+
+            for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) and !done; ++q) {
+                    cout << "!" << endl;
+
+                shapes nueva_subestructura = copia.reasignarNodos(*q);
+
+                cout << copia << endl << nueva_subestructura << endl;
+
+                done = this->igual(nueva_subestructura);
+
+                if (!igual(s) and done)
+                  cout << "==" << *this << endl << s << endl << nueva_subestructura << endl;
+            }
         }
-    }
+
+     #else
+
+        bool done = false;
+        if ((_nodos.size() == s._nodos.size()) and (_ejes.size() == s._ejes.size())) {
+            done = this->igual(s);
+        }
+
+     #endif
     
      cout << "/OP==" << done << endl;
 
@@ -336,7 +361,7 @@ map<unsigned int, vector<unsigned int> > shapes::darPosibilidades(const shapes& 
         bool algo = false;
         for (set<unsigned int>::const_iterator q = s._nodos.begin(); q != s._nodos.end(); q++) {
             if (_relacion_nodos.find(*p)->second == s._relacion_nodos.find(*q)->second) {
-		cout << "dp " << *p << ' ' << *q << endl;
+// 		cout << "dp " << *p << ' ' << *q << endl;
 		res[*p].push_back(*q);
 		algo = true;
             }
@@ -357,7 +382,7 @@ vector<unsigned int> shapes::darPosibilidades(const shapes& donde, const string&
       if (_relacion_nodos.find(*p)->second == _rdesc_nodo.find(s)->second) {
 	for (set<unsigned int>::const_iterator q = donde._nodos.begin(); q != donde._nodos.end(); q++) {
 	    if (_relacion_nodos.find(*p)->second == donde._relacion_nodos.find(*q)->second) {
-		cout << "dp " << *p << ' ' << *q << endl;
+// 		cout << "dp " << *p << ' ' << *q << endl;
 		res.push_back(*q);
 		algo = true;
 	    }
