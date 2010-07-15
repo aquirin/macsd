@@ -108,7 +108,8 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             // Elijo un candidato al azar
             unsigned int y = intAzar(0, candidatas.size() - 1);
             if (candidatas.size() > 0) {
-	      inicial[n].agregarEje(candidatas[y].first, candidatas[y].second, candidatas[y].third);              
+	      inicial[n].agregarEje(candidatas[y].first, candidatas[y].second, candidatas[y].third);
+              cout << inicial[n] << endl;
             }
             else {
                 cout << "No hay candidatos!" << endl;

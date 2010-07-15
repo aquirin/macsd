@@ -50,6 +50,7 @@ class shapes {
         bool empty() const;
 	unsigned int mapear(const unsigned int& i) const;
 	void inicial();
+	multimap<unsigned int, pair<unsigned int, unsigned int> > ejes_a_multimap() const;
 
 	map<unsigned int, vector<unsigned int> > darPosibilidades(const shapes& s) const;
 	vector<unsigned int> darPosibilidades(const shapes& donde, const string& s) const;
@@ -63,7 +64,7 @@ class shapes {
         
 	map<unsigned int,unsigned int> _relacion_nodos; // Numero de nodo, codigo de nodo
 
-		// Base de datos de ejes y nodos
+        // Base de datos de ejes y nodos
         static set< CANDIDATE > _base_ejes;
         static map<unsigned int, string> _desc_nodo;
 	static map<unsigned int, string> _desc_eje;

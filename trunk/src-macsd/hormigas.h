@@ -71,7 +71,7 @@ class Hormiga {
         * vector de coste en donde se almacenara en la posicion i, el coste respecto al objetivo i-esimo
         */
         vector<float> _costes;
-        
+       
     public:
 	vector<unsigned int> soporte() const {return _support;};
         

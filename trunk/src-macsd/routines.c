@@ -649,7 +649,7 @@ int stribeg(char* str, char* tok)
 char* makecaps(char* str)
 {
 	unsigned int i;
-	for(i=0; i<strlen(str); i++) if(__isascii(str[i])) if(islower(str[i])) str[i]=_toupper(str[i]);
+	for(i=0; i<strlen(str); i++) if(isascii(str[i])) if(islower(str[i])) str[i]=toupper(str[i]);
 	return str;
 }
 
@@ -657,7 +657,7 @@ char* makecaps(char* str)
 char* makelower(char* str)
 {
 	unsigned int i;
-	for(i=0; i<strlen(str); i++) if(__isascii(str[i])) if(isupper(str[i])) str[i]=_tolower(str[i]);
+	for(i=0; i<strlen(str); i++) if(isascii(str[i])) if(isupper(str[i])) str[i]=tolower(str[i]);
 	return str;
 }
 

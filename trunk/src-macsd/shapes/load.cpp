@@ -218,7 +218,7 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
                         break;
                 }
             }
-            else {;
+            else {
                 v.push_back(s);
                 cout << s << endl;
                 s.clear();
