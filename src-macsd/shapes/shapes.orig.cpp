@@ -137,7 +137,7 @@ void shapes::agregarEje(const unsigned int & ini, const unsigned int & fin, cons
     cout << ini << ' ' << fin << ' ' << s << endl;
     assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > MAX)) and (_desc_eje.find(s) != _desc_eje.end()));
     
-     unsigned int segundo = fin;
+    unsigned int segundo = fin;
     if (_nodos.find(fin) == _nodos.end()) {      
       // Agrego un nuevo nodos
       segundo = agregarNodo(fin);
