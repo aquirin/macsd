@@ -30,6 +30,7 @@ class shapes {
         unsigned int agregarNodo(const string & s);
 	unsigned int agregarNodo(const unsigned int & s);
 	unsigned int agregarNodoID(const unsigned int & n, const string & s);
+        void random(const unsigned int how_many);
         void clear();
         unsigned int size() const;
         float sizeNorm() const;
@@ -51,11 +52,14 @@ class shapes {
 	unsigned int mapear(const unsigned int& i) const;
 	void inicial();
 	multimap<unsigned int, pair<unsigned int, unsigned int> > ejes_a_multimap() const;
+        vector<unsigned int> hojas() const;
 
 	map<unsigned int, vector<unsigned int> > darPosibilidades(const shapes& s) const;
 	vector<unsigned int> darPosibilidades(const shapes& donde, const string& s) const;
         shapes reasignarNodos(const map<unsigned int,unsigned int> & v);
         bool cubiertoPor(const shapes& s) const;
+
+        shapes& operator=(const shapes& other);
     protected:
 	// Datos sobre nombre instancia, nodos y ejes
         string _name;

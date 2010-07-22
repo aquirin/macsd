@@ -392,3 +392,39 @@ vector<unsigned int> shapes::darPosibilidades(const shapes& donde, const string&
   
     return res;	
 }
+
+void shapes::random(const unsigned int how_many) {
+    inicial();
+    for (unsigned int i = 0; i < how_many; ++i) {
+        vector< CANDIDATE > nuevo = ejesNoUtilizados();
+
+        int sel = intAzar(1, nuevo.size());
+        cout << "RANDOM: " << nuevo[sel-1].first << ' ' << nuevo[sel-1].second << ' ' << nuevo[sel-1].third << endl;
+        agregarEje(nuevo[sel-1].first, nuevo[sel-1].second, nuevo[sel-1].third);
+    }
+}
+
+shapes& shapes::operator=(const shapes& other) {
+    _name = other._name;
+    _nodos = other._nodos;
+    _ejes = other._ejes;
+    _relacion_nodos = other._relacion_nodos;
+
+    return *this;
+}
+
+vector<unsigned int> shapes::hojas() const {
+    // En el caso particular de shapes, las hojas con los nodos "object"
+    vector<unsigned int> sol;
+
+    for (set<unsigned int>::const_iterator it = _nodos.begin(); it != _nodos.end(); ++it) {
+        map<unsigned int, unsigned int>::const_iterator aca = _relacion_nodos.find(*it);
+        if (aca != _relacion_nodos.end()) {
+            map<unsigned int, string>::const_iterator itd = _desc_nodo.find(aca->second);
+            if ((itd != _desc_nodo.end()) and (itd->second == "object"))
+                sol.push_back(*it);
+        }
+    }
+
+    return sol;
+}

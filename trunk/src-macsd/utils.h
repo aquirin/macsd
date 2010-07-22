@@ -212,5 +212,18 @@ void pesosAleatorios(float *vector, unsigned int tamanio);
 int intAzar(const int inicio, const int fin);
 
 int ranking(const unsigned int cant, const float nu_max, const float nu_min);
-  
+
+template <class G>
+class better {
+        public:
+                better(int d) : _indice(d) {};
+
+                bool operator ()(const G &a, const G &b) const {
+                        return (a.first.better(b.first, _indice));
+                }
+
+        private:
+                int _indice;
+};
+
 #endif
