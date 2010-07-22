@@ -26,6 +26,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include "termination_criteria.h"
 #include "global.h"
 
@@ -49,9 +50,9 @@ class emocc_solution {
 		int _niche;
 		termination_criteria _criteria;
                 G _subestructura;
+                vector<G> _instancias;
                 vector<unsigned int> _support;
                 unsigned int _numObjetivos;
-                vector<G> _instancias;
 
 	public:
 		emocc_solution() {};
