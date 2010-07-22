@@ -27,6 +27,7 @@ class shapes {
         
         void agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s);
 	void agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s);
+        void borrarNodo(const unsigned int & ini);
         unsigned int agregarNodo(const string & s);
 	unsigned int agregarNodo(const unsigned int & s);
 	unsigned int agregarNodoID(const unsigned int & n, const string & s);
@@ -41,6 +42,7 @@ class shapes {
 	unsigned int nuevo_codigo_nodo(const unsigned int x) const;
         vector< CANDIDATE > ejesNoUtilizados() const;
 	set< CANDIDATE > ejesUtilizados() const {return _ejes;};
+        string forma(const unsigned int x) const;
         void imprime(ostream &salida) const;
         string graph_g(void) const;
         bool operator== (const shapes& s) const;   

@@ -428,3 +428,29 @@ vector<unsigned int> shapes::hojas() const {
 
     return sol;
 }
+
+string shapes::forma(const unsigned int x) const {
+    string res = "";
+
+    bool found = false;
+    for (set< CANDIDATE >::const_iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+        if ((it->third == 2) and (it->first == x)) {
+            map<unsigned int, unsigned int>::const_iterator aca = _relacion_nodos.find(it->second);
+            map<unsigned int, string>::const_iterator itd = _desc_nodo.find(aca->second);
+            res = itd->second;
+            found = true;
+        }
+    }
+
+    return res;
+}
+
+void shapes::borrarNodo(const unsigned int & ini) {
+    _nodos.erase(ini);
+
+    for (set< CANDIDATE >::const_iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+        if ((it->first == ini) or (it->second == ini)) {
+            _ejes.erase(it);
+        }
+    }
+}
