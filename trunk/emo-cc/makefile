@@ -6,7 +6,7 @@ MACSD = ../src-macsd
 
 all:	debug-shapes debug-go
 
-debug-go: clean
+debug-shapes: clean
 	cp -f $(MACSD)/shapes/config.txt config.txt
 	cp $(MACSD)/shapes/shapes.orig.cpp shapes.cpp
 	cp $(MACSD)/shapes/shapes.orig.h shapes.h

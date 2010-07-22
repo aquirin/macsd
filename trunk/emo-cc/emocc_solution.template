@@ -300,41 +300,40 @@ emocc_solution<G> emocc_solution<G>::crossover(const emocc_solution<G>& other, b
 
         #elif VERSION == V_SHAPE
 
-      /*  vector<unsigned int> primero = _subestructura.hojas();
+        vector<unsigned int> primero = _subestructura.hojas();
         vector<unsigned int> segundo = other._subestructura.hojas();
         G nueva(_subestructura);
 
         // Elijo del primero
-        bool almenosuno = false;
-        for (unsigned int i = 0; i < primero.size(); ++i) {
-            int sel = intAzar(0, 1);
-            if (sel == 1) {
-                almenosuno = true;
-                nueva.agregarNodo("object");
+        unsigned int nn = 0;
+        int sel = intAzar(1, primero.size());
+        for (unsigned int i = 0; i < sel; ++i) {
+            nn = nueva.agregarNodo("object");
+            string aa = _subestructura.forma(primero[i]);
+            // Agrego los ejes de forma si tiene
+            if (aa != "") {
+                unsigned int mm = nueva.agregarNodo(aa);
+                nueva.agregarEje(nn, mm, "shape");
             }
-        }
-
-        if (! almenosuno) {
-            int sel = intAzar(1, primero.size());
-            nueva.agregarNodo("object");
         }
 
         // Elijo del segundo
-        almenosuno = false;
-        for (unsigned int i = 0; i < segundo.size(); ++i) {
-            int sel = intAzar(0, 1);
-            if (sel == 1) {
-                almenosuno = true;
-                nueva.agregarNodo("object");
+        unsigned int mm = 0;
+        sel = intAzar(1, segundo.size());
+        for (unsigned int i = 0; i < sel; ++i) {
+            unsigned int xx = nueva.agregarNodo("object");
+            if (mm == 0) mm = xx;
+            string aa = _subestructura.forma(segundo[i]);
+            // Agrego los ejes de forma si tiene
+            if (aa != "") {
+                unsigned int pp = nueva.agregarNodo(aa);
+                nueva.agregarEje(xx, pp, "shape");
             }
         }
 
-        if (! almenosuno) {
-            int sel = intAzar(1, segundo.size());
-            nueva.agregarNodo("object");
-        }
+        nueva.agregarEje(nn, mm, "on");
 
-	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);*/
+	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
 
         #endif
 
@@ -370,6 +369,29 @@ emocc_solution<G> emocc_solution<G>::mutation() {
                 if (i != sel1 - 1)
                     nueva.agregarNodo(primero[i]);
             }
+        }
+
+	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
+
+        #elif VERSION == V_SHAPE
+
+        G nueva(_subestructura);
+
+        // Agrego o elimino?
+        int sel = intAzar(0, 1);
+
+        if (sel == 0) {
+            vector<CANDIDATE> cand = nueva.ejesNoUtilizados();
+            int sel1 = intAzar(1, cand.size());
+            nueva.agregarEje(cand[sel1-1].first, cand[sel1-1].second, cand[sel1-1].third);
+        }
+        else {
+            // Elimino
+            set<unsigned int> cand = nueva.nodosUtilizados();
+            int sel1 = intAzar(1, cand.size());
+            set<unsigned int>::const_iterator it = cand.begin();
+            for (unsigned int i = 1; i < sel1; ++i) ++it;
+            nueva.borrarNodo(*it);
         }
 
 	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
