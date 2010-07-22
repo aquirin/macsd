@@ -39,6 +39,26 @@ void go::inicial() {
 
 //---------------------------------------------
 
+vector<unsigned int> go::hojas() const {
+    // En este caso las hojas son los terminos GO mas especificos
+
+    vector<unsigned int> res;
+
+    for (set<unsigned int>::const_iterator it = _nodos.begin(); it != _nodos.end(); ++it) {
+        bool found = false;
+        for (set< CANDIDATE >::const_iterator itb = _ejes.begin(); (itb != _ejes.end()) and !found; ++itb) {
+            found = (itb->first == *it);
+        }
+        if (!found) {
+            res.push_back(*it);
+        }
+    }
+
+    return res;
+}
+
+//---------------------------------------------
+
 void go::_reconstruir_arbol(const unsigned int & s) {
 //   cout << "IC" << s << endl;
   for (set<CANDIDATE>::const_iterator p = _base_ejes.begin(); p != _base_ejes.end(); p++) {
@@ -235,4 +255,19 @@ vector<CANDIDATE> go::ejesNoUtilizados() const {
      }
          
     return diff;
+}
+
+
+//---------------------------------------------
+
+void go::random(const unsigned int how_many) {
+    inicial();
+
+    for (unsigned int i = 0; i < how_many; ++i) {
+        vector< CANDIDATE > nuevo = ejesNoUtilizados();
+
+        int sel = intAzar(1, nuevo.size());
+        cout << "RANDOM: " << nuevo[sel-1].first << ' ' << nuevo[sel-1].second << ' ' << nuevo[sel-1].third << endl;
+        agregarEje(nuevo[sel-1].first, nuevo[sel-1].second, nuevo[sel-1].third);
+    }
 }

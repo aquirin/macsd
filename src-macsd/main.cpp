@@ -380,7 +380,7 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
 
 int main(int argc, char *argv[]){	
     Parametros params;
-        NDominatedSet soluciones;
+    NDominatedSet soluciones;
     string fichero;
     vector<SOLUTION> baseDatos;
   
