@@ -1,0 +1,414 @@
+/***************************************************************************
+ *   Copyright (C) 2008 by Rocio Celeste Romero Zaliz   *
+ *   rromero@gemini   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+template <class G>
+emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &cri, const unsigned int numObjetivos, const int& nic) :
+     _costes(numObjetivos),
+     _niche(nic),
+     _criteria(cri),
+     _support(base.size()),
+     _instancias(base) {
+        _numObjetivos = numObjetivos;
+        _costeValido = false;
+        _instancias = base;
+        for (unsigned int l = 0; l < _support.size(); l++)
+            _support[l] = l;
+
+        vector<unsigned int> temp;
+
+        do {
+            _subestructura.random(1);
+
+            temp.clear();
+
+            vector<unsigned int>::iterator p = _support.begin();
+
+            int x = 1;
+            while (p != _support.end()) {
+                // Tengo que probar las combinaciones de nodos para ver si cubre la subestructura (isomorfismo)
+//                cout << "Instancia: " << x++ << endl;
+                if (_instancias[*p].cantNodos() >= _subestructura.cantNodos()) {
+//                    cout << _instancias[*p] << endl;
+                    bool done = false;
+
+                    #ifndef NO_ISOMORFISM
+
+                        map<unsigned int, vector<unsigned int> > v = _subestructura.darPosibilidades(_instancias[*p]);
+
+//                        cout << "T " << v.size() << endl;
+                        multimap<unsigned int, pair<unsigned int, unsigned int> > a = _subestructura.ejes_a_multimap(), b = _instancias[*p].ejes_a_multimap();
+
+                        posibilidades<unsigned int> op(v, a, b);
+                        for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
+//                            cout << "X" << endl;
+                            G copia(_subestructura);
+                            G nueva_subestructura = copia.reasignarNodos(*q);
+//                            cout << "Y" << copia << endl;
+//                            cout << "Esta: " << nueva_subestructura << endl;
+//                            cout << "En: " << _instancias[*p] << endl;
+                            if (_instancias[*p].cubiertoPor(nueva_subestructura)) {
+                                done = true;
+//                                cout << "SI" << endl;
+                                temp.push_back(*p);
+                            }
+                        }
+
+                    #else
+
+                         if (_instancias[*p].cubiertoPor(_subestructura)) {
+  //                          cout << "SI" << endl;
+                            temp.push_back(*p);
+                        }
+
+                    #endif
+                }
+    //             cout << "FIN" << endl;
+                p++;
+            }
+
+            if (! temp.empty()) {
+                _support = temp;
+            }
+        }
+        while (temp.empty());
+
+        calculaCostes();
+        
+        cout << show() << endl;
+}
+
+template <class G>
+emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &cri, const unsigned int numObjetivos, const int& nic, G sub) :
+     _costes(numObjetivos),
+     _niche(nic),
+     _criteria(cri),
+     _subestructura(sub),
+     _instancias(base),
+     _support(base.size()) {
+        _numObjetivos = numObjetivos;
+        _costeValido = false;
+        _instancias = base;
+        for (unsigned int l = 0; l < _support.size(); l++)
+            _support[l] = l;
+
+	vector<unsigned int> temp;
+
+        vector<unsigned int>::iterator p = _support.begin();
+
+        int x = 1;
+        while (p != _support.end()) {
+            // Tengo que probar las combinaciones de nodos para ver si cubre la subestructura (isomorfismo)
+            cout << "Instancia: " << x++ << endl;
+            if (_instancias[*p].cantNodos() >= _subestructura.cantNodos()) {
+                cout << _instancias[*p] << endl;
+                bool done = false;
+
+                #ifndef NO_ISOMORFISM
+
+                    map<unsigned int, vector<unsigned int> > v = _subestructura.darPosibilidades(_instancias[*p]);
+
+                    cout << "T " << v.size() << endl;
+                    multimap<unsigned int, pair<unsigned int, unsigned int> > a = _subestructura.ejes_a_multimap(), b = _instancias[*p].ejes_a_multimap();
+
+                    posibilidades<unsigned int> op(v, a, b);
+                    for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) && !done; ++q) {
+                        cout << "X" << endl;
+                        G copia(_subestructura);
+                        G nueva_subestructura = copia.reasignarNodos(*q);
+                        cout << "Y" << copia << endl;
+                        cout << "Esta: " << nueva_subestructura << endl;
+                        cout << "En: " << _instancias[*p] << endl;
+                        if (_instancias[*p].cubiertoPor(nueva_subestructura)) {
+                            done = true;
+                            cout << "SI" << endl;
+                            temp.push_back(*p);
+                        }
+                    }
+
+                #else
+
+                     if (_instancias[*p].cubiertoPor(_subestructura)) {
+                        cout << "SI" << endl;
+                        temp.push_back(*p);
+                    }
+
+                #endif
+            }
+//             cout << "FIN" << endl;
+            p++;
+        }
+
+        _support = temp;
+
+        calculaCostes();
+        
+        cout << show() << endl;
+}
+
+template <class G>
+void emocc_solution<G>::calculaCostes() {
+    if (!_costeValido) {
+        _costeValido = true;
+
+        // Calculo costes
+        // Esto se instancia en cada subclase particular
+
+        // 0 = support
+        _costes[0] = ((_support.size() * 1.) / (_instancias.size() * 1.));
+
+        // 1 = complexity
+#if (VERSION == V_GO)
+
+        float total = 0.;
+        for (unsigned int i = 0; i < _support.size(); i++) {
+            total += (1. - _instancias[_support[i]].nivelRelativo(_subestructura));
+
+        }
+
+        if (total > 0)
+            _costes[1] = (total / (_support.size() * 1.));
+        else
+            _costes[1] = 0;
+
+#else
+     _costes[1] = _subestructura.sizeNorm();
+
+#endif
+
+
+         cout << "Costo: " << _costes[0] << ' ' << _costes[1] << endl;
+    }
+}
+
+template <class G>
+float emocc_solution<G>::getCoste(const unsigned int id) {
+    assert(id < _numObjetivos);
+
+    calculaCostes();
+    return _costes[id];
+}
+
+template <class G>
+int emocc_solution<G>::dominancia(emocc_solution<G>& v, bool x, int y) {
+    calculaCostes();
+    v.calculaCostes();
+
+    int que;
+
+    if ((_costes[0] >= v._costes[0]) && (_costes[1] >= v._costes[1]) && ((_costes[0] > v._costes[0]) || (_costes[1] > v._costes[1]))) {
+        que = 1;
+    }
+    else if ((v._costes[0] >= _costes[0]) && (v._costes[1] >= _costes[1]) && ((v._costes[0] > _costes[0]) || (v._costes[1] > _costes[1]))) {
+        que = -1;
+    }
+    else que = 0;
+
+    if ((_costes[0] != 0) && (v._costes[0] != 0)) {
+	if (x) {
+	    // Nichos genotipicos
+	    unsigned int inte = 0;
+	    unsigned int unio = (_support.size() + v._support.size());
+	    for (unsigned int i = 0; i < _support.size(); i++) {
+		bool found = false;
+		for (unsigned int j = 0; (j < v._support.size()) && !found; j++) {
+		    if (_support[i] == v._support[j]) {
+			found = true;
+			inte++;
+		    }
+		}
+	    }
+
+	    unio -= (inte);
+	    // Jaccard 0.5
+	    if (((inte * 1.) / (unio * 1.)) < 0.5) {
+		que = 0;
+    //             cout << "ND" << endl;
+	    }
+	}
+    }
+    else {
+        if (_costes[0] == 0)
+            que = -1;
+        else
+            que = 1;
+    }
+//     cout << "QUE: " << que << endl;
+    return que;
+}
+
+template <class G>
+emocc_solution<G> emocc_solution<G>::crossover(const emocc_solution<G>& other, bool species) {
+	// Performs crossover and returns a sibiling
+	// Not species implemented yet
+        emocc_solution<G> sol;
+
+        #if VERSION == V_GO
+
+        vector<unsigned int> primero = _subestructura.hojas();
+        vector<unsigned int> segundo = other._subestructura.hojas();
+        G nueva(_subestructura);
+        nueva.inicial();
+
+        // Elijo del primero
+        bool almenosuno = false;
+        for (unsigned int i = 0; i < primero.size(); ++i) {
+            int sel = intAzar(0, 1);
+            if (sel == 1) {
+                almenosuno = true;
+                nueva.agregarNodo(primero[i]);
+            }
+        }
+
+        if (! almenosuno) {
+            int sel = intAzar(1, primero.size());
+            nueva.agregarNodo(primero[sel-1]);
+        }
+
+        // Elijo del segundo
+        almenosuno = false;
+        for (unsigned int i = 0; i < segundo.size(); ++i) {
+            int sel = intAzar(0, 1);
+            if (sel == 1) {
+                almenosuno = true;
+                nueva.agregarNodo(segundo[i]);
+            }
+        }
+
+        if (! almenosuno) {
+            int sel = intAzar(1, segundo.size());
+            nueva.agregarNodo(segundo[sel-1]);
+        }
+
+	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
+
+        #elif VERSION == V_SHAPE
+
+      /*  vector<unsigned int> primero = _subestructura.hojas();
+        vector<unsigned int> segundo = other._subestructura.hojas();
+        G nueva(_subestructura);
+
+        // Elijo del primero
+        bool almenosuno = false;
+        for (unsigned int i = 0; i < primero.size(); ++i) {
+            int sel = intAzar(0, 1);
+            if (sel == 1) {
+                almenosuno = true;
+                nueva.agregarNodo("object");
+            }
+        }
+
+        if (! almenosuno) {
+            int sel = intAzar(1, primero.size());
+            nueva.agregarNodo("object");
+        }
+
+        // Elijo del segundo
+        almenosuno = false;
+        for (unsigned int i = 0; i < segundo.size(); ++i) {
+            int sel = intAzar(0, 1);
+            if (sel == 1) {
+                almenosuno = true;
+                nueva.agregarNodo("object");
+            }
+        }
+
+        if (! almenosuno) {
+            int sel = intAzar(1, segundo.size());
+            nueva.agregarNodo("object");
+        }
+
+	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);*/
+
+        #endif
+
+        return sol;
+}
+
+template <class G>
+emocc_solution<G> emocc_solution<G>::mutation() {
+	// Performs mutation randomly and returns the mutated cromosome
+        emocc_solution<G> sol;
+
+        #if VERSION == V_GO
+
+        G nueva(_subestructura);
+
+        // Agrego o elimino?
+        int sel = intAzar(0, 1);
+
+        if (sel == 0) {
+            vector<CANDIDATE> cand = nueva.ejesNoUtilizados();
+            int sel1 = intAzar(1, cand.size());
+            if (!_subestructura.nodoUsado(cand[sel1-1].first))
+                nueva.agregarNodo(cand[sel1-1].first);
+            else if (!_subestructura.nodoUsado(cand[sel1-1].second))
+                nueva.agregarNodo(cand[sel1-1].second);
+        }
+        else {
+            // Elimino
+            nueva.inicial();
+            vector<unsigned int> primero = _subestructura.hojas();
+            int sel1 = intAzar(1, primero.size());
+            for (int i = 0; i < (int)primero.size(); ++i) {
+                if (i != sel1 - 1)
+                    nueva.agregarNodo(primero[i]);
+            }
+        }
+
+	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
+
+        #endif
+
+        return sol;
+}
+
+template <class G>
+string emocc_solution<G>::show() const {
+	// Returns a formatted STRING with the phenotype data
+	string outstring = "";
+
+        // Genotype
+
+        stringstream ss3;
+        ss3 << _subestructura;
+        outstring += ss3.str();
+        outstring += "\n";
+
+	// Phenotype
+	stringstream ss;
+	ss << _costes[0];
+	stringstream ss1;
+	ss1 << _costes[1];
+	stringstream ss2;
+	for (unsigned int i = 0; i < _support.size(); i++) {
+	  if (_support[i]) {
+	    stringstream ss3;
+	    ss3 << i + 1;
+	    outstring += ss3.str() + ' ';
+	  }
+	}
+
+        outstring += "\n" + ss.str() + "\t" + ss1.str();
+
+      return outstring;
+}
+
+template <class G>
+ostream& operator<< (ostream& os, const emocc_solution<G>& yo) {os << yo.show() << endl; return os;}

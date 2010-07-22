@@ -1,0 +1,451 @@
+/***************************************************************************
+ *   Copyright (C) 2008 by Rocio Celeste Romero Zaliz   *
+ *   rromero@gemini   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+template <class G, class H>
+vector<H> nsgaii<G,H>::_db = vector<H>();
+
+template <class G, class H>
+nsgaii<G,H>::nsgaii(const vector<H> &database, const int &tampop, const int &nic, termination_criteria &cri) {
+	_N = tampop;
+	_db = database;
+	_niche = nic;
+	_criteria = cri;
+}
+
+template <class G, class H>
+vector< list< triple<G,double,double> > > nsgaii<G,H>::FastNonDominatedSort(const list< triple<G,double,double> > &v) {
+	// Variables
+	vector< triple< triple<G,double,double> ,int,vector<int> > > elements;
+	vector<int> Q;
+	vector< vector<int> > front(v.size());
+	vector< list< triple<G,double,double> > > final(v.size());
+
+	// Code
+	// Frente 0, frente de Pareto
+	unsigned int i = 0;
+	for (typename list< triple<G,double,double> >::const_iterator arrow = v.begin(); arrow != v.end(); arrow++) {
+		int num = 0;
+		vector<int> pp;
+		triple< triple<G,double,double>,int,vector<int> > temp(*arrow, num, pp);
+		elements.push_back(temp);
+	}
+	
+	for (i = 0; i < v.size(); i++) {
+		for (unsigned int j = 0; j < v.size(); j++) {
+			if (elements[j].first.first.dominancia(elements[i].first.first, false, 0)) {
+				elements[i].third.push_back(j);
+				elements[j].second++;
+			}
+			else
+				if (elements[i].first.first.dominancia(elements[j].first.first, false, 0)) {
+					elements[i].second++;
+					elements[j].third.push_back(i);
+				}
+		}
+		if (elements[i].second == 0) {
+			elements[i].first.third = 1;
+			Q.push_back(i);
+			cout << "Frente 0: " << elements[i].first.first << endl;
+		}
+	}
+
+	front[0] = Q;
+
+	// Frente 1 - n, frentes dominados
+	for (i = 0; (i < _N - 1) and (front[i].size() > 0); i++) {
+		Q.clear();
+		for (unsigned int j = 0; j < front[i].size(); j++) {
+			for (unsigned int k = 0; k < elements[front[i][j]].third.size(); k++) {
+				int sel = elements[front[i][j]].third[k];
+				elements[sel].second--;
+				if (elements[sel].second == 0) {
+					elements[sel].first.third++;
+					Q.push_back(sel);
+				}
+			}
+		}
+		front[i+1] = Q;
+	}
+
+	// Frente final
+	for (i = 0; i < v.size(); i++) {
+		list< triple<G,double,double> > temp2;
+		for (unsigned int j = 0; j < front[i].size(); j++)
+			temp2.push_back(elements[front[i][j]].first); // REVISAR
+		final[i] = temp2;
+	}
+				
+	return final;
+}
+
+template <class G, class H>
+list< triple<G,double,double> > nsgaii<G,H>::CrowdingDistanceAssignment(const list< triple<G,double,double> > &v) {
+	// Variables
+	unsigned int l;
+	double ver, next, last;
+	unsigned int numobj = 2;
+	vector< triple<G,double,double> > temp;
+	list< triple<G,double,double> > sol;
+	vector<float> cost1, cost2;
+
+	// Code
+	if (v.size() > 1) {
+		typename list< triple<G,double,double> >::const_iterator p = v.begin();
+		l = v.size();
+		unsigned int i = 0;
+		for (typename list< triple<G,double,double> >::const_iterator q = v.begin(); q != v.end(); q++) {
+			triple<G,double,double> a(q->first, 0., q->third);
+			temp.push_back(a);
+		}
+			
+		for (i = 0; i < numobj; i++) {	
+			better< triple<G,double,double> > mejor(i);
+			sort(temp.begin(), temp.end(), mejor); // sort using each objective value
+			temp[0].second = 999999;
+			temp[v.size() - 1].second = 999999;
+
+			for (unsigned int j = 1; j < v.size() - 1; j++) {
+				ver = temp[j].first.max(i) - temp[j].first.min(i);
+				cost1.push_back(temp[j+1].first.getCoste(0));
+                                cost1.push_back(temp[j+1].first.getCoste(1));
+				cost2.push_back(temp[j-1].first.getCoste(0));
+                                cost2.push_back(temp[j-1].first.getCoste(1));
+				next = cost1[i];
+				last = cost2[i];
+				temp[j].second += ((next - last) / (temp[j].first.max(i) - temp[j].first.min(i)));
+			}
+		}
+		for (i = 0; i < v.size(); i++)
+			sol.push_back(temp[i]);
+	}
+	else
+		sol = v;
+	return sol;
+}
+
+template <class G, class H>
+list< triple<G,double,double> > nsgaii<G,H>::MakeNewPop(const list< triple<G,double,double> > & v) {
+	// Use selection, crossover and mutation to create a new population
+	population p;
+	for (typename list< triple<G,double,double> >::const_iterator q = v.begin(); q != v.end(); q++)
+		p.push_back(*q);
+
+	p.binary_tournament(false, 80, 30);
+
+	list< triple<G,double,double> > res;
+	for (typename population::iterator q = p.begin(); q != p.end(); q++)
+		res.push_back(*q);
+	return res;
+}
+
+template <class G, class H>
+list<G> nsgaii<G,H>::execute(int iter, string name) {
+	// Creation procedure.
+	// Variables
+	list< triple<G,double,double> > newPt, Rt, Pt, Qt, Pp;
+	population P0(_db);
+	vector< list< triple<G,double,double> > > F;
+        list<G> solpop;
+	string info;
+	list<string> s;
+	G aux;
+
+	// Code
+	for (typename population::iterator p = P0.begin(); p != P0.end(); p++) {
+		Pt.push_back(*p);
+        }
+	for (unsigned int t = 0; !_criteria.finish(); t++) {
+		if ((t > 0) and (t % 50 == 0)) {
+			cout << "Restart" << endl;
+			P0.clear();
+			P0 = population(_db);
+			for (typename population::iterator p = P0.begin(); p != P0.end(); p++)
+				Pt.push_back(*p);
+			Qt.merge(Pp);
+		}
+		cout << "Iteracion: " << t + 1 << endl;
+		cout << "Pt: " << Pt.size() << " Qt: " << Qt.size() << endl;
+		Pt.merge(Qt); // combine parent and offspring population
+		cout << "Pt: " << Pt.size() << " Qt: " << Qt.size() << endl;
+		cout << "FNDS" << endl;
+		F = FastNonDominatedSort(Pt); // F = (F1, F2, ...), all nondominated fronts of Pt
+		cout << "/FNDS" << endl;
+		cout << "Fbuild" << endl;
+		unsigned int i;
+		for (i = 0; (i < _N) and (i < F.size()) and (newPt.size() + F[i].size() < _N); i++) {
+			cout << i << " " << F[i].size() << endl;
+			F[i] = CrowdingDistanceAssignment(F[i]); // calculate crowding distance in Fi
+			cout << i << " " << F[i].size() << endl;
+			newPt.merge(F[i]); // include ith nondominated front in the parent pop REVISAR
+		} // check the next front for inclusion
+		cout << "/Fbuild" << endl;
+		if ((newPt.size() < _N) and (i < F.size()) and (F[i].size() > 0)) {
+			cout << "Fbuild" << endl;
+			F[i] = CrowdingDistanceAssignment(F[i]);
+			cout << "/Fbuild" << endl;
+			F[i].sort(crowding<G,H>); // sort in descending order using crowding
+			cout << "/sFbuild" << endl;
+			for (typename list< triple<G,double,double> >::iterator p = F[i].begin(); (p != F[i].end()) and (newPt.size() != _N) and (F[i].size() > 0); p++)
+				newPt.push_back(*p); // choose the firs (N-|newPt|) elements of Fi
+			cout << "end" << endl;
+		}
+		Qt = MakeNewPop(newPt); // use selection, crossover and mutation to create a new population Qt
+		Pt = newPt;
+	}
+	Pt.merge(Qt); // combine parent and offspring population
+	F = FastNonDominatedSort(Pt); // F = (F1, F2, ...), all nondominated fronts of Pt
+
+	// Population conversion
+	for (typename list< triple<G,double,double> >::const_iterator p = F[0].begin(); (p != F[0].end()) and (solpop.size() < _N); p++) {
+            // Search for repetition
+            bool found = false;
+            typename list<G>::iterator it = solpop.begin();
+            while (!found and (it != solpop.end())) {
+                found = (p->first == *it);
+                ++it;
+            }
+            if (!found)
+		solpop.push_back(p->first);
+        }
+
+	return solpop;
+}
+
+//-----------------------------------------------------------------
+
+template <class G, class H>
+unsigned int nsgaii<G,H>::_N = 0;
+
+template <class G, class H>
+termination_criteria nsgaii<G,H>::_criteria = termination_criteria();
+
+template <class G, class H>
+unsigned int nsgaii<G,H>::_niche = 0;
+
+//-----------------------------------------------------------------
+
+template <class G, class H>
+nsgaii<G,H>::population::population(const vector<G>& base) {
+    for (int i = 0; i < base.size(); i++)
+        _data.push_back(base[i]);
+}
+
+template <class G, class H>
+nsgaii<G,H>::population::population(const vector<H>& base) {
+	// Create a random POPULATION
+        for (unsigned int i = 0; i < _N; i++) {
+           cout << "Cromosoma: " << i << endl;
+           _data.push_back(triple<G,double,double>(G(base, _criteria, _N, _niche),0.,0.));
+        }
+}
+
+template <class G, class H>
+nsgaii<G,H>::population::~population() {
+}
+
+template <class G, class H>
+G nsgaii<G,H>::population::any() const {
+	int pos = intAzar(1, _data.size());
+	return _data[pos-1];
+}
+
+template <class G, class H>
+typename nsgaii<G,H>::population::const_iterator nsgaii<G,H>::population::find(const triple<G,double,double>& v) const {
+    bool res = false;
+
+    typename nsgaii<G,H>::population::const_iterator it = _data.begin();
+
+    while (!res and (it != _data.end())) {
+        res = (v == *it);
+        ++it;
+    }
+
+    return res;
+}
+
+template <class G, class H>
+bool nsgaii<G,H>::population::operator==(const nsgaii<G,H>::population& other) const {
+	bool sol = (_data.size() == other._data.size());
+
+	for (typename vector<G>::const_iterator p = _data.begin(); (p != _data.end()) and sol; p++) {
+		sol = (find(*p) != _data.end());
+	}
+
+	return sol;
+}
+
+template <class G, class H>
+bool nsgaii<G,H>::population::is_dominated(G &v) {
+	bool sol = false;
+
+	for (typename nsgaii<G,H>::population::iterartor p = _data.begin(); (p != _data.end()) and !sol; p++) {
+		sol = (*p).dominancia(v);
+	}
+
+	return sol;
+}
+
+template <class G, class H>
+void nsgaii<G,H>::population::selection() {
+	// Perform selection
+	// Variables
+	vector< triple<G,double,double> > lista(_data.size());
+	triple<G,double,double> first, second;
+
+	// Code
+	for (unsigned int i = 0; i < _data.size(); i++) {
+		// Select two individuals
+		int sel = intAzar(1, _data.size());
+		first = _data[sel - 1];
+		sel = intAzar(1, _data.size());
+		second = _data[sel - 1];
+		if (crowding<G,H>(first, second))
+			lista[i] = first;
+		else
+			lista[i] = second;
+	}
+	_data = lista;
+}
+
+template <class G, class H>
+void nsgaii<G,H>::population::crossover(const unsigned int &cross, const bool &species) {
+	// Variables
+	vector< triple<G,double,double> > lista(_data.size());
+	triple<G,double,double> mother, father, child;
+
+	// Code
+	for (unsigned int i = 0; i < _data.size(); i += 2) {
+		// Mother
+		unsigned int sel = intAzar(1, _data.size());
+		mother = _data[sel - 1];
+		// Father
+		sel = intAzar(1, _data.size());
+		father = _data[sel - 1];
+
+		// Crossover
+		sel = intAzar(1, 100);
+		if ((sel < cross) and !_criteria.finish()) {
+			child.first = mother.first.crossover(father.first, species);
+			if ((child.first != mother.first) and child.first.valid())
+				lista[i] = child;
+			else
+				lista[i] = mother;
+
+			if (i + 1 < _data.size())
+				child.first = father.first.crossover(mother.first, species);
+				if ((child.first != father.first) and child.first.valid())
+					lista[i+1] = child;
+				else
+					lista[i+1] = father;
+		}
+		else {
+			lista[i] = mother;
+			if (i + 1 < _data.size())
+				lista[i+1] = father;
+		}
+	}
+	_data = lista;
+}
+
+template <class G, class H>
+void nsgaii<G,H>::population::mutation(const unsigned int &mut) {
+	// Variables
+	vector< triple<G,double,double> > lista(_data.size());
+	triple<G,double,double> mother, father, child;
+
+	// Code
+	for (unsigned int i = 0; i < _data.size(); i++) {
+		// Mother
+		unsigned int sel = intAzar(1, _data.size());
+		mother = _data[sel - 1];
+
+		// Mutation
+		sel = intAzar(1, 100);
+		if ((sel < mut) and !_criteria.finish()) {
+			child.first = mother.first.mutation();
+			if ((child.first != mother.first) and child.first.valid())
+				lista[i] = child;
+			else
+				lista[i] = mother;
+		}
+		else {
+			lista[i] = mother;
+		}
+	}
+	_data = lista;
+}
+
+template <class G, class H>
+void nsgaii<G,H>::population::binary_tournament(const int &cross, const int &mut, const bool &species) {
+	// Perform binary tournament
+	cout << "Selection" << endl;
+	selection();
+// 	cout << *this;
+	if (!_criteria.finish()) {
+		cout << "Crossover" << endl;
+		crossover(cross, species);
+	}
+	if (!_criteria.finish()) {
+		cout << "Mutation" << endl;
+		mutation(mut);
+	}
+	cout << "End binary tournament" << endl;
+}
+
+template <class G, class H>
+void nsgaii<G,H>::population::purge_repeated() {
+	vector<G> sol;
+	for (unsigned int i = 0; i < _data.size(); i++) {
+		bool found = false;
+		for (unsigned int j = 0; (j < sol.size()) and !found; j++) {
+			found = (_data[i] == sol[j]);
+// 			cout << _data[i] << ' ' << sol[j] << ' ' << found << endl;
+		}
+		if (!found) {
+			sol.push_back(_data[i]);
+			cout << "Add: " << _data[i] << endl;
+		}
+	}
+	_data = sol;
+}
+
+template <class G, class H>
+void nsgaii<G,H>::population::purge_invalid() {
+	vector<G> sol;
+	for (int i = 0; i < _data.size(); i++) {
+		if (_data.valid())
+			sol.push_back(_data[i]);
+	}
+	_data = sol;
+}
+
+template <class G, class H>
+void nsgaii<G,H>::population::purge_dominated() {
+	vector<G> sol;
+	for (unsigned int i = 0; i < _data.size(); i++) {
+		bool found = false;
+		for (unsigned int j = i + 1; (j < _data.size()) and !found; j++) {
+			found = (_data[i].dominated(_data[j]));
+		}
+		if (!found)
+			sol.push_back(_data[i]);
+	}
+	_data = sol;
+}
