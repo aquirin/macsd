@@ -43,6 +43,7 @@ class triple {
 		T third;
 
 		bool operator==(const triple<G,H,T>& other) const {return (first == other.first) and (second == other.second) and (third == other.third);};
+		void operator=(const triple<G,H,T>& other) {first = other.first; second = other.second; third = other.third;};
 		bool operator!=(const triple<G,H,T>& other) const {return !(this==other);};
                 bool operator<(const triple<G,H,T>& other) const {return !(third < other.third);};
 

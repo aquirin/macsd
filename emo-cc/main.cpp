@@ -402,7 +402,7 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
 //-------------------------------------------------------------------------
 
 int main(int argc, char *argv[]) {
-    Parametros params;
+//    Parametros params;
     string fichero;
     vector<SOLUTION> baseDatos;
 
@@ -424,7 +424,7 @@ int main(int argc, char *argv[]) {
 
     termination_criteria cri(PARA.GLOB_maxTiempo);
     int nic = 5;
-    nsgaii<emocc_solution<SOLUTION>,SOLUTION> v(baseDatos, PARA.MOACO_numHormigas, nic, cri);
+    nsgaii<emocc_solution<SOLUTION>,SOLUTION> v(baseDatos, PARA.MOACO_numHormigas * 10, nic, cri);
     list< emocc_solution<SOLUTION> > pop;
 
 //-------------------------------------------------------------------------
