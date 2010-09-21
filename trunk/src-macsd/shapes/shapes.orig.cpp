@@ -95,6 +95,7 @@ unsigned int shapes::agregarNodo(const unsigned int & s) {
 
 unsigned int shapes::agregarNodoID(const unsigned int & n, const string & s) {
     _nodos.insert(n);
+    cout << "s " << s << ' ' << n << endl;
     _relacion_nodos.insert(pair<unsigned int, unsigned int>(n, _rdesc_nodo.find(s)->second));
     
     return n;
@@ -180,6 +181,11 @@ vector< CANDIDATE > shapes::ejesNoUtilizados() const {
 	      else {
 		// Reviso que no tenga ya un enlace
 		found = (_ejes.find(CANDIDATE(*q, *p, r->first)) != _ejes.end());
+		
+		// Reviso que ho haya otro nodos object ya asociado
+		for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+		  found = ((_desc_eje.find(it->third)->second == "on") and (it->first == *p));
+		}
 	      }
 	      
 	      if (!found and (_base_ejes.find(CANDIDATE(_relacion_nodos.find(*p)->second, _relacion_nodos.find(*q)->second, r->first)) != _base_ejes.end()) and (_ejes.find(CANDIDATE(*p, *q, r->first)) == _ejes.end()))
@@ -194,6 +200,11 @@ vector< CANDIDATE > shapes::ejesNoUtilizados() const {
 	    if (r->second == "shape") {
 	      for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
 		found = ((_desc_eje.find(it->third)->second == "shape") and (it->first == *p));
+	      }
+	    }
+	    else {
+	       for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+		found = ((_desc_eje.find(it->third)->second == "on") and (it->first == *p));
 	      }
 	    }
 	    
@@ -272,7 +283,12 @@ bool shapes::operator==(const shapes& s) const {
 
         bool done = false;
         if ((_nodos.size() == s._nodos.size()) and (_ejes.size() == s._ejes.size())) {
-            shapes copia(s);
+	  if (igual(s)) {
+	    done = true;
+	    cout << "==I" << *this << endl << s << endl;
+	  }
+	  else {
+            shapes copia(*this);
             map<unsigned int, vector<unsigned int> > v = darPosibilidades(s);
 
             multimap<unsigned int, pair<unsigned int, unsigned int> > a = ejes_a_multimap(), b = s.ejes_a_multimap();
@@ -280,18 +296,19 @@ bool shapes::operator==(const shapes& s) const {
             posibilidades<unsigned int> op(v, a, b);
 
             for (posibilidades<unsigned int>::iterator q = op.begin(); (q != op.end()) and !done; ++q) {
-                    cout << "!" << endl;
+                cout << "!" << endl;
 
                 shapes nueva_subestructura = copia.reasignarNodos(*q);
 
-                cout << copia << endl << nueva_subestructura << endl;
+                cout << s << endl << nueva_subestructura << endl;
 
-                done = this->igual(nueva_subestructura);
+                done = s.igual(nueva_subestructura);
 
-                if (!igual(s) and done)
+		if (done)
                   cout << "==" << *this << endl << s << endl << nueva_subestructura << endl;
             }
         }
+      }
 
      #else
 
@@ -308,6 +325,41 @@ bool shapes::operator==(const shapes& s) const {
 }
 
 bool shapes::igual(const shapes& s) const {
+	for (set<unsigned int>::const_iterator it = _nodos.begin(); it != _nodos.end(); ++it) {
+	  cout << "N " << *it << endl;
+	}
+	
+        for (set< CANDIDATE >::const_iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+	  cout << "E " << it->first << ' ' << it-> second << ' ' << it->third << endl;
+	}
+	
+	for (map<unsigned int,unsigned int>::const_iterator it = _relacion_nodos.begin(); it != _relacion_nodos.end(); ++it) {
+	  cout << "RN " << it->first << ' ' << it->second << endl;
+	}
+	
+	cout << "¿¿¿" << endl;
+	
+	for (set<unsigned int>::const_iterator it = s._nodos.begin(); it != s._nodos.end(); ++it) {
+	  cout << "N " << *it << endl;
+	}
+	
+        for (set< CANDIDATE >::const_iterator it = s._ejes.begin(); it != s._ejes.end(); ++it) {
+	  cout << "E " << it->first << ' ' << it-> second << ' ' << it->third << endl;
+	}
+	
+	for (map<unsigned int,unsigned int>::const_iterator it = s._relacion_nodos.begin(); it != s._relacion_nodos.end(); ++it) {
+	  cout << "RN " << it->first << ' ' << it->second << endl;
+	}
+
+//         // Base de datos de ejes y nodos
+//         static set< CANDIDATE > _base_ejes;
+//         static map<unsigned int, string> _desc_nodo;
+// 	static map<unsigned int, string> _desc_eje;
+// 	static map<string, unsigned int> _rdesc_nodo;
+// 	static map<string, unsigned int> _rdesc_eje;
+
+  
+  
     return ((_nodos == s._nodos) and (_ejes == s._ejes) and (_relacion_nodos == s._relacion_nodos) and (_base_ejes == s._base_ejes) and (_desc_nodo == s._desc_nodo) and (_desc_eje == s._desc_eje) and (_rdesc_nodo == s._rdesc_nodo) and (_rdesc_eje == s._rdesc_eje));
 }
 
@@ -329,9 +381,16 @@ shapes shapes::reasignarNodos(const map<unsigned int, unsigned int> & v) {
     map<unsigned int, unsigned int> dicc;
             
     for (map<unsigned int, unsigned int>::const_iterator p = v.begin(); p != v.end(); ++p) {
-// 	cout << "L " << (*p).first << ' ' << (*p).second << endl;
+	cout << "L " << (*p).first << ' ' << (*p).second << endl;
 	unsigned int o = _relacion_nodos.find((*p).first)->second;
-// 	cout << o << endl;
+	cout << o << endl;
+	
+	cout << *this << endl;
+	
+	for (map<unsigned int, string>::const_iterator it = _desc_nodo.begin(); it != _desc_nodo.end(); ++it) {
+	  cout << it->first << ' ' << it->second << endl;
+	}
+	
         dicc[(*p).first] = nuevo.agregarNodoID((*p).second, _desc_nodo.find(o)->second);
     }
     for (set< CANDIDATE >::iterator p = _ejes.begin(); p != _ejes.end(); p++) {
@@ -414,7 +473,7 @@ shapes& shapes::operator=(const shapes& other) {
 }
 
 vector<unsigned int> shapes::hojas() const {
-    // En el caso particular de shapes, las hojas con los nodos "object"
+    // En el caso particular de shapes, las hojas son los nodos "object"
     vector<unsigned int> sol;
 
     for (set<unsigned int>::const_iterator it = _nodos.begin(); it != _nodos.end(); ++it) {
@@ -448,9 +507,166 @@ string shapes::forma(const unsigned int x) const {
 void shapes::borrarNodo(const unsigned int & ini) {
     _nodos.erase(ini);
 
-    for (set< CANDIDATE >::const_iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+    set< CANDIDATE >::const_iterator it = _ejes.begin();
+    while (it != _ejes.end()) {
         if ((it->first == ini) or (it->second == ini)) {
             _ejes.erase(it);
+	    it = _ejes.begin();
         }
+        else{
+	  ++it;
+	}
     }
+    
+    map<unsigned int,unsigned int>::iterator itrn = _relacion_nodos.begin();
+    bool found = false;
+    while ((itrn != _relacion_nodos.end()) and !found) {
+      if (itrn->first == ini) {
+	_relacion_nodos.erase(itrn);
+	found = true;
+      }
+      else
+	++itrn;
+    }
+}
+
+unsigned int shapes::top() const {
+  // Returns the top object id of the stack of shapes
+  set<unsigned int> sol(_nodos);
+
+  for (set< CANDIDATE >::const_iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+    sol.erase(it->second);
+  }  
+  
+  set<unsigned int>::iterator ip = sol.begin();
+  return *ip;
+}
+
+unsigned int shapes::bottom() const {
+  // Returns the top object id of the stack of shapes
+  set<unsigned int> sol(_nodos);
+
+  for (set< CANDIDATE >::const_iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+    if (it->third == 1) {
+      sol.erase(it->first);
+    }
+    else
+      if (it->third == 2)
+	sol.erase(it->second);
+  }  
+  
+  set<unsigned int>::iterator ip = sol.begin();
+  return *ip;
+}
+
+shapes shapes::subarbol(const unsigned int sel, bool updown) const {
+    bool found = true;
+    shapes res(*this);
+    res.clear();
+    
+    if (updown) {
+      unsigned int act = sel;
+      unsigned int pos = res.agregarNodo("object");
+      unsigned int old_pos = pos;        
+      while (found) {
+	// Search for the shape of pos
+	string form = forma(act);
+	if (form != "") {
+	  unsigned int npos = res.agregarNodo(form);
+	  res.agregarEje(pos, npos, "shape");
+	}
+
+	// Search for the on node of pos (x -> pos)
+	found = false;
+	for (set< CANDIDATE >::const_iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+	  if (it->second == act) {
+	    act = it->first;
+	    old_pos = pos;
+	    pos = res.agregarNodo("object");
+	    res.agregarEje(pos, old_pos, "on");
+	    found = true;
+	  }
+	}
+      }
+    }
+    else {
+      // Search for the on node of pos (x -> pos)
+      unsigned int act = sel;
+      unsigned int pos = res.agregarNodo("object");  
+      unsigned int old_pos = pos;        
+      
+      while (found) {
+	// Search for the shape of pos
+	string form = forma(act);
+	if (form != "") {
+	  cout << "#" << endl;
+	  unsigned int npos = res.agregarNodo(form);
+	  res.agregarEje(pos, npos, "shape");
+	}
+
+	// Search for the on node of pos (pos -> x)
+	found = false;
+	for (set< CANDIDATE >::const_iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+	  if ((it->first == act) and (it->third == 1)) {
+	    act = it->second;
+	    old_pos = pos;
+	    pos = res.agregarNodo("object");
+	    res.agregarEje(old_pos, pos, "on");
+	    found = true;
+	  }
+	}
+      }
+    }
+    
+    return res;
+}
+
+void shapes::merge(const shapes& other, const unsigned int x, const unsigned int y, const string &edge) {
+  bool found = true;
+    
+  unsigned int pos = agregarNodo("object");
+  agregarEje(x, pos, "on");
+  unsigned int act = y;
+  unsigned int old_pos = pos;        
+  
+  while (found) {
+    // Search for the shape of pos
+    string form = other.forma(act);
+    if (form != "") {
+      unsigned int npos = agregarNodo(form);
+      agregarEje(pos, npos, "shape");
+    }
+
+    // Search for the on node of pos (pos -> x)
+    found = false;
+    for (set< CANDIDATE >::const_iterator it = other._ejes.begin(); (it != other._ejes.end()) and !found; ++it) {
+      if ((it->first == act) and (it->third == 1)) {
+	act = it->second;
+	old_pos = pos;
+	pos = agregarNodo("object");
+	agregarEje(old_pos, pos, "on");
+	found = true;
+      }
+    }
+  }
+}
+
+bool shapes::cambiar_forma(const unsigned int x) {
+  bool done = false;
+  
+  vector< pair<string, unsigned int> > opciones;
+  string miforma = _desc_nodo.find(_relacion_nodos.find(x)->second)->second;
+  for (map<string, unsigned int>::const_iterator it =  _rdesc_nodo.begin(); it != _rdesc_nodo.end(); ++it) {
+    if ((it->first != "object") and (it->first != miforma)) {
+      opciones.push_back(pair<string, unsigned int>(it->first,it->second));
+    }
+  }
+  
+  if (! opciones.empty()) {
+    int sel = intAzar(1, opciones.size());
+    _relacion_nodos[x] = opciones[sel-1].second;
+    done = true;
+  }
+  
+  return done;
 }
