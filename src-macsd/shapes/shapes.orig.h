@@ -43,6 +43,7 @@ class shapes {
         vector< CANDIDATE > ejesNoUtilizados() const;
 	set< CANDIDATE > ejesUtilizados() const {return _ejes;};
         string forma(const unsigned int x) const;
+	bool cambiar_forma(const unsigned int x);
         void imprime(ostream &salida) const;
         string graph_g(void) const;
         bool operator== (const shapes& s) const;   
@@ -55,11 +56,16 @@ class shapes {
 	void inicial();
 	multimap<unsigned int, pair<unsigned int, unsigned int> > ejes_a_multimap() const;
         vector<unsigned int> hojas() const;
-
 	map<unsigned int, vector<unsigned int> > darPosibilidades(const shapes& s) const;
 	vector<unsigned int> darPosibilidades(const shapes& donde, const string& s) const;
         shapes reasignarNodos(const map<unsigned int,unsigned int> & v);
         bool cubiertoPor(const shapes& s) const;
+	
+	unsigned int top() const;
+	unsigned int bottom() const;
+	
+	shapes subarbol(const unsigned int sel, bool updown) const;
+	void merge(const shapes& other, const unsigned int x, const unsigned int y, const string &edge);
 
         shapes& operator=(const shapes& other);
     protected:

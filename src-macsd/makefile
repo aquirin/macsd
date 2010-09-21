@@ -27,6 +27,8 @@ debug-shape:	clean
 	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE load.cpp
 	g++ -Wall -o exe-load_shape routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o
 	echo "exe-load_shape has been generated!"
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE test.cpp
+	g++ -Wall -o test_shape routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o global.o test.o
 
 debug-vmap:	clean
 	cp -f vmap/config.txt config.txt
