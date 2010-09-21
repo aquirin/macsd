@@ -65,7 +65,7 @@ emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &c
 //                            cout << "En: " << _instancias[*p] << endl;
                             if (_instancias[*p].cubiertoPor(nueva_subestructura)) {
                                 done = true;
-//                                cout << "SI" << endl;
+				cout << "SI " << *p << endl;
                                 temp.push_back(*p);
                             }
                         }
@@ -73,7 +73,7 @@ emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &c
                     #else
 
                          if (_instancias[*p].cubiertoPor(_subestructura)) {
-  //                          cout << "SI" << endl;
+			    cout << "SI" << endl;
                             temp.push_back(*p);
                         }
 
@@ -137,7 +137,7 @@ emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &c
                         cout << "En: " << _instancias[*p] << endl;
                         if (_instancias[*p].cubiertoPor(nueva_subestructura)) {
                             done = true;
-                            cout << "SI" << endl;
+                            cout << "SI " << *p << endl;
                             temp.push_back(*p);
                         }
                     }
@@ -145,7 +145,7 @@ emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &c
                 #else
 
                      if (_instancias[*p].cubiertoPor(_subestructura)) {
-                        cout << "SI" << endl;
+			cout << "SI " << *p << endl;
                         temp.push_back(*p);
                     }
 
@@ -160,6 +160,10 @@ emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &c
         calculaCostes();
         
         cout << show() << endl;
+}
+
+template <class G>
+emocc_solution<G>::emocc_solution(const emocc_solution& other) : _costeValido(other._costeValido), _costes(other._costes), _niche(other._niche), _criteria(other._criteria), _subestructura(other._subestructura), _instancias(other._instancias), _support(other._support), _numObjetivos(other._numObjetivos) {
 }
 
 template <class G>
@@ -221,27 +225,27 @@ int emocc_solution<G>::dominancia(emocc_solution<G>& v, bool x, int y) {
     else que = 0;
 
     if ((_costes[0] != 0) && (v._costes[0] != 0)) {
-	if (x) {
-	    // Nichos genotipicos
-	    unsigned int inte = 0;
-	    unsigned int unio = (_support.size() + v._support.size());
-	    for (unsigned int i = 0; i < _support.size(); i++) {
-		bool found = false;
-		for (unsigned int j = 0; (j < v._support.size()) && !found; j++) {
-		    if (_support[i] == v._support[j]) {
-			found = true;
-			inte++;
-		    }
-		}
-	    }
-
-	    unio -= (inte);
-	    // Jaccard 0.5
-	    if (((inte * 1.) / (unio * 1.)) < 0.5) {
-		que = 0;
-    //             cout << "ND" << endl;
-	    }
-	}
+// 	if (x) {
+// 	    // Nichos genotipicos
+// 	    unsigned int inte = 0;
+// 	    unsigned int unio = (_support.size() + v._support.size());
+// 	    for (unsigned int i = 0; i < _support.size(); i++) {
+// 		bool found = false;
+// 		for (unsigned int j = 0; (j < v._support.size()) && !found; j++) {
+// 		    if (_support[i] == v._support[j]) {
+// 			found = true;
+// 			inte++;
+// 		    }
+// 		}
+// 	    }
+// 
+// 	    unio -= (inte);
+// 	    // Jaccard 0.5
+// 	    if (((inte * 1.) / (unio * 1.)) < 0.5) {
+// 		que = 0;
+//     //             cout << "ND" << endl;
+// 	    }
+// 	}
     }
     else {
         if (_costes[0] == 0)
@@ -264,7 +268,8 @@ emocc_solution<G> emocc_solution<G>::crossover(const emocc_solution<G>& other, b
         vector<unsigned int> primero = _subestructura.hojas();
         vector<unsigned int> segundo = other._subestructura.hojas();
         G nueva(_subestructura);
-        nueva.inicial();
+//         nueva.inicial();
+	nueva.clear();
 
         // Elijo del primero
         bool almenosuno = false;
@@ -302,39 +307,31 @@ emocc_solution<G> emocc_solution<G>::crossover(const emocc_solution<G>& other, b
 
         vector<unsigned int> primero = _subestructura.hojas();
         vector<unsigned int> segundo = other._subestructura.hojas();
-        G nueva(_subestructura);
+        cout << "Padre " << endl << *this << endl << "Madre " << other << endl;
 
-        // Elijo del primero
-        unsigned int nn = 0;
-        int sel = intAzar(1, primero.size());
-        for (unsigned int i = 0; i < sel; ++i) {
-            nn = nueva.agregarNodo("object");
-            string aa = _subestructura.forma(primero[i]);
-            // Agrego los ejes de forma si tiene
-            if (aa != "") {
-                unsigned int mm = nueva.agregarNodo(aa);
-                nueva.agregarEje(nn, mm, "shape");
-            }
-        }
+        // Elijo del primero el punto de corte
+	if (! primero.empty() and ! segundo.empty()) {
+	  unsigned int nn = 0;
+	  int sel = intAzar(1, primero.size());
+	  G nueva = _subestructura.subarbol(primero[sel-1], true);
+	  
+	  cout << "SUB1: " << _subestructura << ' ' << sel << ' ' << nueva << endl;
 
-        // Elijo del segundo
-        unsigned int mm = 0;
-        sel = intAzar(1, segundo.size());
-        for (unsigned int i = 0; i < sel; ++i) {
-            unsigned int xx = nueva.agregarNodo("object");
-            if (mm == 0) mm = xx;
-            string aa = _subestructura.forma(segundo[i]);
-            // Agrego los ejes de forma si tiene
-            if (aa != "") {
-                unsigned int pp = nueva.agregarNodo(aa);
-                nueva.agregarEje(xx, pp, "shape");
-            }
-        }
+	  // Elijo del segundo el punto de corte
+	  sel = intAzar(1, segundo.size());
+	  G nseg = other._subestructura.subarbol(segundo[sel-1], false);
+	  cout << "SUB2: " << other._subestructura << ' ' << sel << ' ' << nseg << endl;
+	  
+	  nueva.merge(nseg, nueva.bottom(), nseg.top(), "on");
 
-        nueva.agregarEje(nn, mm, "on");
-
-	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
-
+	  cout << "Hijo " << nueva << endl;
+	  
+	  sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
+	}
+	else {
+	  sol = *this;
+	}
+	
         #endif
 
         return sol;
@@ -351,7 +348,6 @@ emocc_solution<G> emocc_solution<G>::mutation() {
 
         // Agrego o elimino?
         int sel = intAzar(0, 1);
-
         if (sel == 0) {
             vector<CANDIDATE> cand = nueva.ejesNoUtilizados();
             int sel1 = intAzar(1, cand.size());
@@ -362,7 +358,8 @@ emocc_solution<G> emocc_solution<G>::mutation() {
         }
         else {
             // Elimino
-            nueva.inicial();
+//             nueva.inicial();
+	    nuevo.clear();
             vector<unsigned int> primero = _subestructura.hojas();
             int sel1 = intAzar(1, primero.size());
             for (int i = 0; i < (int)primero.size(); ++i) {
@@ -377,22 +374,46 @@ emocc_solution<G> emocc_solution<G>::mutation() {
 
         G nueva(_subestructura);
 
-        // Agrego o elimino?
+        // Agrego, elimino o cambio?
         int sel = intAzar(0, 1);
+cout << "Azar " << sel << endl;
 
         if (sel == 0) {
+	    // Agrego
             vector<CANDIDATE> cand = nueva.ejesNoUtilizados();
-            int sel1 = intAzar(1, cand.size());
-            nueva.agregarEje(cand[sel1-1].first, cand[sel1-1].second, cand[sel1-1].third);
+            for (unsigned int x = 0; x < cand.size(); ++x)
+	      cout << "CD " << cand[x].first << ' ' << cand[x].second << ' ' << cand[x].third << endl;
+	    if (!cand.empty()) {
+	      int sel1 = intAzar(1, cand.size());
+	      nueva.agregarEje(cand[sel1-1].first, cand[sel1-1].second, cand[sel1-1].third);
+	      cout << "MutA " << _subestructura << ' ' << nueva << endl;
+	    }
         }
-        else {
+        else if (sel == 1) {
             // Elimino
             set<unsigned int> cand = nueva.nodosUtilizados();
-            int sel1 = intAzar(1, cand.size());
-            set<unsigned int>::const_iterator it = cand.begin();
-            for (unsigned int i = 1; i < sel1; ++i) ++it;
-            nueva.borrarNodo(*it);
+	    if (cand.size() > 1) {
+	      int sel1 = intAzar(1, cand.size());
+	      set<unsigned int>::const_iterator it = cand.begin();
+	      for (unsigned int i = 1; i < sel1; ++i) ++it;
+	      nueva.borrarNodo(*it);
+	      cout << "MutE " << _subestructura << ' ' << nueva << endl;
+	    }
         }
+        else {
+	  // Cambio
+	  set<unsigned int> cand = nueva.nodosUtilizados();
+	  vector<unsigned int> primero = nueva.hojas();
+	  for (unsigned int i = 0; i < primero.size(); ++i)
+	    cand.erase(primero[i]);
+	  if (cand.size() > 1) {
+	    int sel1 = intAzar(1, cand.size());
+	    set<unsigned int>::const_iterator it = cand.begin();
+	    for (unsigned int i = 1; i < sel1; ++i) ++it;
+	    nueva.cambiar_forma(*it);
+	    cout << "MutC " << _subestructura << ' ' << nueva << endl;
+	  }
+	}
 
 	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
 
@@ -420,11 +441,9 @@ string emocc_solution<G>::show() const {
 	ss1 << _costes[1];
 	stringstream ss2;
 	for (unsigned int i = 0; i < _support.size(); i++) {
-	  if (_support[i]) {
 	    stringstream ss3;
-	    ss3 << i + 1;
+	    ss3 << _support[i] + 1;
 	    outstring += ss3.str() + ' ';
-	  }
 	}
 
         outstring += "\n" + ss.str() + "\t" + ss1.str();

@@ -58,6 +58,7 @@ class emocc_solution {
 		emocc_solution() {};
 		emocc_solution(const vector<G>& base, termination_criteria &cri, const unsigned int numObjetivos, const int& nic);
                 emocc_solution(const vector<G>& base, termination_criteria &cri, const unsigned int numObjetivos, const int& nic, G sub);
+		emocc_solution(const emocc_solution& other);
 
 		bool operator==(const emocc_solution& other) const {return (_subestructura == other._subestructura);};
 		bool operator!=(const emocc_solution& other) const {return !((*this) == other);}
@@ -74,7 +75,7 @@ class emocc_solution {
 		emocc_solution<G> mutation();
 		bool better(const emocc_solution<G> &other, const int &obj) const {return (_costes[obj] < other._costes[obj]);}
 		string show() const;
-                bool valid() {calculaCostes(); return (getCoste(0) != 0);}
+                bool valid() {calculaCostes(); return ((getCoste(1) != 0) and (getCoste(0) != 0));}
 };
 
 template <class G>

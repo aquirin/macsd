@@ -49,15 +49,19 @@ vector< list< triple<G,double,double> > > nsgaii<G,H>::FastNonDominatedSort(cons
 	
 	for (i = 0; i < v.size(); i++) {
 		for (unsigned int j = 0; j < v.size(); j++) {
-			if (elements[j].first.first.dominancia(elements[i].first.first, false, 0)) {
+// 			cout << "VS " << elements[i].first.first << endl << elements[j].first.first;
+			if (elements[i].first.first.dominancia(elements[j].first.first, false, 0) == 1) {
 				elements[i].third.push_back(j);
 				elements[j].second++;
+// 				cout << "domina";
 			}
 			else
-				if (elements[i].first.first.dominancia(elements[j].first.first, false, 0)) {
+				if (elements[j].first.first.dominancia(elements[i].first.first, false, 0) == 1) {
 					elements[i].second++;
 					elements[j].third.push_back(i);
+// 					cout << "dominado";
 				}
+// 			cout << endl;
 		}
 		if (elements[i].second == 0) {
 			elements[i].first.third = 1;
@@ -147,11 +151,12 @@ list< triple<G,double,double> > nsgaii<G,H>::MakeNewPop(const list< triple<G,dou
 	for (typename list< triple<G,double,double> >::const_iterator q = v.begin(); q != v.end(); q++)
 		p.push_back(*q);
 
-	p.binary_tournament(false, 80, 30);
+	p.binary_tournament(80, 30, false);
 
 	list< triple<G,double,double> > res;
 	for (typename population::iterator q = p.begin(); q != p.end(); q++)
 		res.push_back(*q);
+	
 	return res;
 }
 
@@ -159,7 +164,7 @@ template <class G, class H>
 list<G> nsgaii<G,H>::execute(int iter, string name) {
 	// Creation procedure.
 	// Variables
-	list< triple<G,double,double> > newPt, Rt, Pt, Qt, Pp;
+	list< triple<G,double,double> > newPt, Pt, Qt;
 	population P0(_db);
 	vector< list< triple<G,double,double> > > F;
         list<G> solpop;
@@ -178,24 +183,75 @@ list<G> nsgaii<G,H>::execute(int iter, string name) {
 			P0 = population(_db);
 			for (typename population::iterator p = P0.begin(); p != P0.end(); p++)
 				Pt.push_back(*p);
-			Qt.merge(Pp);
+// 			Pt.sort();
+// 			Qt.sort();
+			Qt.merge(Pt);
 		}
 		cout << "Iteracion: " << t + 1 << endl;
 		cout << "Pt: " << Pt.size() << " Qt: " << Qt.size() << endl;
+		
+// 		Pt.sort();
+// 		Qt.sort();
+		
+// 		for (typename list< triple<G,double,double> >::const_iterator it = Qt.begin(); it != Qt.end(); ++it) {
+// 		  cout << "$ " << it->first << ' ' << it->second << ' ' << it->third << endl;
+// 		}
+		
 		Pt.merge(Qt); // combine parent and offspring population
 		cout << "Pt: " << Pt.size() << " Qt: " << Qt.size() << endl;
 		cout << "FNDS" << endl;
 		F = FastNonDominatedSort(Pt); // F = (F1, F2, ...), all nondominated fronts of Pt
-		cout << "/FNDS" << endl;
+		cout << "/FNDS" << endl;		
 		cout << "Fbuild" << endl;
-		unsigned int i;
-		for (i = 0; (i < _N) and (i < F.size()) and (newPt.size() + F[i].size() < _N); i++) {
-			cout << i << " " << F[i].size() << endl;
-			F[i] = CrowdingDistanceAssignment(F[i]); // calculate crowding distance in Fi
+		unsigned int i = 0;
+		newPt.clear();
+		
+		list< triple<G,double,double> > NF;
+		for (typename list< triple<G,double,double> >::const_iterator it = F[i].begin(); it != F[i].end(); ++it) {
+			bool found = false;
+			for (typename list< triple<G,double,double> >::const_iterator it1 = NF.begin(); (it1 != NF.end()) and !found; ++it1) {
+				cout << "AQUI " << endl << *it << endl << *it1 << endl;
+				found = ((*it).first == (*it1).first);
+	// 			cout << _data[i] << ' ' << sol[j] << ' ' << found << endl;
+			}
+			if (!found) {
+				NF.push_back(*it);
+				cout << "Add: " << *it << endl;
+			}
+		}
+			
+		while ((i < _N) and (i < F.size()) and (newPt.size() + NF.size() < _N)) {
+			// Purge repeated F[i]
+			
+// 			cout << i << " " << F[i].size() << endl;
+// 			cout << i << " " << NF.size() << endl;
+			
+			F[i] = CrowdingDistanceAssignment(NF); // calculate crowding distance in Fi
+// 			F[i] = CrowdingDistanceAssignment(F[i]); // calculate crowding distance in Fi
 			cout << i << " " << F[i].size() << endl;
 			newPt.merge(F[i]); // include ith nondominated front in the parent pop REVISAR
+			++i;
+			
+			if (i < F.size()) {
+			  NF.clear();
+			  for (typename list< triple<G,double,double> >::const_iterator it = F[i].begin(); it != F[i].end(); ++it) {
+				  bool found = false;
+				  for (typename list< triple<G,double,double> >::const_iterator it1 = NF.begin(); (it1 != NF.end()) and !found; ++it1) {
+					  cout << "AQUI " << endl << *it << endl << *it1 << endl;
+					  found = ((*it).first == (*it1).first);
+		  // 			cout << _data[i] << ' ' << sol[j] << ' ' << found << endl;
+				  }
+				  if (!found) {
+					  NF.push_back(*it);
+					  cout << "Add: " << *it << endl;
+				  }
+			  }
+			}
 		} // check the next front for inclusion
 		cout << "/Fbuild" << endl;
+		for (typename list< triple<G,double,double> >::const_iterator it = newPt.begin(); it != newPt.end(); ++it) {
+		  cout << "b$ " << it->first << ' ' << it->second << ' ' << it->third << endl;
+		}
 		if ((newPt.size() < _N) and (i < F.size()) and (F[i].size() > 0)) {
 			cout << "Fbuild" << endl;
 			F[i] = CrowdingDistanceAssignment(F[i]);
@@ -203,10 +259,16 @@ list<G> nsgaii<G,H>::execute(int iter, string name) {
 			F[i].sort(crowding<G,H>); // sort in descending order using crowding
 			cout << "/sFbuild" << endl;
 			for (typename list< triple<G,double,double> >::iterator p = F[i].begin(); (p != F[i].end()) and (newPt.size() != _N) and (F[i].size() > 0); p++)
-				newPt.push_back(*p); // choose the firs (N-|newPt|) elements of Fi
+			  newPt.push_back(*p); // choose the firs (N-|newPt|) elements of Fi
 			cout << "end" << endl;
 		}
+		for (typename list< triple<G,double,double> >::const_iterator it = newPt.begin(); it != newPt.end(); ++it) {
+		  cout << "a$ " << it->first << ' ' << it->second << ' ' << it->third << endl;
+		}
 		Qt = MakeNewPop(newPt); // use selection, crossover and mutation to create a new population Qt
+		for (typename list< triple<G,double,double> >::const_iterator it = Qt.begin(); it != Qt.end(); ++it) {
+		  cout << "d$ " << it->first << ' ' << it->second << ' ' << it->third << endl;
+		}
 		Pt = newPt;
 	}
 	Pt.merge(Qt); // combine parent and offspring population
@@ -221,8 +283,10 @@ list<G> nsgaii<G,H>::execute(int iter, string name) {
                 found = (p->first == *it);
                 ++it;
             }
-            if (!found)
+            if (!found) {
 		solpop.push_back(p->first);
+		cout << "FAdd: " << p->first << endl;
+	    }
         }
 
 	return solpop;
@@ -341,19 +405,27 @@ void nsgaii<G,H>::population::crossover(const unsigned int &cross, const bool &s
 
 		// Crossover
 		sel = intAzar(1, 100);
+		cout << "Cazar " << sel << ' ' << cross << endl;
 		if ((sel < cross) and !_criteria.finish()) {
 			child.first = mother.first.crossover(father.first, species);
-			if ((child.first != mother.first) and child.first.valid())
+			cout << "Hijo " << child.first << endl << mother.first << endl << father.first << endl;
+			if ((child.first != mother.first) and child.first.valid()) {
 				lista[i] = child;
+				cout << "New " << lista[i] << endl;
+			}
 			else
 				lista[i] = mother;
 
-			if (i + 1 < _data.size())
+			if (i + 1 < _data.size()) {
 				child.first = father.first.crossover(mother.first, species);
-				if ((child.first != father.first) and child.first.valid())
+				if ((child.first != father.first) and child.first.valid()) {
+				  cout << "Ver " << child << ' ' << i+1 << ' ' << _data.size() << endl;
 					lista[i+1] = child;
+					cout << "New " << lista[i+1] << endl;
+				}
 				else
 					lista[i+1] = father;
+			}
 		}
 		else {
 			lista[i] = mother;
@@ -380,6 +452,9 @@ void nsgaii<G,H>::population::mutation(const unsigned int &mut) {
 		sel = intAzar(1, 100);
 		if ((sel < mut) and !_criteria.finish()) {
 			child.first = mother.first.mutation();
+			child.second = 0.;
+			child.third = 0.;
+			
 			if ((child.first != mother.first) and child.first.valid())
 				lista[i] = child;
 			else
@@ -396,7 +471,9 @@ template <class G, class H>
 void nsgaii<G,H>::population::binary_tournament(const int &cross, const int &mut, const bool &species) {
 	// Perform binary tournament
 	cout << "Selection" << endl;
+	
 	selection();
+	
 // 	cout << *this;
 	if (!_criteria.finish()) {
 		cout << "Crossover" << endl;
