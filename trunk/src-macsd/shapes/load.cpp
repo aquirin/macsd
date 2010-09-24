@@ -484,6 +484,7 @@ int main(int argc, char *argv[]){
 
     // impresion en fichero de las soluciones del Pareto (configuraciones de estaciones)
     rutaFinal = str_rs + ".txt";
+    cout << rutaFinal << endl;
     soluciones.writePareto( rutaFinal.c_str() );   
     // -----------------------------------                     
     

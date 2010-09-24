@@ -47,12 +47,17 @@ double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int
 			// Search for the correct index for both nodes
 			n.first = this->hormigas[indice]->subEst().mapear(it->first);
 			n.second = this->hormigas[indice]->subEst().mapear(it->second);
+						cout << "EJE " << n.first << ' ' << n.second << ' ' << n.third << endl;
+
 			if (this->probabilidades.find(n) == this->probabilidades.end()) {
+			  cout << "IN" << endl;
 			  n.second = this->hormigas[indice]->subEst().mapear(it->first);
 			  n.first = this->hormigas[indice]->subEst().mapear(it->second);
 			}
+			cout << "EJE " << it->first << ' ' << it->second << ' ' << it->third << endl << this->hormigas[indice]->subEst() << endl;
+			cout << "EJE " << n.first << ' ' << n.second << ' ' << n.third << endl;
     			baseA = this->hormigas[indice]->getAparicionesEje(n);
-    			baseB = 1;  			   
+    			baseB = 1;
     			break;
     		case 2:  // DYNAMIC
 			mas.avanza(n);
