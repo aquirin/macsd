@@ -34,6 +34,7 @@ shapes::shapes(const string & name, const vector<string> & shap, const vector<st
   
 /*  cout << "Maximo " << _desc_nodo.size() + _desc_eje.size() << endl;*/
   inicial();
+  MAX = _desc_nodo.size();
 }
 
 shapes::shapes(const shapes & s) {
@@ -46,6 +47,7 @@ shapes::shapes(const shapes & s) {
   _desc_eje = s._desc_eje;
   _rdesc_nodo = s._rdesc_nodo;
   _rdesc_eje = s._rdesc_eje;  
+  MAX = s._desc_nodo.size();
 }
 
 void shapes::inicial() {
@@ -106,9 +108,15 @@ unsigned int shapes::mapear(const unsigned int& i) const {
 
   if (i > _desc_nodo.size()) {
     res = i - MAX;
+    cout << "MAX" << ' ' << res << endl;
   }
   else {
+    for (map<unsigned int,unsigned int>::const_iterator it = _relacion_nodos.begin(); it != _relacion_nodos.end(); ++it) {
+	  cout << "RN " << it->first << ' ' << it->second << endl;
+	}
+	
     res = _relacion_nodos.find(i)->second;
+    cout << i << ' ' <<  res << endl;
   }
     
   return res;
@@ -182,10 +190,10 @@ vector< CANDIDATE > shapes::ejesNoUtilizados() const {
 		// Reviso que no tenga ya un enlace
 		found = (_ejes.find(CANDIDATE(*q, *p, r->first)) != _ejes.end());
 		
-		// Reviso que ho haya otro nodos object ya asociado
-		for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
-		  found = ((_desc_eje.find(it->third)->second == "on") and (it->first == *p));
-		}
+// 		// Reviso que ho haya otro nodos object ya asociado
+// 		for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+// 		  found = ((_desc_eje.find(it->third)->second == "on") and (it->first == *p));
+// 		}
 	      }
 	      
 	      if (!found and (_base_ejes.find(CANDIDATE(_relacion_nodos.find(*p)->second, _relacion_nodos.find(*q)->second, r->first)) != _base_ejes.end()) and (_ejes.find(CANDIDATE(*p, *q, r->first)) == _ejes.end()))
@@ -202,11 +210,11 @@ vector< CANDIDATE > shapes::ejesNoUtilizados() const {
 		found = ((_desc_eje.find(it->third)->second == "shape") and (it->first == *p));
 	      }
 	    }
-	    else {
-	       for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
-		found = ((_desc_eje.find(it->third)->second == "on") and (it->first == *p));
-	      }
-	    }
+// 	    else {
+// 	       for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+// 		found = ((_desc_eje.find(it->third)->second == "on") and (it->first == *p));
+// 	      }
+// 	    }
 	    
 	    if (!found and (_base_ejes.find(CANDIDATE(_relacion_nodos.find(*p)->second, q->first, r->first)) != _base_ejes.end()))
 	      res.push_back(CANDIDATE(*p, MAX + q->first, r->first));
@@ -543,7 +551,7 @@ unsigned int shapes::top() const {
 }
 
 unsigned int shapes::bottom() const {
-  // Returns the top object id of the stack of shapes
+  // Returns the bottom object id of the stack of shapes
   set<unsigned int> sol(_nodos);
 
   for (set< CANDIDATE >::const_iterator it = _ejes.begin(); it != _ejes.end(); ++it) {

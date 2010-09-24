@@ -375,11 +375,11 @@ emocc_solution<G> emocc_solution<G>::mutation() {
         G nueva(_subestructura);
 
         // Agrego, elimino o cambio?
-        int sel = intAzar(0, 1);
+        int sel = intAzar(0, 2);
 cout << "Azar " << sel << endl;
 
         if (sel == 0) {
-	    // Agrego
+	    // Agrego una hoja
             vector<CANDIDATE> cand = nueva.ejesNoUtilizados();
             for (unsigned int x = 0; x < cand.size(); ++x)
 	      cout << "CD " << cand[x].first << ' ' << cand[x].second << ' ' << cand[x].third << endl;
@@ -390,18 +390,28 @@ cout << "Azar " << sel << endl;
 	    }
         }
         else if (sel == 1) {
-            // Elimino
+            // Elimino una hoja
             set<unsigned int> cand = nueva.nodosUtilizados();
-	    if (cand.size() > 1) {
+	    vector<unsigned int> primero = nueva.hojas();
+	    unsigned int bajo = nueva.bottom();
+	    string form = nueva.forma(bajo);
+	    for (unsigned int i = 0; i < primero.size(); ++i) {
+	      if ((bajo != primero[i]) or ((bajo == primero[i]) and (form != "")))
+		cand.erase(primero[i]);
+	    }
+	    if (cand.size() >= 1) {
 	      int sel1 = intAzar(1, cand.size());
 	      set<unsigned int>::const_iterator it = cand.begin();
 	      for (unsigned int i = 1; i < sel1; ++i) ++it;
 	      nueva.borrarNodo(*it);
 	      cout << "MutE " << _subestructura << ' ' << nueva << endl;
 	    }
+	    else {
+	      cout << "NoMutE " << bajo << ' ' << _subestructura << endl;
+	    }
         }
         else {
-	  // Cambio
+	  // Cambio una hoja
 	  set<unsigned int> cand = nueva.nodosUtilizados();
 	  vector<unsigned int> primero = nueva.hojas();
 	  for (unsigned int i = 0; i < primero.size(); ++i)
