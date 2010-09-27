@@ -190,10 +190,10 @@ vector< CANDIDATE > shapes::ejesNoUtilizados() const {
 		// Reviso que no tenga ya un enlace
 		found = (_ejes.find(CANDIDATE(*q, *p, r->first)) != _ejes.end());
 		
-// 		// Reviso que ho haya otro nodos object ya asociado
-// 		for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
-// 		  found = ((_desc_eje.find(it->third)->second == "on") and (it->first == *p));
-// 		}
+		// Reviso que ho haya otro nodos object ya asociado
+		for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+		  found = ((_desc_eje.find(it->third)->second == "on") and (it->first == *p));
+		}
 	      }
 	      
 	      if (!found and (_base_ejes.find(CANDIDATE(_relacion_nodos.find(*p)->second, _relacion_nodos.find(*q)->second, r->first)) != _base_ejes.end()) and (_ejes.find(CANDIDATE(*p, *q, r->first)) == _ejes.end()))
@@ -210,11 +210,11 @@ vector< CANDIDATE > shapes::ejesNoUtilizados() const {
 		found = ((_desc_eje.find(it->third)->second == "shape") and (it->first == *p));
 	      }
 	    }
-// 	    else {
-// 	       for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
-// 		found = ((_desc_eje.find(it->third)->second == "on") and (it->first == *p));
-// 	      }
-// 	    }
+	    else {
+	       for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+		found = ((_desc_eje.find(it->third)->second == "on") and (it->first == *p));
+	      }
+	    }
 	    
 	    if (!found and (_base_ejes.find(CANDIDATE(_relacion_nodos.find(*p)->second, q->first, r->first)) != _base_ejes.end()))
 	      res.push_back(CANDIDATE(*p, MAX + q->first, r->first));

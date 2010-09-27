@@ -416,7 +416,7 @@ int main(int argc, char *argv[]) {
     // leemos los datos del fichero de entrada
 #if (VERSION == V_SHAPE) || (VERSION == V_WWW) || (VERSION == V_SCIENCEMAP)
     leeFicheroDatos (PARA.GLOB_rutaEntrada, baseDatos);
-        cout << "Leido" << endl;
+    cout << "Leido" << endl;
 
 #elif VERSION == V_GO
     leeFicheroDatos (PARA.GLOB_rutaEntrada, PARA.GO_bpn, PARA.GO_bpe, PARA.GO_fmn, PARA.GO_fme, PARA.GO_ccn, PARA.GO_cce, baseDatos);
