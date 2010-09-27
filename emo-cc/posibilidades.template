@@ -36,6 +36,27 @@ posibilidades<T>::posibilidades(const map<T, vector<T> >& cuales, const multimap
     
     _ins = ins;
     _est = est;
+
+//     _refijo();
+}
+
+template <typename T>
+void posibilidades<T>::_refijo() {
+//   // Si hay un nodo fijo, me fijo si tiene un solo nodo enganchado y tambien lo hago fijo
+//   for (typename map<T,T>::iterator p = _fijos.begin(); p != _fijos.end(); ++p) {
+//     pair<multimap<T,pair<T,T> >::iterator,multimap<T,pair<T,T> >::iterator> pit = _est.equal_range(p->first);
+// //     for (multimap<T,pair<T,T> >::iterator it = pit->first; it != (pit->second + 1); ++it) {
+// //     }
+// // FALTA ver por tipo de eje
+//     for (multimap<T,pair<T,T> >::iterator it = pit->first; it != (pit->second + 1); ++it) {
+//       // Busco en el otro grafo...
+//       
+//       if (pit->first == pit->second) { // Si solo tiene un eje...
+// 	// Hacer unico
+// 	_fijos[p->first] = pit->first;
+//       }
+//     }
+//   }
 }
 
 template <typename T>

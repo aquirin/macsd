@@ -25,6 +25,7 @@ emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &c
      _criteria(cri),
      _support(base.size()),
      _instancias(base) {
+       cout << "Crea" << endl;
         _numObjetivos = numObjetivos;
         _costeValido = false;
         _instancias = base;
@@ -88,7 +89,7 @@ emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &c
             }
         }
         while (temp.empty());
-
+cout << "Fin Crea" << endl;
         calculaCostes();
         
         cout << show() << endl;
@@ -359,7 +360,7 @@ emocc_solution<G> emocc_solution<G>::mutation() {
         else {
             // Elimino
 //             nueva.inicial();
-	    nuevo.clear();
+	    nueva.clear();
             vector<unsigned int> primero = _subestructura.hojas();
             int sel1 = intAzar(1, primero.size());
             for (int i = 0; i < (int)primero.size(); ++i) {
