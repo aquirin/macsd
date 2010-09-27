@@ -45,9 +45,11 @@ double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int
     	switch (this->heuristicas[indice]) {
     		case 1:  // STATIC
 			// Search for the correct index for both nodes
+			cout << "Mapear " << it->first << endl;
 			n.first = this->hormigas[indice]->subEst().mapear(it->first);
+			cout << "Mapear " << it->second << endl;
 			n.second = this->hormigas[indice]->subEst().mapear(it->second);
-						cout << "EJE " << n.first << ' ' << n.second << ' ' << n.third << endl;
+			cout << "EJE " << n.first << ' ' << n.second << ' ' << n.third << endl;
 
 			if (this->probabilidades.find(n) == this->probabilidades.end()) {
 			  cout << "IN" << endl;

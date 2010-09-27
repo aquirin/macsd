@@ -106,9 +106,9 @@ unsigned int shapes::agregarNodoID(const unsigned int & n, const string & s) {
 unsigned int shapes::mapear(const unsigned int& i) const {
   unsigned int res = 0;
 
-  if (i > _desc_nodo.size()) {
+  if (i > MAX) {
     res = i - MAX;
-    cout << "MAX" << ' ' << res << endl;
+    cout << "MAX " << MAX << ' ' << res << endl;
   }
   else {
     for (map<unsigned int,unsigned int>::const_iterator it = _relacion_nodos.begin(); it != _relacion_nodos.end(); ++it) {
