@@ -425,13 +425,49 @@ map<unsigned int, vector<unsigned int> > shapes::darPosibilidades(const shapes& 
     
     cout << *this << endl;
     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
+	cout << "Nodo est " << *p << endl;
         bool algo = false;
         for (set<unsigned int>::const_iterator q = s._nodos.begin(); q != s._nodos.end(); q++) {
-            if (_relacion_nodos.find(*p)->second == s._relacion_nodos.find(*q)->second) {
-// 		cout << "dp " << *p << ' ' << *q << endl;
-		res[*p].push_back(*q);
-		algo = true;
-            }
+	  cout << "Nodo ins " << *q << endl;
+	  if (_relacion_nodos.find(*p)->second == s._relacion_nodos.find(*q)->second) {
+	    // Reviso si tambien comparten los ejes correctos
+	    set< CANDIDATE > usados;
+	    bool found = true;
+	    for (set< CANDIDATE >::iterator it =  _ejes.begin(); (it != _ejes.end()) and found; ++it) {
+	      if (it->first == *p) {
+		found = false;
+		cout << "FoundP1a " << it->first << ' ' << it->second << ' ' << it->third << endl;
+		for (set< CANDIDATE >::iterator its =  s._ejes.begin(); (its != s._ejes.end()) and !found; ++its) {
+		  cout << "FoundP1b " << its->first << ' ' << its->second << ' ' << its->third << endl;
+		  if ((its->first == *q) and (it->third == its->third) and (_relacion_nodos.find(it->second)->second == s._relacion_nodos.find(its->second)->second) and (usados.find(*its) == usados.end())) {
+		    usados.insert(*its);
+		    cout << "Found1 " << it->first << ' ' << it->second << ' ' << it->third << endl;
+		    cout << "Found1 " << its->first << ' ' << its->second << ' ' << its->third << endl;
+		    found = true;
+		  }
+		}
+	      }
+	      if (it->second == *p) {
+		found = false;
+		cout << "FoundP2a " << it->first << ' ' << it->second << ' ' << it->third << endl;
+		for (set< CANDIDATE >::iterator its =  s._ejes.begin(); (its != s._ejes.end()) and !found; ++its) {
+		  cout << "FoundP2b " << its->first << ' ' << its->second << ' ' << its->third << endl;
+		  if ((its->second == *q) and (it->third == its->third) and (_relacion_nodos.find(it->first)->second == s._relacion_nodos.find(its->first)->second) and (usados.find(*its) == usados.end())) {
+		    usados.insert(*its);
+		    cout << "Found2 " << it->first << ' ' << it->second << ' ' << it->third << endl;
+		    cout << "Found2 " << its->first << ' ' << its->second << ' ' << its->third << endl;
+		    found = true;
+		  }
+		}
+	      }
+	    }
+
+	    if (found) {
+	      cout << "dp " << *p << ' ' << *q << endl;
+	      res[*p].push_back(*q);
+	      algo = true;
+	    }
+	  }
         }
 	if (!algo) 
 	  res[*p] = vector<unsigned int>();

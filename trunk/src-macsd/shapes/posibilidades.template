@@ -4,23 +4,54 @@ posibilidades<T>::posibilidades(const map<T, vector<T> >& cuales, const multimap
     set<unsigned int> lofijo;
     _total = cuales.size();
     unsigned int i = 0;
+    
+//     map<T, vector<T> > new_cuales;
+//     
+//     for (typename map<T, vector<T> >::const_iterator it = cuales.begin(); (it != cuales.end()) and !error; ++it) {
+//       // Reviso cuales son posibles
+//       // Reviso ejes salientes
+//       vector<T> sub;
+//       pair< multimap<T,pair<T,T> >::const_iterator,multimap<T,pair<T,T> >::const_iterator > mi_sal = est.equal_range(it->first);
+//       
+//       for (vector<T>::const_iterator itn = it->begin();; itn != it->end(): ++itn) {
+// 	pair< multimap<T,pair<T,T> >::const_iterator,multimap<T,pair<T,T> >::const_iterator > tu_sal = ins.equal_range(*itn);
+// 	
+// 	bool found = true;
+// 	set< pair<T,T> > usados;
+// 	for (multimap<T,pair<T,T> >::const_iterator itmp = mi_sal.first; (itmp != (mi_sal.second + 1)) and found; ++itmp) {
+// 	  found = false;
+// 	  for (multimap<T,pair<T,T> >::const_iterator ittp = tu_sal.first; (ittp != (tu_sal.second + 1)) and !found; ++ittp) {
+// 	    if ((itmp->second.second == ittp->second.second) and (itmp->second.first)) {
+// 	      usados.insert(ittp->second);
+// 	    }
+// 	  }
+// 	}
+// 	
+// 	if (found) {
+// 	  sub.push_back(itn);
+// 	}
+//       }
+//       new_cuales[*it] = sub;
+//     }
+//     
+    
     for (typename map<T, vector<T> >::const_iterator it = cuales.begin(); (it != cuales.end()) and !error; ++it) {
-	    if ((*it).second.size() == 1) {
-	      if (lofijo.find((*it).second.front()) == lofijo.end()) {
-		_fijos[(*it).first] = (*it).second.front();
-		lofijo.insert((*it).second.front());
-	      }
-	      else {
-		// No hay opciones validas
-		error = true;
-		_fijos.clear();
-		_options.clear();
-	      }
-	    }
-	    else {
-	      _options[i] = (*it).second;
-	      _lapos[i++] = (*it).first;
-	    }
+      if ((*it).second.size() == 1) {
+	if (lofijo.find((*it).second.front()) == lofijo.end()) {
+	  _fijos[(*it).first] = (*it).second.front();
+	  lofijo.insert((*it).second.front());
+	}
+	else {
+	  // No hay opciones validas
+	  error = true;
+	  _fijos.clear();
+	  _options.clear();
+	}
+      }
+      else {
+	_options[i] = (*it).second;
+	_lapos[i++] = (*it).first;
+      }
     }
     _options.resize(i);
     
@@ -36,27 +67,6 @@ posibilidades<T>::posibilidades(const map<T, vector<T> >& cuales, const multimap
     
     _ins = ins;
     _est = est;
-
-//     _refijo();
-}
-
-template <typename T>
-void posibilidades<T>::_refijo() {
-//   // Si hay un nodo fijo, me fijo si tiene un solo nodo enganchado y tambien lo hago fijo
-//   for (typename map<T,T>::iterator p = _fijos.begin(); p != _fijos.end(); ++p) {
-//     pair<multimap<T,pair<T,T> >::iterator,multimap<T,pair<T,T> >::iterator> pit = _est.equal_range(p->first);
-// //     for (multimap<T,pair<T,T> >::iterator it = pit->first; it != (pit->second + 1); ++it) {
-// //     }
-// // FALTA ver por tipo de eje
-//     for (multimap<T,pair<T,T> >::iterator it = pit->first; it != (pit->second + 1); ++it) {
-//       // Busco en el otro grafo...
-//       
-//       if (pit->first == pit->second) { // Si solo tiene un eje...
-// 	// Hacer unico
-// 	_fijos[p->first] = pit->first;
-//       }
-//     }
-//   }
 }
 
 template <typename T>
@@ -156,215 +166,6 @@ typename posibilidades<T>::iterator posibilidades<T>::iterator::operator++() {
       
    return *this;
 }
-
-/* template <typename T>
-typename posibilidades<T>::iterator posibilidades<T>::iterator::operator++() {
-    _pos++;
-
-    bool res = false;
-    if (_donde.size() > 0) {
-      bool nuevo = false;
-      bool done = false;
-
-      do {
-	done = false;
-
-	if (nuevo) {
-	  _donde[_sitio] = -1;
-	}
-
-	do {
-	  ++_donde[_sitio];
-
-	  if (_donde[_sitio] < (*_cuales)[_sitio].size()) {
-	      cout << "OPCION: " << _sitio << endl;
-	      for (int i = 0; i <= _sitio; i++) {
-		  cout << i + 1 << ' ' << (*_cuales)[i][_donde[i]] << endl;
-	      }
-
-	    // Verifico que sea valido
-	    // Primero reviso que no sea repetido el dato
-	    bool valid = true;
-
-	    for (int i = 0; (i < _sitio) and valid; ++i) {
-	      valid = ((*_cuales)[i][_donde[i]] != (*_cuales)[_sitio][_donde[_sitio]]);
-	    }
-
-	    if (valid) {
-	      // Segundo reviso ejes hasta el momento
-	      map<T,T> actual = *_lafija;
-
-	      for (int i = 0; i <= _sitio; i++) {
-		typename map<unsigned int,T>::iterator it = _index->find(i);
-		actual[(*it).second] = (*_cuales)[i][_donde[i]];
-	      }
-
-	      for (typename multimap<T,pair<T,T> >::const_iterator it_est = _lest->begin(); (it_est != _lest->end()) and valid; ++it_est) {
-		// Paso el primero
-		cout << "Pri " << it_est->first << endl;
-		typename map<T,T>::iterator pri = actual.find(it_est->first);
-		if (pri != actual.end()) {
-		  cout << " found!" << pri->second << endl;
-		  // Paso el segundo
-		  typename map<T,T>::iterator seg = actual.find(it_est->second.first);
-		  cout << "Seg " << it_est->second.first << endl;
-
-		  if (seg != actual.end()) {
-		    cout << " found!" << seg->second << endl;
-		    pair<typename multimap<T,pair<T,T> >::const_iterator, typename multimap<T,pair<T,T> >::const_iterator> bus = _lins->equal_range(pri->second);
-		    valid = false;
-		    while ((bus.first != bus.second) and !valid) {
-		      valid = (((*(bus.first)).second.first == seg->second) and (it_est->second.second == (*(bus.first)).second.second));
-		      ++(bus.first);
-		    }
-		  }
-		}
-	      }
-	    }
-
-	    if (valid) {
-	      if (_sitio + 1 < (int)_donde.size()) {
-		++_sitio;
-		nuevo = true;
-		done = true;
-	      }
-	      else {
-		res = true;
-	      }
-	    }
-	    else
-	      cout << "invalid!" << endl;
-	  }
-	  else {
-	    cout << "Me pase" << endl;
-	    --_sitio;
-	  }
-	}
-	while (!done and !res and (_sitio >= 0));
-      }
-      while (!res and (_sitio >= 0));
-
-      if (!res)
-	_pos = -1;
-      else
-	cout << "VALID!" << endl;
-   }
-   else
-     _pos = -1;
-
-   return *this;
-} */
-
-// template <typename T>
-// typename posibilidades<T>::iterator posibilidades<T>::iterator::operator++() {  
-//     _pos++;
-// 
-//     if (_donde.size() > 0) {
-//       bool done = false; 
-//       set<unsigned int> miu;
-//       
-//   //     cout << "PRE-OPCION: ";
-//   //     for (unsigned int i = 0; i < _donde.size(); i++) {
-//   // 	  cout << i + 1 << ' ' << (*_cuales)[i][_donde[i]] << endl;
-//   //     }
-// 
-//       do {
-//   //       cout << _sitio << endl;
-//   //       for (unsigned int i = 0; i < _donde.size(); ++i)
-//   // 	cout << _donde[i] << ' ';
-//   //       cout << endl;
-// 	
-// 	++_donde[_sitio];
-// 	
-// 	if (_donde[_sitio] >= (*_cuales)[_sitio].size()) {
-// 	  // Me pase!
-//   // 	cout << "Pasado" << endl;
-// 	  do {
-// 	    --_sitio;
-// 	    if (_sitio >= 0)
-// 	      ++_donde[_sitio];
-// 	  }
-// 	  while ((_sitio >= 0) and (_donde[_sitio] >= (*_cuales)[_sitio].size()));
-// 	  
-// 	  if ((_sitio < 0) or (_donde[_sitio] >= (*_cuales)[_sitio].size())) {
-// 	    done = true;
-// 	    _pos = -1;
-// 	  }
-// 	  
-//   // 	 cout << _sitio << endl;
-//   //       for (unsigned int i = 0; i < _donde.size(); ++i)
-//   // 	cout << _donde[i] << ' ';
-//   //       cout << endl;
-// 	}
-// 	
-// 	if (!done and (_sitio + 1 < (int)_donde.size())) {
-// 	  bool seguir = false;
-// 	  int aqui = ++_sitio;
-// 	  miu.clear();
-// 	  
-// 	  for (int i = 0; (i < _sitio) and !seguir; ++i) {
-// 	      if (miu.find((*_cuales)[i][_donde[i]]) == miu.end()) {
-// 		miu.insert((*_cuales)[i][_donde[i]]);
-//   // 	      	    cout << "Ins1 " << (*_cuales)[i][_donde[i]] << endl;
-// 	      }
-// 	      else
-// 		seguir = true;
-// 	  }
-// 	  
-// 	  while (!seguir and !done and (aqui < (int)_donde.size())) {
-// 	    _donde[aqui] = 0;
-//   // 	  bool bien = true;
-// 	    
-// 	    while ((_donde[aqui] != (*_cuales)[aqui].size()) and (miu.find((*_cuales)[aqui][_donde[aqui]]) != miu.end())) {
-// 	      ++_donde[aqui];
-// 	    }
-// 	    
-// 	    if (_donde[aqui] == (*_cuales)[aqui].size()) {
-// 	      // No hay opciones validas
-// 	      while ((aqui - 1 >= 0) and (_donde[aqui] == (*_cuales)[aqui].size())) {
-// 		--aqui;
-// 		--_sitio;
-// 		++_donde[aqui];
-// 	      }
-// 	  
-// 	      if ((aqui < 0) or (_donde[aqui] == (*_cuales)[aqui].size())) {
-// 		done = true;
-// 		_pos = -1;
-// 	      }
-// 	    }
-// 	    else {
-//   // 	    cout << "Ins2 " << (*_cuales)[aqui][_donde[aqui]] << endl;
-// 	      miu.insert((*_cuales)[aqui][_donde[aqui]]);
-// 	      
-//   // 	    for (set<unsigned int>::iterator pp = miu.begin(); pp != miu.end(); ++pp)
-//   // 	      cout << *pp << endl;
-// 		
-// 	      ++aqui;
-// 	      ++_sitio;
-// 	    }
-// 	  }
-// 	}
-// 	else if (_sitio + 1 == (int)_donde.size()) {
-// 	  miu.clear();
-// 
-// 	  for (int i = 0; i <= _sitio; ++i) {
-// 	      if (_donde[i] < (*_cuales)[i].size())
-// 		miu.insert((*_cuales)[i][_donde[i]]);
-// 	  }
-// 	  
-// 	  if (miu.size() == _donde.size())
-// 	    ++_sitio;
-// 	}
-//     }
-//     while (!done and (_sitio < (int)_donde.size()));
-//     
-//     _sitio = _donde.size() - 1;
-//    }
-//    else
-//      _pos = -1;
-//       
-//    return *this;
-// }
 
 template <typename T>
 map<T,T> posibilidades<T>::iterator::operator*() {
