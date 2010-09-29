@@ -47,8 +47,6 @@ class posibilidades {
 	
 	multimap<T,pair<T,T> > _ins;
 	multimap<T,pair<T,T> > _est;
-	
-	void _refijo();
 };
 
 #include "posibilidades.template"

@@ -269,7 +269,6 @@ emocc_solution<G> emocc_solution<G>::crossover(const emocc_solution<G>& other, b
         vector<unsigned int> primero = _subestructura.hojas();
         vector<unsigned int> segundo = other._subestructura.hojas();
         G nueva(_subestructura);
-//         nueva.inicial();
 	nueva.clear();
 
         // Elijo del primero
@@ -359,7 +358,6 @@ emocc_solution<G> emocc_solution<G>::mutation() {
         }
         else {
             // Elimino
-//             nueva.inicial();
 	    nueva.clear();
             vector<unsigned int> primero = _subestructura.hojas();
             int sel1 = intAzar(1, primero.size());
