@@ -108,11 +108,11 @@ void Hormiga::posicionaInicialmente() {
 
     // el conjunto de candidatos se inicializa
     _candidatos.clear();
-    _subestructura.clear();    
+    _subestructura.inicial();
     _candidatos = _subestructura.ejesNoUtilizados();
     _support.resize(_instancias.size(), 0);
     for (unsigned int l = 0; l < _support.size(); l++)
-        _support[l] = l;   
+        _support[l] = l; 
 }
 
 //-------------------------------------------------------------------------
@@ -153,7 +153,7 @@ void Hormiga::avanza(const CANDIDATE & nuevo) {
       vector<unsigned int> temp;
       vector<unsigned int>::iterator p = _support.begin();
       while (p != _support.end()) {
-	  cout << "VER i " << *p + 1 << endl;
+// 	  cout << "VER i " << *p + 1 << endl;
 	  if (_instancias[*p].cantNodos() >= _subestructura.cantNodos()) {
 
               #ifndef NO_ISOMORFISM
