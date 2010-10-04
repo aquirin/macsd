@@ -408,6 +408,8 @@ void nsgaii<G,H>::population::crossover(const unsigned int &cross, const bool &s
 		cout << "Cazar " << sel << ' ' << cross << endl;
 		if ((sel < cross) and !_criteria.finish()) {
 			child.first = mother.first.crossover(father.first, species);
+			child.second = 0.;
+			child.third = 0.;
 			cout << "Hijo " << child.first << endl << mother.first << endl << father.first << endl;
 			if ((child.first != mother.first) and child.first.valid()) {
 				lista[i] = child;
