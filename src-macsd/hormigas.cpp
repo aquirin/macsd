@@ -410,7 +410,9 @@ void Hormiga::local_search() {
                         posibilidades<unsigned int> op(v, a, b);
                         posibilidades<unsigned int>::iterator q;
 
-                        for (q = op.begin(); q != op.end(); ++q) {
+			bool almenosuno = false;
+
+                        for (q = op.begin(); (q != op.end()) and !almenosuno; ++q) {
     // 		      SOLUTION nueva_subestructura = _subestructura.reasignarNodos(*q);
     // 		      if (_instancias[_support[pos]].cubiertoPor(nueva_subestructura)) {
                               SOLUTION posible_nueva_subestructura = _subestructura;
@@ -423,7 +425,6 @@ void Hormiga::local_search() {
                                 cout << "MAP " << o->first << ' ' << o->second << endl;
 
                               // Agrego los ejes que tiene
-                              bool almenosuno = false;
                               for (set<CANDIDATE>::const_iterator itj = segundo.begin(); itj != segundo.end(); ++itj) {
     // 			    cout << itj->first << ' ' << itj->second << ' ' << itj->third << ' ' << *it << endl;
                                 if ((*it == (*itj).first) or (*it == (*itj).second)) { // Ejes que involucran al nodo nuevo

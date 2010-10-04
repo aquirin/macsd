@@ -108,15 +108,15 @@ unsigned int shapes::mapear(const unsigned int& i) const {
 
   if (i > MAX) {
     res = i - MAX;
-    cout << "MAX " << MAX << ' ' << res << endl;
+//     cout << "MAX " << MAX << ' ' << res << endl;
   }
   else {
-    for (map<unsigned int,unsigned int>::const_iterator it = _relacion_nodos.begin(); it != _relacion_nodos.end(); ++it) {
-	  cout << "RN " << it->first << ' ' << it->second << endl;
-	}
+//     for (map<unsigned int,unsigned int>::const_iterator it = _relacion_nodos.begin(); it != _relacion_nodos.end(); ++it) {
+// 	  cout << "RN " << it->first << ' ' << it->second << endl;
+// 	}
 	
     res = _relacion_nodos.find(i)->second;
-    cout << i << ' ' <<  res << endl;
+//     cout << i << ' ' <<  res << endl;
   }
     
   return res;
@@ -424,21 +424,24 @@ map<unsigned int, vector<unsigned int> > shapes::darPosibilidades(const shapes& 
     map<unsigned int, vector<unsigned int> > res;
     
     cout << *this << endl;
+    bool out = false;
     for (set<unsigned int>::iterator p = _nodos.begin(); p != _nodos.end(); p++) {
+      if (!out) {
 	cout << "Nodo est " << *p << endl;
         bool algo = false;
         for (set<unsigned int>::const_iterator q = s._nodos.begin(); q != s._nodos.end(); q++) {
-	  cout << "Nodo ins " << *q << endl;
 	  if (_relacion_nodos.find(*p)->second == s._relacion_nodos.find(*q)->second) {
+	    cout << "Nodo ins " << *q << endl;
+
 	    // Reviso si tambien comparten los ejes correctos
 	    set< CANDIDATE > usados;
 	    bool found = true;
 	    for (set< CANDIDATE >::iterator it =  _ejes.begin(); (it != _ejes.end()) and found; ++it) {
-	      if (it->first == *p) {
+	      if ((it->first == *p) and (it->second != *p)) {
 		found = false;
-		cout << "FoundP1a " << it->first << ' ' << it->second << ' ' << it->third << endl;
+// 		cout << "FoundP1a " << it->first << ' ' << it->second << ' ' << it->third << endl;
 		for (set< CANDIDATE >::iterator its =  s._ejes.begin(); (its != s._ejes.end()) and !found; ++its) {
-		  cout << "FoundP1b " << its->first << ' ' << its->second << ' ' << its->third << endl;
+// 		  cout << "FoundP1b " << its->first << ' ' << its->second << ' ' << its->third << endl;
 		  if ((its->first == *q) and (it->third == its->third) and (_relacion_nodos.find(it->second)->second == s._relacion_nodos.find(its->second)->second) and (usados.find(*its) == usados.end())) {
 		    usados.insert(*its);
 		    cout << "Found1 " << it->first << ' ' << it->second << ' ' << it->third << endl;
@@ -447,15 +450,28 @@ map<unsigned int, vector<unsigned int> > shapes::darPosibilidades(const shapes& 
 		  }
 		}
 	      }
-	      if (it->second == *p) {
+	      else if ((it->second == *p) and (it->first != *p)) {
 		found = false;
-		cout << "FoundP2a " << it->first << ' ' << it->second << ' ' << it->third << endl;
+// 		cout << "FoundP2a " << it->first << ' ' << it->second << ' ' << it->third << endl;
 		for (set< CANDIDATE >::iterator its =  s._ejes.begin(); (its != s._ejes.end()) and !found; ++its) {
-		  cout << "FoundP2b " << its->first << ' ' << its->second << ' ' << its->third << endl;
+// 		  cout << "FoundP2b " << its->first << ' ' << its->second << ' ' << its->third << endl;
 		  if ((its->second == *q) and (it->third == its->third) and (_relacion_nodos.find(it->first)->second == s._relacion_nodos.find(its->first)->second) and (usados.find(*its) == usados.end())) {
 		    usados.insert(*its);
 		    cout << "Found2 " << it->first << ' ' << it->second << ' ' << it->third << endl;
 		    cout << "Found2 " << its->first << ' ' << its->second << ' ' << its->third << endl;
+		    found = true;
+		  }
+		}
+	      }
+	      else if ((it->first == *p) and (it->second == *p)) {
+		found = false;
+// 		cout << "FoundP3a " << it->first << ' ' << it->second << ' ' << it->third << endl;
+		for (set< CANDIDATE >::iterator its =  s._ejes.begin(); (its != s._ejes.end()) and !found; ++its) {
+// 		  cout << "FoundP3b " << its->first << ' ' << its->second << ' ' << its->third << endl;
+		  if ((its->second == *q) and (its->first == *q) and (it->third == its->third) and (_relacion_nodos.find(it->first)->second == s._relacion_nodos.find(its->first)->second) and (usados.find(*its) == usados.end())) {
+		    usados.insert(*its);
+		    cout << "Found3 " << it->first << ' ' << it->second << ' ' << it->third << endl;
+		    cout << "Found3 " << its->first << ' ' << its->second << ' ' << its->third << endl;
 		    found = true;
 		  }
 		}
@@ -469,8 +485,14 @@ map<unsigned int, vector<unsigned int> > shapes::darPosibilidades(const shapes& 
 	    }
 	  }
         }
-	if (!algo) 
+	if (!algo) {
 	  res[*p] = vector<unsigned int>();
+	  out = true;
+	}
+      }
+      else {
+	res[*p] = vector<unsigned int>();
+      }
     }
 	
 // 	cout << "M " << res.size() << endl;

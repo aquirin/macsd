@@ -121,6 +121,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     Hormiga best(this->base, this->nObj, this->_aparEje, inicial[0]);
       
     for (unsigned int n = 0; n < PARA.MOACO_numHormigas * 10; n++) {
+	    cout << "Preparar " << n << endl;
             // Pasamos cada SOLUCION a una hormiga
             Hormiga una(this->base, this->nObj, this->_aparEje, inicial[n]);
             	    

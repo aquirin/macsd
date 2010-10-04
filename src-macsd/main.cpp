@@ -105,6 +105,7 @@ void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe
         exit(1);
     }
     
+    unsigned int i = 1;
     while (!arch.eof()) {
         getline(arch, cadena);
         if (!arch.eof()) {
@@ -130,7 +131,7 @@ void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe
                 }
                 while (aux1 != menos_uno);
                 v.push_back(data);
- 		cout << "Item: " << data << endl;
+ 		cout << "Item: " << i++ << " = " << data << endl;
 		data.clear();
             }
         }
