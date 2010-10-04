@@ -180,7 +180,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         for (unsigned int j = 0; j < (unsigned int) this->nObj; j++) {
             prom[j] += (*p).getCoste(j);
         }
-                    
+        cout << "INI: " << p->subEst() << endl;
         p++;
     }
     

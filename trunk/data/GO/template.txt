@@ -1,0 +1,77 @@
+##################################################
+# MACSD Parameters.
+# The name follows a convention: code_name, in which the code specify the part of the algorithm the parameter is for.
+# This is done to avoid collusion with small names.
+##################################################
+
+##
+#  Algorithm-independant parameters
+#
+
+GLOB_tCiclo = 0.0				# tiempo de ciclo permitido
+GLOB_maxTiempo = %TEST_maxTiempo%		# criterio de parada, el tiempo; variable que almacena el tiempo maximo permitido para la ejecucion del algoritmo
+GLOB_areaMax = 0.0				# area maxima permitida (no se utiliza)
+GLOB_rutaEntrada = %TEST_input%			# ruta del fichero de entrada
+GLOB_rutaSalida = %TEST_output%			# ruta del fichero de salida
+GLOB_areaImplicita = 0				# booleana que indica si el area se consigue a partir de los tiempos (1) o no (0)
+GLOB_semilla = %TEST_semilla%			# semilla para el generador de aleatorios
+GLOB_numObjs = 2				# numero de objetivos del problema
+GLOB_preferencias = 0				# entero que nos indica el tipo de preferencias usadas (0--> NO SE USAN PREFERENCIAS, 1--> EQUILIBRIO RESPECTO TC; 2--> EQUILIBRIO RESPECTO A; 3--> EQUILIBRIO RESPECTO TC Y A)
+
+
+##
+#  MOACO parameters
+#
+
+MOACO_tau0 = 0.4				# tau0 para la feromona inicial (only used if the first Pareto is empty) // INUTIL
+MOACO_beta = 0.1				# valor beta del MOACO (parametro de ejecucion beta para favorecer a una informacion heuristica respecto a otra)
+MOACO_ro = 0.2					# valor ro del MOACO (parametro de ejecucion ro para la actualizacion de feromona)
+MOACO_q0 = 0.5					# valor q0 del MOACO (parametro de ejecucion q0 para la regla de transicion del ACO)
+MOACO_numHormigas = %TEST_nhormigas%		# numero de hormigas del algoritmo
+MOACO_gamma = %TEST_gamma%			# valor para seleccionar si genero una hormiga nueva o extiendo una existente /// ROCIO
+MOACO_nEstOptimo = 0				# parametro extra para BicriterionMC
+MOACO_stepSize = %TEST_step%			# tamanio maximo de la subestructura en un paso
+MOACO_maxTama = 7				# tamanio maximo que puede tomar una subestructura-1
+MOACO_ranking = %TEST_rank%			# booleano para la seleccion de la cantidad de pasos (0 --> azar, 1 --> ranking lineal)
+MOACO_multiheuristics = %TEST_heuristica%	# entero que nos indica el tipo de multiheuristics utilizado (0-->sin heuristica, 1--> heuristica estatica, 2--> heuristica dinamica)
+
+##
+#  Specific to the Gene Ontology
+#
+
+GO_bpn = process.nodes
+GO_bpe = process.edges
+GO_fmn = function.nodes
+GO_fme = function.edges
+GO_ccn = cellular.nodes
+GO_cce = cellular.edges
+GO_x = ""					# Used in load.cpp
+
+
+##
+#  Specific to the Visual Science Maps
+#
+
+VMAP_num_nodes = 5				# Number of nodes in the data file
+VMAP_num_edges = 3				# Number of edges in the data file
+
+
+##
+#  Useless parameters
+#
+
+GLOB_tipoAlgoritmo = -1				# identificador del algoritmo (NOT USED)
+GLOB_BL = 0					# true (1) si se utiliza busqueda local, 0 sino (NOT USED)
+#MOACO_multiheuristics = 1			# entero que nos indica el tipo de multiheuristics utilizado (NOT USED)
+MOACO_alfaGrasp = -1				# parametro GRASP (NOT USED)
+MOACO_alfaObj1 = -1				# parametro extra ACS (NOT USED)
+MOACO_numColonias = 1				# numero de colonias, parametro para MOACO multicolony UnsortBicriterion (NOT USED)
+MOACO_tau0Prima = -1				# parametros extra MACSv2 y UnsortBicriterion 
+
+
+##
+#  For test.
+#
+
+# TEST_param = %TEST_param%		# To modify this line, use for instance: sed "s/%TEST_param%/1.4/g" template.txt > config.txt
+# To change more parameters, use: cat template.txt | sed "..." | sed "..." | ... > config.txt
