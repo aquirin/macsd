@@ -213,10 +213,10 @@ NDominatedSet & ACO::ejecuta (string &filename) {
             float x = ((rand() * 1.) / (RAND_MAX));
 	    cout << "Rgamma: " << x << endl;
             if (x >= PARA.MOACO_gamma) {
-// 	      if (best.getCoste(0) != 1)
+	      if (best.getCoste(0) != 1)
         	this->hormigas[i]->posicionaInicialmente();
-// 	      else
-// 		*(this->hormigas[i]) = best;
+	      else
+		*(this->hormigas[i]) = best;
             }
             else {
 		// Reviso posiblidades
@@ -237,10 +237,10 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                     de_donde[i] = true;
                 }
                 else {
-// 		    if (best.getCoste(0) != 1)
+		    if (best.getCoste(0) != 1)
 		      this->hormigas[i]->posicionaInicialmente();
-// 		    else
-// 		      *(this->hormigas[i]) = best;
+		    else
+		      *(this->hormigas[i]) = best;
                 }
             }
         }
@@ -253,7 +253,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 	vector<unsigned int> pasos(PARA.MOACO_numHormigas);
 	unsigned int max = 0;
 	// Elijo los pasos que va a dar cada una
-	vector<Hormiga> caminos;
+// 	vector<Hormiga> caminos;
         for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++) {
 //             cout << "Hormiga: " << nHormiga << endl;
             // las hormigas crean una subestructura, realizando ademas labores de actualizacion y deposito de feromona. La condicion de parada esta basada en una probabilidad de distribucion del tamanio de la subestructura (step_h/step_size)
@@ -316,11 +316,12 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 
 			soporte = copiar.getCoste(0);
 			if (soporte > 0) {
-			    this->hormigas[nHormiga]->avanza(arco);
+// 			    this->hormigas[nHormiga]->avanza(arco);
+			    *(this->hormigas[nHormiga]) = copiar;
 
 			    hice[nHormiga] = pair<bool,CANDIDATE>(true, arco);
-			    Hormiga qw(*(this->hormigas[nHormiga]));
-			    caminos.push_back(qw);
+// 			    Hormiga qw(*(this->hormigas[nHormiga]));
+// 			    caminos.push_back(qw);
  			    cout << "Despues: " << this->hormigas[nHormiga]->subEst();
 			}
 			else {
@@ -349,6 +350,10 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 
                     if (cost1[1] != 0) {
                         // Aqui agrego el local search
+			vector <float> oldcost(2);
+                        oldcost[0] = this->hormigas[nHormiga]->getCoste(0);
+                        oldcost[1] = this->hormigas[nHormiga]->getCoste(1);
+			
                         this->hormigas[nHormiga]->local_search();
                         cout << "Despues Local Search: " << this->hormigas[nHormiga]->subEst();
                         this->hormigas[nHormiga]->calculaCostes();
@@ -357,7 +362,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                         cost[0] = this->hormigas[nHormiga]->getCoste(0);
                         cost[1] = this->hormigas[nHormiga]->getCoste(1);
                         cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
-                        if (*(this->hormigas[nHormiga]) != old_una) {
+                        if ((oldcost[0] != cost[0]) or (oldcost[1] != cost[1])) {
                           cout << "MEJORA!" << endl;
                         }
                     }
@@ -365,10 +370,14 @@ NDominatedSet & ACO::ejecuta (string &filename) {
 // 		    // Actualiza el Pareto
 // 		    // Intermedio...
 		    cout << "Actualiza Pareto" << endl;
-		    this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);
+		    bool res = this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);
 		    if ((this->hormigas[nHormiga]->getCoste(0) == 1) and (this->hormigas[nHormiga]->getCoste(1) < best.getCoste(1))) {
 		      best = *(this->hormigas[nHormiga]);
 		    }
+		     if (res and de_donde[nHormiga])
+			exito_pareto++;
+		    else if (res and !de_donde[nHormiga])
+			exito_cero++;
 // 		    cout << "Intermedio: " << res << endl;
 		}
 	    }
@@ -378,32 +387,34 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         unsigned long ct = clock()/CLOCKS_PER_SEC;
         cout << "TIME 2: " << ct - bt << endl;
         
-        for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++){
-            // obtenemos el fenotipo a partir del genotipo,
-            // que es la subestructura obtenida por la hormiga.
-            // Antes de hacer esto tenemos calcular los costes o valores de los objetivos 
-// 	    cout << this->hormigas[nHormiga]->subEst();
-            this->hormigas[nHormiga]->calculaCostes();             
-// 	    vector <float> cost(2);
-// 	    cost[0] = this->hormigas[nHormiga]->getCoste(0);
-// 	    cost[1] = this->hormigas[nHormiga]->getCoste(1);
-// 	    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
-            this->numEvaluaciones++; 
-            
-// 	    // Actualiza el conjunto intermedio
-//             bool res = this->conjuntoIntermedio.addDominancia(*(this->hormigas[nHormiga]), true, this->numDominanciasPorPreferencias);
+	// Esto ya se hizo arriba!
+	
+//         for (unsigned int nHormiga = 0; nHormiga < PARA.MOACO_numHormigas; nHormiga++){
+//             // obtenemos el fenotipo a partir del genotipo,
+//             // que es la subestructura obtenida por la hormiga.
+//             // Antes de hacer esto tenemos calcular los costes o valores de los objetivos 
+// // 	    cout << this->hormigas[nHormiga]->subEst();
+//             this->hormigas[nHormiga]->calculaCostes();             
+// // 	    vector <float> cost(2);
+// // 	    cost[0] = this->hormigas[nHormiga]->getCoste(0);
+// // 	    cost[1] = this->hormigas[nHormiga]->getCoste(1);
+// // 	    cout << "Costo: " << cost[0] << ' ' << cost[1] << endl;
+//             this->numEvaluaciones++; 
+//             
+// // 	    // Actualiza el conjunto intermedio
+// //             bool res = this->conjuntoIntermedio.addDominancia(*(this->hormigas[nHormiga]), true, this->numDominanciasPorPreferencias);
+// // 	    
+//             // Actualiza el Pareto
+//             bool res = this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);         
+// 	    if ((this->hormigas[nHormiga]->getCoste(0) == 1) and (this->hormigas[nHormiga]->getCoste(1) < best.getCoste(1))) {
+// 	      best = *(this->hormigas[nHormiga]);
+// 	    }
 // 	    
-            // Actualiza el Pareto
-            bool res = this->conjuntoNoDominadas.addDominancia(*(this->hormigas[nHormiga]), this->preferencias, this->numDominanciasPorPreferencias);         
-	    if ((this->hormigas[nHormiga]->getCoste(0) == 1) and (this->hormigas[nHormiga]->getCoste(1) < best.getCoste(1))) {
-	      best = *(this->hormigas[nHormiga]);
-	    }
-	    
-            if (res and de_donde[nHormiga])
-                exito_pareto++;
-            else if (res and !de_donde[nHormiga])
-                exito_cero++;
-        }
+//             if (res and de_donde[nHormiga])
+//                 exito_pareto++;
+//             else if (res and !de_donde[nHormiga])
+//                 exito_cero++;
+//         }
         
         unsigned long dt = clock()/CLOCKS_PER_SEC;
         cout << "TIME 3: " << dt - ct << endl;

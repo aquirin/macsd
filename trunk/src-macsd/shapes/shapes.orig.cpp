@@ -333,42 +333,33 @@ bool shapes::operator==(const shapes& s) const {
 }
 
 bool shapes::igual(const shapes& s) const {
-	for (set<unsigned int>::const_iterator it = _nodos.begin(); it != _nodos.end(); ++it) {
-	  cout << "N " << *it << endl;
-	}
-	
-        for (set< CANDIDATE >::const_iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
-	  cout << "E " << it->first << ' ' << it-> second << ' ' << it->third << endl;
-	}
-	
-	for (map<unsigned int,unsigned int>::const_iterator it = _relacion_nodos.begin(); it != _relacion_nodos.end(); ++it) {
-	  cout << "RN " << it->first << ' ' << it->second << endl;
-	}
-	
-	cout << "¿¿¿" << endl;
-	
-	for (set<unsigned int>::const_iterator it = s._nodos.begin(); it != s._nodos.end(); ++it) {
-	  cout << "N " << *it << endl;
-	}
-	
-        for (set< CANDIDATE >::const_iterator it = s._ejes.begin(); it != s._ejes.end(); ++it) {
-	  cout << "E " << it->first << ' ' << it-> second << ' ' << it->third << endl;
-	}
-	
-	for (map<unsigned int,unsigned int>::const_iterator it = s._relacion_nodos.begin(); it != s._relacion_nodos.end(); ++it) {
-	  cout << "RN " << it->first << ' ' << it->second << endl;
-	}
-
-//         // Base de datos de ejes y nodos
-//         static set< CANDIDATE > _base_ejes;
-//         static map<unsigned int, string> _desc_nodo;
-// 	static map<unsigned int, string> _desc_eje;
-// 	static map<string, unsigned int> _rdesc_nodo;
-// 	static map<string, unsigned int> _rdesc_eje;
-
-  
-  
-    return ((_nodos == s._nodos) and (_ejes == s._ejes) and (_relacion_nodos == s._relacion_nodos) and (_base_ejes == s._base_ejes) and (_desc_nodo == s._desc_nodo) and (_desc_eje == s._desc_eje) and (_rdesc_nodo == s._rdesc_nodo) and (_rdesc_eje == s._rdesc_eje));
+// 	for (set<unsigned int>::const_iterator it = _nodos.begin(); it != _nodos.end(); ++it) {
+// 	  cout << "N " << *it << endl;
+// 	}
+// 	
+//         for (set< CANDIDATE >::const_iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+// 	  cout << "E " << it->first << ' ' << it-> second << ' ' << it->third << endl;
+// 	}
+// 	
+// 	for (map<unsigned int,unsigned int>::const_iterator it = _relacion_nodos.begin(); it != _relacion_nodos.end(); ++it) {
+// 	  cout << "RN " << it->first << ' ' << it->second << endl;
+// 	}
+// 	
+// 	cout << "¿¿¿" << endl;
+// 	
+// 	for (set<unsigned int>::const_iterator it = s._nodos.begin(); it != s._nodos.end(); ++it) {
+// 	  cout << "N " << *it << endl;
+// 	}
+// 	
+//         for (set< CANDIDATE >::const_iterator it = s._ejes.begin(); it != s._ejes.end(); ++it) {
+// 	  cout << "E " << it->first << ' ' << it-> second << ' ' << it->third << endl;
+// 	}
+// 	
+// 	for (map<unsigned int,unsigned int>::const_iterator it = s._relacion_nodos.begin(); it != s._relacion_nodos.end(); ++it) {
+// 	  cout << "RN " << it->first << ' ' << it->second << endl;
+// 	}
+ 
+    return ((_nodos == s._nodos) and (_ejes == s._ejes) and (_relacion_nodos == s._relacion_nodos));
 }
 
 vector< CANDIDATE > shapes::posibilidades_totales() { // Candidatos unicos...
