@@ -356,6 +356,17 @@ bool nsgaii<G,H>::population::operator==(const nsgaii<G,H>::population& other) c
 }
 
 template <class G, class H>
+void nsgaii<G,H>::population::merge(const population & other) {
+  for (typename nsgaii<G,H>::population::const_iterator it = other.begin(); it != other.end(); ++it) {
+      bool found = false;
+      for (typename nsgaii<G,H>::population::iterator itv = begin(); (itv != end()) and !found; ++itv)
+	found = (it->first == itv->first);
+      if (!found)
+	push_back(*it);
+  }
+}
+
+template <class G, class H>
 bool nsgaii<G,H>::population::is_dominated(G &v) {
 	bool sol = false;
 

@@ -66,9 +66,12 @@ void go::_reconstruir_arbol(const unsigned int & s) {
       // Los ejes son (padre,hijo)
 //       cout << "+ " << p->first << endl;
       agregarNodo(p->first);
-/*      agregarEje(p->first,p->second,p->third);*/
+      if (_ejes.find(*p) == _ejes.end()) { // Paranoia
+	cout << "Faltaba" << endl;
+	agregarEje(p->first,p->second,p->third);
+      }
     }
-    else if ((_nodos.find(p->first) != _nodos.end()) and (_nodos.find(p->second) != _nodos.end()) and (_ejes.find(CANDIDATE(p->first,p->second,p->third)) == _ejes.end())) {
+    else if ((_nodos.find(p->first) != _nodos.end()) and (_nodos.find(p->second) != _nodos.end()) and (_ejes.find(*p) == _ejes.end())) {
 //       cout << "l " << p->first << ' ' << p->second << endl;
       agregarEje(p->first,p->second,p->third);
     }
