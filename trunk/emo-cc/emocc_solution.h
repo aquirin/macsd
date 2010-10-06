@@ -50,7 +50,7 @@ class emocc_solution {
 		int _niche;
 		termination_criteria _criteria;
                 G _subestructura;
-                vector<G> _instancias;
+                static vector<G> _instancias;
                 vector<unsigned int> _support;
                 unsigned int _numObjetivos;
 

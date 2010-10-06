@@ -85,7 +85,8 @@ class nsgaii {
 
                         const_iterator find(const triple<G,double,double> & v) const;
                         void push_back(const triple<G,double,double> & v) {_data.push_back(v);};
-
+			void merge(const population & other);
+			
                         // Genetic operations
                         void selection();
                         void crossover(const unsigned int &cross, const bool &species = false);

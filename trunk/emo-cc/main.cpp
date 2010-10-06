@@ -100,12 +100,12 @@ void leerEjes(const string& s, multimap<pair<string,string>, string> & mm) {
 void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe, const string& fmn, const string& fme, const string& ccn, const string& cce, vector< SOLUTION >& v) {
     ifstream arch;
     string cadena;
-
+      
     vector<string> w;
     set<string> ww;
     vector<string> e;
     multimap<pair<string,string>, string> rela;
-
+    
     // Leo la base de datos de GO
     leerNodos(bpn, ww);
     leerNodos(fmn, ww);
@@ -113,23 +113,99 @@ void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe
     leerEjes(bpe, rela);
     leerEjes(fme, rela);
     leerEjes(cce, rela);
-
+    
     e.push_back("enlace");
-
-    for(set<string>::iterator it = ww.begin(); it != ww.end(); ++it)
-      w.push_back(*it);
-
+     
     unsigned int aux, aux1, aux2, codigo;
     unsigned int menos_uno = 0 - 1;
 
-    SOLUTION data("1", w, e, rela);
+    // Me quedo solo con los nodos que aparecen en la base de datos
+    
+    set<string> esta;
+    
+    arch.open(fichero.c_str());
+
+    if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
+        exit(1);
+    }
+    
+    unsigned int i = 1;
+    while (!arch.eof()) {
+        getline(arch, cadena);
+        if (!arch.eof()) {
+            if (!cadena.empty()) {
+//                 200858_s_at|6412/protein biosynthesis/evidence IEA|3735/structural constituent of ribosome/evidence IEA|5840/ribosome/evidence IEA@5622/intracellular/evidence IEA|20
+                // Gene product
+                aux = cadena.find('|', 0);
+                string name = cadena.substr(0, aux);
+                // Data
+                do {
+                    aux1 = cadena.find('/', aux + 1);
+                    if (aux1 != menos_uno) {
+                        codigo = atoi(cadena.substr(aux + 1, aux1 - aux - 1).c_str());
+			esta.insert(cadena.substr(aux + 1, aux1 - aux - 1));
+                        aux = aux1;
+                        aux1 = cadena.find('@', aux + 1);
+                        aux2 = cadena.find('|', aux + 1);
+                        if ((aux1 < 0) or (aux2 < aux1))
+                            aux1 = aux2;
+                        aux = aux1;
+                    }
+                }
+                while (aux1 != menos_uno);
+            }
+        }
+    }
+
+    arch.close();    
+    
+    // Busco los nodos que se pueden acceder a partir de "esta"
+    set<string> todos;
+    multimap<pair<string,string>, string> tejes;
+    while (!esta.empty()) {
+      set<string> new_esta;
+      for (set<string>::iterator it = esta.begin(); it != esta.end(); ++it) {
+	todos.insert(*it);
+	for (multimap<pair<string,string>, string>::iterator itm = rela.begin(); itm != rela.end(); ++itm) {
+	  if (itm->first.second == *it) { // Soy el hijo
+	    // Agrego al padre
+	    if (todos.find(itm->first.first) == todos.end())
+	      new_esta.insert(itm->first.first);
+	  }
+	}
+      }
+      esta = new_esta;
+    }
+    
+    cout << "<BASE>" << endl;
+    for (set<string>::iterator it = todos.begin(); it != todos.end(); ++it) {
+      for (multimap<pair<string,string>, string>::iterator itm = rela.begin(); itm != rela.end(); ++itm) {
+	if (itm->first.second == *it) { // Soy el hijo
+	  tejes.insert(*itm);
+	  codigo = atoi(itm->first.first.c_str());
+	  cout << '(' << codigo << ',';
+	  codigo = atoi(itm->first.second.c_str());
+	  cout << codigo << ",enlace)" << endl;
+	}
+      }
+    }
+    cout << "</BASE>" << endl;
+    
+    // Nodos usables
+    for(set<string>::iterator it = todos.begin(); it != todos.end(); ++it) {
+      w.push_back(*it);
+    }
+    
+    // Ejes usables en tejes
+   
+    SOLUTION data("1", w, e, tejes);
 
     arch.open(fichero.c_str());
 
     if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
         exit(1);
     }
-
+    
     while (!arch.eof()) {
         getline(arch, cadena);
         if (!arch.eof()) {
@@ -155,7 +231,7 @@ void leeFicheroDatos(const string& fichero, const string& bpn, const string& bpe
                 }
                 while (aux1 != menos_uno);
                 v.push_back(data);
- 		cout << "Item: " << data << endl;
+ 		cout << "Item: " << i++ << " = " << data << endl;
 		data.clear();
             }
         }

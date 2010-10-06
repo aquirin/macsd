@@ -19,13 +19,16 @@
  ***************************************************************************/
 
 template <class G>
+vector<G> emocc_solution<G>::_instancias = vector<G>();
+
+template <class G>
 emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &cri, const unsigned int numObjetivos, const int& nic) :
      _costes(numObjetivos),
      _niche(nic),
      _criteria(cri),
-     _support(base.size()),
-     _instancias(base) {
+     _support(base.size()) {
        cout << "Crea" << endl;
+        _instancias = base;
         _numObjetivos = numObjetivos;
         _costeValido = false;
         _instancias = base;
@@ -101,8 +104,8 @@ emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &c
      _niche(nic),
      _criteria(cri),
      _subestructura(sub),
-     _instancias(base),
      _support(base.size()) {
+        _instancias = base;
         _numObjetivos = numObjetivos;
         _costeValido = false;
         _instancias = base;
@@ -164,7 +167,8 @@ emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &c
 }
 
 template <class G>
-emocc_solution<G>::emocc_solution(const emocc_solution& other) : _costeValido(other._costeValido), _costes(other._costes), _niche(other._niche), _criteria(other._criteria), _subestructura(other._subestructura), _instancias(other._instancias), _support(other._support), _numObjetivos(other._numObjetivos) {
+emocc_solution<G>::emocc_solution(const emocc_solution& other) : _costeValido(other._costeValido), _costes(other._costes), _niche(other._niche), _criteria(other._criteria), _subestructura(other._subestructura), _support(other._support), _numObjetivos(other._numObjetivos) {
+          _instancias = other._instancias;
 }
 
 template <class G>
