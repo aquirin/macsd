@@ -17,12 +17,12 @@ using namespace std;
 class www : public shapes {
     public: 
         // Constructores y destructores
-        www() : shapes() {MAX = 255;};
+        www() : shapes() {MAX = 510;};
         www(const string & name, const vector<string> & shap, const vector<string> & link, const multimap<pair<string,string>, string> & rn);
 	
        ~www() {};
-        www(const www& s) : shapes(s) {MAX = 255;};
-	www(const shapes& s) : shapes(s) {MAX = 255;};	
+        www(const www& s) : shapes(s) {MAX = 510;};
+	www(const shapes& s) : shapes(s) {MAX = 510;};	
 	
 	void inicial();
         vector< CANDIDATE > ejesNoUtilizados() const;
