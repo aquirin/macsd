@@ -26,6 +26,13 @@ class www : public shapes {
 	
 	void inicial();
         vector< CANDIDATE > ejesNoUtilizados() const;
+	www crossover(const www & other) const; // No usar si hay ciclos!
+	www mutation() const;
+        void random(const unsigned int how_many);
+	vector<unsigned int> hojas() const;
+	
+  private:
+	www _subgraph(CANDIDATE eje, unsigned int cual, unsigned int & donde) const;
 };
 
 #endif

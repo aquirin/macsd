@@ -44,7 +44,7 @@ emocc_solution<G>::emocc_solution(const vector<G>& base, termination_criteria &c
 
             vector<unsigned int>::iterator p = _support.begin();
 
-            int x = 1;
+//             int x = 1;
             while (p != _support.end()) {
                 // Tengo que probar las combinaciones de nodos para ver si cubre la subestructura (isomorfismo)
 //                cout << "Instancia: " << x++ << endl;
@@ -201,7 +201,6 @@ void emocc_solution<G>::calculaCostes() {
 
 #endif
 
-
          cout << "Costo: " << _costes[0] << ' ' << _costes[1] << endl;
     }
 }
@@ -336,6 +335,12 @@ emocc_solution<G> emocc_solution<G>::crossover(const emocc_solution<G>& other, b
 	  sol = *this;
 	}
 	
+	#elif ((VERSION == V_WWW) || (VERSION == V_SCIENCEMAP))
+
+        G nueva(_subestructura.crossover(other._subestructura));
+
+	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
+
         #endif
 
         return sol;
@@ -379,7 +384,7 @@ emocc_solution<G> emocc_solution<G>::mutation() {
 
         // Agrego, elimino o cambio?
         int sel = intAzar(0, 2);
-cout << "Azar " << sel << endl;
+	cout << "Azar " << sel << endl;
 
         if (sel == 0) {
 	    // Agrego una hoja
@@ -427,6 +432,12 @@ cout << "Azar " << sel << endl;
 	    cout << "MutC " << _subestructura << ' ' << nueva << endl;
 	  }
 	}
+
+	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
+
+	#elif ((VERSION == V_WWW) || (VERSION == V_SCIENCEMAP))
+
+        G nueva(_subestructura.mutation());      
 
 	sol = emocc_solution(_instancias, _criteria, _numObjetivos, _niche, nueva);
 

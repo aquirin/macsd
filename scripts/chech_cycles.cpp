@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 
 		    for (multimap<unsigned int, unsigned int>::iterator it = ejes.begin(); (it != ejes.end()) and !res; ++it) {
 		      if (it->first == op.second) {
-			if (it->second == op.first)
+			if (it->second == nodos[i])
 			  res = true;
 			else
 			  pila.push(pair<unsigned int, unsigned int>(op.first, it->second));

@@ -31,6 +31,204 @@ void www::inicial() {
   agregarNodo("page");
 }
 
+www www::crossover(const www & other) const {
+  // Selecciono el punto de corte en ambos
+  www res;
+  
+  CANDIDATE primero, segundo;
+  vector<CANDIDATE> uno;
+  unsigned int pos_uno = 0, pos_dos = 0;
+  
+  www A, B;
+  
+  cout << "Cruzar" << endl << *this << endl << other << endl;
+  
+  for (set<CANDIDATE>::iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+    if (_desc_eje.find(it->third)->second == "hyperlink")
+      uno.push_back(*it);
+  }
+  if (!uno.empty()) {
+    int sel = intAzar(1, uno.size());
+    A = _subgraph(uno[sel-1], uno[sel-1].first, pos_uno);
+  }
+  else {
+    A = *this;
+    for (set<unsigned int>::const_iterator p = _nodos.begin(); (p != _nodos.end()) and (pos_uno == 0); ++p) {
+     if (_desc_nodo.find(_relacion_nodos.find(*p)->second)->second == "page") 
+      pos_uno = *p;
+   }
+  }
+   
+  vector<CANDIDATE> dos;
+  for (set<CANDIDATE>::iterator it = other._ejes.begin(); it != other._ejes.end(); ++it) {
+    if (other._desc_eje.find(it->third)->second == "hyperlink")
+      dos.push_back(*it);
+  }
+  if (!dos.empty()) {
+    int sel = intAzar(1, dos.size());
+    B = other._subgraph(dos[sel-1], dos[sel-1].second, pos_dos);
+  }
+  else {
+    B = other;
+    for (set<unsigned int>::const_iterator p = other._nodos.begin(); (p != other._nodos.end()) and (pos_dos == 0); ++p) {
+     if (other._desc_nodo.find(other._relacion_nodos.find(*p)->second)->second == "page") 
+      pos_dos = *p;
+    }
+  }
+  
+  cout << "A es:" << A << endl << "B es:" << B << endl;
+
+  // Hago el cruce
+  res = A;
+  unsigned int x;
+  map<unsigned int, unsigned int> nn;
+  
+  for (set<unsigned int>::const_iterator p = B._nodos.begin(); p != B._nodos.end(); ++p) {
+    x = res.agregarNodo(B._desc_nodo.find(B._relacion_nodos.find(*p)->second)->second);
+    nn[*p] = x;
+  }
+  
+  for (set<CANDIDATE>::iterator it = other._ejes.begin(); it != other._ejes.end(); ++it) {
+    if ((nn.find(it->first) != nn.end()) and (nn.find(it->second) != nn.end()))
+      res.agregarEje(nn[it->first], nn[it->second], _desc_eje.find(it->third)->second);
+  }
+  
+  res.agregarEje(pos_uno, nn[pos_dos], "hyperlink");
+ 
+  cout << "Solucion:" << endl << res << endl;
+  
+  return res;
+}
+
+www www::mutation() const {
+  // Agrego, elimino o cambio?
+  www nueva(*this);
+  
+  int sel = intAzar(0, 2);
+  cout << "Azar " << sel << endl << *this << endl;
+
+  if (sel == 0) {
+      // Agrego una hoja
+      vector<CANDIDATE> cand = nueva.ejesNoUtilizados();
+      // Elimino los auto-ciclos
+      for (vector<CANDIDATE>::iterator x = cand.begin(); x != cand.end(); ++x) {
+	if (x->first == x->second)
+	  cand.erase(x);
+	else
+	  cout << "CD " << x->first << ' ' << x->second << ' ' << x->third << endl;
+      }
+      if (!cand.empty()) {
+	int sel1 = intAzar(1, cand.size());
+	nueva.agregarEje(cand[sel1-1].first, cand[sel1-1].second, cand[sel1-1].third);
+	cout << "MutA " << *this << ' ' << nueva << endl;
+      }
+  }
+  else if (sel == 1) {
+      // Elimino una hoja que no sea un page...
+      vector<unsigned int> primero = nueva.hojas();
+
+      for (vector<unsigned int>::iterator it = primero.begin(); it != primero.end(); ++it) {
+	if (_desc_nodo.find(_relacion_nodos.find(*it)->second)->second == "page") {
+	  primero.erase(it);
+	  it = primero.begin();
+	}
+      }
+      
+      if (!primero.empty()) {
+	int sel1 = intAzar(1, primero.size());
+	nueva.borrarNodo(primero[sel1 - 1]);
+	cout << "MutE " << *this << ' ' << nueva << endl;
+      }
+  }
+  else {
+    // Cambio una hoja
+    // Solo nodos que no son "page"
+    vector<unsigned int> primero = nueva.hojas();
+
+    for (vector<unsigned int>::iterator it = primero.begin(); it != primero.end(); ++it) {
+      if (nueva._desc_nodo.find(nueva._relacion_nodos.find(*it)->second)->second == "page") {
+	primero.erase(it);
+      	it = primero.begin();
+      }
+    }
+    
+    if (!primero.empty()) {
+      int sel1 = intAzar(1, primero.size());
+      int sel2 = 0;
+      map<unsigned int, string>::const_iterator itt = _desc_nodo.begin();
+
+      do {
+	sel2 = intAzar(1, _desc_nodo.size());
+      
+	itt = _desc_nodo.begin();
+	for (int i = 1; i < sel2; ++i) ++itt;
+      }
+      while (itt->second != "page");
+      
+      nueva._relacion_nodos[primero[sel1 - 1]] = itt->first;
+      
+      cout << "MutC " << *this << ' ' << nueva << endl;
+    }
+  }
+  
+  return nueva;
+}
+
+vector<unsigned int> www::hojas() const {
+    // En el caso particular de www son hojas de verdad...
+    vector<unsigned int> sol;
+    map<unsigned int, unsigned int> nn;
+
+    for (set<CANDIDATE>::const_iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+      if (nn.find(it->first) == nn.end())
+	nn[it->first] = 1;
+      else
+	nn[it->first]++;
+      if (nn.find(it->second) == nn.end())
+	nn[it->second] = 1;
+      else
+	nn[it->second]++;
+    }
+    
+    for (map<unsigned int, unsigned int>::iterator it = nn.begin(); it != nn.end(); ++it)
+      if (it->second == 1)
+	sol.push_back(it->first);
+
+    return sol;
+}
+
+www www::_subgraph(CANDIDATE eje, unsigned int cual, unsigned int & donde) const {
+  www res;
+  stack<unsigned int> pila;
+  set<unsigned int> used;
+  map<unsigned int, unsigned int> nn;
+  
+  // Agrego nodos
+  pila.push(cual);
+  
+  while (!pila.empty()) {
+    unsigned int actual = pila.top();
+    pila.pop();
+    used.insert(actual);
+    unsigned int x = res.agregarNodo(_desc_nodo.find(_relacion_nodos.find(actual)->second)->second);
+    nn[actual] = x;
+    for (set<CANDIDATE>::iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+      if ((it->first == actual) and (*it != eje) and (used.find(it->second) == used.end()))
+	pila.push(it->second);
+    }
+  }
+  
+  // Agrego ejes
+  for (set<CANDIDATE>::iterator it = _ejes.begin(); it != _ejes.end(); ++it) {
+    if ((*it != eje) and (nn.find(it->first) != nn.end()) and (nn.find(it->second) != nn.end()))
+      res.agregarEje(nn[it->first], nn[it->second], _desc_eje.find(it->third)->second);
+  }
+  
+  donde = nn[cual];
+
+  return res;
+}
+
 vector< CANDIDATE > www::ejesNoUtilizados() const {
     vector< CANDIDATE > res;
 
@@ -40,21 +238,12 @@ vector< CANDIDATE > www::ejesNoUtilizados() const {
 	for (set<unsigned int>::const_iterator q = _nodos.begin(); q != _nodos.end(); ++q)
 	  for (map<unsigned int, string>::const_iterator r = _desc_eje.begin(); r != _desc_eje.end(); ++r) {
 	    bool found = false;
-	    if (r->second == "word") {
-	      // Reviso que ho haya otro nodos shape ya asociado
-	      for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
-		found = ((_desc_eje.find(it->third)->second == "word") and (it->first == *p));
-	      }
-	      
-	      // Reviso que el nodo shape al cual quiero asociar no tenga ya un objeto asociado
+	    if (r->second == "word") { 
+	      // Reviso que ho haya otro nodo usando el dato de word
 	      for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
 		found = ((_desc_eje.find(it->third)->second == "word") and (it->second == *q));
 	      }
 	    }
-// 	    else {
-// 	      // Reviso que no tenga ya un enlace
-// 	      found = (_ejes.find(CANDIDATE(*q, *p, r->first)) != _ejes.end());
-// 	    }
 	    
 	    if (!found and (_base_ejes.find(CANDIDATE(_relacion_nodos.find(*p)->second, _relacion_nodos.find(*q)->second, r->first)) != _base_ejes.end()) and (_ejes.find(CANDIDATE(*p, *q, r->first)) == _ejes.end()))
 	      res.push_back(CANDIDATE(*p, *q, r->first));
@@ -67,7 +256,7 @@ vector< CANDIDATE > www::ejesNoUtilizados() const {
 	    bool found = false;
 	    if (r->second == "word") {
 	      for (set<CANDIDATE>::iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
-		found = ((_desc_eje.find(it->third)->second == "word") and (it->first == *p));
+		found = ((_desc_eje.find(it->third)->second == "word") and (it->first == *p) and (_relacion_nodos.find(it->second)->second == q->first));
 	      }
 	    }
 	    
@@ -77,4 +266,15 @@ vector< CANDIDATE > www::ejesNoUtilizados() const {
     }
     
     return res;
+}
+
+void www::random(const unsigned int how_many) {
+    inicial();
+    for (unsigned int i = 0; i < how_many; ++i) {
+        vector< CANDIDATE > nuevo = ejesNoUtilizados();
+
+        int sel = intAzar(1, nuevo.size());
+        cout << "RANDOM: " << nuevo[sel-1].first << ' ' << nuevo[sel-1].second << ' ' << nuevo[sel-1].third << endl;
+        agregarEje(nuevo[sel-1].first, nuevo[sel-1].second, nuevo[sel-1].third);
+    }
 }

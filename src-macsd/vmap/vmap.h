@@ -11,6 +11,7 @@
 #include "utils.h"
 #include "shapes.h"
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -32,6 +33,15 @@ class vmap : public shapes {
 
         void agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s);
 	void agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s);
+	
+	vmap crossover(const vmap & other) const; // No usar si hay ciclos!
+	vmap mutation() const;
+	
+        void random(const unsigned int how_many);	
+	vector<unsigned int> hojas() const;
+	
+    private:
+	vmap _subgraph(CANDIDATE eje, unsigned int cual, unsigned int & donde) const;
 };
 
 #endif
