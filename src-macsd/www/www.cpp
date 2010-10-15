@@ -23,7 +23,7 @@ www::www(const string & name, const vector<string> & shap, const vector<string> 
 	
 	/*  cout << "Maximo " << _desc_nodo.size() + _desc_eje.size() << endl;*/
 	inicial();
-	MAX = 255;
+	MAX = 510;
 }
 
 void www::inicial() {
