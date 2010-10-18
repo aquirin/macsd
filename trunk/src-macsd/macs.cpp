@@ -25,15 +25,15 @@ MACS::MACS (vector<SOLUTION>& b, Parametros &params) : ACO (b, params) {
 }
 
 //---------------------------------------------------------
-double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int indice, vector< CANDIDATE > &candidatas) {
+long double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int indice, vector< CANDIDATE > &candidatas) {
     	
-    double suma, baseA = -1., baseB = -1.;    
+    long double suma, baseA = -1., baseB = -1.;    
 
     suma = 0.;
 
     // para los posibles ejes en el conjunto de candidatos calculamos la probabilidad de ser elegidos.
     
-    for (map<CANDIDATE,double>::iterator it = this->probabilidades.begin(); it != this->probabilidades.end(); ++it)    
+    for (map<CANDIDATE,long double>::iterator it = this->probabilidades.begin(); it != this->probabilidades.end(); ++it)    
         (*it).second = 0.;
          
     // calculamos la probabilidad de los ejese puedan ser candidatos
@@ -92,9 +92,9 @@ double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int
 }
 
 //---------------------------------------------------------
-double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int indice, vector< CANDIDATE > &candidatas) {
+long double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int indice, vector< CANDIDATE > &candidatas) {
 
-    double suma = this->calculaNumeradoresProbabilidades(unaHormiga, indice, candidatas);
+    long double suma = this->calculaNumeradoresProbabilidades(unaHormiga, indice, candidatas);
 
     map<CANDIDATE,bool> done;
     
@@ -123,8 +123,8 @@ double MACS::calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int i
 CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CANDIDATE > &candidatas){
    CANDIDATE eleccion(0,0,0);
 
-    double sumaNumeradores, probAleatoria;
-    double *sumaProb;
+    long double sumaNumeradores, probAleatoria;
+    long double *sumaProb;
     
 //     cout << "Antes" << endl;
     sumaNumeradores = this->calculaProbabilidadesTransicion(unaHormiga, indice, candidatas);
@@ -187,7 +187,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 		  
 	  // calculamos las probabilidades acumuladas para poder aplicar una seleccion de ejes por ruleta
 	  cout << "CC " <<  this->probabilidades.size() << ' ' << candidatas.size() << endl;
-	  sumaProb = new double[candidatas.size()];
+	  sumaProb = new long double[candidatas.size()];
 	  CANDIDATE n = candidatas[0];
 	 
 	  // Search for the correct index for both nodes
@@ -216,6 +216,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 		  
 	  do 
 	      probAleatoria = ((rand() * 1.) / (RAND_MAX * 1.)); 
+// 	    	MaxValue - MinValue + 1) * Rnd) + MinValue
 	  while (probAleatoria == 0);
 	  cout << "Entonces: " << probAleatoria << endl;
 	  

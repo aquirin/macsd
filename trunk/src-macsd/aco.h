@@ -48,7 +48,7 @@ protected:
      * vector donde se almacenara temporalmente las probabilidades de seleccion
      * de los arcos para la transicion de una hormiga
      */
-    map<CANDIDATE,double> probabilidades;
+    map<CANDIDATE,long double> probabilidades;
     
   
     /** 
