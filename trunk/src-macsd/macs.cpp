@@ -186,7 +186,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 	  // en el caso de que el numero aleatorio sea mayor que q0 elegimos aleatoriamente por ruleta segun las probabilidades de cada eje elegible
 		  
 	  // calculamos las probabilidades acumuladas para poder aplicar una seleccion de ejes por ruleta
-	  cout << "CC " <<  this->probabilidades.size() << endl;
+	  cout << "CC " <<  this->probabilidades.size() << ' ' << candidatas.size() << endl;
 	  sumaProb = new double[candidatas.size()];
 	  CANDIDATE n = candidatas[0];
 	 
