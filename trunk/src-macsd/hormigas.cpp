@@ -374,8 +374,8 @@ void Hormiga::local_search() {
 	
 	if (_support.size() == 1) {
 	  _subestructura = _instancias[_support[0]];
-	   _costeValido = false;
-	   _candidatos = _subestructura.ejesNoUtilizados();
+	  _costeValido = false;
+	  _candidatos = _subestructura.ejesNoUtilizados();
 	}
 	else if (_support.size() > 1) {
 		// See what all support structures have in common
@@ -500,7 +500,12 @@ void Hormiga::local_search() {
                     set<CANDIDATE> segundo = _instancias[_support[pos]].ejesUtilizados();
 
                     for (set<unsigned int>::const_iterator it = primero.begin(); it != primero.end(); ++it) {
-                        cout << "ADD:" << *it << endl;
+			  cout << "ADD:" << *it << endl;
+			  
+// 			  bool ver = false;
+// 			  for (unsigned int i = 0; (i < _support.size()) and !false; i++) {
+// 			      set<unsigned int> us = _instancias[_support[i]].nodosUtilizados();
+// 			  }
 
                           SOLUTION posible_nueva_subestructura = _subestructura;
                           unsigned int nn = posible_nueva_subestructura.agregarNodo(_instancias[_support[pos]].tipoNodo(*it));
