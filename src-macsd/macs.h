@@ -43,7 +43,7 @@ class MACS : public ACO {
      * @param candidatas el conjunto de tareas posibles o candidatas
      * @return devuelve la probabilidad calculada
      */
-    double calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int indice,
+    long double calculaProbabilidadesTransicion(Hormiga &unaHormiga, unsigned int indice,
 		vector< CANDIDATE > &candidatas);
 
     /**
@@ -54,7 +54,7 @@ class MACS : public ACO {
      * @param candidatas el conjunto de tareas posibles o candidatas
      * @return devuelve la suma de los numeradores de las probabilidades
      */
-    double calculaNumeradoresProbabilidades(Hormiga &unaHormiga, unsigned int indice,
+    long double calculaNumeradoresProbabilidades(Hormiga &unaHormiga, unsigned int indice,
 		vector< CANDIDATE > &candidatas);
 
     
