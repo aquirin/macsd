@@ -31,6 +31,12 @@ class www : public shapes {
         void random(const unsigned int how_many);
 	vector<unsigned int> hojas() const;
 	
+	unsigned int agregarNodo(const string & s);
+	unsigned int agregarNodo(const unsigned int & s);
+	unsigned int agregarNodoID(const unsigned int & n, const string & s);
+
+        void agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s);
+	void agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s);
   private:
 	www _subgraph(CANDIDATE eje, unsigned int cual, unsigned int & donde) const;
 };

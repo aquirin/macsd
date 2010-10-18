@@ -278,3 +278,77 @@ void www::random(const unsigned int how_many) {
         agregarEje(nuevo[sel-1].first, nuevo[sel-1].second, nuevo[sel-1].third);
     }
 }
+
+unsigned int www::agregarNodo(const string & s) {
+  cout << "an string " << s << endl;
+  assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
+
+  map<string, unsigned int>::const_iterator it = _rdesc_nodo.find(s);
+
+  _nodos.insert((*it).second);
+  _relacion_nodos.insert(pair<unsigned int, unsigned int>((*it).second, (*it).second));
+
+  return (*it).second;
+}
+
+unsigned int www::agregarNodo(const unsigned int & s) {
+  cout << "an int " << s << endl;
+
+  unsigned int nuevo = s;
+  if (nuevo > MAX) nuevo = s - MAX;
+
+  _nodos.insert(nuevo);
+  _relacion_nodos.insert(pair<unsigned int, unsigned int>(nuevo, nuevo));
+
+  return nuevo;
+}
+
+unsigned int www::agregarNodoID(const unsigned int & n, const string & s) {
+  assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
+
+  map<string, unsigned int>::const_iterator it = _rdesc_nodo.find(s);
+
+  assert(n == (*it).second);
+
+  _nodos.insert((*it).second);
+  _relacion_nodos.insert(pair<unsigned int, unsigned int>((*it).second, (*it).second));
+
+  return (*it).second;
+}
+
+void www::agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s){
+    // Verifico que alguno de los nodos del eje ya exista en el grafo
+    cout << ini << ' ' << fin << ' ' << s << endl;
+    assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > _desc_nodo.size())) and (_rdesc_eje.find(s) != _rdesc_eje.end()));
+
+    unsigned int segundo = fin;
+    if (_nodos.find(fin) == _nodos.end()) {
+      // Agrego un nuevo nodos
+      segundo = agregarNodo(fin);
+    }
+    unsigned int eleje = _rdesc_eje.find(s)->second;
+    if (_ejes.find(CANDIDATE(ini,segundo,eleje)) == _ejes.end()) {
+        _ejes.insert(CANDIDATE(ini,segundo,eleje));
+    }
+    else {
+        cout << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
+    }
+}
+
+void www::agregarEje(const unsigned int & ini, const unsigned int & fin, const unsigned int & s){
+    // Verifico que alguno de los nodos del eje ya exista en el grafo
+    cout << ini << ' ' << fin << ' ' << s << endl;
+    assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > MAX)) and (_desc_eje.find(s) != _desc_eje.end()));
+
+    unsigned int segundo = fin;
+    if (_nodos.find(fin) == _nodos.end()) {
+      // Agrego un nuevo nodos
+      segundo = agregarNodo(fin);
+    }
+    if (_ejes.find(CANDIDATE(ini,segundo,s)) == _ejes.end()) {
+        _ejes.insert(CANDIDATE(ini,segundo,s));
+    }
+    else {
+        cout << "ERRRRRRRRRRRRRROR " << ini << ' ' << fin << ' ' << s << endl;
+    }
+}
