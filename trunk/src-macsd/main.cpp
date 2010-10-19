@@ -482,32 +482,35 @@ int main(int argc, char *argv[]){
 
     
 //---------------------------------------------------------------------
-// Falta para WWW
     map <CANDIDATE,double> aparEje;
     if (PARA.MOACO_multiheuristics == 1) {
         // STATIC
-	map<CANDIDATE,bool> already_in_instance;
         for (unsigned int i = 0; i < baseDatos.size(); i++) {
-            vector< CANDIDATE > tent = baseDatos[i].posibilidades_totales();
-	    for (vector< CANDIDATE >::iterator it = tent.begin(); it != tent.end(); ++it) {
+	    map<CANDIDATE,bool> already_in_instance;
+            set< CANDIDATE > tent = baseDatos[i].ejesUtilizados();
+	    for (set< CANDIDATE >::iterator it = tent.begin(); it != tent.end(); ++it) {
 	      already_in_instance[*it] = false;
 	    }	      
-            vector< CANDIDATE >::iterator p = tent.begin();	    
+            set< CANDIDATE >::iterator p = tent.begin();	    
 	    
             for (; p != tent.end(); p++) {
-#if (VERSION == V_SHAPE)  || (VERSION == V_WWW)
-		// Must do only in shapes when using isomorphism
-		p->first = 1;
-#endif
+		CANDIDATE n;
+		
+		cout << "!Mapear " << p->first << endl;
+		n.first = baseDatos[i].mapear(p->first);
+		cout << "!Mapear " << p->second << endl;
+		n.second = baseDatos[i].mapear(p->second);
+		n.third = p->third;
+		cout << "!EJE " << n.first << ' ' << n.second << ' ' << n.third << endl;
 
-                if (aparEje.find(*p) == aparEje.end()) {
-                    aparEje[*p] = 1;
+                if (aparEje.find(n) == aparEje.end()) {
+                    aparEje[n] = 1;
 		}
                 else {
-		    if (! already_in_instance[*p])
-		      aparEje[*p]++;
+		    if (! already_in_instance[n])
+		      aparEje[n]++;
                 }
-        	already_in_instance[*p] = true;
+        	already_in_instance[n] = true;
             }
         }
                 

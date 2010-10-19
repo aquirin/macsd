@@ -60,7 +60,9 @@ class shapes {
 	vector<unsigned int> darPosibilidades(const shapes& donde, const string& s) const;
         shapes reasignarNodos(const map<unsigned int,unsigned int> & v);
         bool cubiertoPor(const shapes& s) const;
-	
+
+	bool ejeTipoUsado(CANDIDATE ej, const shapes & other) const;
+
 	unsigned int top() const;
 	unsigned int bottom() const;
 	

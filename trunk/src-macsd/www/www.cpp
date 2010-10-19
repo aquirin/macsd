@@ -232,6 +232,8 @@ www www::_subgraph(CANDIDATE eje, unsigned int cual, unsigned int & donde) const
 vector< CANDIDATE > www::ejesNoUtilizados() const {
     vector< CANDIDATE > res;
 
+    cout << "El max " << MAX << endl;
+    
     if (_nodos.size() < MAX) {
       // Busco ejes entre nodos ya existentes que no haya usado
       for (set<unsigned int>::const_iterator p = _nodos.begin(); p != _nodos.end(); ++p)
@@ -280,47 +282,40 @@ void www::random(const unsigned int how_many) {
 }
 
 unsigned int www::agregarNodo(const string & s) {
-  cout << "an string " << s << endl;
-  assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
+    assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
 
-  map<string, unsigned int>::const_iterator it = _rdesc_nodo.find(s);
-
-  _nodos.insert((*it).second);
-  _relacion_nodos.insert(pair<unsigned int, unsigned int>((*it).second, (*it).second));
-
-  return (*it).second;
+    unsigned int real = _rdesc_nodo.find(s)->second;
+    unsigned int nuevo = _nodos.size() + 1;
+    _nodos.insert(nuevo);
+    _relacion_nodos.insert(pair<unsigned int, unsigned int>(nuevo, real));
+    
+    return nuevo;
 }
 
 unsigned int www::agregarNodo(const unsigned int & s) {
-  cout << "an int " << s << endl;
+    assert(s > MAX);
 
-  unsigned int nuevo = s;
-  if (nuevo > MAX) nuevo = s - MAX;
-
-  _nodos.insert(nuevo);
-  _relacion_nodos.insert(pair<unsigned int, unsigned int>(nuevo, nuevo));
-
-  return nuevo;
+    unsigned int real = s - MAX;
+    unsigned int nuevo = _nodos.size() + 1;
+    _nodos.insert(nuevo);
+    _relacion_nodos.insert(pair<unsigned int, unsigned int>(nuevo, real));
+    
+    return nuevo;
 }
 
 unsigned int www::agregarNodoID(const unsigned int & n, const string & s) {
-  assert(_rdesc_nodo.find(s) != _rdesc_nodo.end());
-
-  map<string, unsigned int>::const_iterator it = _rdesc_nodo.find(s);
-
-  assert(n == (*it).second);
-
-  _nodos.insert((*it).second);
-  _relacion_nodos.insert(pair<unsigned int, unsigned int>((*it).second, (*it).second));
-
-  return (*it).second;
+    _nodos.insert(n);
+    cout << "s " << s << ' ' << n << endl;
+    _relacion_nodos.insert(pair<unsigned int, unsigned int>(n, _rdesc_nodo.find(s)->second));
+    
+    return n;
 }
 
 void www::agregarEje(const unsigned int & ini, const unsigned int & fin, const string & s){
     // Verifico que alguno de los nodos del eje ya exista en el grafo
     cout << ini << ' ' << fin << ' ' << s << endl;
     assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > _desc_nodo.size())) and (_rdesc_eje.find(s) != _rdesc_eje.end()));
-
+    
     unsigned int segundo = fin;
     if (_nodos.find(fin) == _nodos.end()) {
       // Agrego un nuevo nodos
@@ -339,9 +334,9 @@ void www::agregarEje(const unsigned int & ini, const unsigned int & fin, const u
     // Verifico que alguno de los nodos del eje ya exista en el grafo
     cout << ini << ' ' << fin << ' ' << s << endl;
     assert((_nodos.find(ini) != _nodos.end()) and ((_nodos.find(fin) != _nodos.end()) or (fin > MAX)) and (_desc_eje.find(s) != _desc_eje.end()));
-
+    
     unsigned int segundo = fin;
-    if (_nodos.find(fin) == _nodos.end()) {
+    if (_nodos.find(fin) == _nodos.end()) {      
       // Agrego un nuevo nodos
       segundo = agregarNodo(fin);
     }

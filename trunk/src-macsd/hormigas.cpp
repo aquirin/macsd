@@ -16,7 +16,8 @@ Hormiga::Hormiga (const vector< SOLUTION >& base, const unsigned int numObjetivo
         _aparEje = ap;
         for (unsigned int l = 0; l < _support.size(); l++)
             _support[l] = l;
-	_candidatos = _subestructura.ejesNoUtilizados(); // Todos los posibles ejes
+// 	_candidatos = _subestructura.ejesNoUtilizados(); // Todos los posibles ejes
+	_candidatos = getCandidatos();
 	calculaCostes();
 }
 
@@ -79,7 +80,7 @@ Hormiga::Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos 
 
         _support = temp;
 	
-       _candidatos = _subestructura.ejesNoUtilizados();
+       _candidatos = getCandidatos();
 
         calculaCostes();
 }
@@ -109,7 +110,7 @@ void Hormiga::posicionaInicialmente() {
     // el conjunto de candidatos se inicializa
     _candidatos.clear();
     _subestructura.inicial();
-    _candidatos = _subestructura.ejesNoUtilizados();
+    _candidatos = getCandidatos();
     _support.resize(_instancias.size(), 0);
     for (unsigned int l = 0; l < _support.size(); l++)
         _support[l] = l; 
@@ -118,18 +119,25 @@ void Hormiga::posicionaInicialmente() {
 //-------------------------------------------------------------------------
 
 bool Hormiga::extendible() {
-  calculaCostes();
+  bool res = false;
   
-  bool res = ((_candidatos.size() > 0) and (_costes[1] < 1));
+  if (!_candidatos.empty())
+    _candidatos = getCandidatos();
   
-  bool found = res;
-  vector<unsigned int>::iterator p = _support.begin();
-  while ((p != _support.end()) and found) {
-    found = (_subestructura.size() > _instancias[*p].size());
-    ++p;
+  if (_candidatos.size() > 0) {
+    calculaCostes(); 
+    
+    if (_costes[1] < 1) {
+      vector<unsigned int>::iterator p = _support.begin();
+      res = true;
+      while ((p != _support.end()) and res) {
+	res = (_subestructura.size() < _instancias[*p].size());
+	++p;
+      }
+    }
   }
 
-  return res and !found;
+  return res;
 };
 
 //-------------------------------------------------------------------------
@@ -191,7 +199,7 @@ void Hormiga::avanza(const CANDIDATE & nuevo) {
       // aumentamos el numero de asignados si es que usamos nuevos
       _ejesAsignados++;
       
-      _candidatos = _subestructura.ejesNoUtilizados();  
+//       _candidatos = getCandidatos();  
     }
 }
 
@@ -221,7 +229,26 @@ bool Hormiga::operator==(const Hormiga & unaHormiga) {
 //-------------------------------------------------------------------------
 
 vector< CANDIDATE > Hormiga::getCandidatos() {
-    return _subestructura.ejesNoUtilizados();
+  vector< CANDIDATE > res;
+  
+  vector< CANDIDATE > primero = _subestructura.ejesNoUtilizados();
+  
+  // Elimino aquellos candidatos que no existan en ninguna instancias
+  
+  for (vector< CANDIDATE >::const_iterator p = primero.begin(); p != primero.end(); ++p) {
+    bool found = false;
+    for (vector<unsigned int>::const_iterator it = _support.begin(); (it != _support.end()) and !found; ++it) {
+//       cout << '(' << p->first << ',' << p->second << ',' << p->third << ')' << endl << _instancias[*it] << endl;
+      if (_instancias[*it].ejeTipoUsado(*p, _subestructura)) {
+	res.push_back(*p);
+	found = true;
+      }
+    }
+  }
+  
+  cout << "Candd " << primero.size() << ' ' << res.size() << endl;
+  
+  return res;
 }
 
 //-------------------------------------------------------------------------
@@ -361,6 +388,26 @@ float Hormiga::getAparicionesEje(const CANDIDATE& eje) {
 
 //-------------------------------------------------------------------------
 	
+ostream& operator<<(ostream& os, const Hormiga& s) {
+  os << s.subEst() << endl;
+  
+  vector<unsigned int> el = s.soporte();
+  
+  for (vector<unsigned int>::const_iterator it = el.begin(); it != el.end(); ++it)
+    cout << *it + 1 << ' ';
+  
+  cout << endl;
+/*  
+  float n = s.getCoste(0);
+  float m = s.getCoste(1);
+  
+  cout << "Cost = " << n << ", Cost = " << m << endl; */
+  
+  return os;
+}
+
+//-------------------------------------------------------------------------
+
 void Hormiga::local_search() {   
 	// Cambiar para que lo haga depth first! que sino se queda sin memoria
 	bool algo = false;
@@ -374,8 +421,10 @@ void Hormiga::local_search() {
 	
 	if (_support.size() == 1) {
 	  _subestructura = _instancias[_support[0]];
+	  cout << "same1" << endl;
 	  _costeValido = false;
-	  _candidatos = _subestructura.ejesNoUtilizados();
+	  _candidatos.clear();
+	  cout << "same2" << endl;
 	}
 	else if (_support.size() > 1) {
 		// See what all support structures have in common
@@ -553,7 +602,7 @@ void Hormiga::local_search() {
 
 		if (algo) {
 		  _costeValido = false;         
-		  _candidatos = _subestructura.ejesNoUtilizados();
+// 		  _candidatos = getCandidatos();
 		}
 	}
 }
