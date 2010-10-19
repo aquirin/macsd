@@ -34,7 +34,7 @@ shapes::shapes(const string & name, const vector<string> & shap, const vector<st
   
 /*  cout << "Maximo " << _desc_nodo.size() + _desc_eje.size() << endl;*/
   inicial();
-  MAX = _desc_nodo.size();
+//   MAX = _desc_nodo.size();
 }
 
 shapes::shapes(const shapes & s) {
@@ -47,7 +47,7 @@ shapes::shapes(const shapes & s) {
   _desc_eje = s._desc_eje;
   _rdesc_nodo = s._rdesc_nodo;
   _rdesc_eje = s._rdesc_eje;  
-  MAX = s._desc_nodo.size();
+//   MAX = s._desc_nodo.size();
 }
 
 void shapes::inicial() {
@@ -114,7 +114,7 @@ unsigned int shapes::mapear(const unsigned int& i) const {
 //     for (map<unsigned int,unsigned int>::const_iterator it = _relacion_nodos.begin(); it != _relacion_nodos.end(); ++it) {
 // 	  cout << "RN " << it->first << ' ' << it->second << endl;
 // 	}
-	
+// 	
     res = _relacion_nodos.find(i)->second;
 //     cout << i << ' ' <<  res << endl;
   }
@@ -384,11 +384,11 @@ shapes shapes::reasignarNodos(const map<unsigned int, unsigned int> & v) {
 	unsigned int o = _relacion_nodos.find((*p).first)->second;
 	cout << o << endl;
 	
-	cout << *this << endl;
-	
-	for (map<unsigned int, string>::const_iterator it = _desc_nodo.begin(); it != _desc_nodo.end(); ++it) {
-	  cout << it->first << ' ' << it->second << endl;
-	}
+// 	cout << *this << endl;
+// 	
+// 	for (map<unsigned int, string>::const_iterator it = _desc_nodo.begin(); it != _desc_nodo.end(); ++it) {
+// 	  cout << it->first << ' ' << it->second << endl;
+// 	}
 	
         dicc[(*p).first] = nuevo.agregarNodoID((*p).second, _desc_nodo.find(o)->second);
     }
@@ -726,4 +726,28 @@ bool shapes::cambiar_forma(const unsigned int x) {
   }
   
   return done;
+}
+
+bool shapes::ejeTipoUsado(CANDIDATE ej, const shapes & other) const {
+  bool found = false;
+  unsigned int p;
+  if (ej.first >= MAX)
+    p = ej.first - MAX;
+  else
+    p = other._relacion_nodos.find(ej.first)->second;
+  
+  unsigned int q;
+  if (ej.second >= MAX)
+    q = ej.second - MAX;
+  else
+    q = other._relacion_nodos.find(ej.second)->second;
+  
+  cout << p << ' ' << q << ' ' << MAX << endl;
+  
+  for (set< CANDIDATE >::const_iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
+    if ((_relacion_nodos.find(it->first)->second == p) and (_relacion_nodos.find(it->second)->second == q) and (it->third == ej.third))
+      found = true;
+  }
+  
+  return found;
 }

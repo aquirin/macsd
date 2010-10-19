@@ -365,6 +365,9 @@ NDominatedSet & ACO::ejecuta (string &filename) {
                         if ((oldcost[0] != cost[0]) or (oldcost[1] != cost[1])) {
                           cout << "MEJORA!" << endl;
                         }
+                        
+                        if (! this->hormigas[nHormiga]->extendible())
+			  puedo[nHormiga] = false;
                     }
   
 // 		    // Actualiza el Pareto

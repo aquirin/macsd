@@ -143,7 +143,7 @@ class Hormiga {
         /**
         devuelve la subestructura que guarda la hormiga
         */
-        SOLUTION subEst() {return _subestructura;};
+        SOLUTION subEst() const {return _subestructura;};
 
 	/* Modificado ROCIO x: TRUE = Jaccard, FALSE = Sin Jaccard */
         int dominancia(Hormiga& v, bool x, int y);
@@ -163,5 +163,7 @@ class Hormiga {
 
         bool extendible();
 };
+
+ostream& operator<<(ostream& os, const Hormiga& s);
 
 #endif

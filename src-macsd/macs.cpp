@@ -43,8 +43,10 @@ long double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigne
 	CANDIDATE n = *it;
         Hormiga mas = *(this->hormigas[indice]);
     	switch (this->heuristicas[indice]) {
-    		case 1:  // STATIC
+    		case 1: // STATIC
 			// Search for the correct index for both nodes
+			cout << "pp " << n.first << ' ' << n.second << ' ' << n.third << endl;
+			
 			cout << "Mapear " << it->first << endl;
 			n.first = this->hormigas[indice]->subEst().mapear(it->first);
 			cout << "Mapear " << it->second << endl;
@@ -61,7 +63,7 @@ long double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigne
     			baseA = this->hormigas[indice]->getAparicionesEje(n);
     			baseB = 1;
     			break;
-    		case 2:  // DYNAMIC
+    		case 2: // DYNAMIC
 			mas.avanza(n);
 
                         if (mas.getCoste(0) > 0)
@@ -70,7 +72,7 @@ long double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigne
                             baseA = 0;
    			baseB = 1;	
     			break;
-    		case 0:  // no se usan heuristicas, solo feromona en el MOACO
+    		case 0: // no se usan heuristicas, solo feromona en el MOACO
     			baseA = baseB = 1;
     			break;
     	}
