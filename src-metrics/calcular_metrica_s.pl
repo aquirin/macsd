@@ -28,6 +28,7 @@ my $costos;
 my %pareto_sop = ();
 my %pareto_cos = ();
 open(IN, $in);
+my $i = 1;
 my $first = 1;
 while (<IN>) {
 #     ** Solucion no dominada 4**
@@ -46,7 +47,8 @@ while (<IN>) {
         else {
             $first = 0;
         }
-        $id = $1;
+        $id = $i;
+	$i++;
     }
     elsif (/^[0-1].*\t/) {
         my $f = $_;
@@ -65,7 +67,7 @@ $pareto_sop{$id} = $soporte;
 $pareto_cos{$id} = $costos;
 
 # foreach my $i (keys %pareto_cos) {
-#     print "NO: $i $pareto_cos{$i}\n";
+#     print "NO: $pareto_cos{$i}\n";
 # }
 # print "\n";
 
@@ -73,7 +75,7 @@ $pareto_cos{$id} = $costos;
 my %pareto_sj = ();
 my $domina;
 my @set = sort keys %pareto_cos;
-my $i = 0;
+$i = 0;
 while ($i <= $#set) {
     my $j = 0;
     $domina = 0;
@@ -94,7 +96,7 @@ while ($i <= $#set) {
 #     print "NO: $i $pareto_sj{$i}\n";
 # }
 # foreach my $i (sort keys %pareto_sj) {
-#     print "SI: $i $pareto_sj{$i}\n";
+#     print "SI: $i\n";
 # }
 
 # Calculo hypervolumen (estoy maximizando -> lo comparo con el (0,0)

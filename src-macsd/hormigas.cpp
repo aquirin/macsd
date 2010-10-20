@@ -121,9 +121,8 @@ void Hormiga::posicionaInicialmente() {
 bool Hormiga::extendible() {
   bool res = false;
   
-  if (!_candidatos.empty())
-    _candidatos = getCandidatos();
-  
+  _candidatos = getCandidatos();
+
   if (_candidatos.size() > 0) {
     calculaCostes(); 
     
@@ -231,6 +230,8 @@ bool Hormiga::operator==(const Hormiga & unaHormiga) {
 vector< CANDIDATE > Hormiga::getCandidatos() {
   vector< CANDIDATE > res;
   
+  cout << _subestructura << endl;
+  
   vector< CANDIDATE > primero = _subestructura.ejesNoUtilizados();
   
   // Elimino aquellos candidatos que no existan en ninguna instancias
@@ -241,6 +242,7 @@ vector< CANDIDATE > Hormiga::getCandidatos() {
 //       cout << '(' << p->first << ',' << p->second << ',' << p->third << ')' << endl << _instancias[*it] << endl;
       if (_instancias[*it].ejeTipoUsado(*p, _subestructura)) {
 	res.push_back(*p);
+	cout << "Candidato " << '(' << p->first << ',' << p->second << ',' << p->third << ')' << endl;
 	found = true;
       }
     }
