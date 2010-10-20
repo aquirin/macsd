@@ -742,7 +742,7 @@ bool shapes::ejeTipoUsado(CANDIDATE ej, const shapes & other) const {
   else
     q = other._relacion_nodos.find(ej.second)->second;
   
-  cout << p << ' ' << q << ' ' << MAX << endl;
+//   cout << p << ' ' << q << ' ' << MAX << endl;
   
   for (set< CANDIDATE >::const_iterator it = _ejes.begin(); (it != _ejes.end()) and !found; ++it) {
     if ((_relacion_nodos.find(it->first)->second == p) and (_relacion_nodos.find(it->second)->second == q) and (it->third == ej.third))

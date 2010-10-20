@@ -27,6 +27,8 @@ MACS::MACS (vector<SOLUTION>& b, Parametros &params) : ACO (b, params) {
 //---------------------------------------------------------
 long double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigned int indice, vector< CANDIDATE > &candidatas) {
     	
+    set<CANDIDATE> used;
+  
     long double suma, baseA = -1., baseB = -1.;    
 
     suma = 0.;
@@ -85,7 +87,10 @@ long double MACS::calculaNumeradoresProbabilidades (Hormiga &unaHormiga, unsigne
 	  n.second = this->hormigas[indice]->subEst().mapear(it->first);
 	  n.first = this->hormigas[indice]->subEst().mapear(it->second);
 	}
-    	this->probabilidades[n] = this->matricesFeromona[n] * pow(baseA, this->betaLambda[indice]) * pow(baseB, this->betaNoLambda[indice]); 
+	if (used.find(n) == used.end()) {
+	  this->probabilidades[n] = this->matricesFeromona[n] * pow(baseA, this->betaLambda[indice]) * pow(baseB, this->betaNoLambda[indice]); 
+	  used.insert(n);
+	}
     	suma += this->probabilidades[n];
         it++;
     }
