@@ -487,7 +487,7 @@ int main(int argc, char *argv[]) {
 
     // almacenamiento de parametros
     // -----------------------------
-    PARA.ReadConfiguration((char *)"config.txt");
+    PARA.ReadConfiguration(argv[1]);
 
     // leemos los datos del fichero de entrada
 #if (VERSION == V_SHAPE) || (VERSION == V_WWW) || (VERSION == V_SCIENCEMAP)

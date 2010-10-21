@@ -5,10 +5,9 @@ MAC = -I/usr/include/malloc
 MACSD = ../src-macsd
 DATA = ../data
 
-all:	debug-shapes debug-go debug-www
+all:	debug-shapes debug-GO debug-www
 
 debug-shapes: clean
-	cp -f $(DATA)/shapes/config.txt config.txt
 	cp $(MACSD)/shapes/shapes.orig.cpp shapes.cpp
 	cp $(MACSD)/shapes/shapes.orig.h shapes.h
 	cp $(MACSD)/shapes/posibilidades.template posibilidades.template
@@ -32,8 +31,7 @@ debug-shapes: clean
 	g++ $(MAC) -Wall -o emocc-shapes.dbg routines.o main.o shapes.o utils.o Parameter.o global.o
 	echo "emocc-shapes.dbg has been generated!"
 
-debug-go: clean
-	cp -f $(DATA)/go/config.txt config.txt
+debug-GO: clean
 	cp $(MACSD)/shapes/shapes.orig.cpp shapes.cpp
 	cp $(MACSD)/shapes/shapes.orig.h shapes.h
 	cp $(MACSD)/shapes/posibilidades.template posibilidades.template
@@ -57,11 +55,10 @@ debug-go: clean
 	g++ $(MAC) -Wall -g -O0 -c -DVERSION=V_GO utils.cpp
 	g++ $(MAC) -Wall -g -O0 -c -DVERSION=V_GO global.cpp
 	g++ $(MAC) -Wall -g -O0 -c Parameter.cpp
-	g++ $(MAC) -Wall -o emocc-go.dbg routines.o main.o shapes.o ontologia.o utils.o Parameter.o global.o
-	echo "emocc-go.dbg has been generated!"
+	g++ $(MAC) -Wall -o emocc-GO.dbg routines.o main.o shapes.o ontologia.o utils.o Parameter.o global.o
+	echo "emocc-GO.dbg has been generated!"
 
 debug-www: clean
-	cp -f $(DATA)/www/config.txt config.txt
 	cp $(MACSD)/shapes/shapes.orig.cpp shapes.cpp
 	cp $(MACSD)/shapes/shapes.orig.h shapes.h
 	cp $(MACSD)/shapes/posibilidades.template posibilidades.template
@@ -89,7 +86,6 @@ debug-www: clean
 	echo "emocc-www.dbg has been generated!"
 
 debug-vmap: clean
-	cp -f $(DATA)/vmap/config.txt config.txt
 	cp $(MACSD)/shapes/shapes.orig.cpp shapes.cpp
 	cp $(MACSD)/shapes/shapes.orig.h shapes.h
 	cp $(MACSD)/shapes/posibilidades.template posibilidades.template
@@ -117,4 +113,5 @@ debug-vmap: clean
 	echo "emocc-vmap.dbg has been generated!"
 
 clean:
-	rm -f *.o emocc-*
+	rm -f *.o
+
