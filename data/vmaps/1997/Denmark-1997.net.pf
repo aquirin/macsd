@@ -1,0 +1,513 @@
+*vertices 249
+1 " Multidisciplinary " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+2 " Agricultural and Biological Sciences (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+3 " Agronomy and Crop Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+4 " Animal Science and Zoology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+5 " Aquatic Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+6 " Ecology, Evolution, Behavior and Systematics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+7 " Food Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+8 " Forestry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+9 " Horticulture " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+10 " Insect Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+11 " Plant Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+12 " Soil Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+13 " Arts and Humanities (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+14 " History " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+15 " Language and Linguistics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+16 " Philosophy " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+17 " Biochemistry, Genetics and Molecular Biology (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+18 " Aging " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+19 " Biochemistry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+20 " Biophysics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+21 " Biotechnology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+22 " Cancer Research " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+23 " Cell Biology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+24 " Clinical Biochemistry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+25 " Developmental Biology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+26 " Endocrinology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+27 " Genetics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+28 " Molecular Biology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+29 " Molecular Medicine " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+30 " Physiology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+31 " Structural Biology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+32 " Business, Management and Accounting (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+33 " Accounting " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+34 " Business and International Management " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+35 " Management Information Systems " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+36 " Management of Technology and Innovation " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+37 " Marketing " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+38 " Organizational Behavior and Human Resource Management " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+39 " Strategy and Management " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+40 " Chemical Engineering (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+41 " Bioengineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+42 " Catalysis " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+43 " Chemical Health and Safety " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+44 " Colloid and Surface Chemistry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+45 " Filtration and Separation " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+46 " Fluid Flow and Transfer Processes " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+47 " Process Chemistry and Technology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+48 " Chemistry (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+49 " Analytical Chemistry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+50 " Electrochemistry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+51 " Inorganic Chemistry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+52 " Organic Chemistry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+53 " Physical and Theoretical Chemistry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+54 " Spectroscopy " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+55 " Computer Science (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+56 " Artificial Intelligence " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+57 " Computational Theory and Mathematics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+58 " Computer Graphics and Computer-Aided Design " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+59 " Computer Networks and Communications " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+60 " Computer Science Applications " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+61 " Computer Vision and Pattern Recognition " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+62 " Hardware and Architecture " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+63 " Human-Computer Interaction " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+64 " Information Systems " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+65 " Signal Processing " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+66 " Software " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+67 " Decision Sciences (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+68 " Information Systems and Management " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+69 " Management Science and Operations Research " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+70 " Statistics, Probability and Uncertainty " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+71 " Earth and Planetary Sciences (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+72 " Atmospheric Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+73 " Computers in Earth Sciences " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+74 " Earth-Surface Processes " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+75 " Economic Geology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+76 " Geochemistry and Petrology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+77 " Geology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+78 " Geophysics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+79 " Geotechnical Engineering and Engineering Geology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+80 " Oceanography " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+81 " Paleontology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+82 " Space and Planetary Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+83 " Stratigraphy " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+84 " Economics and Econometrics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+85 " Finance " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+86 " Energy (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+87 " Energy Engineering and Power Technology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+88 " Fuel Technology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+89 " Nuclear Energy and Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+90 " Renewable Energy, Sustainability and the Environment " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+91 " Engineering (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+92 " Aerospace Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+93 " Automotive Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+94 " Biomedical Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+95 " Civil and Structural Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+96 " Computational Mechanics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+97 " Control and Systems Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+98 " Electrical and Electronic Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+99 " Industrial and Manufacturing Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+100 " Mechanical Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+101 " Mechanics of Materials " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+102 " Ocean Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+103 " Safety, Risk, Reliability and Quality " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+104 " Media Technology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+105 " Building and Construction " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+106 " Architecture " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+107 " Environmental Science (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+108 " Ecological Modeling " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+109 " Ecology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+110 " Environmental Chemistry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+111 " Environmental Engineering " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+112 " Global and Planetary Change " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+113 " Health, Toxicology and Mutagenesis " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+114 " Management, Monitoring, Policy and Law " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+115 " Nature and Landscape Conservation " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+116 " Pollution " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+117 " Waste Management and Disposal " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+118 " Water Science and Technology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+119 " Immunology and Microbiology (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+120 " Applied Microbiology and Biotechnology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+121 " Immunology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+122 " Microbiology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+123 " Parasitology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+124 " Virology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+125 " Materials Science (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+126 " Biomaterials " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+127 " Ceramics and Composites " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+128 " Electronic, Optical and Magnetic Materials " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+129 " Materials Chemistry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+130 " Metals and Alloys " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+131 " Polymers and Plastics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+132 " Surfaces, Coatings and Films " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+133 " Mathematics (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+134 " Algebra and Number Theory " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+135 " Analysis " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+136 " Applied Mathematics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+137 " Computational Mathematics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+138 " Control and Optimization " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+139 " Discrete Mathematics and Combinatorics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+140 " Geometry and Topology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+141 " Logic " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+142 " Mathematical Physics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+143 " Modeling and Simulation " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+144 " Numerical Analysis " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+145 " Statistics and Probability " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+146 " Theoretical Computer Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+147 " Medicine (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+148 " Anatomy " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+149 " Anesthesiology and Pain Medicine " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+150 " Cardiology and Cardiovascular Medicine " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+151 " Critical Care and Intensive Care Medicine " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+152 " Dermatology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+153 " Embryology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+154 " Emergency Medicine " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+155 " Endocrinology, Diabetes and Metabolism " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+156 " Epidemiology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+157 " Gastroenterology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+158 " Genetics (clinical) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+159 " Geriatrics and Gerontology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+160 " Health Informatics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+161 " Health Policy " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+162 " Hematology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+163 " Hepatology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+164 " Histology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+165 " Immunology and Allergy " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+166 " Internal Medicine " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+167 " Infectious Diseases " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+168 " Microbiology (medical) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+169 " Nephrology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+170 " Neurology (clinical) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+171 " Obstetrics and Gynecology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+172 " Oncology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+173 " Ophthalmology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+174 " Orthopedics and Sports Medicine " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+175 " Otorhinolaryngology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+176 " Pathology and Forensic Medicine " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+177 " Pediatrics, Perinatology and Child Health " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+178 " Pharmacology (medical) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+179 " Physiology (medical) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+180 " Psychiatry and Mental Health " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+181 " Public Health, Environmental and Occupational Health " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+182 " Pulmonary and Respiratory Medicine " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+183 " Radiology, Nuclear Medicine and Imaging " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+184 " Rehabilitation " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+185 " Reproductive Medicine " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+186 " Rheumatology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+187 " Surgery " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+188 " Transplantation " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+189 " Urology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+190 " Neuroscience (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+191 " Behavioral Neuroscience " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+192 " Biological Psychiatry " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+193 " Cellular and Molecular Neuroscience " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+194 " Cognitive Neuroscience " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+195 " Developmental Neuroscience " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+196 " Endocrine and Autonomic Systems " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+197 " Neurology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+198 " Sensory Systems " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+199 " Nursing (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+200 " Leadership and Management " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+201 " Pharmacology, Toxicology and Pharmaceutics (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+202 " Drug Discovery " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+203 " Pharmaceutical Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+204 " Pharmacology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+205 " Toxicology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+206 " Physics and Astronomy (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+207 " Acoustics and Ultrasonics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+208 " Astronomy and Astrophysics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+209 " Condensed Matter Physics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+210 " Instrumentation " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+211 " Nuclear and High Energy Physics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+212 " Atomic and Molecular Physics, and Optics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+213 " Radiation " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+214 " Statistical and Nonlinear Physics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+215 " Surfaces and Interfaces " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+216 " Psychology (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+217 " Applied Psychology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+218 " Clinical Psychology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+219 " Developmental and Educational Psychology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+220 " Experimental and Cognitive Psychology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+221 " Neuropsychology and Physiological Psychology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+222 " Social Psychology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+223 " Social Sciences (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+224 " Archeology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+225 " Development " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+226 " Education " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+227 " Geography, Planning and Development " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+228 " Health (social science) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+229 " Human Factors and Ergonomics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+230 " Law " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+231 " Library and Information Sciences " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+232 " Linguistics and Language " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+233 " Safety Research " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+234 " Sociology and Political Science " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+235 " Transportation " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+236 " Anthropology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+237 " Communication " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+238 " Demography " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+239 " Political Science and International Relations " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+240 " Public Administration " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+241 " Urban Studies " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+242 " Veterinary (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+243 " Dentistry (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+244 " Health Professions (miscellaneous) " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+245 " Chiropractics " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+246 " Health Information Management " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+247 " Medical Laboratory Technology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+248 " Physical Therapy, Sports Therapy and Rehabilitation " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+249 " Radiological and Ultrasound Technology " ellipse x_fact 50 y_fact 50 fos 10 bw 0.0 ic LSkyBlue
+*edges
+1 27 5317.000000
+1 82 972.000000
+2 27 1130.000000
+3 11 491.000000
+4 242 1762.000000
+5 109 1327.000000
+6 109 923.000000
+7 147 1174.000000
+8 11 1560.000000
+9 11 294.000000
+10 19 92.000000
+11 19 1899.000000
+11 107 1187.000000
+11 108 66.000000
+11 109 1686.000000
+11 112 350.000000
+12 109 422.000000
+13 216 5.000000
+13 224 3.000000
+14 180 10.000000
+15 226 3.000000
+15 232 3.000000
+16 216 34.000000
+17 19 2800.000000
+18 147 223.000000
+19 20 4143.000000
+19 24 1016.000000
+19 27 6231.000000
+19 30 2036.000000
+19 31 1751.000000
+19 49 965.000000
+19 52 4121.000000
+19 124 601.000000
+19 155 3437.000000
+19 190 2529.000000
+21 41 178.000000
+21 122 1695.000000
+22 27 2744.000000
+22 162 1688.000000
+22 172 5897.000000
+23 25 1720.000000
+23 27 8292.000000
+23 121 11690.000000
+23 148 662.000000
+23 164 98.000000
+25 153 310.000000
+25 171 449.000000
+26 155 4006.000000
+27 28 5955.000000
+27 158 3397.000000
+27 173 93.000000
+27 236 35.000000
+27 238 32.000000
+29 204 162.000000
+30 150 1201.000000
+30 174 584.000000
+30 179 1404.000000
+30 248 525.000000
+32 36 19.000000
+33 84 10.000000
+34 39 16.000000
+34 84 15.000000
+35 64 2.000000
+35 231 2.000000
+36 38 42.000000
+36 39 69.000000
+37 242 14.000000
+40 50 122.000000
+40 53 257.000000
+40 86 4.000000
+40 88 201.000000
+42 47 368.000000
+42 53 345.000000
+43 103 11.000000
+44 53 469.000000
+45 49 42.000000
+46 53 115.000000
+48 52 3049.000000
+51 52 805.000000
+52 129 639.000000
+52 202 3662.000000
+52 203 672.000000
+53 91 460.000000
+53 127 57.000000
+53 212 2693.000000
+53 245 81.000000
+54 212 1514.000000
+55 98 44.000000
+56 97 23.000000
+57 63 34.000000
+57 66 56.000000
+57 141 1.000000
+57 146 74.000000
+57 212 119.000000
+58 66 60.000000
+59 98 197.000000
+60 206 40.000000
+61 98 53.000000
+62 98 75.000000
+63 146 34.000000
+64 98 44.000000
+64 231 34.000000
+65 98 30.000000
+67 69 14.000000
+68 214 23.000000
+69 70 10.000000
+69 136 42.000000
+69 235 4.000000
+71 77 745.000000
+71 78 1120.000000
+71 80 985.000000
+71 81 223.000000
+71 107 2535.000000
+71 227 81.000000
+72 107 1267.000000
+73 76 18.000000
+73 78 18.000000
+74 107 419.000000
+75 77 48.000000
+76 78 1220.000000
+77 83 547.000000
+78 102 67.000000
+79 95 4.000000
+82 206 1243.000000
+82 208 2139.000000
+84 85 60.000000
+84 181 35.000000
+86 87 4.000000
+86 88 4.000000
+87 88 261.000000
+89 213 134.000000
+90 100 38.000000
+91 100 85.000000
+91 207 24.000000
+92 100 20.000000
+93 100 1.000000
+93 107 1.000000
+93 110 1.000000
+94 160 28.000000
+94 190 17.000000
+94 246 28.000000
+95 100 53.000000
+96 101 133.000000
+96 206 94.000000
+97 98 44.000000
+97 99 14.000000
+98 104 3.000000
+98 206 414.000000
+99 229 8.000000
+103 136 34.000000
+105 106 1.000000
+105 181 60.000000
+107 110 1841.000000
+107 111 385.000000
+107 114 9.000000
+107 116 695.000000
+107 117 76.000000
+107 118 308.000000
+107 205 708.000000
+107 227 81.000000
+107 234 33.000000
+107 241 42.000000
+109 115 161.000000
+113 205 511.000000
+119 121 99.000000
+120 122 1494.000000
+121 122 1283.000000
+121 147 2364.000000
+121 152 452.000000
+121 157 933.000000
+121 165 2644.000000
+121 167 869.000000
+121 168 809.000000
+121 176 816.000000
+121 182 141.000000
+121 186 326.000000
+121 242 787.000000
+123 167 665.000000
+125 130 605.000000
+125 209 731.000000
+126 174 4.000000
+128 209 919.000000
+129 131 294.000000
+132 215 507.000000
+133 135 41.000000
+133 136 122.000000
+133 141 1.000000
+133 145 81.000000
+134 144 1.000000
+134 211 24.000000
+136 137 26.000000
+136 138 14.000000
+136 206 176.000000
+139 146 24.000000
+140 211 29.000000
+142 206 3881.000000
+143 206 27.000000
+147 154 16.000000
+147 156 623.000000
+147 159 83.000000
+147 169 626.000000
+147 171 449.000000
+147 181 1023.000000
+148 247 33.000000
+149 190 191.000000
+150 199 419.000000
+151 190 100.000000
+155 166 3732.000000
+157 163 453.000000
+159 180 83.000000
+160 246 36.000000
+161 181 29.000000
+162 188 432.000000
+170 184 33.000000
+170 190 6186.000000
+171 185 300.000000
+172 183 780.000000
+172 189 507.000000
+173 198 257.000000
+175 243 163.000000
+176 230 49.000000
+177 190 399.000000
+178 204 618.000000
+180 190 3160.000000
+180 191 529.000000
+180 192 801.000000
+180 201 453.000000
+180 216 2306.000000
+180 217 74.000000
+180 218 2150.000000
+180 219 564.000000
+181 200 12.000000
+181 222 37.000000
+181 225 32.000000
+181 228 83.000000
+181 244 100.000000
+183 213 438.000000
+183 243 275.000000
+183 249 587.000000
+184 226 8.000000
+187 190 473.000000
+190 193 2176.000000
+190 194 51.000000
+190 195 267.000000
+190 197 2271.000000
+190 204 3055.000000
+190 220 28.000000
+190 221 419.000000
+196 204 20.000000
+205 233 3.000000
+206 209 3585.000000
+206 211 6355.000000
+206 212 4251.000000
+206 214 2176.000000
+209 215 933.000000
+210 215 307.000000
+216 223 45.000000
+220 232 3.000000
+226 244 8.000000
+227 239 10.000000
+234 237 2.000000
+234 240 4.000000

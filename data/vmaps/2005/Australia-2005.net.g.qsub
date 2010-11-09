@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Australia-2005.net.g
+#$ -q larga
+#$ -o ./Australia-2005.net.g.txt
+#$ -e ./Australia-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Australia-2005.net.g > ./Australia-2005.net.g_nc

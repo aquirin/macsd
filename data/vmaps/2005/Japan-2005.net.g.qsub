@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Japan-2005.net.g
+#$ -q larga
+#$ -o ./Japan-2005.net.g.txt
+#$ -e ./Japan-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Japan-2005.net.g > ./Japan-2005.net.g_nc

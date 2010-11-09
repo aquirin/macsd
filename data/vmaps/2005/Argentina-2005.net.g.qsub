@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Argentina-2005.net.g
+#$ -q larga
+#$ -o ./Argentina-2005.net.g.txt
+#$ -e ./Argentina-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Argentina-2005.net.g > ./Argentina-2005.net.g_nc

@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Viet_Nam-2005.net.g
+#$ -q larga
+#$ -o ./Viet_Nam-2005.net.g.txt
+#$ -e ./Viet_Nam-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Viet_Nam-2005.net.g > ./Viet_Nam-2005.net.g_nc

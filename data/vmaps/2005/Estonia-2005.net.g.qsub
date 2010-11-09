@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Estonia-2005.net.g
+#$ -q larga
+#$ -o ./Estonia-2005.net.g.txt
+#$ -e ./Estonia-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Estonia-2005.net.g > ./Estonia-2005.net.g_nc

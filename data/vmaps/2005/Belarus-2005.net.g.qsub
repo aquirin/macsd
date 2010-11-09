@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Belarus-2005.net.g
+#$ -q larga
+#$ -o ./Belarus-2005.net.g.txt
+#$ -e ./Belarus-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Belarus-2005.net.g > ./Belarus-2005.net.g_nc
