@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Canada-2005.net.g
+#$ -q larga
+#$ -o ./Canada-2005.net.g.txt
+#$ -e ./Canada-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Canada-2005.net.g > ./Canada-2005.net.g_nc

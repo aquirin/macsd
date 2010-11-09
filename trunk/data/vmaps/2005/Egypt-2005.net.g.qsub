@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Egypt-2005.net.g
+#$ -q larga
+#$ -o ./Egypt-2005.net.g.txt
+#$ -e ./Egypt-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Egypt-2005.net.g > ./Egypt-2005.net.g_nc

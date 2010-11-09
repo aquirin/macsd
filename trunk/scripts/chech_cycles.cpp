@@ -85,25 +85,33 @@ int main(int argc, char *argv[]) {
 		stack< pair<unsigned int, unsigned int> > pila;
 		bool res = false;
 		for (unsigned int i = 0; (i < nodos.size()) and !res; ++i) {
+		  cout << "Nodo: " << nodos[i] << endl;
 		  for (multimap<unsigned int, unsigned int>::iterator it = ejes.begin(); it != ejes.end(); ++it) {
 		    if (it->first == nodos[i]) {
 		      if (it->first == it->second)
 			res = true;
-		      else
+		      else {
 			pila.push(pair<unsigned int, unsigned int>(it->first, it->second));
+			cout << "Inicio: " << it->first << ' ' << it->second << endl;
+		      }
 		    }
 		  }
 		  
 		  while ((pila.size() > 0) and !res) {
 		    pair<unsigned int, unsigned int> op = pila.top();
 		    pila.pop();
+		    cout << "OP: " << op.first << ' ' << op.second << endl;
 
 		    for (multimap<unsigned int, unsigned int>::iterator it = ejes.begin(); (it != ejes.end()) and !res; ++it) {
+// 		      cout << it->first << ' ' << op.second << endl;
 		      if (it->first == op.second) {
-			if (it->second == nodos[i])
+			if (it->second == nodos[i]) {
 			  res = true;
-			else
+			}
+			else {
 			  pila.push(pair<unsigned int, unsigned int>(op.first, it->second));
+			  cout << "Sub: " << op.first << ' ' << it->second << endl;
+			}
 		      }
 		    }
 		  }

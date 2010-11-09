@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Jordan-2005.net.g
+#$ -q larga
+#$ -o ./Jordan-2005.net.g.txt
+#$ -e ./Jordan-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Jordan-2005.net.g > ./Jordan-2005.net.g_nc

@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Croatia-2005.net.g
+#$ -q larga
+#$ -o ./Croatia-2005.net.g.txt
+#$ -e ./Croatia-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Croatia-2005.net.g > ./Croatia-2005.net.g_nc

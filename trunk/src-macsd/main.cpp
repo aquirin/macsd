@@ -474,10 +474,6 @@ int main(int argc, char *argv[]){
 
 #elif VERSION == V_GO
     leeFicheroDatos (PARA.GLOB_rutaEntrada, PARA.GO_bpn, PARA.GO_bpe, PARA.GO_fmn, PARA.GO_fme, PARA.GO_ccn, PARA.GO_cce, baseDatos);
-// #elif VERSION == V_SCIENCEMAP
-//     map<string,unsigned int> nodos;
-//     set< pair< pair<string,string>, unsigned int> > ejes;
-//     leeFicheroDatos (PARA.GLOB_rutaEntrada, baseDatos, &nodos, &ejes);
 #endif
 
     

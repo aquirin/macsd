@@ -1,0 +1,8 @@
+#!bash
+#$ -N ./Bangladesh-2005.net.g
+#$ -q larga
+#$ -o ./Bangladesh-2005.net.g.txt
+#$ -e ./Bangladesh-2005.net.g_err.txt
+#$ -cwd
+
+../../../scripts/cycle_remover_undirected ./Bangladesh-2005.net.g > ./Bangladesh-2005.net.g_nc
