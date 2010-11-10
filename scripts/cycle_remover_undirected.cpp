@@ -202,7 +202,9 @@ int main(int argc, char *argv[]) {
 		  }
 		}
 			
-		ofstream out("erase.me");
+		string fich("erase.me");
+		fich += fichero;
+		ofstream out(fich.c_str());
 		if (!eliminar.empty()) {
 		  for (vector<string>::iterator it = texto.begin(); it != texto.end(); ++it) {
 		    if (((*it)[0] == 'd') or ((*it)[0] == 'e')) {
@@ -246,7 +248,9 @@ int main(int argc, char *argv[]) {
 	    nodos.clear();
 	    ejes.clear();
 	    texto.clear();
-	    string ej("mv erase.me ");
+	    string ej("mv erase.me");
+	    ej += fichero;
+	    ej += " ";
 	    ej += fichero;
 	    ej += "_nc";
 // 	    cout << ej << endl;
