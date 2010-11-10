@@ -8,6 +8,7 @@
 #include <stack>
 #include <fstream>
 #include <utility>
+#include <sstream>
 #include <iostream>
 #include <list>
 #include <stdio.h>
@@ -28,11 +29,11 @@ int main(int argc, char *argv[]) {
             
     vector<unsigned int> nodos;
     multimap<unsigned int, unsigned int> ejes;
-    
+      
     arch.open(fichero.c_str());
 
     if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
-        exit(1);
+	exit(1);
     }
     
     string cad;
@@ -40,35 +41,35 @@ int main(int argc, char *argv[]) {
     vector<string> texto;
     multimap<unsigned int, unsigned int>::iterator it;
     pair<multimap<unsigned int, unsigned int>::iterator, multimap<unsigned int, unsigned int>::iterator> pit;
-        
+	
     while (!arch.eof()) {
-        getline(arch, cadena);
-        if (!arch.eof()) {
+	getline(arch, cadena);
+	if (!arch.eof()) {
 	    texto.push_back(cadena);
 
-            if (!cadena.empty()) {
-                switch (cadena[0]) {
-                    case 'v':
+	    if (!cadena.empty()) {
+		switch (cadena[0]) {
+		    case 'v':
 //                     v 1 object
-                        aux = cadena.rfind(' ', cadena.size());
-                        cad = cadena.substr(aux + 1, cadena.size() - aux);
-                        aux1 = cadena.find(' ', 0);
-                        desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
+			aux = cadena.rfind(' ', cadena.size());
+			cad = cadena.substr(aux + 1, cadena.size() - aux);
+			aux1 = cadena.find(' ', 0);
+			desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
 			
 			nodos.push_back(atoi(desde.c_str()));
 // 			cout << "Nodo " << desde << endl;
 				
 			break;
-                    case 'e':
-                    case 'd':
+		    case 'e':
+		    case 'd':
     //                     d 1 3 on
-                        aux = cadena.find(' ', 0);
-                        aux1 = cadena.find(' ', aux + 1);
-                        desde = cadena.substr(aux + 1, aux1 - aux - 1);
-                        aux = cadena.rfind(' ', cadena.size());
-                        hasta = cadena.substr(aux1 + 1, aux - aux1 - 1);
-                        cadena = cadena.substr(aux + 1, cadena.size() - aux);
-                
+			aux = cadena.find(' ', 0);
+			aux1 = cadena.find(' ', aux + 1);
+			desde = cadena.substr(aux + 1, aux1 - aux - 1);
+			aux = cadena.rfind(' ', cadena.size());
+			hasta = cadena.substr(aux1 + 1, aux - aux1 - 1);
+			cadena = cadena.substr(aux + 1, cadena.size() - aux);
+		
 			pit = ejes.equal_range(atoi(desde.c_str()));
 			
 			it = pit.first;
@@ -92,13 +93,16 @@ int main(int argc, char *argv[]) {
 			  ejes.insert(pair<unsigned int, unsigned int>(atoi(hasta.c_str()),atoi(desde.c_str())));
 // 			cout << "Eje " << desde <<  ' ' << hasta << endl;
 			
-                        break;
-                    case '%':
-                    default:
-                        break;
-                }
-            }
-            else {
+			break;
+		    case '%':
+		    default:
+			break;
+		}
+	    }
+	    else {  
+	      bool finiquito = false;
+	      
+	      while (!finiquito) {
 // 		cout << "Nodos:" << endl;
 // 		for (unsigned int i = 0; i < nodos.size(); ++i)
 // 		  cout << nodos[i] << ',';
@@ -198,6 +202,7 @@ int main(int argc, char *argv[]) {
 		  }
 		}
 			
+		ofstream out("erase.me");
 		if (!eliminar.empty()) {
 		  for (vector<string>::iterator it = texto.begin(); it != texto.end(); ++it) {
 		    if (((*it)[0] == 'd') or ((*it)[0] == 'e')) {
@@ -211,28 +216,43 @@ int main(int argc, char *argv[]) {
 		      bool found = false;
 		      for (list< pair<unsigned int, unsigned int> >::iterator ll = eliminar.begin(); (ll != eliminar.end()) and !found; ++ll) {
 			found = ((ll->first == atoi(desde.c_str())) and (ll->second == atoi(hasta.c_str())));
-			if (found)
-			  cout << "% Borrado " << ll->first << ' ' << ll->second << endl;
+			if (found) {
+			  out << "% Borrado " << ll->first << ' ' << ll->second << endl;
+			  stringstream ss1;
+			  ss1 << ll->first;
+			  stringstream ss2;
+			  ss2 << ll->second;
+			  *it = "% Borrado " + ss1.str() + " " + ss2.str();
+			}
 		      }
 		      if (!found)
-			cout << *it << endl;
+			out << *it << endl;
 		    }
 		    else
-		      cout << *it << endl;
+		      out << *it << endl;
 		  }
 		  res = false;
 		}
 		else {
+		  finiquito = true;
 		  for (vector<string>::iterator it = texto.begin(); it != texto.end(); ++it)
-		    cout << *it << endl;
+		    out << *it << endl;
 		}
-		
-		nodos.clear();
-		ejes.clear();
-		texto.clear();
+		out.close();
+// 		string a;
+// 		cin >> a;
 		eliminar.clear();
-            }
-        }
+	    }
+	    nodos.clear();
+	    ejes.clear();
+	    texto.clear();
+	    string ej("mv erase.me ");
+	    ej += fichero;
+	    ej += "_nc";
+// 	    cout << ej << endl;
+	    system(ej.c_str());
+	  }
+	}
     }
     
     arch.close();
