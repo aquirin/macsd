@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
 		list< pair<unsigned int, unsigned int> > eliminar;
 		
 		for (unsigned int i = 0; i < nodos.size(); ++i) {
-// 		  cout << "Nodo: " << nodos[i] << endl;
+		  cout << "Nodo: " << nodos[i] << endl;
 		  if ((nodes_in_cycle.find(nodos[i]) == nodes_in_cycle.end()) and (ejes.count(nodos[i]) > 1)) {
 		    for (multimap<unsigned int, unsigned int>::iterator it = ejes.begin(); it != ejes.end(); ++it) {
 		      if (it->first == nodos[i]) {
@@ -140,10 +140,10 @@ int main(int argc, char *argv[]) {
 		    while ((pila.size() > 0) and !res) {
 		      op = pila.top();
 		      pila.pop();
-  // 		    cout << "OP: ";
-  // 		    for (list<unsigned int>::iterator lit = op.begin(); lit != op.end(); ++lit)
-  // 		      cout << *lit << ' ';
-  // 		    cout << endl;
+  		    cout << "OP: ";
+  		    for (list<unsigned int>::iterator lit = op.begin(); lit != op.end(); ++lit)
+  		      cout << *lit << ' ';
+  		    cout << endl;
 		      list<unsigned int>::iterator last = --(op.end());
 
 		      for (multimap<unsigned int, unsigned int>::iterator it = ejes.begin(); (it != ejes.end()) and !res; ++it) {
