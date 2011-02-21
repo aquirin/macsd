@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Colombia-2005.net.g
+#$ -N Colombia-2005.net.g
 #$ -q larga
-#$ -o ./Colombia-2005.net.g.txt
-#$ -e ./Colombia-2005.net.g_err.txt
+#$ -o Colombia-2005.net.g.txt
+#$ -e Colombia-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Colombia-2005.net.g > ./Colombia-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Colombia-2005.net.g > Colombia-2005.net.g_nc

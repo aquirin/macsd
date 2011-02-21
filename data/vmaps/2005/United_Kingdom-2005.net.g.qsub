@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./United_Kingdom-2005.net.g
+#$ -N United_Kingdom-2005.net.g
 #$ -q larga
-#$ -o ./United_Kingdom-2005.net.g.txt
-#$ -e ./United_Kingdom-2005.net.g_err.txt
+#$ -o United_Kingdom-2005.net.g.txt
+#$ -e United_Kingdom-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./United_Kingdom-2005.net.g > ./United_Kingdom-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected United_Kingdom-2005.net.g > United_Kingdom-2005.net.g_nc

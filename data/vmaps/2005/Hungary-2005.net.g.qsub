@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Hungary-2005.net.g
+#$ -N Hungary-2005.net.g
 #$ -q larga
-#$ -o ./Hungary-2005.net.g.txt
-#$ -e ./Hungary-2005.net.g_err.txt
+#$ -o Hungary-2005.net.g.txt
+#$ -e Hungary-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Hungary-2005.net.g > ./Hungary-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Hungary-2005.net.g > Hungary-2005.net.g_nc

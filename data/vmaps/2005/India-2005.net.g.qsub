@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./India-2005.net.g
+#$ -N India-2005.net.g
 #$ -q larga
-#$ -o ./India-2005.net.g.txt
-#$ -e ./India-2005.net.g_err.txt
+#$ -o India-2005.net.g.txt
+#$ -e India-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./India-2005.net.g > ./India-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected India-2005.net.g > India-2005.net.g_nc

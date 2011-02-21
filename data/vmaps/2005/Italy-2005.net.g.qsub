@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Italy-2005.net.g
+#$ -N Italy-2005.net.g
 #$ -q larga
-#$ -o ./Italy-2005.net.g.txt
-#$ -e ./Italy-2005.net.g_err.txt
+#$ -o Italy-2005.net.g.txt
+#$ -e Italy-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Italy-2005.net.g > ./Italy-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Italy-2005.net.g > Italy-2005.net.g_nc

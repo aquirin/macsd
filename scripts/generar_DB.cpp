@@ -4,14 +4,14 @@
 #include "hormigas.h"
 #include "NDominatedSet.h"
 #include <stack>
-#define MAX 15
+#define MAX 13
 
 using namespace std;
 
 bool find(const vector<shapes>& aca, const shapes& que) {
     bool found = false;
     for (vector<shapes>::const_iterator p = aca.begin(); (p != aca.end()) and !found; p++){
-        found = ((*p) == que);
+        found = ((*p).igual(que));
     }
     return found;
 }
@@ -27,7 +27,7 @@ int main (int argc, char* argv[]) {
     stack<shapes> pila;
 //     stack<Hormiga> todas;
     stack< pair<int,bool> > don;
-    shapes s(15,w);
+    shapes s(10,w);
     s.agregarNodo(1, "object");
     pila.push(s);
     pair<int,bool> q(1, true);

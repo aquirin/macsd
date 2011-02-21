@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Finland-2005.net.g
+#$ -N Finland-2005.net.g
 #$ -q larga
-#$ -o ./Finland-2005.net.g.txt
-#$ -e ./Finland-2005.net.g_err.txt
+#$ -o Finland-2005.net.g.txt
+#$ -e Finland-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Finland-2005.net.g > ./Finland-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Finland-2005.net.g > Finland-2005.net.g_nc

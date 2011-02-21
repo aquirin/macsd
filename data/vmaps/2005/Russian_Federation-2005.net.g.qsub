@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Russian_Federation-2005.net.g
+#$ -N Russian_Federation-2005.net.g
 #$ -q larga
-#$ -o ./Russian_Federation-2005.net.g.txt
-#$ -e ./Russian_Federation-2005.net.g_err.txt
+#$ -o Russian_Federation-2005.net.g.txt
+#$ -e Russian_Federation-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Russian_Federation-2005.net.g > ./Russian_Federation-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Russian_Federation-2005.net.g > Russian_Federation-2005.net.g_nc

@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./China-2005.net.g
+#$ -N China-2005.net.g
 #$ -q larga
-#$ -o ./China-2005.net.g.txt
-#$ -e ./China-2005.net.g_err.txt
+#$ -o China-2005.net.g.txt
+#$ -e China-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./China-2005.net.g > ./China-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected China-2005.net.g > China-2005.net.g_nc

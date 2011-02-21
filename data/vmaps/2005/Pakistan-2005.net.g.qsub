@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Pakistan-2005.net.g
+#$ -N Pakistan-2005.net.g
 #$ -q larga
-#$ -o ./Pakistan-2005.net.g.txt
-#$ -e ./Pakistan-2005.net.g_err.txt
+#$ -o Pakistan-2005.net.g.txt
+#$ -e Pakistan-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Pakistan-2005.net.g > ./Pakistan-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Pakistan-2005.net.g > Pakistan-2005.net.g_nc

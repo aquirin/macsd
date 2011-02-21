@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./South_Africa-2005.net.g
+#$ -N South_Africa-2005.net.g
 #$ -q larga
-#$ -o ./South_Africa-2005.net.g.txt
-#$ -e ./South_Africa-2005.net.g_err.txt
+#$ -o South_Africa-2005.net.g.txt
+#$ -e South_Africa-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./South_Africa-2005.net.g > ./South_Africa-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected South_Africa-2005.net.g > South_Africa-2005.net.g_nc

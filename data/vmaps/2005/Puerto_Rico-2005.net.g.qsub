@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Puerto_Rico-2005.net.g
+#$ -N Puerto_Rico-2005.net.g
 #$ -q larga
-#$ -o ./Puerto_Rico-2005.net.g.txt
-#$ -e ./Puerto_Rico-2005.net.g_err.txt
+#$ -o Puerto_Rico-2005.net.g.txt
+#$ -e Puerto_Rico-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Puerto_Rico-2005.net.g > ./Puerto_Rico-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Puerto_Rico-2005.net.g > Puerto_Rico-2005.net.g_nc

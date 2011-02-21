@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Hong_Kong-2005.net.g
+#$ -N Hong_Kong-2005.net.g
 #$ -q larga
-#$ -o ./Hong_Kong-2005.net.g.txt
-#$ -e ./Hong_Kong-2005.net.g_err.txt
+#$ -o Hong_Kong-2005.net.g.txt
+#$ -e Hong_Kong-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Hong_Kong-2005.net.g > ./Hong_Kong-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Hong_Kong-2005.net.g > Hong_Kong-2005.net.g_nc

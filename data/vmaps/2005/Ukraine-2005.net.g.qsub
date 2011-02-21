@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Ukraine-2005.net.g
+#$ -N Ukraine-2005.net.g
 #$ -q larga
-#$ -o ./Ukraine-2005.net.g.txt
-#$ -e ./Ukraine-2005.net.g_err.txt
+#$ -o Ukraine-2005.net.g.txt
+#$ -e Ukraine-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Ukraine-2005.net.g > ./Ukraine-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Ukraine-2005.net.g > Ukraine-2005.net.g_nc

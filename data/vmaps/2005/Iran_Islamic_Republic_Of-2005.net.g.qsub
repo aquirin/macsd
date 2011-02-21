@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Iran_Islamic_Republic_Of-2005.net.g
+#$ -N Iran_Islamic_Republic_Of-2005.net.g
 #$ -q larga
-#$ -o ./Iran_Islamic_Republic_Of-2005.net.g.txt
-#$ -e ./Iran_Islamic_Republic_Of-2005.net.g_err.txt
+#$ -o Iran_Islamic_Republic_Of-2005.net.g.txt
+#$ -e Iran_Islamic_Republic_Of-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Iran_Islamic_Republic_Of-2005.net.g > ./Iran_Islamic_Republic_Of-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Iran_Islamic_Republic_Of-2005.net.g > Iran_Islamic_Republic_Of-2005.net.g_nc

@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Chile-2005.net.g
+#$ -N Chile-2005.net.g
 #$ -q larga
-#$ -o ./Chile-2005.net.g.txt
-#$ -e ./Chile-2005.net.g_err.txt
+#$ -o Chile-2005.net.g.txt
+#$ -e Chile-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Chile-2005.net.g > ./Chile-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Chile-2005.net.g > Chile-2005.net.g_nc
