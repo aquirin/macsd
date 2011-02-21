@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Brazil-2005.net.g
+#$ -N Brazil-2005.net.g
 #$ -q larga
-#$ -o ./Brazil-2005.net.g.txt
-#$ -e ./Brazil-2005.net.g_err.txt
+#$ -o Brazil-2005.net.g.txt
+#$ -e Brazil-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Brazil-2005.net.g > ./Brazil-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Brazil-2005.net.g > Brazil-2005.net.g_nc

@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Kuwait-2005.net.g
+#$ -N Kuwait-2005.net.g
 #$ -q larga
-#$ -o ./Kuwait-2005.net.g.txt
-#$ -e ./Kuwait-2005.net.g_err.txt
+#$ -o Kuwait-2005.net.g.txt
+#$ -e Kuwait-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Kuwait-2005.net.g > ./Kuwait-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Kuwait-2005.net.g > Kuwait-2005.net.g_nc

@@ -31,7 +31,7 @@ MOACO_numHormigas = %TEST_nhormigas%		# numero de hormigas del algoritmo
 MOACO_gamma = %TEST_gamma%			# valor para seleccionar si genero una hormiga nueva o extiendo una existente /// ROCIO
 MOACO_nEstOptimo = 0				# parametro extra para BicriterionMC
 MOACO_stepSize = %TEST_step%			# tamanio maximo de la subestructura en un paso
-MOACO_maxTama = 7				# tamanio maximo que puede tomar una subestructura-1
+MOACO_maxTama = 25				# tamanio maximo que puede tomar una subestructura-1
 MOACO_ranking = %TEST_rank%			# booleano para la seleccion de la cantidad de pasos (0 --> azar, 1 --> ranking lineal)
 MOACO_multiheuristics = %TEST_heuristica%	# entero que nos indica el tipo de multiheuristics utilizado (0-->sin heuristica, 1--> heuristica estatica, 2--> heuristica dinamica)
 

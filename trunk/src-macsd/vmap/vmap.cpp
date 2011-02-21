@@ -28,7 +28,7 @@ vmap::vmap(const string & name, const vector<string> & shap, const vector<string
 
 void vmap::inicial() {
   clear();
-  agregarNodo("\"\\nMultidisciplinary\\n\"");
+  agregarNodo("\"Multidisciplinary\"");
 }
 
 vector< CANDIDATE > vmap::ejesNoUtilizados() const {

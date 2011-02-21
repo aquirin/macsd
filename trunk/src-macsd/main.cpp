@@ -336,7 +336,6 @@ void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
                         cad = cadena.substr(aux + 1, cadena.size() - aux);
                         aux1 = cadena.find(' ', 0);
                         desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
-			
 			bw.insert(cad);
 			if (quenodo.find(atoi(desde.c_str())) == quenodo.end())
 			  quenodo.insert(pair<unsigned int,string>(atoi(desde.c_str()),cad));

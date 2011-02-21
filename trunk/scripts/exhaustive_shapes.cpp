@@ -4,7 +4,7 @@
 #include "hormigas.h"
 #include "NDominatedSet.h"
 #include <stack>
-#define MAX 8
+#define MAX 15
 
 using namespace std;
 

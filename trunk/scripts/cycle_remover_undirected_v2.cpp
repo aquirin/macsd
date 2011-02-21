@@ -209,8 +209,8 @@ int main(int argc, char *argv[]) {
 // 		  }
 		}
 		
-		string fich("erase.me");
-		fich += fichero;
+		string fich(fichero.c_str());
+		fich += "_nc";
 		ofstream out(fich.c_str());
 		for (vector<string>::iterator it = texto.begin(); it != texto.end(); ++it) {
 		  if (((*it)[0] == 'd') or ((*it)[0] == 'e')) {

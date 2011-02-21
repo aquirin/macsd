@@ -1,8 +1,8 @@
 #!bash
-#$ -N ./Cuba-2005.net.g
+#$ -N Cuba-2005.net.g
 #$ -q larga
-#$ -o ./Cuba-2005.net.g.txt
-#$ -e ./Cuba-2005.net.g_err.txt
+#$ -o Cuba-2005.net.g.txt
+#$ -e Cuba-2005.net.g_err.txt
 #$ -cwd
 
-../../../scripts/cycle_remover_undirected ./Cuba-2005.net.g > ./Cuba-2005.net.g_nc
+/home/rocio/macsd/scripts/cycle_remover_undirected Cuba-2005.net.g > Cuba-2005.net.g_nc
