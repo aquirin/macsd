@@ -161,7 +161,7 @@ release-vector:	clean
 
 
 clean:
-	rm -f *.o
+	rm -f *.o exe exe-shape.dbg exe-vmap.dbg exe-go.dbg exe-load exe-set exe-matrix exe-vector exe-load_vmap exe-load_shape
 
 
 exe-old:
