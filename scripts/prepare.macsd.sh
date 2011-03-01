@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # BASEDIR (local SVN)
-BASEDIR=/home/ECSC/aquirin/prog/macsd
+BASEDIR=~/AQUIRIN/program/macsd
 
 # BASEDIR (distant)
 #BASEDIR=/home/ECSC/aquirin/macsd

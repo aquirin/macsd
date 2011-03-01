@@ -259,7 +259,8 @@ SubList *GetInitialSubs(Parameters *parameters)
          } while (j > i);
 
          // only keep substructure if more than one positive instance
-				 // if (sub->numInstances > 1) 
+				 // TO BE DESACTIVATED FOR THE EXPERIMENT "LEAVE-ONE-IN"
+				 //if (sub->numInstances > 1) 
 				 // keep *all* substructures
 				 if (sub->numInstances > 0) 
          {
