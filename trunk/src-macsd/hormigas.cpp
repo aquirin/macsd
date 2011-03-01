@@ -41,9 +41,10 @@ Hormiga::Hormiga (const vector<SOLUTION>& base, const unsigned int numObjetivos 
             cout << "Instancia: " << x++ << endl;
             if (_instancias[*p].cantNodos() >= _subestructura.cantNodos()) {
                 cout << _instancias[*p] << endl;
-                bool done = false;
 
                 #ifndef NO_ISOMORFISM
+
+                bool done = false;
 
                     map<unsigned int, vector<unsigned int> > v = _subestructura.darPosibilidades(_instancias[*p]);
 

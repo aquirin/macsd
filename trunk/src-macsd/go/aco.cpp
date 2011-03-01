@@ -93,7 +93,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         // inicializar cada hormiga reiniciando la asignacion de nodos
         set<unsigned int> usados;
         for (unsigned int i = 0; i < this->numHormigas; i++) {
-            float x = ((rand() * 1.) / (RAND_MAX));
+            float x = ((my_rand() * 1.) / (RAND_MAX));
             if (x > this->gamma)
         	this->hormigas[i]->posicionaInicialmente();
             else {

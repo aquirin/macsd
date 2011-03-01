@@ -11,8 +11,8 @@
 GLOB_tCiclo = 0.0				# tiempo de ciclo permitido
 GLOB_maxTiempo = 300				# criterio de parada, el tiempo; variable que almacena el tiempo maximo permitido para la ejecucion del algoritmo
 GLOB_areaMax = 0.0				# area maxima permitida (no se utiliza)
-GLOB_rutaEntrada = ../data/scientograms/Scientograms-US.txt # ruta del fichero de entrada (VMAP version)
-GLOB_rutaSalida = ../data/scientograms/res-vmap			# ruta del fichero de salida (VMAP version)
+GLOB_rutaEntrada = ../data/www/profstud6_19_25_43_45.txt # ruta del fichero de entrada (VMAP version)
+GLOB_rutaSalida = ../data/www/res-www			# ruta del fichero de salida (VMAP version)
 GLOB_areaImplicita = 0				# booleana que indica si el area se consigue a partir de los tiempos (1) o no (0)
 GLOB_semilla = 1				# semilla para el generador de aleatorios
 GLOB_numObjs = 2				# numero de objetivos del problema

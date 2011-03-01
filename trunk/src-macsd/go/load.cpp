@@ -141,7 +141,7 @@ int main(int argc, char *argv[]){
     vector< SOLUTION > baseDatos, misub;
         
    // Initialize the random generator    
-    srand(PARA.GLOB_semilla);
+    my_srand(PARA.GLOB_semilla);
 	
     // almacenamiento de parametros        
     // -----------------------------

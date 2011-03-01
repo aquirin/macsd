@@ -30,7 +30,7 @@ using namespace std;
  
 #define VALOR_CORRECCION_NULO 0.00001
 
-#define GUARDAR_RESULTADOS_INTERMEDIOS true
+#define GUARDAR_RESULTADOS_INTERMEDIOS false
 
 /**
  * macros sobre los parametros de los algoritmos
@@ -225,5 +225,8 @@ class better {
         private:
                 int _indice;
 };
+
+int my_rand();
+void my_srand(unsigned int seed);
 
 #endif

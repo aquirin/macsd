@@ -197,16 +197,16 @@ void pesosAleatorios(float *vector, unsigned int tamanio){
 //-----------------------------------------------------------------------
 
 int intAzar(const int inicio, const int fin) {
-    if (inicio == fin) {
+    if (inicio >= fin) {
         return inicio;
     }
     else
-        return ((rand() % (fin - inicio + 1)) + inicio);
+        return ((my_rand() % (fin - inicio + 1)) + inicio);
 }
 
 //-----------------------------------------------------------------------
 int ranking(const unsigned int cant, const float nu_max, const float nu_min) {
-    float random_entre_0_y_1 = rand()/(float(RAND_MAX)+1); 
+    float random_entre_0_y_1 = my_rand()/(float(RAND_MAX)+1); 
     vector<float> proba(cant+1);
     
     proba[0] = 0.0;
@@ -226,4 +226,21 @@ int ranking(const unsigned int cant, const float nu_max, const float nu_min) {
     if (x > cant) cerr << "ERRRRRRRRRRRRRRRRRR!" << endl;
     cout << "Salir: " << (cant - x + 1) << endl;
     return (cant - x + 1);
+}
+
+
+//-----------------------------------------------------------------------
+
+// rand and srand in the same compilation unit (so the seed is controlled in
+// some systems in which otherwise would have a different behavior).
+int my_rand() {
+    return rand();
+}
+
+//-----------------------------------------------------------------------
+
+// rand and srand in the same compilation unit (so the seed is controlled in
+// some systems in which otherwise would have a different behavior).
+void my_srand(unsigned int seed) {
+    srand(seed);
 }
