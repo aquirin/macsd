@@ -2,6 +2,8 @@
 #define __MACS_H__
 
 #include "aco.h"
+#include "utils.h"
+
 #if VERSION == V_SHAPE
 #include "shapes.h"
 #elif VERSION == V_GO

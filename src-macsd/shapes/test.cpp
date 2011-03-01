@@ -43,7 +43,7 @@ int main() {
 //         cout << "Distintos" << endl;
 // }
 
-//     srand(1);
+//     my_srand(1);
     map<unsigned int, vector<unsigned int> > v;
         vector<unsigned int> r(3);
         r[0] = 1;
@@ -96,7 +96,7 @@ int main() {
     }
          
 //     double at = clock()/CLOCKS_PER_SEC;
-//     srand(1);
+//     my_srand(1);
 //       vector< vector<unsigned int> > v(3);
 //         vector<unsigned int> r(3);
 //         r[0] = 1;

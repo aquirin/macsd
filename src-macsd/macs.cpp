@@ -137,7 +137,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
     sumaNumeradores = this->calculaProbabilidadesTransicion(unaHormiga, indice, candidatas);
 //     cout << "Despues" << endl;
     
-    probAleatoria = ((rand() * 1.) / (RAND_MAX * 1.));
+    probAleatoria = ((my_rand() * 1.) / (RAND_MAX * 1.));
         
     // todas las candidatas que quedan tienen probabilidad 0, por lo que elegimos buscando el maximo    
     
@@ -222,7 +222,7 @@ CANDIDATE MACS::transicion(Hormiga &unaHormiga, unsigned int indice, vector< CAN
 	  }	
 		  
 	  do 
-	      probAleatoria = ((rand() * 1.) / (RAND_MAX * 1.)); 
+	      probAleatoria = ((my_rand() * 1.) / (RAND_MAX * 1.)); 
 // 	    	MaxValue - MinValue + 1) * Rnd) + MinValue
 	  while (probAleatoria == 0);
 	  cout << "Entonces: " << probAleatoria << endl;

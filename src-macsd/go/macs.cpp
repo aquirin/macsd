@@ -108,7 +108,7 @@ tuplax3<unsigned int> MACS::transicion(Hormiga &unaHormiga, unsigned int indice,
     sumaNumeradores = this->calculaProbabilidadesTransicion(unaHormiga, indice, candidatas);
 //     cout << "Despues" << endl;
     
-    probAleatoria = ((rand() * 1.) / (RAND_MAX * 1.));
+    probAleatoria = ((my_rand() * 1.) / (RAND_MAX * 1.));
         
     // todas las candidatas que quedan tienen probabilidad 0, por lo que elegimos buscando el maximo    
     
@@ -152,7 +152,7 @@ tuplax3<unsigned int> MACS::transicion(Hormiga &unaHormiga, unsigned int indice,
         }		        		
 //     	    	cout << "@@@@@@@@" << sumaProb[i-1] << endl;
     	do 
-            probAleatoria = ((rand() * 1.) / (RAND_MAX * 1.)); 
+            probAleatoria = ((my_rand() * 1.) / (RAND_MAX * 1.)); 
         while (probAleatoria == 0);
         
         // recorremos las probabilidades acumuladas de todas los ejes para ver el eje elegido aleatoriamente

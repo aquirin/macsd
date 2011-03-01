@@ -72,7 +72,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     vector< CANDIDATE > candidatas;
     
     nombreFichero = filename;
-    tiempoTranscurrido = tiempoHastaUltimaIteracion = 0.; 
+    tiempoTranscurrido = tiempoHastaUltimaIteracion = 0; 
     inicio = time( NULL );
     fin = time( NULL );
     this->inicioAlgoritmo = tiempoIteracionAnterior = clock()/CLOCKS_PER_SEC;
@@ -210,7 +210,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         vector<bool> de_donde(PARA.MOACO_numHormigas, false);
         
         for (unsigned int i = 0; i < PARA.MOACO_numHormigas; i++) {
-            float x = ((rand() * 1.) / (RAND_MAX));
+            float x = ((my_rand() * 1.) / (RAND_MAX));
 	    cout << "Rgamma: " << x << endl;
             if (x >= PARA.MOACO_gamma) {
 	      if (best.getCoste(0) != 1)
@@ -429,7 +429,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         tiempoIteracionAnterior = fin;
         fin = time( NULL );
         tiempoHastaUltimaIteracion = tiempoIteracionAnterior - inicio;
-        tiempoTranscurrido = difftime(fin, inicio);
+        tiempoTranscurrido = (long unsigned int)difftime(fin, inicio);
         cout << "TT: " << difftime(fin, inicio) << endl;
 
         // Muestro datos de exito
@@ -442,7 +442,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         
         // operaciones de impresion en archivos de los resultados intermedios conseguidos
         // siempre que el flag este activado (los flags se guardan en el fichero utils.h)
-        if ((this->numIteraciones % 2) == 0) {
+        if ( GUARDAR_RESULTADOS_INTERMEDIOS && ((this->numIteraciones % 2) == 0) ) {
             // Imprimo el Pareto cada 100 iteraciones
             string temp = nombreFichero + "_ite_";
             stringstream s;
