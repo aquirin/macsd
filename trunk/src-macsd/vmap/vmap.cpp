@@ -6,7 +6,7 @@ vmap::vmap(const string & name, const vector<string> & shap, const vector<string
 	for (unsigned int i = 0; i < shap.size(); ++i) {
 		_desc_nodo.insert(pair<unsigned int, string>(i+1, shap[i]));
 		_rdesc_nodo.insert(pair<string, unsigned int>(shap[i], i+1));
-		/*    cout << i+1 << ' ' << shap[i] << endl;*/
+	//	    cout << "##" << i+1 << ' ' << shap[i] << endl;
 	}
 	
 	for (unsigned int i = 0; i < link.size(); ++i) {
@@ -21,14 +21,14 @@ vmap::vmap(const string & name, const vector<string> & shap, const vector<string
 		//      cout << _rdesc_nodo.find(it->first.first)->second << ' ' << _rdesc_nodo.find(it->first.second)->second << ' ' << _rdesc_eje.find(it->second)->second << endl;
 	}
 	
-	/*  cout << "Maximo " << _desc_nodo.size() + _desc_eje.size() << endl;*/
+	  cout << "Maximo " << _desc_nodo.size() + _desc_eje.size() << endl;
 	inicial();
 	MAX = 999;
 }
 
 void vmap::inicial() {
   clear();
-  agregarNodo("\"\\nMultidisciplinary\\n\"");
+  agregarNodo("\"Multidisciplinary\"");
 }
 
 vector< CANDIDATE > vmap::ejesNoUtilizados() const {

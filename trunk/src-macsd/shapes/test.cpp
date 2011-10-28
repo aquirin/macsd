@@ -7,149 +7,100 @@
 
 using namespace std;
 
-int main() {
-//     vector<string> figuras(4);
-//     figuras[0] = "circle";
-//     figuras[1] = "square";
-//     figuras[2] = "rectangle";
-//     figuras[3] = "triangle";
-//     shapes uno(4, figuras), dos(4, figuras);
-//     
-//     // Genero la primer figura
-//     uno.agregarNodo(1, "object");
-//     uno.agregarNodo(2, "triangle");
-//     uno.agregarNodo(3, "object");
-//     uno.agregarNodo(4, "circle");
-//     uno.agregarNodo(5, "object");
-//     uno.agregarEje(1,2,2);
-//     uno.agregarEje(1,3,1);
-//     uno.agregarEje(3,4,2);
-//     uno.agregarEje(3,5,1);
-//             
-//     // Genero la segunda figura
-//     dos.agregarNodo(1, "object");
-//     dos.agregarNodo(2, "object");
-//     dos.agregarNodo(3, "object");    
-//     dos.agregarNodo(4, "circle");
-//     dos.agregarNodo(5, "triangle");
-//     dos.agregarEje(1,2,1);
-//     dos.agregarEje(2,3,1);
-//     dos.agregarEje(1,5,2);
-//     dos.agregarEje(2,4,2);
-//     
-//     if (uno == dos)
-//         cout << "Iguales" << endl;
-//     else
-//         cout << "Distintos" << endl;
-// }
+void leeFicheroDatos(const string& fichero, vector<SOLUTION>& v) {
+    ifstream arch;
+    string cadena;
+   
+    unsigned int aux;
+    unsigned int aux1;
+    string desde, hasta;
+    vector<string> w(6);
+    w[0] = "object";
+    w[1] = "square";
+    w[2] = "triangle";
+    w[3] = "ellipse";
+    w[4] = "rectangle";
+    w[5] = "circle";
+    vector<string> e(2);
+    e[0] = "on";
+    e[1] = "shape";
+    multimap<pair<string,string>, string> rela;
+    for (unsigned int i = 1; i < w.size(); ++i)
+      rela.insert(pair<pair<string,string>, string>(pair<string,string>("object",w[i]), "shape"));
+    rela.insert(pair<pair<string,string>, string>(pair<string,string>(w[0],w[0]), "on"));
+    SOLUTION s("1", w, e, rela);
+    s.clear();
 
-//     my_srand(1);
-    map<unsigned int, vector<unsigned int> > v;
-        vector<unsigned int> r(3);
-        r[0] = 1;
-        r[1] = 3;
-        r[2] = 5;
-        v[0] = r;
-        vector<unsigned int> t(3);
-        t[0] = 1;
-        t[1] = 3;
-        t[2] = 5;
-        v[1] = t;
-        vector<unsigned int> n(3);
-        n[0] = 1;
-        n[1] = 3;
-        n[2] = 5;
-        v[2] = n;
-//     vector<unsigned int> r(2);
-//     r[0] = 1;
-//     r[1] = 3;
-//     v[0] = r;
-//     vector<unsigned int> t(2);
-//     t[0] = 1;
-//     t[1] = 3;
-//     v[1] = t;
-//     vector<unsigned int> y(2);
-//     y[0] = 2;
-//     y[1] = 4;
-//     v[2] = y;
+    arch.open(fichero.c_str());
+
+    if (!arch.good()) { cout << "Problema con el fichero: " << fichero << endl;
+        exit(1);
+    }
+
+    map<unsigned int,unsigned int> pos;
+    string cad;
+    unsigned int nn;
+    while (!arch.eof()) {
+        getline(arch, cadena);
+        if (!arch.eof()) {
+            if (!cadena.empty()) {
+                switch (cadena[0]) {
+                    case 'v':
+//                     v 1 object
+                        aux = cadena.rfind(' ', cadena.size());
+                        cad = cadena.substr(aux + 1, cadena.size() - aux);
+                        aux1 = cadena.find(' ', 0);
+                        desde = cadena.substr(aux1 + 1, aux - aux1 - 1);
+
+                        nn = s.agregarNodo(cad);
+
+                        pos.insert(pair<unsigned int,unsigned int>(atoi(desde.c_str()),nn));
+                        break;
+                    case 'e':
+                    case 'd':
+    //                     d 1 3 on
+                        aux = cadena.find(' ', 0);
+                        aux1 = cadena.find(' ', aux + 1);
+                        desde = cadena.substr(aux + 1, aux1 - aux - 1);
+                        aux = cadena.rfind(' ', cadena.size());
+                        hasta = cadena.substr(aux1 + 1, aux - aux1 - 1);
+                        cadena = cadena.substr(aux + 1, cadena.size() - aux);
+
+                        s.agregarEje(pos.find(atoi(desde.c_str()))->second, pos.find(atoi(hasta.c_str()))->second, cadena);
+                        break;
+                    case '%':
+                    default:
+                        break;
+                }
+            }
+            else {;
+                v.push_back(s);
+                cout << s << endl;
+                s.clear();
+                pos.clear();
+            }
+        }
+    }
+    if (!s.empty())
+        v.push_back(s);
+
+    arch.close();
+}
+
+int main() {
+    vector<shapes> baseDatos;
+    leeFicheroDatos("prueba1.g", baseDatos);
+
+    shapes uno = baseDatos[0];
+    shapes dos = baseDatos[1];
     
-    multimap<unsigned int, unsigned int> rel_est;
-    rel_est.insert(pair<unsigned int,unsigned int>(0,2));
-    rel_est.insert(pair<unsigned int,unsigned int>(1,2));
-//     rel_est.insert(pair<unsigned int,unsigned int>(2,1));
-    
-    multimap<unsigned int, unsigned int> rel_ins;
-    rel_ins.insert(pair<unsigned int,unsigned int>(1,3));
-    rel_ins.insert(pair<unsigned int,unsigned int>(5,3));
-//     rel_ins.insert(pair<unsigned int,unsigned int>(3,5));
-//     rel_ins.insert(pair<unsigned int,unsigned int>(5,3));
-    
-    posibilidades<unsigned int> prob(v, rel_est, rel_ins);
-    for (posibilidades<unsigned int>::iterator p = prob.begin(); p != prob.end(); ++p) {
+    posibilidades prob(&uno, &dos);
+    for (posibilidades::iterator p = prob.begin(); p != prob.end(); ++p) {
             cout << "OPCION: ";
             map<unsigned int, unsigned int> x = *p;
             for (map<unsigned int, unsigned int>::iterator i = x.begin(); i != x.end(); i++) {
-                cout << (*i).first + 1 << " -> " << (*i).second << endl;
+                cout << (*i).first << " -> " << (*i).second << endl;
             }
             cout << endl;
-        }
     }
-         
-//     double at = clock()/CLOCKS_PER_SEC;
-//     my_srand(1);
-//       vector< vector<unsigned int> > v(3);
-//         vector<unsigned int> r(3);
-//         r[0] = 1;
-//         r[1] = 3;
-//         r[2] = 5;
-//         v[0] = r;
-//         vector<unsigned int> t(3);
-//         t[0] = 1;
-//         t[1] = 3;
-//         t[2] = 5;
-//         v[1] = t;
-//         vector<unsigned int> n(3);
-//         n[0] = 1;
-//         n[1] = 3;
-//         n[2] = 5;
-//         v[2] = n;
-//     for (unsigned int o = 0; o < 1000; o++){
-//     //     vector< vector<unsigned int> > v(4);
-//     //     for (unsigned int i = 0; i < v.size(); i++) {
-//     //         int azar = intAzar(1,5);
-//     //         vector<unsigned int> w(azar);
-//     //         for (unsigned int j = 0; j < azar; j++) {
-//     //             w[j] = j + 1;
-//     //         }
-//     //         v[i] = w;
-//     //     }
-//       
-//         
-//     //     vector<unsigned int> m(2);
-//     //     m[0] = 1;
-//     //     m[1] = 3;
-//     //     v[3] = m;
-//         
-//         posibilidades<unsigned int> prob(v);
-//         
-//     //     vector<unsigned int> x = *(prob.begin());
-//     //     if (prob.begin() != prob.end()) {
-//     //         for (unsigned int i = 0; i < x.size(); i++) {
-//     //             cout << x[i] << ' ';
-//     //         }
-//     //         cout << endl << "===========" << endl;
-//     //     }
-//     
-//    
-//         for (posibilidades<unsigned int>::iterator p = prob.begin(); p != prob.end(); ++p) {
-//             cout << "OPCION: ";
-//             vector<unsigned int> x = *p;
-//             for (unsigned int i = 0; i < x.size(); i++) {
-//                 cout << x[i] << ' ';
-//             }
-//             cout << endl;
-//         }
-//     }
-//     double fin = clock()/CLOCKS_PER_SEC;
-//     cout << (fin - at)/1000 << endl;
-// }
+}

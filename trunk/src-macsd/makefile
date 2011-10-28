@@ -7,29 +7,64 @@ all-release:	clean release-shape release-vmap release-www release-go
 ##################################################
 # DEBUG
 
+posibilidades-test: partialclean
+	cp shapes/shapes.edges.cpp shapes.cpp
+	cp shapes/shapes.edges.h shapes.h
+	cp shapes/posibilidades.edges.cpp posibilidades.cpp
+	cp shapes/posibilidades.edges.h posibilidades.h
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE posibilidades.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE shapes.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE test.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE utils.cpp
+	g++ -Wall -g -o test_shape shapes.o posibilidades.o test.o utils.o
+
+debug-shape-new:	partialclean
+	cp -f shapes/config.txt config.txt
+	cp shapes/shapes.edges.cpp shapes.cpp
+	cp shapes/shapes.edges.h shapes.h
+	cp shapes/posibilidades.edges.cpp posibilidades.cpp
+	cp shapes/posibilidades.edges.h posibilidades.h
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE shapes.cpp
+	gcc -g -O0 -c routines.c
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE hormigas.edges.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE posibilidades.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE NDominatedSet.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE macs.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE main.edges.cpp -o main.o
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE aco.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE utils.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE global.cpp
+	g++ -Wall -g -O0 -c Parameter.cpp
+	g++ -Wall -g -o exe-shape.dbg routines.o main.o macs.o shapes.o hormigas.edges.o NDominatedSet.o aco.o utils.o Parameter.o global.o posibilidades.o
+	echo "exe-shape.dbg has been generated!"
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE load.cpp
+	g++ -Wall -g -o exe-load_shape routines.o macs.o shapes.o hormigas.edges.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o posibilidades.o
+	echo "exe-load_shape has been generated!"
+	#g++ -Wall -g -O0 -c -DVERSION=V_SHAPE test.cpp
+	#g++ -Wall -o test_shape routines.o macs.o shapes.o hormigas.edges.o NDominatedSet.o aco.o utils.o Parameter.o global.o test.o posibilidades.o
+
 debug-shape:	partialclean
 	cp -f shapes/config.txt config.txt
 	cp shapes/shapes.orig.cpp shapes.cpp
 	cp shapes/shapes.orig.h shapes.h
 	cp shapes/posibilidades.template posibilidades.template
 	cp shapes/posibilidades.h posibilidades.h
-	g++ -Wall -pg -O0 -c -DVERSION=V_SHAPE shapes.cpp
-	gcc -pg -O0 -c routines.c
-	g++ -Wall -pg -O0 -c -DVERSION=V_SHAPE hormigas.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SHAPE NDominatedSet.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SHAPE macs.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SHAPE main.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SHAPE aco.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SHAPE utils.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SHAPE global.cpp
-	g++ -Wall -pg -O0 -c Parameter.cpp
-	g++ -Wall -pg -o exe-shape.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o global.o
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE shapes.cpp
+	gcc -g -O0 -c routines.c
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE hormigas.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE NDominatedSet.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE macs.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE main.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE aco.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE utils.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE global.cpp
+	g++ -Wall -g -O0 -c Parameter.cpp
+	g++ -Wall -g -o exe-shape.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o global.o
 	echo "exe-shape.dbg has been generated!"
-	cp shapes/load.cpp load.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SHAPE load.cpp
-	g++ -Wall -pg -o exe-load_shape routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o
+	g++ -Wall -g -O0 -c -DVERSION=V_SHAPE load.cpp
+	g++ -Wall -g -o exe-load_shape routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o
 	echo "exe-load_shape has been generated!"
-	#g++ -Wall -pg -O0 -c -DVERSION=V_SHAPE test.cpp
+	#g++ -Wall -g -O0 -c -DVERSION=V_SHAPE test.cpp
 	#g++ -Wall -o test_shape routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o global.o test.o
 
 debug-vmap:	partialclean
@@ -40,21 +75,20 @@ debug-vmap:	partialclean
 	cp shapes/posibilidades.h posibilidades.h
 	cp vmap/vmap.cpp vmap.cpp
 	cp vmap/vmap.h vmap.h
-	g++ -Wall -pg -O0 -c -DVERSION=V_SCIENCEMAP shapes.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SCIENCEMAP vmap.cpp
-	gcc -pg -O0 -c routines.c
-	g++ -Wall -pg -O0 -c -DVERSION=V_SCIENCEMAP hormigas.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SCIENCEMAP NDominatedSet.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SCIENCEMAP macs.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SCIENCEMAP main.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SCIENCEMAP aco.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SCIENCEMAP utils.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SCIENCEMAP global.cpp
-	g++ -Wall -pg -O0 -c Parameter.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SCIENCEMAP shapes.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SCIENCEMAP vmap.cpp
+	gcc -g -O0 -c routines.c
+	g++ -Wall -g -O0 -c -DVERSION=V_SCIENCEMAP hormigas.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SCIENCEMAP NDominatedSet.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SCIENCEMAP macs.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SCIENCEMAP main.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SCIENCEMAP aco.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SCIENCEMAP utils.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SCIENCEMAP global.cpp
+	g++ -Wall -g -O0 -c Parameter.cpp
 	g++ -Wall -o exe-vmap.dbg routines.o main.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o vmap.o global.o
 	echo "exe-vmap.dbg has been generated!"
-	cp shapes/load.cpp load.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_SCIENCEMAP load.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_SCIENCEMAP load.cpp
 	g++ -Wall -o exe-load_vmap routines.o macs.o shapes.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o vmap.o global.o
 	echo "exe-load_vmap has been generated!"
 	
@@ -66,21 +100,20 @@ debug-www:	partialclean
 	cp shapes/posibilidades.h posibilidades.h
 	cp www/www.h www.h
 	cp www/www.cpp www.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_WWW shapes.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_WWW www.cpp
-	gcc -pg -O0 -c routines.c
-	g++ -Wall -pg -O0 -c -DVERSION=V_WWW hormigas.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_WWW NDominatedSet.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_WWW macs.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_WWW main.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_WWW aco.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_WWW utils.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_WWW global.cpp
-	g++ -Wall -pg -O0 -c Parameter.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_WWW shapes.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_WWW www.cpp
+	gcc -g -O0 -c routines.c
+	g++ -Wall -g -O0 -c -DVERSION=V_WWW hormigas.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_WWW NDominatedSet.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_WWW macs.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_WWW main.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_WWW aco.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_WWW utils.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_WWW global.cpp
+	g++ -Wall -g -O0 -c Parameter.cpp
 	g++ -Wall -o exe-www.dbg routines.o main.o macs.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o www.o global.o shapes.o
 	echo "exe-www.dbg has been generated!"
-	cp shapes/load.cpp load.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_WWW load.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_WWW load.cpp
 	g++ -Wall -o exe-load_www routines.o macs.o hormigas.o NDominatedSet.o aco.o utils.o Parameter.o load.o www.o global.o shapes.o
 	echo "exe-load_www has been generated!"
 
@@ -92,21 +125,20 @@ debug-go:	partialclean
 	cp shapes/posibilidades.h posibilidades.h
 	cp go/ontologia.h ontologia.h
 	cp go/ontologia.cpp ontologia.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_GO shapes.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_GO ontologia.cpp
-	gcc -pg -O0 -c routines.c
-	g++ -Wall -pg -O0 -c -DVERSION=V_GO hormigas.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_GO NDominatedSet.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_GO macs.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_GO main.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_GO aco.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_GO utils.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_GO global.cpp
-	g++ -Wall -pg -O0 -c Parameter.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_GO shapes.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_GO ontologia.cpp
+	gcc -g -O0 -c routines.c
+	g++ -Wall -g -O0 -c -DVERSION=V_GO hormigas.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_GO NDominatedSet.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_GO macs.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_GO main.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_GO aco.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_GO utils.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_GO global.cpp
+	g++ -Wall -g -O0 -c Parameter.cpp
 	g++ -Wall -o exe-go.dbg routines.o main.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o global.o
 	echo "exe-go.dbg has been generated!"
-	cp shapes/load.cpp load.cpp
-	g++ -Wall -pg -O0 -c -DVERSION=V_GO load.cpp
+	g++ -Wall -g -O0 -c -DVERSION=V_GO load.cpp
 	g++ -Wall -o exe-load_go routines.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o load.o global.o
 	echo "exe-load_go has been generated!"
 	
@@ -233,7 +265,7 @@ release-set:	clean
 	g++ -Wall -O2 -c -DVERSION=V_SCIENCEMAP main.cpp
 	g++ -Wall -O2 -c -DVERSION=V_SCIENCEMAP aco.cpp
 	g++ -Wall -O2 -c -DVERSION=V_SCIENCEMAP utils.cpp
-	g++ -Wall -pg -O0 -c Parameter.cpp
+	g++ -Wall -g -O0 -c Parameter.cpp
 	g++ -Wall -o exe-set routines.o main.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o
 	echo "exe-set has been generated!"
 	
@@ -250,7 +282,7 @@ release-matrix:	clean
 	g++ -Wall -O2 -c -DVERSION=V_SCIENCEMAP main.cpp
 	g++ -Wall -O2 -c -DVERSION=V_SCIENCEMAP aco.cpp
 	g++ -Wall -O2 -c -DVERSION=V_SCIENCEMAP utils.cpp
-	g++ -Wall -pg -O0 -c Parameter.cpp
+	g++ -Wall -g -O0 -c Parameter.cpp
 	g++ -Wall -o exe-matrix routines.o main.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o
 	echo "exe-matrix has been generated!"
 
@@ -267,7 +299,7 @@ release-vector:	clean
 	g++ -Wall -O2 -c -DVERSION=V_SCIENCEMAP main.cpp
 	g++ -Wall -O2 -c -DVERSION=V_SCIENCEMAP aco.cpp
 	g++ -Wall -O2 -c -DVERSION=V_SCIENCEMAP utils.cpp
-	g++ -Wall -pg -O0 -c Parameter.cpp
+	g++ -Wall -g -O0 -c Parameter.cpp
 	g++ -Wall -o exe-vector routines.o main.o macs.o shapes.o hormigas.o ontologia.o NDominatedSet.o aco.o utils.o Parameter.o
 	echo "exe-vector has been generated!"
 
