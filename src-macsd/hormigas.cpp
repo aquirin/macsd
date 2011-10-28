@@ -234,6 +234,8 @@ vector< CANDIDATE > Hormiga::getCandidatos() {
   cout << _subestructura << endl;
   
   vector< CANDIDATE > primero = _subestructura.ejesNoUtilizados();
+
+  cout << primero.size() << endl;
   
   // Elimino aquellos candidatos que no existan en ninguna instancias
   

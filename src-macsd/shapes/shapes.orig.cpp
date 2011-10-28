@@ -487,6 +487,7 @@ map<unsigned int, vector<unsigned int> > shapes::darPosibilidades(const shapes& 
     }
 	
 // 	cout << "M " << res.size() << endl;
+	// Ordenar el map poniendo primero el que tiene menos posibilidades hasta el que tiene mas posibilidades
     return res;
 }
 

@@ -5,36 +5,8 @@ posibilidades<T>::posibilidades(const map<T, vector<T> >& cuales, const multimap
     _total = cuales.size();
     unsigned int i = 0;
     
-//     map<T, vector<T> > new_cuales;
-//     
-//     for (typename map<T, vector<T> >::const_iterator it = cuales.begin(); (it != cuales.end()) and !error; ++it) {
-//       // Reviso cuales son posibles
-//       // Reviso ejes salientes
-//       vector<T> sub;
-//       pair< multimap<T,pair<T,T> >::const_iterator,multimap<T,pair<T,T> >::const_iterator > mi_sal = est.equal_range(it->first);
-//       
-//       for (vector<T>::const_iterator itn = it->begin();; itn != it->end(): ++itn) {
-// 	pair< multimap<T,pair<T,T> >::const_iterator,multimap<T,pair<T,T> >::const_iterator > tu_sal = ins.equal_range(*itn);
-// 	
-// 	bool found = true;
-// 	set< pair<T,T> > usados;
-// 	for (multimap<T,pair<T,T> >::const_iterator itmp = mi_sal.first; (itmp != (mi_sal.second + 1)) and found; ++itmp) {
-// 	  found = false;
-// 	  for (multimap<T,pair<T,T> >::const_iterator ittp = tu_sal.first; (ittp != (tu_sal.second + 1)) and !found; ++ittp) {
-// 	    if ((itmp->second.second == ittp->second.second) and (itmp->second.first)) {
-// 	      usados.insert(ittp->second);
-// 	    }
-// 	  }
-// 	}
-// 	
-// 	if (found) {
-// 	  sub.push_back(itn);
-// 	}
-//       }
-//       new_cuales[*it] = sub;
-//     }
-//     
-    
+    multimap<unsigned int, pair<T, vector<T> > > cuenta;
+
     for (typename map<T, vector<T> >::const_iterator it = cuales.begin(); (it != cuales.end()) and !error; ++it) {
       if ((*it).second.size() == 1) {
 	if (lofijo.find((*it).second.front()) == lofijo.end()) {
@@ -48,10 +20,13 @@ posibilidades<T>::posibilidades(const map<T, vector<T> >& cuales, const multimap
 	  _options.clear();
 	}
       }
-      else {
-	_options[i] = (*it).second;
-	_lapos[i++] = (*it).first;
-      }
+      cuenta.insert(pair<unsigned int, pair<T, vector<T> > >((*it).second.size(), (*it)));
+    }
+    // Ordeno todo por la cantdidad de opciones que tengo, de menor a mayor
+    
+    for (typename multimap<unsigned int, pair<T, vector<T> > >::iterator it = cuenta.begin(); it != cuenta.end(); it++) {
+	_options[i] = (*it).second.second;
+	_lapos[i++] = (*it).second.first;
     }
     _options.resize(i);
     

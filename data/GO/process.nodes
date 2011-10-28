@@ -27,9 +27,9 @@
 0000054,ribosome export from nucleus
 0000055,ribosomal large subunit export from nucleus
 0000056,ribosomal small subunit export from nucleus
-0000059,protein import into nucleus, docking
-0000060,protein import into nucleus, translocation
-0000061,protein import into nucleus, substrate release
+0000059,protein import into nucleus_docking
+0000060,protein import into nucleus_translocation
+0000061,protein import into nucleus_substrate release
 0000066,mitochondrial ornithine transport
 0000070,mitotic sister chromatid segregation
 0000072,M phase specific microtubule process
@@ -77,7 +77,7 @@
 0000169,activation of MAPK activity during osmolarity sensing
 0000173,inactivation of MAPK activity during osmolarity sensing
 0000183,chromatin silencing at rDNA
-0000184,nuclear-transcribed mRNA catabolic process, nonsense-mediated decay
+0000184,nuclear-transcribed mRNA catabolic process_nonsense-mediated decay
 0000185,activation of MAPKKK activity
 0000186,activation of MAPKK activity
 0000187,activation of MAPK activity
@@ -114,14 +114,14 @@
 0000280,nuclear division
 0000281,cytokinesis after mitosis
 0000282,cellular bud site selection
-0000288,nuclear-transcribed mRNA catabolic process, deadenylation-dependent decay
+0000288,nuclear-transcribed mRNA catabolic process_deadenylation-dependent decay
 0000289,nuclear-transcribed mRNA poly(A) tail shortening
 0000290,deadenylation-dependent decapping of nuclear-transcribed mRNA
-0000291,nuclear-transcribed mRNA catabolic process, exonucleolytic
+0000291,nuclear-transcribed mRNA catabolic process_exonucleolytic
 0000292,RNA fragment catabolic process
-0000294,nuclear-transcribed mRNA catabolic process, endonucleolytic cleavage-dependent decay
+0000294,nuclear-transcribed mRNA catabolic process_endonucleolytic cleavage-dependent decay
 0000296,spermine transport
-0000301,retrograde transport, vesicle recycling within Golgi
+0000301,retrograde transport_vesicle recycling within Golgi
 0000302,response to reactive oxygen species
 0000303,response to superoxide
 0000304,response to singlet oxygen
@@ -129,9 +129,9 @@
 0000316,sulfite transport
 0000320,re-entry into mitotic cell cycle
 0000321,re-entry into mitotic cell cycle after pheromone arrest
-0000335,negative regulation of transposition, DNA-mediated
-0000336,positive regulation of transposition, DNA-mediated
-0000337,regulation of transposition, DNA-mediated
+0000335,negative regulation of transposition_DNA-mediated
+0000336,positive regulation of transposition_DNA-mediated
+0000337,regulation of transposition_DNA-mediated
 0000338,protein deneddylation
 0000348,nuclear mRNA branch site recognition
 0000349,generation of catalytic spliceosome for first transesterification step
@@ -139,26 +139,26 @@
 0000352,trans assembly of SL containing precatalytic spliceosome
 0000353,formation of quadruple SL/U4/U5/U6 snRNP
 0000354,cis assembly of pre-catalytic spliceosome
-0000365,nuclear mRNA trans splicing, via spliceosome
+0000365,nuclear mRNA trans splicing_via spliceosome
 0000366,intergenic nuclear mRNA trans splicing
 0000372,Group I intron splicing
 0000373,Group II intron splicing
 0000374,Group III intron splicing
-0000375,RNA splicing, via transesterification reactions
-0000376,RNA splicing, via transesterification reactions with guanosine as nucleophile
-0000377,RNA splicing, via transesterification reactions with bulged adenosine as nucleophile
+0000375,RNA splicing_via transesterification reactions
+0000376,RNA splicing_via transesterification reactions with guanosine as nucleophile
+0000377,RNA splicing_via transesterification reactions with bulged adenosine as nucleophile
 0000378,RNA exon ligation
 0000379,tRNA-type intron splice site recognition and cleavage
-0000380,alternative nuclear mRNA splicing, via spliceosome
-0000381,regulation of alternative nuclear mRNA splicing, via spliceosome
+0000380,alternative nuclear mRNA splicing_via spliceosome
+0000381,regulation of alternative nuclear mRNA splicing_via spliceosome
 0000387,spliceosomal snRNP biogenesis
 0000388,spliceosome conformational change to release U4 (or U4atac) and U1 (or U11)
 0000389,nuclear mRNA 3'-splice site recognition
 0000390,spliceosome disassembly
 0000393,spliceosomal conformational changes to generate catalytic conformation
-0000394,RNA splicing, via endonucleolytic cleavage and ligation
+0000394,RNA splicing_via endonucleolytic cleavage and ligation
 0000395,nuclear mRNA 5'-splice site recognition
-0000398,nuclear mRNA splicing, via spliceosome
+0000398,nuclear mRNA splicing_via spliceosome
 0000409,regulation of transcription by galactose
 0000410,negative regulation of transcription by galactose
 0000411,positive regulation of transcription by galactose
@@ -181,49 +181,49 @@
 0000435,positive regulation of transcription from RNA polymerase II promoter by galactose
 0000436,positive regulation of transcription from RNA polymerase II promoter by carbon catabolites
 0000437,negative regulation of transcription from RNA polymerase II promoter by carbon catabolites
-0000447,endonucleolytic cleavage in ITS1 to separate SSU-rRNA from 5.8S rRNA and LSU-rRNA from tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000448,cleavage in ITS2 between 5.8S rRNA and LSU-rRNA of tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000449,endonucleolytic cleavage of tricistronic rRNA transcript (SSU-rRNA, LSU-rRNA, 5S)
-0000450,cleavage of bicistronic rRNA transcript (SSU-rRNA, LSU-rRNA)
+0000447,endonucleolytic cleavage in ITS1 to separate SSU-rRNA from 5.8S rRNA and LSU-rRNA from tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000448,cleavage in ITS2 between 5.8S rRNA and LSU-rRNA of tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000449,endonucleolytic cleavage of tricistronic rRNA transcript (SSU-rRNA_LSU-rRNA_5S)
+0000450,cleavage of bicistronic rRNA transcript (SSU-rRNA_LSU-rRNA)
 0000451,rRNA 2'-O-methylation
 0000452,snoRNA guided rRNA 2'-O-methylation
 0000453,enzyme-directed rRNA 2'-O-methylation
 0000454,snoRNA guided rRNA pseudouridine synthesis
 0000455,enzyme-directed rRNA pseudouridine synthesis
 0000456,dimethylation during SSU-rRNA biogenesis
-0000457,endonucleolytic cleavage between SSU-rRNA and LSU-rRNA of tricistronic rRNA transcript (SSU-rRNA, LSU-rRNA, 5S)
-0000458,endonucleolytic cleavage between LSU-rRNA and 5S rRNA of tricistronic rRNA transcript (SSU-rRNA, LSU-rRNA, 5S)
+0000457,endonucleolytic cleavage between SSU-rRNA and LSU-rRNA of tricistronic rRNA transcript (SSU-rRNA_LSU-rRNA_5S)
+0000458,endonucleolytic cleavage between LSU-rRNA and 5S rRNA of tricistronic rRNA transcript (SSU-rRNA_LSU-rRNA_5S)
 0000459,exonucleolytic trimming during rRNA processing
 0000460,maturation of 5.8S rRNA
-0000461,endonucleolytic cleavage to generate mature 3'-end of SSU-rRNA from (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000462,maturation of SSU-rRNA from tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000463,maturation of LSU-rRNA from tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000464,endonucleolytic cleavage in ITS1 upstream of 5.8S rRNA from tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000465,exonucleolytic trimming to generate mature 5'-end of 5.8S rRNA from tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000466,maturation of 5.8S rRNA from tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000467,exonucleolytic trimming to generate mature 3'-end of 5.8S rRNA from tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000468,generation of mature 3'-end of LSU-rRNA from tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
+0000461,endonucleolytic cleavage to generate mature 3'-end of SSU-rRNA from (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000462,maturation of SSU-rRNA from tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000463,maturation of LSU-rRNA from tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000464,endonucleolytic cleavage in ITS1 upstream of 5.8S rRNA from tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000465,exonucleolytic trimming to generate mature 5'-end of 5.8S rRNA from tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000466,maturation of 5.8S rRNA from tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000467,exonucleolytic trimming to generate mature 3'-end of 5.8S rRNA from tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000468,generation of mature 3'-end of LSU-rRNA from tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
 0000469,cleavages during rRNA processing
 0000470,maturation of LSU-rRNA
-0000471,endonucleolytic cleavage in 3'-ETS of tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000472,endonucleolytic cleavage to generate mature 5'-end of SSU-rRNA from (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000473,maturation of LSU-rRNA from tetracistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, 2S rRNA, LSU-rRNA)
-0000474,maturation of SSU-rRNA from tetracistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, 2S rRNA, LSU-rRNA)
+0000471,endonucleolytic cleavage in 3'-ETS of tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000472,endonucleolytic cleavage to generate mature 5'-end of SSU-rRNA from (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000473,maturation of LSU-rRNA from tetracistronic rRNA transcript (SSU-rRNA_5.8S rRNA_2S rRNA_LSU-rRNA)
+0000474,maturation of SSU-rRNA from tetracistronic rRNA transcript (SSU-rRNA_5.8S rRNA_2S rRNA_LSU-rRNA)
 0000475,maturation of 2S rRNA
 0000476,maturation of 4.5S rRNA
-0000477,generation of mature 5'-end of LSU-rRNA from tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
+0000477,generation of mature 5'-end of LSU-rRNA from tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
 0000478,endonucleolytic cleavages during rRNA processing
-0000479,endonucleolytic cleavage of tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000480,endonucleolytic cleavage in 5'-ETS of tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
+0000479,endonucleolytic cleavage of tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000480,endonucleolytic cleavage in 5'-ETS of tricistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
 0000481,maturation of 5S rRNA
-0000482,maturation of 5S rRNA from tetracistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)
-0000483,endonucleolytic cleavage of tetracistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, 2S rRNA, LSU-rRNA)
-0000484,cleavage between SSU-rRNA and 5.8S rRNA of tetracistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, 2S rRNA, LSU-rRNA)
-0000485,cleavage between 2S rRNA and LSU-rRNA of tetracistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, 2S rRNA, LSU-rRNA)
-0000486,cleavage between 5.8S rRNA and 2S rRNA of tetracistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, 2S rRNA, LSU-rRNA)
-0000487,maturation of 5.8S rRNA from tetracistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, 2S rRNA, LSU-rRNA)
-0000488,maturation of LSU-rRNA from tetracistronic rRNA transcript (SSU-rRNA, LSU-rRNA, 4.5S-rRNA, 5S-rRNA)
-0000489,maturation of SSU-rRNA from tetracistronic rRNA transcript (SSU-rRNA, LSU-rRNA, 4.5S-rRNA, 5S-rRNA)
+0000482,maturation of 5S rRNA from tetracistronic rRNA transcript (SSU-rRNA_5.8S rRNA_LSU-rRNA)
+0000483,endonucleolytic cleavage of tetracistronic rRNA transcript (SSU-rRNA_5.8S rRNA_2S rRNA_LSU-rRNA)
+0000484,cleavage between SSU-rRNA and 5.8S rRNA of tetracistronic rRNA transcript (SSU-rRNA_5.8S rRNA_2S rRNA_LSU-rRNA)
+0000485,cleavage between 2S rRNA and LSU-rRNA of tetracistronic rRNA transcript (SSU-rRNA_5.8S rRNA_2S rRNA_LSU-rRNA)
+0000486,cleavage between 5.8S rRNA and 2S rRNA of tetracistronic rRNA transcript (SSU-rRNA_5.8S rRNA_2S rRNA_LSU-rRNA)
+0000487,maturation of 5.8S rRNA from tetracistronic rRNA transcript (SSU-rRNA_5.8S rRNA_2S rRNA_LSU-rRNA)
+0000488,maturation of LSU-rRNA from tetracistronic rRNA transcript (SSU-rRNA_LSU-rRNA_4.5S-rRNA_5S-rRNA)
+0000489,maturation of SSU-rRNA from tetracistronic rRNA transcript (SSU-rRNA_LSU-rRNA_4.5S-rRNA_5S-rRNA)
 0000491,snoRNP assembly
 0000492,box C/D snoRNP assembly
 0000493,box H/ACA snoRNP assembly
@@ -241,10 +241,10 @@
 0000712,resolution of meiotic joint molecules as recombinants
 0000713,meiotic heteroduplex formation
 0000714,meiotic strand displacement
-0000715,nucleotide-excision repair, DNA damage recognition
-0000716,transcription-coupled nucleotide-excision repair, DNA damage recognition
-0000717,nucleotide-excision repair, DNA duplex unwinding
-0000718,nucleotide-excision repair, DNA damage removal
+0000715,nucleotide-excision repair_DNA damage recognition
+0000716,transcription-coupled nucleotide-excision repair_DNA damage recognition
+0000717,nucleotide-excision repair_DNA duplex unwinding
+0000718,nucleotide-excision repair_DNA damage removal
 0000719,photoreactive repair
 0000720,pyrimidine dimer repair via nucleotide-excision repair
 0000722,telomere maintenance via recombination
@@ -253,17 +253,17 @@
 0000725,recombinational repair
 0000726,non-recombinational repair
 0000727,double-strand break repair via break-induced replication
-0000728,gene conversion at mating-type locus, DNA double-strand break formation
+0000728,gene conversion at mating-type locus_DNA double-strand break formation
 0000729,DNA double-strand break processing
 0000730,DNA recombinase assembly
 0000731,DNA synthesis during DNA repair
 0000732,strand displacement
 0000733,DNA strand renaturation
-0000734,gene conversion at mating-type locus, DNA repair synthesis
+0000734,gene conversion at mating-type locus_DNA repair synthesis
 0000735,removal of nonhomologous ends
-0000736,double-strand break repair via single-strand annealing, removal of nonhomologous ends
-0000737,DNA catabolic process, endonucleolytic
-0000738,DNA catabolic process, exonucleolytic
+0000736,double-strand break repair via single-strand annealing_removal of nonhomologous ends
+0000737,DNA catabolic process_endonucleolytic
+0000738,DNA catabolic process_exonucleolytic
 0000740,nuclear membrane fusion
 0000741,karyogamy
 0000742,karyogamy during conjugation with cellular fusion
@@ -309,7 +309,7 @@
 0000912,formation of actomyosin apparatus involved in cytokinesis
 0000913,preprophase band formation
 0000914,phragmoplast formation
-0000915,cytokinesis, contractile ring formation
+0000915,cytokinesis_contractile ring formation
 0000916,contractile ring contraction involved in cytokinesis
 0000917,barrier septum formation
 0000918,selection of site for barrier septum formation
@@ -508,7 +508,7 @@
 0001783,B cell apoptosis
 0001787,natural killer cell proliferation
 0001788,antibody-dependent cellular cytotoxicity
-0001789,G-protein signaling, coupled to S1P second messenger (sphingosine kinase activating)
+0001789,G-protein signaling_coupled to S1P second messenger (sphingosine kinase activating)
 0001794,type IIa hypersensitivity
 0001795,type IIb hypersensitivity
 0001796,regulation of type IIa hypersensitivity
@@ -563,10 +563,10 @@
 0001845,phagolysosome formation
 0001865,NK T cell differentiation
 0001866,NK T cell proliferation
-0001867,complement activation, lectin pathway
-0001868,regulation of complement activation, lectin pathway
-0001869,negative regulation of complement activation, lectin pathway
-0001870,positive regulation of complement activation, lectin pathway
+0001867,complement activation_lectin pathway
+0001868,regulation of complement activation_lectin pathway
+0001869,negative regulation of complement activation_lectin pathway
+0001870,positive regulation of complement activation_lectin pathway
 0001878,response to yeast
 0001879,detection of yeast
 0001880,Mullerian duct regression
@@ -633,7 +633,7 @@
 0001959,regulation of cytokine and chemokine mediated signaling pathway
 0001960,negative regulation of cytokine and chemokine mediated signaling pathway
 0001961,positive regulation of cytokine and chemokine mediated signaling pathway
-0001963,synaptic transmission, dopaminergic
+0001963,synaptic transmission_dopaminergic
 0001964,startle response
 0001966,thigmotaxis
 0001967,suckling behavior
@@ -750,13 +750,13 @@
 0002099,tRNA wobble guanine modification
 0002100,tRNA wobble adenosine to inosine editing
 0002101,tRNA wobble cytosine modification
-0002103,endonucleolytic cleavage of tetracistronic rRNA transcript (SSU-rRNA, LSU-rRNA, 4.5S-rRNA, 5S-rRNA)
-0002104,endonucleolytic cleaveage between 4.5S rRNA and 5S rRNA of tetracistronic rRNA transcript (SSU-rRNA, LSU-rRNA, 4.5S-rRNA, 5S-rRNA)
-0002105,endonucleolytic cleaveage between LSU-rRNA and 4.5S rRNA of tetracistronic rRNA transcript (SSU-rRNA, LSU-rRNA, 4.5S-rRNA, 5S-rRNA)
-0002106,endonucleolytic cleaveage between SSU-rRNA and LSU-rRNA of tetracistronic rRNA transcript (SSU-rRNA, LSU-rRNA, 4.5S-rRNA, 5S-rRNA)
+0002103,endonucleolytic cleavage of tetracistronic rRNA transcript (SSU-rRNA_LSU-rRNA_4.5S-rRNA_5S-rRNA)
+0002104,endonucleolytic cleaveage between 4.5S rRNA and 5S rRNA of tetracistronic rRNA transcript (SSU-rRNA_LSU-rRNA_4.5S-rRNA_5S-rRNA)
+0002105,endonucleolytic cleaveage between LSU-rRNA and 4.5S rRNA of tetracistronic rRNA transcript (SSU-rRNA_LSU-rRNA_4.5S-rRNA_5S-rRNA)
+0002106,endonucleolytic cleaveage between SSU-rRNA and LSU-rRNA of tetracistronic rRNA transcript (SSU-rRNA_LSU-rRNA_4.5S-rRNA_5S-rRNA)
 0002107,generation of mature 3'-end of 5S rRNA generated by RNA polymerase III
-0002108,maturation of LSU-rRNA from tricistronic rRNA transcript (SSU-rRNA, LSU-rRNA,5S)
-0002109,maturation of SSU-rRNA from tricistronic rRNA transcript (SSU-rRNA, LSU-rRNA,5S)
+0002108,maturation of LSU-rRNA from tricistronic rRNA transcript (SSU-rRNA_LSU-rRNA,5S)
+0002109,maturation of SSU-rRNA from tricistronic rRNA transcript (SSU-rRNA_LSU-rRNA,5S)
 0002110,cotranscriptional mitochondrial rRNA nucleotide insertion
 0002117,amphibian larval development
 0002119,nematode larval development
@@ -851,21 +851,21 @@
 0002291,T cell activation via T cell receptor contact with antigen bound to MHC molecule on antigen presenting cell
 0002292,T cell differentiation during immune response
 0002293,alpha-beta T cell differentiation during immune response
-0002294,CD4-positive, alpha-beta T cell differentiation during immune response
+0002294,CD4-positive_alpha-beta T cell differentiation during immune response
 0002295,T-helper cell lineage commitment
 0002296,T-helper 1 cell lineage commitment
 0002297,T-helper 2 cell lineage commitment
-0002298,CD4-positive, CD25-positive, alpha-beta regulatory T cell differentiation during immune response
+0002298,CD4-positive_CD25-positive_alpha-beta regulatory T cell differentiation during immune response
 0002299,alpha-beta intraepithelial T cell differentiation
-0002300,CD8-positive, alpha-beta intraepithelial T cell differentiation
-0002301,CD4-positive, alpha-beta intraepithelial T cell differentiation
-0002302,CD8-positive, alpha-beta T cell differentiation during immune response
+0002300,CD8-positive_alpha-beta intraepithelial T cell differentiation
+0002301,CD4-positive_alpha-beta intraepithelial T cell differentiation
+0002302,CD8-positive_alpha-beta T cell differentiation during immune response
 0002303,gamma-delta T cell differentiation during immune response
 0002304,gamma-delta intraepithelial T cell differentiation
-0002305,CD8-positive, gamma-delta intraepithelial T cell differentiation
+0002305,CD8-positive_gamma-delta intraepithelial T cell differentiation
 0002306,CD4-positive gamma-delta intraepithelial T cell differentiation
-0002307,CD8-positive, alpha-beta regulatory T cell differentiation
-0002308,CD8-positive, alpha-beta cytotoxic T cell differentiation
+0002307,CD8-positive_alpha-beta regulatory T cell differentiation
+0002308,CD8-positive_alpha-beta cytotoxic T cell differentiation
 0002309,T cell proliferation during immune response
 0002310,alpha-beta T cell proliferation during immune response
 0002311,gamma-delta T cell proliferation during immune response
@@ -918,8 +918,8 @@
 0002358,B cell homeostatic proliferation
 0002359,B-1 B cell proliferation
 0002360,T cell lineage commitment
-0002361,CD4-positive, CD25-positive, alpha-beta regulatory T cell differentiation
-0002362,CD4-positive, CD25-positive, alpha-beta regulatory T cell lineage commitment
+0002361,CD4-positive_CD25-positive_alpha-beta regulatory T cell differentiation
+0002362,CD4-positive_CD25-positive_alpha-beta regulatory T cell lineage commitment
 0002363,alpha-beta T cell lineage commitment
 0002364,NK T cell lineage commitment
 0002365,gamma-delta T cell lineage commitment
@@ -1036,18 +1036,18 @@
 0002476,antigen processing and presentation of endogenous peptide antigen via MHC class Ib
 0002477,antigen processing and presentation of exogenous peptide antigen via MHC class Ib
 0002478,antigen processing and presentation of exogenous peptide antigen
-0002479,antigen processing and presentation of exogenous peptide antigen via MHC class I, TAP-dependent
-0002480,antigen processing and presentation of exogenous peptide antigen via MHC class I, TAP-independent
-0002481,antigen processing and presentation of exogenous protein antigen via MHC class Ib, TAP-dependent
-0002482,antigen processing and presentation of exogenous protein antigen via MHC class Ib, TAP-independent
+0002479,antigen processing and presentation of exogenous peptide antigen via MHC class I_TAP-dependent
+0002480,antigen processing and presentation of exogenous peptide antigen via MHC class I_TAP-independent
+0002481,antigen processing and presentation of exogenous protein antigen via MHC class Ib_TAP-dependent
+0002482,antigen processing and presentation of exogenous protein antigen via MHC class Ib_TAP-independent
 0002483,antigen processing and presentation of endogenous peptide antigen
 0002484,antigen processing and presentation of endogenous peptide antigen via MHC class I via ER pathway
-0002485,antigen processing and presentation of endogenous peptide antigen via MHC class I via ER pathway, TAP-dependent
-0002486,antigen processing and presentation of endogenous peptide antigen via MHC class I via ER pathway, TAP-independent
+0002485,antigen processing and presentation of endogenous peptide antigen via MHC class I via ER pathway_TAP-dependent
+0002486,antigen processing and presentation of endogenous peptide antigen via MHC class I via ER pathway_TAP-independent
 0002487,antigen processing and presentation of endogenous peptide antigen via MHC class I via endolysosomal pathway
 0002488,antigen processing and presentation of endogenous peptide antigen via MHC class Ib via ER pathway
-0002489,antigen processing and presentation of endogenous peptide antigen via MHC class Ib via ER pathway, TAP-dependent
-0002490,antigen processing and presentation of endogenous peptide antigen via MHC class Ib via ER pathway, TAP-independent
+0002489,antigen processing and presentation of endogenous peptide antigen via MHC class Ib via ER pathway_TAP-dependent
+0002490,antigen processing and presentation of endogenous peptide antigen via MHC class Ib via ER pathway_TAP-independent
 0002491,antigen processing and presentation of endogenous peptide antigen via MHC class II
 0002492,peptide antigen assembly with MHC class Ib protein complex
 0002493,lipid antigen assembly with MHC class Ib protein complex
@@ -1748,13 +1748,13 @@
 0006116,NADH oxidation
 0006117,acetaldehyde metabolic process
 0006119,oxidative phosphorylation
-0006120,mitochondrial electron transport, NADH to ubiquinone
-0006121,mitochondrial electron transport, succinate to ubiquinone
-0006122,mitochondrial electron transport, ubiquinol to cytochrome c
-0006123,mitochondrial electron transport, cytochrome c to oxygen
+0006120,mitochondrial electron transport_NADH to ubiquinone
+0006121,mitochondrial electron transport_succinate to ubiquinone
+0006122,mitochondrial electron transport_ubiquinol to cytochrome c
+0006123,mitochondrial electron transport_cytochrome c to oxygen
 0006124,ferredoxin metabolic process
 0006127,glycerophosphate shuttle
-0006139,nucleobase, nucleoside, nucleotide and nucleic acid metabolic process
+0006139,nucleobase_nucleoside_nucleotide and nucleic acid metabolic process
 0006140,regulation of nucleotide metabolic process
 0006141,regulation of purine base metabolic process
 0006142,regulation of pyrimidine base metabolic process
@@ -1868,7 +1868,7 @@
 0006266,DNA ligation
 0006267,pre-replicative complex assembly
 0006268,DNA unwinding during replication
-0006269,DNA replication, synthesis of RNA primer
+0006269,DNA replication_synthesis of RNA primer
 0006270,DNA replication initiation
 0006271,DNA strand elongation during DNA replication
 0006272,leading strand elongation
@@ -1883,17 +1883,17 @@
 0006282,regulation of DNA repair
 0006283,transcription-coupled nucleotide-excision repair
 0006284,base-excision repair
-0006285,base-excision repair, AP site formation
-0006286,base-excision repair, base-free sugar-phosphate removal
-0006287,base-excision repair, gap-filling
-0006288,base-excision repair, DNA ligation
+0006285,base-excision repair_AP site formation
+0006286,base-excision repair_base-free sugar-phosphate removal
+0006287,base-excision repair_gap-filling
+0006288,base-excision repair_DNA ligation
 0006289,nucleotide-excision repair
 0006290,pyrimidine dimer repair
-0006293,nucleotide-excision repair, preincision complex stabilization
-0006294,nucleotide-excision repair, preincision complex assembly
-0006295,nucleotide-excision repair, DNA incision, 3'-to lesion
-0006296,nucleotide-excision repair, DNA incision, 5'-to lesion
-0006297,nucleotide-excision repair, DNA gap filling
+0006293,nucleotide-excision repair_preincision complex stabilization
+0006294,nucleotide-excision repair_preincision complex assembly
+0006295,nucleotide-excision repair_DNA incision_3'-to lesion
+0006296,nucleotide-excision repair_DNA incision_5'-to lesion
+0006297,nucleotide-excision repair_DNA gap filling
 0006298,mismatch repair
 0006301,postreplication repair
 0006302,double-strand break repair
@@ -1907,7 +1907,7 @@
 0006310,DNA recombination
 0006311,meiotic gene conversion
 0006312,mitotic recombination
-0006313,transposition, DNA-mediated
+0006313,transposition_DNA-mediated
 0006314,intron homing
 0006315,homing of group II introns
 0006316,movement of group I intron
@@ -1928,14 +1928,14 @@
 0006348,chromatin silencing at telomere
 0006349,genetic imprinting
 0006350,transcription
-0006351,transcription, DNA-dependent
+0006351,transcription_DNA-dependent
 0006352,transcription initiation
 0006353,transcription termination
 0006354,RNA elongation
-0006355,regulation of transcription, DNA-dependent
+0006355,regulation of transcription_DNA-dependent
 0006356,regulation of transcription from RNA polymerase I promoter
 0006357,regulation of transcription from RNA polymerase II promoter
-0006358,regulation of transcription from RNA polymerase II promoter, global
+0006358,regulation of transcription from RNA polymerase II promoter_global
 0006359,regulation of transcription from RNA polymerase III promoter
 0006360,transcription from RNA polymerase I promoter
 0006361,transcription initiation from RNA polymerase I promoter
@@ -1975,7 +1975,7 @@
 0006407,rRNA export from nucleus
 0006408,snRNA export from nucleus
 0006409,tRNA export from nucleus
-0006410,transcription, RNA-dependent
+0006410,transcription_RNA-dependent
 0006412,translation
 0006413,translational initiation
 0006414,translational elongation
@@ -2152,10 +2152,10 @@
 0006612,protein targeting to membrane
 0006613,cotranslational protein targeting to membrane
 0006614,SRP-dependent cotranslational protein targeting to membrane
-0006615,SRP-dependent cotranslational protein targeting to membrane, docking
-0006616,SRP-dependent cotranslational protein targeting to membrane, translocation
-0006617,SRP-dependent cotranslational protein targeting to membrane, signal sequence recognition
-0006618,SRP-dependent cotranslational protein targeting to membrane, signal sequence processing
+0006615,SRP-dependent cotranslational protein targeting to membrane_docking
+0006616,SRP-dependent cotranslational protein targeting to membrane_translocation
+0006617,SRP-dependent cotranslational protein targeting to membrane_signal sequence recognition
+0006618,SRP-dependent cotranslational protein targeting to membrane_signal sequence processing
 0006620,posttranslational protein targeting to membrane
 0006621,protein retention in ER lumen
 0006622,protein targeting to lysosome
@@ -2384,7 +2384,7 @@
 0006886,intracellular protein transport
 0006887,exocytosis
 0006888,ER to Golgi vesicle-mediated transport
-0006890,retrograde vesicle-mediated transport, Golgi to ER
+0006890,retrograde vesicle-mediated transport_Golgi to ER
 0006891,intra-Golgi vesicle-mediated transport
 0006892,post-Golgi vesicle-mediated transport
 0006893,Golgi to plasma membrane transport
@@ -2400,8 +2400,8 @@
 0006907,pinocytosis
 0006908,clathrin-independent pinocytosis
 0006909,phagocytosis
-0006910,phagocytosis, recognition
-0006911,phagocytosis, engulfment
+0006910,phagocytosis_recognition
+0006911,phagocytosis_engulfment
 0006913,nucleocytoplasmic transport
 0006914,autophagy
 0006915,apoptosis
@@ -2417,11 +2417,11 @@
 0006927,transformed cell apoptosis
 0006928,cell motility
 0006929,substrate-bound cell migration
-0006930,substrate-bound cell migration, cell extension
-0006931,substrate-bound cell migration, cell attachment to substrate
-0006932,substrate-bound cell migration, cell contraction
+0006930,substrate-bound cell migration_cell extension
+0006931,substrate-bound cell migration_cell attachment to substrate
+0006932,substrate-bound cell migration_cell contraction
 0006933,negative regulation of cell adhesion involved in substrate-bound cell migration
-0006934,substrate-bound cell migration, adhesion receptor recycling
+0006934,substrate-bound cell migration_adhesion receptor recycling
 0006935,chemotaxis
 0006936,muscle contraction
 0006937,regulation of muscle contraction
@@ -2438,8 +2438,8 @@
 0006954,inflammatory response
 0006955,immune response
 0006956,complement activation
-0006957,complement activation, alternative pathway
-0006958,complement activation, classical pathway
+0006957,complement activation_alternative pathway
+0006958,complement activation_classical pathway
 0006959,humoral immune response
 0006962,male-specific antibacterial humoral response
 0006963,positive regulation of antibacterial peptide biosynthetic process
@@ -2453,8 +2453,8 @@
 0006973,intracellular accumulation of glycerol
 0006974,response to DNA damage stimulus
 0006975,DNA damage induced protein phosphorylation
-0006977,DNA damage response, signal transduction by p53 class mediator resulting in cell cycle arrest
-0006978,DNA damage response, signal transduction by p53 class mediator resulting in transcription of p21 class mediator
+0006977,DNA damage response_signal transduction by p53 class mediator resulting in cell cycle arrest
+0006978,DNA damage response_signal transduction by p53 class mediator resulting in transcription of p21 class mediator
 0006979,response to oxidative stress
 0006980,redox signal response
 0006981,activation of SoxR protein
@@ -2466,8 +2466,8 @@
 0006987,activation of signaling protein activity involved in unfolded protein response
 0006990,positive regulation of gene-specific transcription involved in unfolded protein response
 0006991,response to sterol depletion
-0006992,sterol depletion response, sterol regulatory element binding protein cleavage
-0006993,sterol depletion response, sterol regulatory element binding protein nuclear translocation
+0006992,sterol depletion response_sterol regulatory element binding protein cleavage
+0006993,sterol depletion response_sterol regulatory element binding protein nuclear translocation
 0006994,positive regulation of sterol regulatory element binding protein target gene transcription involved in sterol depletion response
 0006995,cellular response to nitrogen starvation
 0006996,organelle organization and biogenesis
@@ -2533,14 +2533,14 @@
 0007065,male meiosis sister chromatid cohesion
 0007066,female meiosis sister chromatid cohesion
 0007067,mitosis
-0007068,negative regulation of transcription, mitotic
-0007069,negative regulation of transcription from RNA polymerase I promoter, mitotic
-0007070,negative regulation of transcription from RNA polymerase II promoter, mitotic
-0007071,negative regulation of transcription from RNA polymerase III promoter, mitotic
+0007068,negative regulation of transcription_mitotic
+0007069,negative regulation of transcription from RNA polymerase I promoter_mitotic
+0007070,negative regulation of transcription from RNA polymerase II promoter_mitotic
+0007071,negative regulation of transcription from RNA polymerase III promoter_mitotic
 0007072,positive regulation of transcription on exit from mitosis
-0007073,positive regulation of transcription on exit from mitosis, from RNA polymerase I promoter
-0007074,positive regulation of transcription on exit from mitosis, from RNA polymerase II promoter
-0007075,positive regulation of transcription on exit from mitosis, from RNA polymerase III promoter
+0007073,positive regulation of transcription on exit from mitosis_from RNA polymerase I promoter
+0007074,positive regulation of transcription on exit from mitosis_from RNA polymerase II promoter
+0007075,positive regulation of transcription on exit from mitosis_from RNA polymerase III promoter
 0007076,mitotic chromosome condensation
 0007077,mitotic nuclear envelope disassembly
 0007078,lamin depolymerization
@@ -2565,10 +2565,10 @@
 0007100,mitotic centrosome separation
 0007101,male meiosis centrosome cycle
 0007103,spindle pole body duplication in nuclear envelope
-0007105,cytokinesis, site selection
+0007105,cytokinesis_site selection
 0007107,membrane addition at site of cytokinesis
-0007108,cytokinesis, initiation of separation
-0007109,cytokinesis, completion of separation
+0007108,cytokinesis_initiation of separation
+0007109,cytokinesis_completion of separation
 0007110,cytokinesis after meiosis I
 0007111,cytokinesis after meiosis II
 0007112,male meiosis cytokinesis
@@ -2632,31 +2632,31 @@
 0007184,SMAD protein nuclear translocation
 0007185,transmembrane receptor protein tyrosine phosphatase signaling pathway
 0007186,G-protein coupled receptor protein signaling pathway
-0007187,G-protein signaling, coupled to cyclic nucleotide second messenger
-0007188,G-protein signaling, coupled to cAMP nucleotide second messenger
-0007189,G-protein signaling, adenylate cyclase activating pathway
+0007187,G-protein signaling_coupled to cyclic nucleotide second messenger
+0007188,G-protein signaling_coupled to cAMP nucleotide second messenger
+0007189,G-protein signaling_adenylate cyclase activating pathway
 0007190,activation of adenylate cyclase activity
-0007191,dopamine receptor, adenylate cyclase activating pathway
-0007192,serotonin receptor, adenylate cyclase activating pathway
-0007193,G-protein signaling, adenylate cyclase inhibiting pathway
+0007191,dopamine receptor_adenylate cyclase activating pathway
+0007192,serotonin receptor_adenylate cyclase activating pathway
+0007193,G-protein signaling_adenylate cyclase inhibiting pathway
 0007194,negative regulation of adenylate cyclase activity
-0007195,dopamine receptor, adenylate cyclase inhibiting pathway
-0007196,metabotropic glutamate receptor, adenylate cyclase inhibiting pathway
-0007197,muscarinic acetylcholine receptor, adenylate cyclase inhibiting pathway
-0007198,serotonin receptor, adenylate cyclase inhibiting pathway
-0007199,G-protein signaling, coupled to cGMP nucleotide second messenger
-0007200,G-protein signaling, coupled to IP3 second messenger (phospholipase C activating)
+0007195,dopamine receptor_adenylate cyclase inhibiting pathway
+0007196,metabotropic glutamate receptor_adenylate cyclase inhibiting pathway
+0007197,muscarinic acetylcholine receptor_adenylate cyclase inhibiting pathway
+0007198,serotonin receptor_adenylate cyclase inhibiting pathway
+0007199,G-protein signaling_coupled to cGMP nucleotide second messenger
+0007200,G-protein signaling_coupled to IP3 second messenger (phospholipase C activating)
 0007202,activation of phospholipase C activity
 0007204,elevation of cytosolic calcium ion concentration
 0007205,activation of protein kinase C activity
-0007206,metabotropic glutamate receptor, phospholipase C activating pathway
-0007207,muscarinic acetylcholine receptor, phospholipase C activating pathway
-0007208,serotonin receptor, phospholipase C activating pathway
-0007209,tachykinin receptor, phospholipase C activating pathway
+0007206,metabotropic glutamate receptor_phospholipase C activating pathway
+0007207,muscarinic acetylcholine receptor_phospholipase C activating pathway
+0007208,serotonin receptor_phospholipase C activating pathway
+0007209,tachykinin receptor_phospholipase C activating pathway
 0007210,serotonin receptor signaling pathway
 0007211,octopamine/tyramine signaling pathway
 0007212,dopamine receptor signaling pathway
-0007213,acetylcholine receptor signaling, muscarinic pathway
+0007213,acetylcholine receptor signaling_muscarinic pathway
 0007214,gamma-aminobutyric acid signaling pathway
 0007215,glutamate signaling pathway
 0007216,metabotropic glutamate receptor signaling pathway
@@ -2665,7 +2665,7 @@
 0007219,Notch signaling pathway
 0007220,Notch receptor processing
 0007221,positive regulation of transcription of Notch receptor target
-0007223,Wnt receptor signaling pathway, calcium modulating pathway
+0007223,Wnt receptor signaling pathway_calcium modulating pathway
 0007224,smoothened signaling pathway
 0007225,patched ligand processing
 0007227,signal transduction downstream of smoothened
@@ -2696,7 +2696,7 @@
 0007268,synaptic transmission
 0007269,neurotransmitter secretion
 0007270,nerve-nerve synaptic transmission
-0007271,synaptic transmission, cholinergic
+0007271,synaptic transmission_cholinergic
 0007272,ensheathment of neurons
 0007274,neuromuscular synaptic transmission
 0007275,multicellular organismal development
@@ -2727,7 +2727,7 @@
 0007300,ovarian nurse cell to oocyte transport
 0007301,ovarian ring canal formation
 0007302,nurse cell nucleus anchoring
-0007303,cytoplasmic transport, nurse cell to oocyte
+0007303,cytoplasmic transport_nurse cell to oocyte
 0007304,chorion-containing eggshell formation
 0007305,vitelline membrane formation in chorion-containing eggshell
 0007306,eggshell chorion formation
@@ -2735,9 +2735,9 @@
 0007308,oocyte construction
 0007309,oocyte axis determination
 0007310,oocyte dorsal/ventral axis determination
-0007311,maternal determination of dorsal/ventral axis, oocyte, germ-line encoded
+0007311,maternal determination of dorsal/ventral axis_oocyte_germ-line encoded
 0007312,oocyte nucleus migration during oocyte axis determination
-0007313,maternal determination of dorsal/ventral axis, oocyte, soma encoded
+0007313,maternal determination of dorsal/ventral axis_oocyte_soma encoded
 0007314,oocyte anterior/posterior axis determination
 0007315,pole plasm assembly
 0007316,pole plasm RNA localization
@@ -2762,7 +2762,7 @@
 0007350,blastoderm segmentation
 0007351,tripartite regional subdivision
 0007352,zygotic determination of dorsal/ventral axis
-0007354,zygotic determination of anterior/posterior axis, embryo
+0007354,zygotic determination of anterior/posterior axis_embryo
 0007355,anterior region determination
 0007356,thorax and anterior abdomen determination
 0007357,positive regulation of central gap gene transcription
@@ -2788,12 +2788,12 @@
 0007377,germ-band extension
 0007378,amnioserosa formation
 0007379,segment specification
-0007380,specification of segmental identity, head
-0007381,specification of segmental identity, labial segment
-0007382,specification of segmental identity, maxillary segment
-0007383,specification of segmental identity, antennal segment
-0007384,specification of segmental identity, thorax
-0007385,specification of segmental identity, abdomen
+0007380,specification of segmental identity_head
+0007381,specification of segmental identity_labial segment
+0007382,specification of segmental identity_maxillary segment
+0007383,specification of segmental identity_antennal segment
+0007384,specification of segmental identity_thorax
+0007385,specification of segmental identity_abdomen
 0007386,compartment specification
 0007387,anterior compartment specification
 0007388,posterior compartment specification
@@ -2801,9 +2801,9 @@
 0007390,germ-band shortening
 0007391,dorsal closure
 0007392,initiation of dorsal closure
-0007393,dorsal closure, leading edge cell fate determination
-0007394,dorsal closure, elongation of leading edge cells
-0007395,dorsal closure, spreading of leading edge cells
+0007393,dorsal closure_leading edge cell fate determination
+0007394,dorsal closure_elongation of leading edge cells
+0007395,dorsal closure_spreading of leading edge cells
 0007396,suture of dorsal opening
 0007398,ectoderm development
 0007399,nervous system development
@@ -2828,12 +2828,12 @@
 0007422,peripheral nervous system development
 0007423,sensory organ development
 0007424,open tracheal system development
-0007425,epithelial cell fate determination, open tracheal system
-0007426,tracheal outgrowth, open tracheal system
-0007427,epithelial cell migration, open tracheal system
-0007428,primary branching, open tracheal system
-0007429,secondary branching, open tracheal system
-0007430,terminal branching, open tracheal system
+0007425,epithelial cell fate determination_open tracheal system
+0007426,tracheal outgrowth_open tracheal system
+0007427,epithelial cell migration_open tracheal system
+0007428,primary branching_open tracheal system
+0007429,secondary branching_open tracheal system
+0007430,terminal branching_open tracheal system
 0007431,salivary gland development
 0007432,salivary gland boundary specification
 0007433,larval salivary gland boundary specification
@@ -2851,10 +2851,10 @@
 0007445,determination of imaginal disc primordium
 0007446,imaginal disc growth
 0007447,imaginal disc pattern formation
-0007448,anterior/posterior pattern formation, imaginal disc
-0007449,proximal/distal pattern formation, imaginal disc
-0007450,dorsal/ventral pattern formation, imaginal disc
-0007451,dorsal/ventral lineage restriction, imaginal disc
+0007448,anterior/posterior pattern formation_imaginal disc
+0007449,proximal/distal pattern formation_imaginal disc
+0007450,dorsal/ventral pattern formation_imaginal disc
+0007451,dorsal/ventral lineage restriction_imaginal disc
 0007453,clypeo-labral disc morphogenesis
 0007454,labial disc morphogenesis
 0007455,eye-antennal disc morphogenesis
@@ -2925,18 +2925,18 @@
 0007529,establishment of synaptic specificity at neuromuscular junction
 0007530,sex determination
 0007531,mating type determination
-0007532,regulation of transcription, mating-type specific
+0007532,regulation of transcription_mating-type specific
 0007533,mating type switching
 0007534,gene conversion at mating-type locus
 0007535,donor selection
 0007536,activation of recombination (HML)
 0007537,inactivation of recombination (HML)
 0007538,primary sex determination
-0007539,primary sex determination, soma
-0007540,sex determination, establishment of X:A ratio
-0007541,sex determination, primary response to X:A ratio
-0007542,primary sex determination, germ-line
-0007543,sex determination, somatic-gonadal interaction
+0007539,primary sex determination_soma
+0007540,sex determination_establishment of X:A ratio
+0007541,sex determination_primary response to X:A ratio
+0007542,primary sex determination_germ-line
+0007543,sex determination_somatic-gonadal interaction
 0007545,processes downstream of sex determination signal
 0007546,somatic processes downstream of sex determination signal
 0007547,germ-line processes downstream of sex determination signal
@@ -2969,20 +2969,20 @@
 0007587,sugar utilization
 0007588,excretion
 0007589,body fluid secretion
-0007591,molting cycle, chitin-based cuticle
+0007591,molting cycle_chitin-based cuticle
 0007592,protein-based cuticle development
 0007593,chitin-based cuticle tanning
 0007594,puparial adhesion
 0007595,lactation
 0007596,blood coagulation
-0007597,blood coagulation, intrinsic pathway
-0007598,blood coagulation, extrinsic pathway
+0007597,blood coagulation_intrinsic pathway
+0007598,blood coagulation_extrinsic pathway
 0007599,hemostasis
 0007600,sensory perception
 0007601,visual perception
 0007602,phototransduction
-0007603,phototransduction, visible light
-0007604,phototransduction, UV
+0007603,phototransduction_visible light
+0007604,phototransduction_UV
 0007605,sensory perception of sound
 0007606,sensory perception of chemical stimulus
 0007608,sensory perception of smell
@@ -3035,9 +3035,9 @@
 0008063,Toll signaling pathway
 0008064,regulation of actin polymerization and/or depolymerization
 0008065,establishment of blood-nerve barrier
-0008069,dorsal/ventral axis determination, ovarian follicular epithelium
-0008070,maternal determination of dorsal/ventral axis, ovarian follicular epithelium, germ-line encoded
-0008071,maternal determination of dorsal/ventral axis, ovarian follicular epithelium, soma encoded
+0008069,dorsal/ventral axis determination_ovarian follicular epithelium
+0008070,maternal determination of dorsal/ventral axis_ovarian follicular epithelium_germ-line encoded
+0008071,maternal determination of dorsal/ventral axis_ovarian follicular epithelium_soma encoded
 0008078,mesodermal cell migration
 0008088,axon cargo transport
 0008089,anterograde axon cargo transport
@@ -3084,7 +3084,7 @@
 0008298,intracellular mRNA localization
 0008299,isoprenoid biosynthetic process
 0008300,isoprenoid catabolic process
-0008302,ring canal formation, actin assembly
+0008302,ring canal formation_actin assembly
 0008306,associative learning
 0008314,gurken receptor signaling pathway
 0008315,meiotic G2/MI transition
@@ -3101,7 +3101,7 @@
 0008354,germ cell migration
 0008355,olfactory learning
 0008356,asymmetric cell division
-0008358,maternal determination of anterior/posterior axis, embryo
+0008358,maternal determination of anterior/posterior axis_embryo
 0008359,regulation of bicoid mRNA localization
 0008360,regulation of cell shape
 0008361,regulation of cell size
@@ -3126,11 +3126,11 @@
 0008587,imaginal disc-derived wing margin morphogenesis
 0008588,release of cytoplasmic sequestered NF-kappaB
 0008589,regulation of smoothened signaling pathway
-0008591,regulation of Wnt receptor signaling pathway, calcium modulating pathway
+0008591,regulation of Wnt receptor signaling pathway_calcium modulating pathway
 0008592,regulation of Toll signaling pathway
 0008593,regulation of Notch signaling pathway
 0008594,photoreceptor cell morphogenesis
-0008595,determination of anterior/posterior axis, embryo
+0008595,determination of anterior/posterior axis_embryo
 0008608,attachment of spindle microtubules to kinetochore
 0008610,lipid biosynthetic process
 0008611,ether lipid biosynthetic process
@@ -3146,7 +3146,7 @@
 0008627,induction of apoptosis by ionic changes
 0008628,induction of apoptosis by hormones
 0008629,induction of apoptosis by intracellular signals
-0008630,DNA damage response, signal transduction resulting in induction of apoptosis
+0008630,DNA damage response_signal transduction resulting in induction of apoptosis
 0008631,induction of apoptosis by oxidative stress
 0008632,apoptotic program
 0008633,activation of pro-apoptotic gene products
@@ -3162,11 +3162,11 @@
 0008653,lipopolysaccharide metabolic process
 0008654,phospholipid biosynthetic process
 0008655,pyrimidine salvage
-0009047,dosage compensation, by hyperactivation of X chromosome
-0009048,dosage compensation, by inactivation of X chromosome
+0009047,dosage compensation_by hyperactivation of X chromosome
+0009048,dosage compensation_by inactivation of X chromosome
 0009050,glycopeptide catabolic process
-0009051,pentose-phosphate shunt, oxidative branch
-0009052,pentose-phosphate shunt, non-oxidative branch
+0009051,pentose-phosphate shunt_oxidative branch
+0009052,pentose-phosphate shunt_non-oxidative branch
 0009056,catabolic process
 0009057,macromolecule catabolic process
 0009058,biosynthetic process
@@ -3206,7 +3206,7 @@
 0009092,homoserine metabolic process
 0009093,cysteine catabolic process
 0009094,L-phenylalanine biosynthetic process
-0009095,aromatic amino acid family biosynthetic process, prephenate pathway
+0009095,aromatic amino acid family biosynthetic process_prephenate pathway
 0009097,isoleucine biosynthetic process
 0009098,leucine biosynthetic process
 0009099,valine biosynthetic process
@@ -3467,9 +3467,9 @@
 0009582,detection of abiotic stimulus
 0009583,detection of light stimulus
 0009584,detection of visible light
-0009585,red, far-red light phototransduction
+0009585,red_far-red light phototransduction
 0009586,rhodopsin mediated phototransduction
-0009588,UV-A, blue light phototransduction
+0009588,UV-A_blue light phototransduction
 0009589,detection of UV
 0009590,detection of gravity
 0009593,detection of chemical stimulus
@@ -3612,11 +3612,11 @@
 0009762,NADP-malic enzyme C4 photosynthesis
 0009763,NAD-malic enzyme C4 photosynthesis
 0009764,PEP carboxykinase C4 photosynthesis
-0009765,photosynthesis, light harvesting
+0009765,photosynthesis_light harvesting
 0009766,primary charge separation
 0009767,photosynthetic electron transport chain
-0009768,photosynthesis, light harvesting in photosystem I
-0009769,photosynthesis, light harvesting in photosystem II
+0009768,photosynthesis_light harvesting in photosystem I
+0009769,photosynthesis_light harvesting in photosystem II
 0009770,primary charge separation in photosystem I
 0009771,primary charge separation in photosystem II
 0009772,photosynthetic electron transport in photosystem II
@@ -3637,7 +3637,7 @@
 0009791,post-embryonic development
 0009792,embryonic development ending in birth or egg hatching
 0009793,embryonic development ending in seed dormancy
-0009794,regulation of mitotic cell cycle, embryonic
+0009794,regulation of mitotic cell cycle_embryonic
 0009798,axis specification
 0009799,determination of symmetry
 0009800,cinnamic acid biosynthetic process
@@ -3654,10 +3654,10 @@
 0009811,stilbene biosynthetic process
 0009812,flavonoid metabolic process
 0009813,flavonoid biosynthetic process
-0009814,defense response, incompatible interaction
-0009816,defense response to bacterium, incompatible interaction
-0009817,defense response to fungus, incompatible interaction
-0009818,defense response to protozoan, incompatible interaction
+0009814,defense response_incompatible interaction
+0009816,defense response to bacterium_incompatible interaction
+0009817,defense response to fungus_incompatible interaction
+0009818,defense response to protozoan_incompatible interaction
 0009819,drought recovery
 0009820,alkaloid metabolic process
 0009821,alkaloid biosynthetic process
@@ -3674,8 +3674,8 @@
 0009833,plant-type primary cell wall biogenesis
 0009834,plant-type secondary cell wall biogenesis
 0009835,ripening
-0009836,ripening, climacteric
-0009837,ripening, non-climacteric
+0009836,ripening_climacteric
+0009837,ripening_non-climacteric
 0009838,abscission
 0009845,seed germination
 0009846,pollen germination
@@ -3692,15 +3692,15 @@
 0009859,pollen hydration
 0009860,pollen tube growth
 0009861,jasmonic acid and ethylene-dependent systemic resistance
-0009862,systemic acquired resistance, salicylic acid mediated signaling pathway
+0009862,systemic acquired resistance_salicylic acid mediated signaling pathway
 0009863,salicylic acid mediated signaling pathway
-0009864,induced systemic resistance, jasmonic acid mediated signaling pathway
+0009864,induced systemic resistance_jasmonic acid mediated signaling pathway
 0009865,pollen tube adhesion
-0009866,induced systemic resistance, ethylene mediated signaling pathway
+0009866,induced systemic resistance_ethylene mediated signaling pathway
 0009867,jasmonic acid mediated signaling pathway
-0009868,jasmonic acid and ethylene-dependent systemic resistance, jasmonic acid mediated signaling pathway
-0009870,defense response signaling pathway, resistance gene-dependent
-0009871,jasmonic acid and ethylene-dependent systemic resistance, ethylene mediated signaling pathway
+0009868,jasmonic acid and ethylene-dependent systemic resistance_jasmonic acid mediated signaling pathway
+0009870,defense response signaling pathway_resistance gene-dependent
+0009871,jasmonic acid and ethylene-dependent systemic resistance_ethylene mediated signaling pathway
 0009873,ethylene mediated signaling pathway
 0009875,pollen-pistil interaction
 0009876,pollen adhesion
@@ -3724,8 +3724,8 @@
 0009902,chloroplast relocation
 0009903,chloroplast avoidance movement
 0009904,chloroplast accumulation movement
-0009906,response to photoperiod, blue light
-0009907,response to photoperiod, red light
+0009906,response to photoperiod_blue light
+0009907,response to photoperiod_red light
 0009908,flower development
 0009909,regulation of flower development
 0009910,negative regulation of flower development
@@ -3884,7 +3884,7 @@
 0010107,potassium ion import
 0010108,detection of glutamine
 0010109,regulation of photosynthesis
-0010110,regulation of photosynthesis, dark reaction
+0010110,regulation of photosynthesis_dark reaction
 0010111,glyoxysome organization and biogenesis
 0010112,regulation of systemic acquired resistance
 0010113,negative regulation of systemic acquired resistance
@@ -3897,7 +3897,7 @@
 0010120,camalexin biosynthetic process
 0010121,arginine catabolic process to proline via ornithine
 0010122,arginine catabolic process to alanine via ornithine
-0010123,acetate catabolic process to butyrate, ethanol, acetone and butanol
+0010123,acetate catabolic process to butyrate_ethanol_acetone and butanol
 0010124,phenylacetate catabolic process
 0010125,mycothiol biosynthetic process
 0010126,mycothiol metabolic process
@@ -3905,7 +3905,7 @@
 0010128,benzoate catabolic process via CoA ligation
 0010129,anaerobic cyclohexane-1-carboxylate catabolic process
 0010130,anaerobic ethylbenzene catabolic process
-0010131,sucrose catabolic process, using invertase or sucrose synthase
+0010131,sucrose catabolic process_using invertase or sucrose synthase
 0010132,dhurrin biosynthetic process
 0010133,proline catabolic process to glutamate
 0010134,sulfate assimilation via adenylyl sulfate reduction
@@ -3914,7 +3914,7 @@
 0010137,ureide biosynthetic process
 0010138,pyrimidine ribonucleotide salvage
 0010139,pyrimidine deoxyribonucleotide salvage
-0010142,farnesyl diphosphate biosynthetic process, mevalonate pathway
+0010142,farnesyl diphosphate biosynthetic process_mevalonate pathway
 0010143,cutin biosynthetic process
 0010144,pyridoxal phosphate biosynthetic process from pyridoxamine
 0010145,fructan metabolic process
@@ -3960,7 +3960,7 @@
 0010201,response to high irradiance
 0010202,response to low fluence red light
 0010203,response to very low fluence red light
-0010204,defense response signaling pathway, resistance gene-independent
+0010204,defense response signaling pathway_resistance gene-independent
 0010205,photoinhibition
 0010206,photosystem II repair
 0010207,photosystem II assembly
@@ -4014,7 +4014,7 @@
 0010264,myo-inositol hexakisphosphate biosynthetic process
 0010265,SCF complex assembly
 0010266,response to vitamin B1
-0010267,RNA interference, production of ta-siRNAs
+0010267,RNA interference_production of ta-siRNAs
 0010268,brassinosteroid homeostasis
 0010269,response to selenium ion
 0010270,photosystem II oxygen evolving complex assembly
@@ -4035,8 +4035,8 @@
 0010312,detoxification of zinc ion
 0010315,auxin efflux
 0010321,regulation of vegetative phase change
-0010322,regulation of isopentenyl diphosphate biosynthetic process, mevalonate-independent pathway
-0010323,negative regulation of isopentenyl diphosphate biosynthetic process, mevalonate-independent pathway
+0010322,regulation of isopentenyl diphosphate biosynthetic process_mevalonate-independent pathway
+0010323,negative regulation of isopentenyl diphosphate biosynthetic process_mevalonate-independent pathway
 0010324,membrane invagination
 0010325,raffinose family oligosaccharide biosynthetic process
 0010332,response to gamma radiation
@@ -4189,9 +4189,9 @@
 0010522,regulation of calcium ion transport into cytosol
 0010523,negative regulation of calcium ion transport into cytosol
 0010524,positive regulation of calcium ion transport into cytosol
-0010525,regulation of transposition, RNA-mediated
-0010526,negative regulation of transposition, RNA-mediated
-0010527,positive regulation of transposition, RNA-mediated
+0010525,regulation of transposition_RNA-mediated
+0010526,negative regulation of transposition_RNA-mediated
+0010527,positive regulation of transposition_RNA-mediated
 0010528,regulation of transposition
 0010529,negative regulation of transposition
 0010530,positive regulation of transposition
@@ -4255,7 +4255,7 @@
 0010595,positive regulation of endothelial cell migration
 0010596,negative regulation of endothelial cell migration
 0010597,green leaf volatile biosynthetic process
-0010599,RNA interference, production of lsiRNA
+0010599,RNA interference_production of lsiRNA
 0010600,regulation of auxin biosynthetic process
 0010601,positive regulation of auxin biosynthetic process
 0010602,regulation of 1-aminocyclopropane-1-carboxylate metabolic process
@@ -4410,7 +4410,7 @@
 0014812,muscle cell migration
 0014813,satellite cell commitment
 0014814,axon regeneration at neuromuscular junction
-0014815,initiation of satellite cell activation by growth factor signalling, involved in skeletal muscle regeneration
+0014815,initiation of satellite cell activation by growth factor signalling_involved in skeletal muscle regeneration
 0014816,satellite cell differentiation
 0014817,satellite cell fate specification
 0014818,satellite cell fate determination
@@ -4511,9 +4511,9 @@
 0015010,tetrahydrocorphin metabolic process
 0015011,nickel-tetrapyrrole coenzyme metabolic process
 0015012,heparan sulfate proteoglycan biosynthetic process
-0015013,heparan sulfate proteoglycan biosynthetic process, linkage to polypeptide
-0015014,heparan sulfate proteoglycan biosynthetic process, polysaccharide chain biosynthetic process
-0015015,heparan sulfate proteoglycan biosynthetic process, enzymatic modification
+0015013,heparan sulfate proteoglycan biosynthetic process_linkage to polypeptide
+0015014,heparan sulfate proteoglycan biosynthetic process_polysaccharide chain biosynthetic process
+0015015,heparan sulfate proteoglycan biosynthetic process_enzymatic modification
 0015031,protein transport
 0015032,storage protein import into fat body
 0015074,DNA integration
@@ -4523,7 +4523,7 @@
 0015671,oxygen transport
 0015672,monovalent inorganic cation transport
 0015673,silver ion transport
-0015674,di-, tri-valent inorganic cation transport
+0015674,di-_tri-valent inorganic cation transport
 0015675,nickel ion transport
 0015676,vanadium ion transport
 0015677,copper ion import
@@ -4762,7 +4762,7 @@
 0015919,peroxisomal membrane transport
 0015920,lipopolysaccharide transport
 0015921,lipopolysaccharide export
-0015931,nucleobase, nucleoside, nucleotide and nucleic acid transport
+0015931,nucleobase_nucleoside_nucleotide and nucleic acid transport
 0015936,coenzyme A metabolic process
 0015937,coenzyme A biosynthetic process
 0015938,coenzyme A catabolic process
@@ -4776,7 +4776,7 @@
 0015946,methanol oxidation
 0015947,methane metabolic process
 0015948,methanogenesis
-0015949,nucleobase, nucleoside and nucleotide interconversion
+0015949,nucleobase_nucleoside and nucleotide interconversion
 0015950,purine nucleotide interconversion
 0015951,purine ribonucleotide interconversion
 0015952,purine deoxyribonucleotide interconversion
@@ -4808,10 +4808,10 @@
 0015978,carbon utilization by utilization of organic compounds
 0015979,photosynthesis
 0015980,energy derivation by oxidation of organic compounds
-0015985,energy coupled proton transport, down electrochemical gradient
+0015985,energy coupled proton transport_down electrochemical gradient
 0015986,ATP synthesis coupled proton transport
 0015987,GTP synthesis coupled proton transport
-0015988,energy coupled proton transport, against electrochemical gradient
+0015988,energy coupled proton transport_against electrochemical gradient
 0015989,light-driven proton transport
 0015990,electron transport coupled proton transport
 0015991,ATP hydrolysis coupled proton transport
@@ -4958,10 +4958,10 @@
 0016264,gap junction assembly
 0016265,death
 0016266,O-glycan processing
-0016267,O-glycan processing, core 1
-0016268,O-glycan processing, core 2
-0016269,O-glycan processing, core 3
-0016270,O-glycan processing, core 4
+0016267,O-glycan processing_core 1
+0016268,O-glycan processing_core 2
+0016269,O-glycan processing_core 3
+0016270,O-glycan processing_core 4
 0016271,tissue death
 0016310,phosphorylation
 0016311,dephosphorylation
@@ -5009,10 +5009,10 @@
 0016525,negative regulation of angiogenesis
 0016539,intein-mediated protein splicing
 0016540,protein autoprocessing
-0016543,male courtship behavior, orientation prior to leg tapping and wing vibration
-0016544,male courtship behavior, tapping to detect pheromone
-0016545,male courtship behavior, veined wing vibration
-0016546,male courtship behavior, proboscis-mediated licking
+0016543,male courtship behavior_orientation prior to leg tapping and wing vibration
+0016544,male courtship behavior_tapping to detect pheromone
+0016545,male courtship behavior_veined wing vibration
+0016546,male courtship behavior_proboscis-mediated licking
 0016550,insertion or deletion editing
 0016551,posttranscriptional insertion or deletion editing
 0016552,cotranscriptional insertion or deletion editing
@@ -5023,9 +5023,9 @@
 0016557,peroxisome membrane biogenesis
 0016558,protein import into peroxisome matrix
 0016559,peroxisome fission
-0016560,protein import into peroxisome matrix, docking
-0016561,protein import into peroxisome matrix, translocation
-0016562,protein import into peroxisome matrix, receptor recycling
+0016560,protein import into peroxisome matrix_docking
+0016561,protein import into peroxisome matrix_translocation
+0016562,protein import into peroxisome matrix_receptor recycling
 0016567,protein ubiquitination
 0016568,chromatin modification
 0016569,covalent chromatin modification
@@ -5082,7 +5082,7 @@
 0017183,peptidyl-diphthamide biosynthetic process from peptidyl-histidine
 0017184,peptidyl-diphthamide catabolic process
 0017185,peptidyl-lysine hydroxylation
-0017186,peptidyl-pyroglutamic acid biosynthetic process, using glutaminyl-peptide cyclotransferase
+0017186,peptidyl-pyroglutamic acid biosynthetic process_using glutaminyl-peptide cyclotransferase
 0017187,peptidyl-glutamic acid carboxylation
 0017189,N-terminal peptidyl-alanine acetylation
 0017190,N-terminal peptidyl-aspartic acid acetylation
@@ -5144,7 +5144,7 @@
 0018054,peptidyl-lysine biotinylation
 0018055,peptidyl-lysine lipoylation
 0018057,peptidyl-lysine oxidation
-0018058,N-terminal protein amino acid deamination, from amino carbon
+0018058,N-terminal protein amino acid deamination_from amino carbon
 0018059,N-terminal peptidyl-serine deamination
 0018060,N-terminal peptidyl-cysteine deamination
 0018061,peptidyl-L-3-phenyllactic acid biosynthetic process from peptidyl-phenylalanine
@@ -5579,13 +5579,13 @@
 0018983,Z-phenylacetaldoxime metabolic process
 0018984,naphthalenesulfonate metabolic process
 0018985,pronuclear envelope synthesis
-0018988,molting cycle, protein-based cuticle
+0018988,molting cycle_protein-based cuticle
 0018989,apolysis
-0018990,ecdysis, chitin-based cuticle
+0018990,ecdysis_chitin-based cuticle
 0018991,oviposition
 0018992,germ-line sex determination
 0018993,somatic sex determination
-0018996,molting cycle, collagen and cuticulin-based cuticle
+0018996,molting cycle_collagen and cuticulin-based cuticle
 0019042,latent virus infection
 0019043,establishment of viral latency
 0019044,latent virus maintenance
@@ -5611,7 +5611,7 @@
 0019064,viral envelope fusion with host membrane
 0019065,receptor mediated endocytosis of virus by host
 0019066,translocation of virus into host cell
-0019067,viral assembly, maturation, egress, and release
+0019067,viral assembly_maturation_egress_and release
 0019068,virus assembly
 0019069,viral capsid assembly
 0019070,viral genome maturation
@@ -5659,7 +5659,7 @@
 0019216,regulation of lipid metabolic process
 0019217,regulation of fatty acid metabolic process
 0019218,regulation of steroid metabolic process
-0019219,regulation of nucleobase, nucleoside, nucleotide and nucleic acid metabolic process
+0019219,regulation of nucleobase_nucleoside_nucleotide and nucleic acid metabolic process
 0019220,regulation of phosphate metabolic process
 0019221,cytokine and chemokine mediated signaling pathway
 0019222,regulation of metabolic process
@@ -5688,7 +5688,7 @@
 0019251,anaerobic cobalamin biosynthetic process
 0019252,starch biosynthetic process
 0019253,reductive pentose-phosphate cycle
-0019254,carnitine metabolic process, CoA-linked
+0019254,carnitine metabolic process_CoA-linked
 0019255,glucose 1-phosphate metabolic process
 0019256,acrylonitrile catabolic process
 0019257,4-nitrotoluene metabolic process
@@ -5698,7 +5698,7 @@
 0019262,N-acetylneuraminate catabolic process
 0019263,adamantanone catabolic process
 0019264,glycine biosynthetic process from serine
-0019265,glycine biosynthetic process, by transamination of glyoxylate
+0019265,glycine biosynthetic process_by transamination of glyoxylate
 0019266,asparagine biosynthetic process from oxaloacetate
 0019267,asparagine biosynthetic process from cysteine
 0019270,aerobactin biosynthetic process
@@ -5711,17 +5711,17 @@
 0019279,methionine biosynthetic process from L-homoserine via cystathionine
 0019280,methionine biosynthetic process from homoserine via O-acetyl-L-homoserine and cystathionine
 0019281,methionine biosynthetic process from homoserine via O-succinyl-L-homoserine and cystathionine
-0019282,methionine biosynthetic process, direct, from O-acetyl-L-homoserine
+0019282,methionine biosynthetic process_direct_from O-acetyl-L-homoserine
 0019283,methionine biosynthetic process from O-phospho-L-homoserine and cystathionine
 0019284,methionine biosynthetic process from S-adenosylmethionine
 0019285,glycine betaine biosynthetic process from choline
 0019286,glycine betaine biosynthetic process from glycine
-0019287,isopentenyl diphosphate biosynthetic process, mevalonate pathway
-0019288,isopentenyl diphosphate biosynthetic process, mevalonate-independent pathway
+0019287,isopentenyl diphosphate biosynthetic process_mevalonate pathway
+0019288,isopentenyl diphosphate biosynthetic process_mevalonate-independent pathway
 0019289,rhizobactin 1021 biosynthetic process
 0019290,siderophore biosynthetic process
 0019292,tyrosine biosynthetic process from chorismate via 4-hydroxyphenylpyruvate
-0019293,tyrosine biosynthetic process, by oxidation of phenylalanine
+0019293,tyrosine biosynthetic process_by oxidation of phenylalanine
 0019294,ketodeoxyoctanoate biosynthetic process
 0019295,coenzyme M biosynthetic process
 0019296,coenzyme M metabolic process
@@ -5759,8 +5759,8 @@
 0019328,anaerobic gallate catabolic process
 0019329,ammonia oxidation
 0019330,aldoxime metabolic process
-0019331,anaerobic respiration, using ammonium as electron donor
-0019332,aerobic respiration, using nitrite as electron donor
+0019331,anaerobic respiration_using ammonium as electron donor
+0019332,aerobic respiration_using nitrite as electron donor
 0019333,denitrification pathway
 0019334,p-cymene catabolic process
 0019335,3-methylquinoline catabolic process
@@ -5794,8 +5794,8 @@
 0019363,pyridine nucleotide biosynthetic process
 0019364,pyridine nucleotide catabolic process
 0019365,pyridine nucleotide salvage
-0019367,fatty acid elongation, saturated fatty acid
-0019368,fatty acid elongation, unsaturated fatty acid
+0019367,fatty acid elongation_saturated fatty acid
+0019368,fatty acid elongation_unsaturated fatty acid
 0019369,arachidonic acid metabolic process
 0019370,leukotriene biosynthetic process
 0019371,cyclooxygenase pathway
@@ -5805,16 +5805,16 @@
 0019375,galactolipid biosynthetic process
 0019376,galactolipid catabolic process
 0019377,glycolipid catabolic process
-0019378,sulfate assimilation, phosphoadenylyl sulfate reduction by an oxidoreductase, acting on sulfur group of donors, NAD or NADP as acceptor
-0019379,sulfate assimilation, phosphoadenylyl sulfate reduction by phosphoadenylyl-sulfate reductase (thioredoxin)
+0019378,sulfate assimilation_phosphoadenylyl sulfate reduction by an oxidoreductase_acting on sulfur group of donors_NAD or NADP as acceptor
+0019379,sulfate assimilation_phosphoadenylyl sulfate reduction by phosphoadenylyl-sulfate reductase (thioredoxin)
 0019380,3-phenylpropionate catabolic process
 0019381,atrazine catabolic process
 0019382,carbon tetrachloride catabolic process
 0019383,(+)-camphor catabolic process
 0019384,caprolactam catabolic process
-0019385,methanogenesis, from acetate
-0019386,methanogenesis, from carbon dioxide
-0019387,methanogenesis, from methanol
+0019385,methanogenesis_from acetate
+0019386,methanogenesis_from carbon dioxide
+0019387,methanogenesis_from methanol
 0019388,galactose catabolic process
 0019389,glucuronoside metabolic process
 0019390,glucuronoside biosynthetic process
@@ -5836,23 +5836,23 @@
 0019406,hexitol biosynthetic process
 0019407,hexitol catabolic process
 0019408,dolichol biosynthetic process
-0019409,aerobic respiration, using ammonium as electron donor
-0019410,aerobic respiration, using carbon monoxide as electron donor
-0019411,aerobic respiration, using ferrous ions as electron donor
-0019412,aerobic respiration, using hydrogen as electron donor
+0019409,aerobic respiration_using ammonium as electron donor
+0019410,aerobic respiration_using carbon monoxide as electron donor
+0019411,aerobic respiration_using ferrous ions as electron donor
+0019412,aerobic respiration_using hydrogen as electron donor
 0019413,acetate biosynthetic process
-0019414,aerobic respiration, using sulfur or sulfate as electron donor
+0019414,aerobic respiration_using sulfur or sulfate as electron donor
 0019415,acetate biosynthetic process from carbon monoxide
 0019416,polythionate oxidation
 0019417,sulfur oxidation
 0019418,sulfide oxidation
 0019419,sulfate reduction
 0019420,dissimilatory sulfate reduction
-0019421,sulfate reduction, APS pathway
+0019421,sulfate reduction_APS pathway
 0019422,disproportionation of elemental sulfur
-0019423,sulfur oxidation, ferric ion-dependent
-0019424,sulfide oxidation, using siroheme sulfite reductase
-0019425,sulfur oxidation, using siroheme sulfite reductase
+0019423,sulfur oxidation_ferric ion-dependent
+0019424,sulfide oxidation_using siroheme sulfite reductase
+0019425,sulfur oxidation_using siroheme sulfite reductase
 0019426,bisulfite reduction
 0019427,acetyl-CoA biosynthetic process from acetate
 0019428,allantoin biosynthetic process
@@ -5876,29 +5876,29 @@
 0019448,L-cysteine catabolic process
 0019449,L-cysteine catabolic process to hypotaurine
 0019450,L-cysteine catabolic process to pyruvate
-0019451,L-cysteine catabolic process to pyruvate, using cysteine dioxygenase
+0019451,L-cysteine catabolic process to pyruvate_using cysteine dioxygenase
 0019452,L-cysteine catabolic process to taurine
 0019453,L-cysteine catabolic process via cystine
-0019454,L-cysteine catabolic process via cystine, using glutathione-cystine transhydrogenase
-0019455,L-cysteine catabolic process via cystine, using cystine reductase
-0019456,L-cysteine catabolic process via cystine, using cysteine transaminase
+0019454,L-cysteine catabolic process via cystine_using glutathione-cystine transhydrogenase
+0019455,L-cysteine catabolic process via cystine_using cystine reductase
+0019456,L-cysteine catabolic process via cystine_using cysteine transaminase
 0019457,methionine catabolic process to succinyl-CoA
 0019458,methionine catabolic process via 2-oxobutanoate
 0019459,glutamate deamidation
 0019460,glutamate catabolic process to fumarate
-0019461,glutamate catabolic process to fumarate, using glutamate synthase (NADPH)
-0019462,glutamate catabolic process to fumarate, using glutaminase
+0019461,glutamate catabolic process to fumarate_using glutamate synthase (NADPH)
+0019462,glutamate catabolic process to fumarate_using glutaminase
 0019463,glycine catabolic process to creatine
 0019464,glycine decarboxylation via glycine cleavage system
 0019465,aspartate transamidation
 0019466,ornithine catabolic process via proline
-0019467,ornithine catabolic process, by decarboxylation
+0019467,ornithine catabolic process_by decarboxylation
 0019468,nopaline catabolic process
 0019469,octopine catabolic process
 0019470,4-hydroxyproline catabolic process
 0019471,4-hydroxyproline metabolic process
 0019472,4-hydroxyproline biosynthetic process
-0019473,L-lysine catabolic process to glutarate, by acetylation
+0019473,L-lysine catabolic process to glutarate_by acetylation
 0019474,L-lysine catabolic process to acetyl-CoA
 0019475,L-lysine catabolic process to acetate
 0019476,D-lysine catabolic process
@@ -5906,12 +5906,12 @@
 0019478,D-amino acid catabolic process
 0019479,L-alanine oxidation to propanoate
 0019480,L-alanine oxidation to pyruvate via D-alanine
-0019481,L-alanine catabolic process, by transamination
+0019481,L-alanine catabolic process_by transamination
 0019482,beta-alanine metabolic process
 0019483,beta-alanine biosynthetic process
 0019484,beta-alanine catabolic process
 0019485,beta-alanine catabolic process to L-alanine
-0019486,beta-alanine catabolic process to mevalonate semialdehyde, by transamination
+0019486,beta-alanine catabolic process to mevalonate semialdehyde_by transamination
 0019487,anaerobic acetylene catabolic process
 0019488,ribitol catabolic process to xylulose 5-phosphate
 0019489,methylgallate metabolic process
@@ -5938,7 +5938,7 @@
 0019510,S-adenosylhomocysteine catabolic process
 0019511,peptidyl-proline hydroxylation
 0019512,lactose catabolic process via tagatose-6-phosphate
-0019513,lactose catabolic process, using glucoside 3-dehydrogenase
+0019513,lactose catabolic process_using glucoside 3-dehydrogenase
 0019515,lactose catabolic process via UDP-galactose
 0019516,lactate oxidation
 0019517,threonine catabolic process to D-lactate
@@ -5994,8 +5994,8 @@
 0019571,D-arabinose catabolic process
 0019572,L-arabinose catabolic process
 0019573,D-arabinose catabolic process to xylulose 5-phosphate
-0019574,sucrose catabolic process, using glucoside 3-dehydrogenase
-0019575,sucrose catabolic process, using beta-fructofuranosidase
+0019574,sucrose catabolic process_using glucoside 3-dehydrogenase
+0019575,sucrose catabolic process_using beta-fructofuranosidase
 0019576,aerobic fructose catabolic process
 0019577,aldaric acid metabolic process
 0019578,aldaric acid biosynthetic process
@@ -6032,10 +6032,10 @@
 0019611,4-toluenecarboxylate metabolic process
 0019612,4-toluenecarboxylate catabolic process
 0019614,catechol catabolic process
-0019615,catechol catabolic process, ortho-cleavage
-0019616,catechol catabolic process, meta-cleavage
-0019617,protocatechuate catabolic process, meta-cleavage
-0019618,protocatechuate catabolic process, ortho-cleavage
+0019615,catechol catabolic process_ortho-cleavage
+0019616,catechol catabolic process_meta-cleavage
+0019617,protocatechuate catabolic process_meta-cleavage
+0019618,protocatechuate catabolic process_ortho-cleavage
 0019619,protocatechuate catabolic process
 0019620,aerobic benzoate metabolic process
 0019621,creatinine catabolic process to formate
@@ -6046,7 +6046,7 @@
 0019626,short-chain fatty acid catabolic process
 0019627,urea metabolic process
 0019628,urate catabolic process
-0019629,propionate catabolic process, 2-methylcitrate cycle
+0019629,propionate catabolic process_2-methylcitrate cycle
 0019630,quinate metabolic process
 0019631,quinate catabolic process
 0019632,shikimate metabolic process
@@ -6093,14 +6093,14 @@
 0019674,NAD metabolic process
 0019676,ammonia assimilation cycle
 0019677,NAD catabolic process
-0019678,propionate metabolic process, methylmalonyl pathway
-0019679,propionate metabolic process, methylcitrate cycle
+0019678,propionate metabolic process_methylmalonyl pathway
+0019679,propionate metabolic process_methylcitrate cycle
 0019680,L-methylmalonyl-CoA biosynthetic process
 0019681,acetyl-CoA assimilation pathway
 0019682,glyceraldehyde-3-phosphate metabolic process
 0019683,glyceraldehyde-3-phosphate catabolic process
-0019684,photosynthesis, light reaction
-0019685,photosynthesis, dark reaction
+0019684,photosynthesis_light reaction
+0019685,photosynthesis_dark reaction
 0019686,purine nucleoside interconversion
 0019687,pyruvate biosynthetic process from acetate
 0019688,purine deoxyribonucleoside interconversion
@@ -6146,7 +6146,7 @@
 0019746,hopanoid biosynthetic process
 0019747,regulation of isoprenoid metabolic process
 0019748,secondary metabolic process
-0019749,cytoskeleton-dependent cytoplasmic transport, nurse cell to oocyte
+0019749,cytoskeleton-dependent cytoplasmic transport_nurse cell to oocyte
 0019750,chloroplast transport
 0019751,polyol metabolic process
 0019752,carboxylic acid metabolic process
@@ -6164,8 +6164,8 @@
 0019795,nonprotein amino acid biosynthetic process
 0019796,nonprotein amino acid catabolic process
 0019800,peptide cross-linking via chondroitin 4-sulfate glycosaminoglycan
-0019801,cyclization of asparagine, during protein splicing
-0019802,cyclization of glutamine, during protein splicing
+0019801,cyclization of asparagine_during protein splicing
+0019802,cyclization of glutamine_during protein splicing
 0019803,peptidyl-aspartic acid carboxylation
 0019805,quinolinate biosynthetic process
 0019817,vesicle fusion with peroxisome
@@ -6193,12 +6193,12 @@
 0019889,pteridine metabolic process
 0019896,axon transport of mitochondrion
 0019915,sequestering of lipid
-0019916,peptidyl-D-alanine racemization, direct
+0019916,peptidyl-D-alanine racemization_direct
 0019917,peptidyl-D-alanine racemization via peptidyl-L-serine
-0019918,peptidyl-arginine methylation, to symmetrical-dimethyl arginine
-0019919,peptidyl-arginine methylation, to asymmetrical-dimethyl arginine
-0019920,peptidyl-1-thioglycine biosynthetic process, internal
-0019921,peptidyl-1-thioglycine biosynthetic process, carboxy-terminal
+0019918,peptidyl-arginine methylation_to symmetrical-dimethyl arginine
+0019919,peptidyl-arginine methylation_to asymmetrical-dimethyl arginine
+0019920,peptidyl-1-thioglycine biosynthetic process_internal
+0019921,peptidyl-1-thioglycine biosynthetic process_carboxy-terminal
 0019922,protein-chromophore linkage via peptidyl-cysteine
 0019923,alpha-1-microglobulin-chromophore linkage
 0019926,peptidyl-tryptophan oxidation to tryptophyl quinone
@@ -6211,8 +6211,8 @@
 0019933,cAMP-mediated signaling
 0019934,cGMP-mediated signaling
 0019935,cyclic-nucleotide-mediated signaling
-0019937,protein catenane formation via N6-(L-isoaspartyl)-L-lysine, autocatalytic
-0019938,peptide cross-linking via N6-(L-isoaspartyl)-L-lysine, presumed catalytic
+0019937,protein catenane formation via N6-(L-isoaspartyl)-L-lysine_autocatalytic
+0019938,peptide cross-linking via N6-(L-isoaspartyl)-L-lysine_presumed catalytic
 0019939,peptidyl-S-palmitoleyl-L-cysteine biosynthetic process from peptidyl-cysteine
 0019941,modification-dependent protein catabolic process
 0019950,SMT3-dependent protein catabolic process
@@ -6231,7 +6231,7 @@
 0020027,hemoglobin metabolic process
 0020028,hemoglobin import
 0020033,antigenic variation
-0020035,cytoadherence to microvasculature, mediated by parasite protein
+0020035,cytoadherence to microvasculature_mediated by parasite protein
 0021501,prechordal plate formation
 0021502,neural fold elevation formation
 0021503,neural fold bending
@@ -6536,8 +6536,8 @@
 0021806,initiation of movement involved in cerebral cortex radial glia guided migration
 0021807,motogenic signaling initiating cell movement in the cerebral cortex
 0021808,cytosolic calcium signaling involved in the initiation of cell movement in glial-mediated radial cell migration
-0021809,neurotrophic factor signaling initiating cell movement, involved in cerebral cortex radial glia guided migration
-0021810,neurotransmitter signaling initiating cell movement, involved in cerebral cortex radial glia guided migration
+0021809,neurotrophic factor signaling initiating cell movement_involved in cerebral cortex radial glia guided migration
+0021810,neurotransmitter signaling initiating cell movement_involved in cerebral cortex radial glia guided migration
 0021811,growth factor signaling initiating cell movement involved in cerebral cortex radial glia guided migration
 0021812,neuronal-glial interaction involved in cerebral cortex radial glia guided migration
 0021813,cell-cell adhesion involved in neuronal-glial interactions involved in cerebral cortex radial glia guided migration
@@ -6815,7 +6815,7 @@
 0030002,cellular anion homeostasis
 0030003,cellular cation homeostasis
 0030004,cellular monovalent inorganic cation homeostasis
-0030005,cellular di-, tri-valent inorganic cation homeostasis
+0030005,cellular di-_tri-valent inorganic cation homeostasis
 0030007,cellular potassium ion homeostasis
 0030010,establishment of cell polarity
 0030011,maintenance of cell polarity
@@ -6927,7 +6927,7 @@
 0030262,apoptotic nuclear changes
 0030263,apoptotic chromosome condensation
 0030264,nuclear fragmentation during apoptosis
-0030265,rhodopsin mediated G-protein signaling, coupled to IP3 second messenger
+0030265,rhodopsin mediated G-protein signaling_coupled to IP3 second messenger
 0030277,maintenance of gastrointestinal epithelium
 0030278,regulation of ossification
 0030279,negative regulation of ossification
@@ -6944,7 +6944,7 @@
 0030316,osteoclast differentiation
 0030317,sperm motility
 0030318,melanocyte differentiation
-0030319,cellular di-, tri-valent inorganic anion homeostasis
+0030319,cellular di-_tri-valent inorganic anion homeostasis
 0030320,cellular monovalent inorganic anion homeostasis
 0030321,transepithelial chloride transport
 0030322,stabilization of membrane potential
@@ -6955,7 +6955,7 @@
 0030327,prenylated protein catabolic process
 0030328,prenylcysteine catabolic process
 0030329,prenylcysteine metabolic process
-0030330,DNA damage response, signal transduction by p53 class mediator
+0030330,DNA damage response_signal transduction by p53 class mediator
 0030334,regulation of cell migration
 0030335,positive regulation of cell migration
 0030336,negative regulation of cell migration
@@ -6977,8 +6977,8 @@
 0030419,nicotianamine catabolic process
 0030420,establishment of competence for transformation
 0030421,defecation
-0030422,RNA interference, production of siRNA
-0030423,RNA interference, targeting of mRNA for destruction
+0030422,RNA interference_production of siRNA
+0030423,RNA interference_targeting of mRNA for destruction
 0030431,sleep
 0030432,peristalsis
 0030433,ER-associated protein catabolic process
@@ -6988,12 +6988,12 @@
 0030447,filamentous growth
 0030448,hyphal growth
 0030449,regulation of complement activation
-0030450,regulation of complement activation, classical pathway
-0030451,regulation of complement activation, alternative pathway
+0030450,regulation of complement activation_classical pathway
+0030451,regulation of complement activation_alternative pathway
 0030452,group I intron catabolic process
 0030466,chromatin silencing at silent mating-type cassette
 0030472,mitotic spindle organization and biogenesis in nucleus
-0030473,nuclear migration, microtubule-mediated
+0030473,nuclear migration_microtubule-mediated
 0030474,spindle pole body duplication
 0030476,ascospore wall assembly
 0030488,tRNA methylation
@@ -7085,7 +7085,7 @@
 0030711,positive regulation of border follicle cell delamination
 0030712,negative regulation of border follicle cell delamination
 0030713,ovarian follicle cell stalk formation
-0030714,anterior/posterior axis determination, follicular epithelium
+0030714,anterior/posterior axis determination_follicular epithelium
 0030715,oocyte growth in germarium-derived egg chamber
 0030716,oocyte fate determination
 0030717,karyosome formation
@@ -7148,8 +7148,8 @@
 0030843,negative regulation of intermediate filament depolymerization
 0030844,positive regulation of intermediate filament depolymerization
 0030845,inhibition of phospholipase C activity
-0030846,termination of RNA polymerase II transcription, poly(A)-coupled
-0030847,termination of RNA polymerase II transcription, poly(A)-independent
+0030846,termination of RNA polymerase II transcription_poly(A)-coupled
+0030847,termination of RNA polymerase II transcription_poly(A)-independent
 0030850,prostate gland development
 0030851,granulocyte differentiation
 0030852,regulation of granulocyte differentiation
@@ -7206,11 +7206,11 @@
 0030961,peptidyl-arginine hydroxylation
 0030962,peptidyl-arginine dihydroxylation to peptidyl-3,4-dihydroxy-L-arginine
 0030963,peptidyl-lysine dihydroxylation to 4,5-dihydroxy-L-lysine
-0030965,plasma membrane electron transport, NADH to quinone
+0030965,plasma membrane electron transport_NADH to quinone
 0030967,ER-nuclear sterol response pathway
 0030968,endoplasmic reticulum unfolded protein response
 0030969,UFP-specific transcription factor mRNA processing during unfolded protein response
-0030970,retrograde protein transport, ER to cytosol
+0030970,retrograde protein transport_ER to cytosol
 0030972,cleavage of cytosolic proteins during apoptosis
 0030974,thiamin pyrophosphate transport
 0030978,alpha-glucan metabolic process
@@ -7243,10 +7243,10 @@
 0031036,myosin II filament assembly
 0031037,myosin II filament disassembly
 0031038,myosin II filament assembly or disassembly
-0031041,O-glycan processing, core 5
-0031042,O-glycan processing, core 6
-0031043,O-glycan processing, core 7
-0031044,O-glycan processing, core 8
+0031041,O-glycan processing_core 5
+0031042,O-glycan processing_core 6
+0031043,O-glycan processing_core 7
+0031044,O-glycan processing_core 8
 0031046,spindle pole body duplication in cytoplasm
 0031047,gene silencing by RNA
 0031048,chromatin silencing by small RNA
@@ -7275,7 +7275,7 @@
 0031076,embryonic camera-type eye development
 0031077,post-embryonic camera-type eye development
 0031081,nuclear pore distribution
-0031086,nuclear-transcribed mRNA catabolic process, deadenylation-independent decay
+0031086,nuclear-transcribed mRNA catabolic process_deadenylation-independent decay
 0031087,deadenylation-independent decapping of nuclear-transcribed mRNA
 0031098,stress-activated protein kinase signaling pathway
 0031099,regeneration
@@ -7345,31 +7345,31 @@
 0031173,otolith mineralization completed early in development
 0031174,lifelong otolith mineralization
 0031175,neurite development
-0031178,siderophore biosynthetic process, peptide formation
+0031178,siderophore biosynthetic process_peptide formation
 0031179,peptide modification
-0031180,siderophore biosynthetic process, peptide modification
-0031181,achromobactin biosynthetic process, peptide formation
-0031182,achromobactin biosynthetic process, peptide modification
-0031183,chrysobactin biosynthetic process, peptide formation
-0031184,chrysobactin biosynthetic process, peptide modification
-0031185,ferricrocin biosynthetic process, peptide formation
-0031186,ferricrocin biosynthetic process, peptide modification
-0031187,pyochelin biosynthetic process, peptide formation
-0031188,pyochelin biosynthetic process, peptide modification
-0031189,siderophore biosynthetic process from catechol, peptide formation
-0031190,siderophore biosynthetic process from catechol, peptide modification
-0031191,enterobactin biosynthetic process, peptide formation
-0031192,enterobactin biosynthetic process, peptide modification
-0031193,rhizobactin 1021 biosynthetic process, peptide formation
-0031194,rhizobactin 1021 biosynthetic process, peptide modification
-0031195,vibriobactin biosynthetic process, peptide formation
-0031196,vibriobactin biosynthetic process, peptide modification
-0031197,siderophore biosynthetic process from hydroxamic acid, peptide formation
-0031198,siderophore biosynthetic process from hydroxamic acid, peptide modification
-0031199,ferrichrome biosynthetic process, peptide formation
-0031200,ferrichrome biosynthetic process, peptide modification
-0031203,posttranslational protein targeting to membrane, docking
-0031204,posttranslational protein targeting to membrane, translocation
+0031180,siderophore biosynthetic process_peptide modification
+0031181,achromobactin biosynthetic process_peptide formation
+0031182,achromobactin biosynthetic process_peptide modification
+0031183,chrysobactin biosynthetic process_peptide formation
+0031184,chrysobactin biosynthetic process_peptide modification
+0031185,ferricrocin biosynthetic process_peptide formation
+0031186,ferricrocin biosynthetic process_peptide modification
+0031187,pyochelin biosynthetic process_peptide formation
+0031188,pyochelin biosynthetic process_peptide modification
+0031189,siderophore biosynthetic process from catechol_peptide formation
+0031190,siderophore biosynthetic process from catechol_peptide modification
+0031191,enterobactin biosynthetic process_peptide formation
+0031192,enterobactin biosynthetic process_peptide modification
+0031193,rhizobactin 1021 biosynthetic process_peptide formation
+0031194,rhizobactin 1021 biosynthetic process_peptide modification
+0031195,vibriobactin biosynthetic process_peptide formation
+0031196,vibriobactin biosynthetic process_peptide modification
+0031197,siderophore biosynthetic process from hydroxamic acid_peptide formation
+0031198,siderophore biosynthetic process from hydroxamic acid_peptide modification
+0031199,ferrichrome biosynthetic process_peptide formation
+0031200,ferrichrome biosynthetic process_peptide modification
+0031203,posttranslational protein targeting to membrane_docking
+0031204,posttranslational protein targeting to membrane_translocation
 0031214,biomineral formation
 0031215,shell calcification
 0031221,arabinan metabolic process
@@ -7399,7 +7399,7 @@
 0031289,actin phosphorylation
 0031290,retinal ganglion cell axon guidance
 0031291,Ran protein signal transduction
-0031292,gene conversion at mating-type locus, DNA double-strand break processing
+0031292,gene conversion at mating-type locus_DNA double-strand break processing
 0031293,membrane protein intracellular domain proteolysis
 0031294,lymphocyte costimulation
 0031295,T cell costimulation
@@ -7436,7 +7436,7 @@
 0031348,negative regulation of defense response
 0031349,positive regulation of defense response
 0031363,N-terminal protein amino acid deamination
-0031364,N-terminal protein amino acid deamination, from side chain
+0031364,N-terminal protein amino acid deamination_from side chain
 0031365,N-terminal protein amino acid modification
 0031366,N-terminal peptidyl-arginine deamination
 0031367,N-terminal peptidyl-glutamine deamination
@@ -7541,7 +7541,7 @@
 0031580,membrane raft distribution
 0031581,hemidesmosome assembly
 0031582,replication fork arrest at rDNA repeats
-0031583,G-protein signaling, phospholipase D activating pathway
+0031583,G-protein signaling_phospholipase D activating pathway
 0031584,phospholipase D activation
 0031585,regulation of inositol-1,4,5-triphosphate receptor activity
 0031586,negative regulation of inositol-1,4,5-triphosphate receptor activity
@@ -7559,7 +7559,7 @@
 0031630,regulation of synaptic vesicle fusion to presynaptic membrane
 0031631,negative regulation of synaptic vesicle fusion to presynaptic membrane
 0031632,positive regulation of synaptic vesicle fusion to presynaptic membrane
-0031635,opioid receptor, adenylate cyclase inhibiting pathway
+0031635,opioid receptor_adenylate cyclase inhibiting pathway
 0031637,regulation of neuronal synaptic plasticity in response to neurotrophin
 0031638,zymogen activation
 0031639,plasminogen activation
@@ -7738,7 +7738,7 @@
 0032193,ubiquinone biosynthetic process via 2-polyprenylphenol
 0032194,ubiquinone biosynthetic process via 3,4-dihydroxy-5-polyprenylbenzoate
 0032196,transposition
-0032197,transposition, RNA-mediated
+0032197,transposition_RNA-mediated
 0032198,MITE transposition
 0032199,transcription during RNA-mediated transposition
 0032200,telomere organization and biogenesis
@@ -7760,15 +7760,15 @@
 0032218,riboflavin transport
 0032219,cell wall catabolic process during cytogamy
 0032220,plasma membrane fusion during cytogamy
-0032222,regulation of synaptic transmission, cholinergic
-0032223,negative regulation of synaptic transmission, cholinergic
-0032224,positive regulation of synaptic transmission, cholinergic
-0032225,regulation of synaptic transmission, dopaminergic
-0032226,positive regulation of synaptic transmission, dopaminergic
-0032227,negative regulation of synaptic transmission, dopaminergic
-0032228,regulation of synaptic transmission, GABAergic
-0032229,negative regulation of synaptic transmission, GABAergic
-0032230,positive regulation of synaptic transmission, GABAergic
+0032222,regulation of synaptic transmission_cholinergic
+0032223,negative regulation of synaptic transmission_cholinergic
+0032224,positive regulation of synaptic transmission_cholinergic
+0032225,regulation of synaptic transmission_dopaminergic
+0032226,positive regulation of synaptic transmission_dopaminergic
+0032227,negative regulation of synaptic transmission_dopaminergic
+0032228,regulation of synaptic transmission_GABAergic
+0032229,negative regulation of synaptic transmission_GABAergic
+0032230,positive regulation of synaptic transmission_GABAergic
 0032231,regulation of actin filament bundle formation
 0032232,negative regulation of actin filament bundle formation
 0032233,positive regulation of actin filament bundle formation
@@ -7777,9 +7777,9 @@
 0032236,positive regulation of calcium ion transport via store-operated calcium channel
 0032237,activation of store-operated calcium channel activity
 0032238,adenosine transport
-0032239,regulation of nucleobase, nucleoside, nucleotide and nucleic acid transport
-0032240,negative regulation of nucleobase, nucleoside, nucleotide and nucleic acid transport
-0032241,positive regulation of nucleobase, nucleoside, nucleotide and nucleic acid transport
+0032239,regulation of nucleobase_nucleoside_nucleotide and nucleic acid transport
+0032240,negative regulation of nucleobase_nucleoside_nucleotide and nucleic acid transport
+0032241,positive regulation of nucleobase_nucleoside_nucleotide and nucleic acid transport
 0032242,regulation of nucleoside transport
 0032243,negative regulation of nucleoside transport
 0032244,positive regulation of nucleoside transport
@@ -8242,12 +8242,12 @@
 0032826,regulation of natural killer cell differentiation during immune response
 0032827,negative regulation of natural killer cell differentiation during immune response
 0032828,positive regulation of natural killer cell differentiation during immune response
-0032829,regulation of CD4-positive, CD25-positive, alpha-beta regulatory T cell differentiation
-0032830,negative regulation of CD4-positive, CD25-positive, alpha-beta regulatory T cell differentiation
-0032831,positive regulation of CD4-positive, CD25-positive, alpha-beta regulatory T cell differentiation
-0032832,regulation of CD4-positive, CD25-positive, alpha-beta regulatory T cell differentiation during immune response
-0032833,negative regulation of CD4-positive, CD25-positive, alpha-beta regulatory T cell differentiation during immune response
-0032834,positive regulation of CD4-positive, CD25-positive, alpha-beta regulatory T cell differentiation during immune response
+0032829,regulation of CD4-positive_CD25-positive_alpha-beta regulatory T cell differentiation
+0032830,negative regulation of CD4-positive_CD25-positive_alpha-beta regulatory T cell differentiation
+0032831,positive regulation of CD4-positive_CD25-positive_alpha-beta regulatory T cell differentiation
+0032832,regulation of CD4-positive_CD25-positive_alpha-beta regulatory T cell differentiation during immune response
+0032833,negative regulation of CD4-positive_CD25-positive_alpha-beta regulatory T cell differentiation during immune response
+0032834,positive regulation of CD4-positive_CD25-positive_alpha-beta regulatory T cell differentiation during immune response
 0032835,glomerulus development
 0032836,glomerular basement membrane development
 0032837,distributive segregation
@@ -8293,7 +8293,7 @@
 0032886,regulation of microtubule-based process
 0032887,regulation of spindle elongation
 0032888,regulation of mitotic spindle elongation
-0032889,regulation of vacuole fusion, non-autophagic
+0032889,regulation of vacuole fusion_non-autophagic
 0032890,regulation of organic acid transport
 0032891,negative regulation of organic acid transport
 0032892,positive regulation of organic acid transport
@@ -8490,10 +8490,10 @@
 0033153,T cell receptor V(D)J recombination
 0033156,oligogalacturonide transport
 0033157,regulation of intracellular protein transport
-0033158,regulation of protein import into nucleus, translocation
-0033159,negative regulation of protein import into nucleus, translocation
-0033160,positive regulation of protein import into nucleus, translocation
-0033168,RNA interference, conversion of ds siRNA to ss siRNA
+0033158,regulation of protein import into nucleus_translocation
+0033159,negative regulation of protein import into nucleus_translocation
+0033160,positive regulation of protein import into nucleus_translocation
+0033168,RNA interference_conversion of ds siRNA to ss siRNA
 0033169,histone H3-K9 demethylation
 0033173,calcineurin-NFAT signaling pathway
 0033182,regulation of histone ubiquitination
@@ -8610,8 +8610,8 @@
 0033358,UDP-L-arabinose biosynthetic process
 0033359,lysine biosynthetic process via diaminopimelate and N-succinyl-2-amino-6-ketopimelate
 0033360,lysine biosynthetic process via diaminopimelate and L-2-acetamido-6-oxoheptanedioate
-0033361,lysine biosynthetic process via diaminopimelate, dehydrogenase pathway
-0033362,lysine biosynthetic process via diaminopimelate, diaminopimelate-aminotransferase pathway
+0033361,lysine biosynthetic process via diaminopimelate_dehydrogenase pathway
+0033362,lysine biosynthetic process via diaminopimelate_diaminopimelate-aminotransferase pathway
 0033363,secretory granule organization and biogenesis
 0033364,mast cell secretory granule organization and biogenesis
 0033365,protein localization in organelle
@@ -8638,7 +8638,7 @@
 0033386,geranylgeranyl diphosphate biosynthetic process
 0033387,putrescine biosynthetic process from ornithine
 0033388,putrescine biosynthetic process from arginine
-0033389,putrescine biosynthetic process from arginine, using agmatinase
+0033389,putrescine biosynthetic process from arginine_using agmatinase
 0033390,putrescine biosynthetic process from arginine via N-carbamoylputrescine
 0033393,homogalacturonan catabolic process
 0033394,beta-alanine biosynthetic process via 1,3 diaminopropane
@@ -8723,14 +8723,14 @@
 0033538,ajugose biosynthetic process using galactan:galactan galactosyltransferase
 0033539,fatty acid beta-oxidation using acyl-CoA dehydrogenase
 0033540,fatty acid beta-oxidation using acyl-CoA oxidase
-0033541,fatty acid beta-oxidation, unsaturated, odd number
-0033542,fatty acid beta-oxidation, unsaturated, even number
-0033543,fatty acid beta-oxidation, unsaturated, even number, reductase/isomerase pathway
-0033544,fatty acid beta-oxidation, unsaturated, even number, epimerase pathway
-0033545,myo-inositol hexakisphosphate biosynthetic process, lipid-dependent
-0033546,myo-inositol hexakisphosphate biosynthetic process, via inositol 1,3,4-trisphosphate
-0033547,myo-inositol hexakisphosphate biosynthetic process, via direct phosphorylation of inositol 1,4,5-trisphosphate
-0033548,myo-inositol hexakisphosphate biosynthetic process, lipid-independent
+0033541,fatty acid beta-oxidation_unsaturated_odd number
+0033542,fatty acid beta-oxidation_unsaturated_even number
+0033543,fatty acid beta-oxidation_unsaturated_even number_reductase/isomerase pathway
+0033544,fatty acid beta-oxidation_unsaturated_even number_epimerase pathway
+0033545,myo-inositol hexakisphosphate biosynthetic process_lipid-dependent
+0033546,myo-inositol hexakisphosphate biosynthetic process_via inositol 1,3,4-trisphosphate
+0033547,myo-inositol hexakisphosphate biosynthetic process_via direct phosphorylation of inositol 1,4,5-trisphosphate
+0033548,myo-inositol hexakisphosphate biosynthetic process_lipid-independent
 0033552,response to vitamin B3
 0033554,cellular response to stress
 0033555,multicellular organismal response to stress
@@ -8740,7 +8740,7 @@
 0033563,dorsal/ventral axon guidance
 0033564,anterior/posterior axon guidance
 0033566,gamma-tubulin complex localization
-0033567,DNA replication, Okazaki fragment processing
+0033567,DNA replication_Okazaki fragment processing
 0033571,lactoferrin transport
 0033572,transferrin transport
 0033574,response to testosterone stimulus
@@ -8778,7 +8778,7 @@
 0033617,mitochondrial respiratory chain complex IV assembly
 0033618,plasma membrane respiratory chain complex IV assembly
 0033619,membrane protein proteolysis
-0033621,nuclear-transcribed mRNA catabolic process, meiosis-specific transcripts
+0033621,nuclear-transcribed mRNA catabolic process_meiosis-specific transcripts
 0033622,integrin activation
 0033623,regulation of integrin activation
 0033624,negative regulation of integrin activation
@@ -8818,7 +8818,7 @@
 0033672,positive regulation of NAD+ kinase activity
 0033673,negative regulation of kinase activity
 0033674,positive regulation of kinase activity
-0033683,nucleotide-excision repair, DNA incision
+0033683,nucleotide-excision repair_DNA incision
 0033684,regulation of luteinizing hormone secretion
 0033685,negative regulation of luteinizing hormone secretion
 0033686,positive regulation of luteinizing hormone secretion
@@ -9120,7 +9120,7 @@
 0034401,establishment and/or maintenance of chromatin architecture during transcription
 0034402,recruitment of 3'-end processing factors to RNA polymerase II holoenzyme complex
 0034403,alignment of 3' and 5' splice sites of nuclear mRNA
-0034404,nucleobase, nucleoside and nucleotide biosynthetic process
+0034404,nucleobase_nucleoside and nucleotide biosynthetic process
 0034405,response to fluid shear stress
 0034406,cell wall beta-glucan metabolic process
 0034407,cell wall 1,3-beta-glucan metabolic process
@@ -9130,13 +9130,13 @@
 0034411,cell wall 1,3-beta-glucan biosynthetic process
 0034412,ascospore wall beta-glucan biosynthetic process
 0034413,ascospore wall 1,3-beta-glucan biosynthetic process
-0034414,tRNA 3'-trailer cleavage, endonucleolytic
-0034415,tRNA 3'-trailer cleavage, exonucleolytic
+0034414,tRNA 3'-trailer cleavage_endonucleolytic
+0034415,tRNA 3'-trailer cleavage_exonucleolytic
 0034418,urate biosynthetic process
 0034420,co-translational protein amino acid acetylation
 0034421,post-translational protein amino acid acetylation
-0034427,nuclear-transcribed mRNA catabolic process, exonucleolytic, 3'-5'
-0034428,nuclear-transcribed mRNA catabolic process, exonucleolytic, 5'-3'
+0034427,nuclear-transcribed mRNA catabolic process_exonucleolytic_3'-5'
+0034428,nuclear-transcribed mRNA catabolic process_exonucleolytic_5'-3'
 0034429,tectobulbar tract morphogenesis
 0034433,steroid esterification
 0034434,sterol esterification
@@ -9189,8 +9189,8 @@
 0034509,centromeric core chromatin formation
 0034510,centromere separation
 0034514,mitochondrial unfolded protein response
-0035001,dorsal trunk growth, open tracheal system
-0035002,liquid clearance, open tracheal system
+0035001,dorsal trunk growth_open tracheal system
+0035002,liquid clearance_open tracheal system
 0035006,melanization defense response
 0035007,regulation of melanization defense response
 0035008,positive regulation of melanization defense response
@@ -9211,14 +9211,14 @@
 0035026,leading edge cell differentiation
 0035027,leading edge cell fate commitment
 0035028,leading edge cell fate determination
-0035029,dorsal closure, leading edge cell fate commitment
+0035029,dorsal closure_leading edge cell fate commitment
 0035036,sperm-egg recognition
 0035037,sperm entry
 0035038,female pronucleus formation
 0035039,male pronucleus formation
 0035040,sperm nuclear envelope removal
 0035041,sperm chromatin decondensation
-0035042,fertilization, exchange of chromosomal proteins
+0035042,fertilization_exchange of chromosomal proteins
 0035043,male pronuclear envelope synthesis
 0035044,sperm aster formation
 0035045,sperm plasma membrane disassembly
@@ -9251,12 +9251,12 @@
 0035082,axoneme biogenesis
 0035083,cilium axoneme biogenesis
 0035084,flagellar axoneme biogenesis
-0035087,RNA interference, siRNA loading onto RISC
+0035087,RNA interference_siRNA loading onto RISC
 0035088,establishment and/or maintenance of apical/basal cell polarity
 0035089,establishment of apical/basal cell polarity
 0035090,maintenance of apical/basal cell polarity
 0035092,sperm chromatin condensation
-0035093,spermatogenesis, exchange of chromosomal proteins
+0035093,spermatogenesis_exchange of chromosomal proteins
 0035094,response to nicotine
 0035095,behavioral response to nicotine
 0035096,larval midgut cell programmed cell death
@@ -9304,20 +9304,20 @@
 0035143,caudal fin morphogenesis
 0035144,anal fin morphogenesis
 0035146,tube fusion
-0035147,branch fusion, open tracheal system
+0035147,branch fusion_open tracheal system
 0035148,lumen formation
-0035149,lumen formation, open tracheal system
+0035149,lumen formation_open tracheal system
 0035150,regulation of tube size
-0035151,regulation of tube size, open tracheal system
-0035152,regulation of tube architecture, open tracheal system
-0035153,epithelial cell type specification, open tracheal system
-0035154,terminal cell fate specification, open tracheal system
-0035155,negative regulation of terminal cell fate specification, open tracheal system
+0035151,regulation of tube size_open tracheal system
+0035152,regulation of tube architecture_open tracheal system
+0035153,epithelial cell type specification_open tracheal system
+0035154,terminal cell fate specification_open tracheal system
+0035155,negative regulation of terminal cell fate specification_open tracheal system
 0035156,fusion cell fate specification
 0035157,negative regulation of fusion cell fate specification
-0035158,regulation of tube diameter, open tracheal system
-0035159,regulation of tube length, open tracheal system
-0035160,maintenance of epithelial integrity, open tracheal system
+0035158,regulation of tube diameter_open tracheal system
+0035159,regulation of tube length_open tracheal system
+0035160,maintenance of epithelial integrity_open tracheal system
 0035161,imaginal disc lineage restriction
 0035162,embryonic hemopoiesis
 0035163,embryonic hemocyte differentiation
@@ -9346,11 +9346,11 @@
 0035193,larval central nervous system remodeling
 0035194,posttranscriptional gene silencing by RNA
 0035195,gene silencing by miRNA
-0035196,gene silencing by miRNA, production of miRNAs
+0035196,gene silencing by miRNA_production of miRNAs
 0035199,salt aversion
 0035200,leg disc anterior/posterior pattern formation
 0035201,leg disc anterior/posterior lineage restriction
-0035202,sac formation, open tracheal system
+0035202,sac formation_open tracheal system
 0035203,regulation of lamellocyte differentiation
 0035204,negative regulation of lamellocyte differentiation
 0035205,positive regulation of lamellocyte differentiation
@@ -9387,7 +9387,7 @@
 0035245,peptidyl-arginine C-methylation
 0035246,peptidyl-arginine N-methylation
 0035247,peptidyl-arginine omega-N-methylation
-0035249,synaptic transmission, glutamatergic
+0035249,synaptic transmission_glutamatergic
 0035260,internal genitalia morphogenesis
 0035261,external genitalia morphogenesis
 0035262,gonad morphogenesis
@@ -9400,10 +9400,10 @@
 0035270,endocrine system development
 0035271,ring gland development
 0035272,exocrine system development
-0035277,spiracle morphogenesis, open tracheal system
-0035278,gene silencing by miRNA, negative regulation of translation
-0035279,gene silencing by miRNA, mRNA cleavage
-0035280,gene silencing by miRNA, miRNA loading onto RISC
+0035277,spiracle morphogenesis_open tracheal system
+0035278,gene silencing by miRNA_negative regulation of translation
+0035279,gene silencing by miRNA_mRNA cleavage
+0035280,gene silencing by miRNA_miRNA loading onto RISC
 0035281,pre-microRNA export from nucleus
 0035282,segmentation
 0035283,central nervous system segmentation
@@ -9414,8 +9414,8 @@
 0035288,anterior head segmentation
 0035289,posterior head segmentation
 0035290,trunk segmentation
-0035291,specification of segmental identity, intercalary segment
-0035292,specification of segmental identity, trunk
+0035291,specification of segmental identity_intercalary segment
+0035292,specification of segmental identity_trunk
 0035293,chitin-based larval cuticle pattern formation
 0035294,determination of wing disc primordium
 0035295,tube development
@@ -9431,7 +9431,7 @@
 0035309,wing and notum subfield formation
 0035310,notum cell fate specification
 0035311,wing cell fate specification
-0035313,wound healing, spreading of epidermal cells
+0035313,wound healing_spreading of epidermal cells
 0035314,scab formation
 0035315,hair cell differentiation
 0035316,non-sensory hair organization and biogenesis
@@ -9468,12 +9468,12 @@
 0040026,positive regulation of vulval development
 0040027,negative regulation of vulval development
 0040028,regulation of vulval development
-0040029,regulation of gene expression, epigenetic
-0040030,regulation of molecular function, epigenetic
+0040029,regulation of gene expression_epigenetic
+0040030,regulation of molecular function_epigenetic
 0040031,snRNA modification
 0040032,post-embryonic body morphogenesis
-0040033,negative regulation of translation, ncRNA-mediated
-0040034,regulation of development, heterochronic
+0040033,negative regulation of translation_ncRNA-mediated
+0040034,regulation of development_heterochronic
 0040035,hermaphrodite genitalia development
 0040036,regulation of fibroblast growth factor receptor signaling pathway
 0040037,negative regulation of fibroblast growth factor receptor signaling pathway
@@ -9492,8 +9492,8 @@
 0042034,peptidyl-lysine esterification
 0042035,regulation of cytokine biosynthetic process
 0042036,negative regulation of cytokine biosynthetic process
-0042037,peptidyl-histidine methylation, to form pros-methylhistidine
-0042038,peptidyl-histidine methylation, to form tele-methylhistidine
+0042037,peptidyl-histidine methylation_to form pros-methylhistidine
+0042038,peptidyl-histidine methylation_to form tele-methylhistidine
 0042039,vanadium incorporation into metallo-sulfur cluster
 0042040,metal incorporation into metallo-molybdopterin complex
 0042042,tungsten incorporation into tungsten-molybdopterin complex
@@ -9564,8 +9564,8 @@
 0042138,meiotic DNA double-strand break formation
 0042139,early meiotic recombination nodule assembly
 0042140,late meiotic recombination nodule assembly
-0042144,vacuole fusion, non-autophagic
-0042147,retrograde transport, endosome to Golgi
+0042144,vacuole fusion_non-autophagic
+0042147,retrograde transport_endosome to Golgi
 0042148,strand invasion
 0042149,cellular response to glucose starvation
 0042150,plasmid recombination
@@ -9677,7 +9677,7 @@
 0042297,vocal learning
 0042303,molting cycle
 0042304,regulation of fatty acid biosynthetic process
-0042305,specification of segmental identity, mandibular segment
+0042305,specification of segmental identity_mandibular segment
 0042306,regulation of protein import into nucleus
 0042307,positive regulation of protein import into nucleus
 0042308,negative regulation of protein import into nucleus
@@ -9689,10 +9689,10 @@
 0042316,penicillin metabolic process
 0042317,penicillin catabolic process
 0042318,penicillin biosynthetic process
-0042320,regulation of circadian sleep/wake cycle, REM sleep
-0042321,negative regulation of circadian sleep/wake cycle, sleep
-0042322,negative regulation of circadian sleep/wake cycle, REM sleep
-0042323,negative regulation of circadian sleep/wake cycle, non-REM sleep
+0042320,regulation of circadian sleep/wake cycle_REM sleep
+0042321,negative regulation of circadian sleep/wake cycle_sleep
+0042322,negative regulation of circadian sleep/wake cycle_REM sleep
+0042323,negative regulation of circadian sleep/wake cycle_non-REM sleep
 0042325,regulation of phosphorylation
 0042326,negative regulation of phosphorylation
 0042327,positive regulation of phosphorylation
@@ -9747,11 +9747,11 @@
 0042384,cilium biogenesis
 0042386,hemocyte differentiation
 0042387,plasmatocyte differentiation
-0042388,gibberellic acid mediated signaling, G-alpha-dependent
-0042390,gibberellic acid mediated signaling, G-alpha-independent
+0042388,gibberellic acid mediated signaling_G-alpha-dependent
+0042390,gibberellic acid mediated signaling_G-alpha-independent
 0042391,regulation of membrane potential
-0042394,ecdysis, protein-based cuticle
-0042395,ecdysis, collagen and cuticulin-based cuticle
+0042394,ecdysis_protein-based cuticle
+0042395,ecdysis_collagen and cuticulin-based cuticle
 0042396,phosphagen biosynthetic process
 0042397,phosphagen catabolic process
 0042398,amino acid derivative biosynthetic process
@@ -9811,7 +9811,7 @@
 0042461,photoreceptor cell development
 0042462,eye photoreceptor cell development
 0042463,non-eye photoreceptor cell development
-0042464,dosage compensation, by hypoactivation of X chromosome
+0042464,dosage compensation_by hypoactivation of X chromosome
 0042465,kinesis
 0042466,chemokinesis
 0042467,orthokinesis
@@ -9885,7 +9885,7 @@
 0042545,cell wall modification
 0042546,cell wall biogenesis
 0042547,cell wall modification during multidimensional cell growth
-0042548,regulation of photosynthesis, light reaction
+0042548,regulation of photosynthesis_light reaction
 0042549,photosystem II stabilization
 0042550,photosystem I stabilization
 0042551,neuron maturation
@@ -9991,9 +9991,9 @@
 0042743,hydrogen peroxide metabolic process
 0042744,hydrogen peroxide catabolic process
 0042745,circadian sleep/wake cycle
-0042746,circadian sleep/wake cycle, wakefulness
-0042747,circadian sleep/wake cycle, REM sleep
-0042748,circadian sleep/wake cycle, non-REM sleep
+0042746,circadian sleep/wake cycle_wakefulness
+0042747,circadian sleep/wake cycle_REM sleep
+0042748,circadian sleep/wake cycle_non-REM sleep
 0042749,regulation of circadian sleep/wake cycle
 0042750,hibernation
 0042751,estivation
@@ -10008,10 +10008,10 @@
 0042761,very-long-chain fatty acid biosynthetic process
 0042762,regulation of sulfur metabolic process
 0042766,nucleosome mobilization
-0042769,DNA damage response, detection of DNA damage
-0042770,DNA damage response, signal transduction
-0042771,DNA damage response, signal transduction by p53 class mediator resulting in induction of apoptosis
-0042772,DNA damage response, signal transduction resulting in transcription
+0042769,DNA damage response_detection of DNA damage
+0042770,DNA damage response_signal transduction
+0042771,DNA damage response_signal transduction by p53 class mediator resulting in induction of apoptosis
+0042772,DNA damage response_signal transduction resulting in transcription
 0042773,ATP synthesis coupled electron transport
 0042774,plasma membrane ATP synthesis coupled electron transport
 0042775,organelle ATP synthesis coupled electron transport
@@ -10250,7 +10250,7 @@
 0043132,NAD transport
 0043133,hindgut contraction
 0043134,regulation of hindgut contraction
-0043137,DNA replication, removal of RNA primer
+0043137,DNA replication_removal of RNA primer
 0043143,translational machinery localization
 0043144,snoRNA processing
 0043145,snoRNA 3'-end cleavage
@@ -10263,7 +10263,7 @@
 0043152,induction of bacterial agglutination
 0043153,entrainment of circadian clock by photoperiod
 0043154,negative regulation of caspase activity
-0043155,negative regulation of photosynthesis, light reaction
+0043155,negative regulation of photosynthesis_light reaction
 0043156,chromatin remodeling in response to cation stress
 0043157,response to cation stress
 0043158,heterocyst differentiation
@@ -10360,18 +10360,18 @@
 0043362,nucleate erythrocyte maturation
 0043363,nucleate erythrocyte differentiation
 0043366,beta selection
-0043367,CD4-positive, alpha beta T cell differentiation
+0043367,CD4-positive_alpha beta T cell differentiation
 0043368,positive T cell selection
-0043369,CD4-positive or CD8-positive, alpha-beta T cell lineage commitment
-0043370,regulation of CD4-positive, alpha beta T cell differentiation
-0043371,negative regulation of CD4-positive, alpha beta T cell differentiation
-0043372,positive regulation of CD4-positive, alpha beta T cell differentiation
-0043373,CD4-positive, alpha-beta T cell lineage commitment
-0043374,CD8-positive, alpha-beta T cell differentiation
-0043375,CD8-positive, alpha-beta T cell lineage commitment
-0043376,regulation of CD8-positive, alpha-beta T cell differentiation
-0043377,negative regulation of CD8-positive, alpha-beta T cell differentiation
-0043378,positive regulation of CD8-positive, alpha-beta T cell differentiation
+0043369,CD4-positive or CD8-positive_alpha-beta T cell lineage commitment
+0043370,regulation of CD4-positive_alpha beta T cell differentiation
+0043371,negative regulation of CD4-positive_alpha beta T cell differentiation
+0043372,positive regulation of CD4-positive_alpha beta T cell differentiation
+0043373,CD4-positive_alpha-beta T cell lineage commitment
+0043374,CD8-positive_alpha-beta T cell differentiation
+0043375,CD8-positive_alpha-beta T cell lineage commitment
+0043376,regulation of CD8-positive_alpha-beta T cell differentiation
+0043377,negative regulation of CD8-positive_alpha-beta T cell differentiation
+0043378,positive regulation of CD8-positive_alpha-beta T cell differentiation
 0043379,memory T cell differentiation
 0043380,regulation of memory T cell differentiation
 0043381,negative regulation of memory T cell differentiation
@@ -10477,9 +10477,9 @@
 0043506,regulation of JNK activity
 0043507,positive regulation of JNK activity
 0043508,negative regulation of JNK activity
-0043516,regulation of DNA damage response, signal transduction by p53 class mediator
-0043517,positive regulation of DNA damage response, signal transduction by p53 class mediator
-0043518,negative regulation of DNA damage response, signal transduction by p53 class mediator
+0043516,regulation of DNA damage response_signal transduction by p53 class mediator
+0043517,positive regulation of DNA damage response_signal transduction by p53 class mediator
+0043518,negative regulation of DNA damage response_signal transduction by p53 class mediator
 0043519,regulation of myosin II filament assembly or disassembly
 0043520,regulation of myosin II filament assembly
 0043521,regulation of myosin II filament disassembly
@@ -10501,7 +10501,7 @@
 0043551,regulation of phosphoinositide 3-kinase activity
 0043552,positive regulation of phosphoinositide 3-kinase activity
 0043553,negative regulation of phosphoinositide 3-kinase activity
-0043554,aerobic respiration, using arsenite as electron donor
+0043554,aerobic respiration_using arsenite as electron donor
 0043555,regulation of translation in response to stress
 0043556,regulation of translation in response to oxidative stress
 0043557,regulation of translation in response to osmotic stress
@@ -10599,7 +10599,7 @@
 0043703,photoreceptor cell fate determination
 0043704,photoreceptor cell fate specification
 0043705,cyanophycin metabolic process
-0043706,heterophilic cell adhesion during cytoadherence to microvasculature, mediated by parasite protein
+0043706,heterophilic cell adhesion during cytoadherence to microvasculature_mediated by parasite protein
 0043707,cell adhesion during single-species biofilm formation in or on host organism
 0043708,cell adhesion during biofilm formation
 0043709,cell adhesion during single-species biofilm formation
@@ -10608,7 +10608,7 @@
 0043900,regulation of multi-organism process
 0043901,negative regulation of multi-organism process
 0043902,positive regulation of multi-organism process
-0043903,regulation of symbiosis, encompassing mutualism through parasitism
+0043903,regulation of symbiosis_encompassing mutualism through parasitism
 0043921,modulation by host of viral transcription
 0043922,negative regulation by host of viral transcription
 0043923,positive regulation by host of viral transcription
@@ -10617,8 +10617,8 @@
 0044002,acquisition of nutrients from host
 0044003,modification by symbiont of host morphology or physiology
 0044004,disruption by symbiont of host cells
-0044005,induction by symbiont in host of tumor, nodule, or growth
-0044006,induction by symbiont in host of tumor, nodule, or growth containing transformed cells
+0044005,induction by symbiont in host of tumor_nodule_or growth
+0044006,induction by symbiont in host of tumor_nodule_or growth containing transformed cells
 0044007,dissemination or transmission of symbiont from host
 0044008,dissemination or transmission of symbiont from host by vector
 0044009,viral transmission by vector
@@ -10669,7 +10669,7 @@
 0044400,multi-species biofilm formation on inanimate substrate
 0044401,multi-species biofilm formation in or on host organism
 0044402,competition with another organism
-0044403,symbiosis, encompassing mutualism through parasitism
+0044403,symbiosis_encompassing mutualism through parasitism
 0044405,recognition of host
 0044406,adhesion to host
 0044407,single-species biofilm formation in or on host organism
@@ -10698,7 +10698,7 @@
 0045014,negative regulation of transcription by glucose
 0045016,mitochondrial magnesium ion transport
 0045017,glycerolipid biosynthetic process
-0045018,retrograde transport, vacuole to Golgi
+0045018,retrograde transport_vacuole to Golgi
 0045019,negative regulation of nitric oxide biosynthetic process
 0045020,error-prone DNA repair
 0045021,error-free DNA repair
@@ -10713,9 +10713,9 @@
 0045039,protein import into mitochondrial inner membrane
 0045040,protein import into mitochondrial outer membrane
 0045041,protein import into mitochondrial intermembrane space
-0045042,protein import into mitochondrial intermembrane space, conservative
-0045043,protein import into mitochondrial intermembrane space, nonconservative
-0045044,protein import into mitochondrial intermembrane space, direct
+0045042,protein import into mitochondrial intermembrane space_conservative
+0045043,protein import into mitochondrial intermembrane space_nonconservative
+0045044,protein import into mitochondrial intermembrane space_direct
 0045046,protein import into peroxisome membrane
 0045047,protein targeting to ER
 0045048,protein insertion into ER membrane
@@ -10804,8 +10804,8 @@
 0045184,establishment of protein localization
 0045185,maintenance of protein location
 0045186,zonula adherens assembly
-0045187,regulation of circadian sleep/wake cycle, sleep
-0045188,regulation of circadian sleep/wake cycle, non-REM sleep
+0045187,regulation of circadian sleep/wake cycle_sleep
+0045188,regulation of circadian sleep/wake cycle_non-REM sleep
 0045189,connective tissue growth factor biosynthetic process
 0045190,isotype switching
 0045191,regulation of isotype switching
@@ -10817,7 +10817,7 @@
 0045201,maintenance of neuroblast polarity
 0045204,MAPK export from nucleus
 0045208,MAPK phosphatase export from nucleus
-0045209,MAPK phosphatase export from nucleus, leptomycin B sensitive
+0045209,MAPK phosphatase export from nucleus_leptomycin B sensitive
 0045210,FasL biosynthetic process
 0045212,neurotransmitter receptor biosynthetic process
 0045213,neurotransmitter receptor metabolic process
@@ -10841,8 +10841,8 @@
 0045232,S-layer organization and biogenesis
 0045234,protein palmitoleylation
 0045235,protein amino acid palmitoleylation
-0045291,nuclear mRNA trans splicing, splice leader addition
-0045292,nuclear mRNA cis splicing, via spliceosome
+0045291,nuclear mRNA trans splicing_splice leader addition
+0045292,nuclear mRNA cis splicing_via spliceosome
 0045297,post-mating behavior
 0045299,otolith mineralization
 0045304,regulation of establishment of competence for transformation
@@ -10952,13 +10952,13 @@
 0045427,enzyme active site formation via (phospho-5'-guanosine)-L-histidine
 0045428,regulation of nitric oxide biosynthetic process
 0045429,positive regulation of nitric oxide biosynthetic process
-0045433,male courtship behavior, veined wing generated song production
-0045434,negative regulation of female receptivity, post-mating
+0045433,male courtship behavior_veined wing generated song production
+0045434,negative regulation of female receptivity_post-mating
 0045443,juvenile hormone secretion
 0045444,fat cell differentiation
 0045445,myoblast differentiation
 0045446,endothelial cell differentiation
-0045448,mitotic cell cycle, embryonic
+0045448,mitotic cell cycle_embryonic
 0045449,regulation of transcription
 0045450,bicoid mRNA localization
 0045451,pole plasm oskar mRNA localization
@@ -11257,12 +11257,12 @@
 0045807,positive regulation of endocytosis
 0045808,negative regulation of establishment of competence for transformation
 0045809,positive regulation of establishment of competence for transformation
-0045812,negative regulation of Wnt receptor signaling pathway, calcium modulating pathway
-0045813,positive regulation of Wnt receptor signaling pathway, calcium modulating pathway
-0045814,negative regulation of gene expression, epigenetic
-0045815,positive regulation of gene expression, epigenetic
-0045816,negative regulation of transcription from RNA polymerase II promoter, global
-0045817,positive regulation of transcription from RNA polymerase II promoter, global
+0045812,negative regulation of Wnt receptor signaling pathway_calcium modulating pathway
+0045813,positive regulation of Wnt receptor signaling pathway_calcium modulating pathway
+0045814,negative regulation of gene expression_epigenetic
+0045815,positive regulation of gene expression_epigenetic
+0045816,negative regulation of transcription from RNA polymerase II promoter_global
+0045817,positive regulation of transcription from RNA polymerase II promoter_global
 0045818,negative regulation of glycogen catabolic process
 0045819,positive regulation of glycogen catabolic process
 0045820,negative regulation of glycolysis
@@ -11298,8 +11298,8 @@
 0045854,positive regulation of bicoid mRNA localization
 0045855,negative regulation of pole plasm oskar mRNA localization
 0045856,positive regulation of pole plasm oskar mRNA localization
-0045857,negative regulation of molecular function, epigenetic
-0045858,positive regulation of molecular function, epigenetic
+0045857,negative regulation of molecular function_epigenetic
+0045858,positive regulation of molecular function_epigenetic
 0045859,regulation of protein kinase activity
 0045860,positive regulation of protein kinase activity
 0045861,negative regulation of proteolysis
@@ -11323,12 +11323,12 @@
 0045885,positive regulation of survival gene product expression
 0045886,negative regulation of synaptic growth at neuromuscular junction
 0045887,positive regulation of synaptic growth at neuromuscular junction
-0045892,negative regulation of transcription, DNA-dependent
-0045893,positive regulation of transcription, DNA-dependent
-0045894,negative regulation of transcription, mating-type specific
-0045895,positive regulation of transcription, mating-type specific
-0045896,regulation of transcription, mitotic
-0045897,positive regulation of transcription, mitotic
+0045892,negative regulation of transcription_DNA-dependent
+0045893,positive regulation of transcription_DNA-dependent
+0045894,negative regulation of transcription_mating-type specific
+0045895,positive regulation of transcription_mating-type specific
+0045896,regulation of transcription_mitotic
+0045897,positive regulation of transcription_mitotic
 0045898,regulation of transcriptional preinitiation complex assembly
 0045899,positive regulation of transcriptional preinitiation complex assembly
 0045900,negative regulation of translational elongation
@@ -11365,11 +11365,11 @@
 0045931,positive regulation of mitotic cell cycle
 0045932,negative regulation of muscle contraction
 0045933,positive regulation of muscle contraction
-0045934,negative regulation of nucleobase, nucleoside, nucleotide and nucleic acid metabolic process
-0045935,positive regulation of nucleobase, nucleoside, nucleotide and nucleic acid metabolic process
+0045934,negative regulation of nucleobase_nucleoside_nucleotide and nucleic acid metabolic process
+0045935,positive regulation of nucleobase_nucleoside_nucleotide and nucleic acid metabolic process
 0045936,negative regulation of phosphate metabolic process
 0045937,positive regulation of phosphate metabolic process
-0045938,positive regulation of circadian sleep/wake cycle, sleep
+0045938,positive regulation of circadian sleep/wake cycle_sleep
 0045939,negative regulation of steroid metabolic process
 0045940,positive regulation of steroid metabolic process
 0045941,positive regulation of transcription
@@ -11387,12 +11387,12 @@
 0045954,positive regulation of natural killer cell mediated cytotoxicity
 0045955,negative regulation of calcium ion-dependent exocytosis
 0045956,positive regulation of calcium ion-dependent exocytosis
-0045957,negative regulation of complement activation, alternative pathway
-0045958,positive regulation of complement activation, alternative pathway
-0045959,negative regulation of complement activation, classical pathway
-0045960,positive regulation of complement activation, classical pathway
-0045961,negative regulation of development, heterochronic
-0045962,positive regulation of development, heterochronic
+0045957,negative regulation of complement activation_alternative pathway
+0045958,positive regulation of complement activation_alternative pathway
+0045959,negative regulation of complement activation_classical pathway
+0045960,positive regulation of complement activation_classical pathway
+0045961,negative regulation of development_heterochronic
+0045962,positive regulation of development_heterochronic
 0045963,negative regulation of dopamine metabolic process
 0045964,positive regulation of dopamine metabolic process
 0045965,negative regulation of ecdysteroid metabolic process
@@ -11404,10 +11404,10 @@
 0045971,positive regulation of juvenile hormone catabolic process
 0045972,negative regulation of juvenile hormone secretion
 0045973,positive regulation of juvenile hormone secretion
-0045974,regulation of translation, ncRNA-mediated
-0045975,positive regulation of translation, ncRNA-mediated
-0045976,negative regulation of mitotic cell cycle, embryonic
-0045977,positive regulation of mitotic cell cycle, embryonic
+0045974,regulation of translation_ncRNA-mediated
+0045975,positive regulation of translation_ncRNA-mediated
+0045976,negative regulation of mitotic cell cycle_embryonic
+0045977,positive regulation of mitotic cell cycle_embryonic
 0045978,negative regulation of nucleoside metabolic process
 0045979,positive regulation of nucleoside metabolic process
 0045980,negative regulation of nucleotide metabolic process
@@ -11435,26 +11435,26 @@
 0046002,positive regulation of preblastoderm mitotic cell cycle
 0046003,negative regulation of syncytial blastoderm mitotic cell cycle
 0046004,positive regulation of syncytial blastoderm mitotic cell cycle
-0046005,positive regulation of circadian sleep/wake cycle, REM sleep
+0046005,positive regulation of circadian sleep/wake cycle_REM sleep
 0046006,regulation of activated T cell proliferation
 0046007,negative regulation of activated T cell proliferation
-0046008,regulation of female receptivity, post-mating
-0046009,positive regulation of female receptivity, post-mating
-0046010,positive regulation of circadian sleep/wake cycle, non-REM sleep
+0046008,regulation of female receptivity_post-mating
+0046009,positive regulation of female receptivity_post-mating
+0046010,positive regulation of circadian sleep/wake cycle_non-REM sleep
 0046011,regulation of oskar mRNA translation
 0046012,positive regulation of oskar mRNA translation
 0046013,regulation of T cell homeostatic proliferation
 0046014,negative regulation of T cell homeostatic proliferation
 0046015,regulation of transcription by glucose
 0046016,positive regulation of transcription by glucose
-0046017,regulation of transcription from RNA polymerase I promoter, mitotic
-0046018,positive regulation of transcription from RNA polymerase I promoter, mitotic
+0046017,regulation of transcription from RNA polymerase I promoter_mitotic
+0046018,positive regulation of transcription from RNA polymerase I promoter_mitotic
 0046019,regulation of transcription from RNA polymerase II promoter by pheromones
 0046020,negative regulation of transcription from RNA polymerase II promoter by pheromones
-0046021,regulation of transcription from RNA polymerase II promoter, mitotic
-0046022,positive regulation of transcription from RNA polymerase II promoter, mitotic
-0046023,regulation of transcription from RNA polymerase III promoter, mitotic
-0046024,positive regulation of transcription from RNA polymerase III promoter, mitotic
+0046021,regulation of transcription from RNA polymerase II promoter_mitotic
+0046022,positive regulation of transcription from RNA polymerase II promoter_mitotic
+0046023,regulation of transcription from RNA polymerase III promoter_mitotic
+0046024,positive regulation of transcription from RNA polymerase III promoter_mitotic
 0046031,ADP metabolic process
 0046032,ADP catabolic process
 0046033,AMP metabolic process
@@ -11884,7 +11884,7 @@
 0046520,sphingoid biosynthetic process
 0046521,sphingoid catabolic process
 0046528,imaginal disc fusion
-0046529,imaginal disc fusion, thorax closure
+0046529,imaginal disc fusion_thorax closure
 0046530,photoreceptor cell differentiation
 0046532,regulation of photoreceptor cell differentiation
 0046533,negative regulation of photoreceptor cell differentiation
@@ -11962,8 +11962,8 @@
 0046660,female sex differentiation
 0046661,male sex differentiation
 0046662,regulation of oviposition
-0046663,dorsal closure, leading edge cell differentiation
-0046664,dorsal closure, amnioserosa morphology change
+0046663,dorsal closure_leading edge cell differentiation
+0046664,dorsal closure_amnioserosa morphology change
 0046665,amnioserosa maintenance
 0046666,retinal cell programmed cell death
 0046667,compound eye retinal cell programmed cell death
@@ -12027,8 +12027,8 @@
 0046737,active induction of cell-mediated immune response in host by virus
 0046738,active induction of innate immune response in host by virus
 0046739,spread of virus within host
-0046740,spread of virus within host, cell to cell
-0046741,spread of virus within host, tissue to tissue
+0046740,spread of virus within host_cell to cell
+0046741,spread of virus within host_tissue to tissue
 0046742,viral capsid transport in host cell nucleus
 0046743,viral capsid transport in host cell cytoplasm
 0046744,viral capsid envelopment
@@ -12089,8 +12089,8 @@
 0046804,peptide cross-linking via (2S,3S,4Xi,6R)-3-methyl-lanthionine sulfoxide
 0046805,protein-heme linkage via 1'-L-histidine
 0046807,viral scaffold assembly and maintenance
-0046813,virion attachment, binding of host cell surface receptor
-0046814,virion attachment, binding of host cell surface coreceptor
+0046813,virion attachment_binding of host cell surface receptor
+0046814,virion attachment_binding of host cell surface coreceptor
 0046815,genome retention in viral capsid
 0046819,protein secretion by the type V secretion system
 0046822,regulation of nucleocytoplasmic transport
@@ -12114,7 +12114,7 @@
 0046842,trisporic acid biosynthetic process
 0046843,dorsal appendage formation
 0046844,micropyle formation
-0046845,branched duct epithelial cell fate determination, open tracheal system
+0046845,branched duct epithelial cell fate determination_open tracheal system
 0046847,filopodium formation
 0046849,bone remodeling
 0046850,regulation of bone remodeling
@@ -12198,8 +12198,8 @@
 0047497,mitochondrion transport along microtubule
 0048002,antigen processing and presentation of peptide antigen
 0048003,antigen processing and presentation of lipid antigen via MHC class Ib
-0048006,antigen processing and presentation, endogenous lipid antigen via MHC class Ib
-0048007,antigen processing and presentation, exogenous lipid antigen via MHC class Ib
+0048006,antigen processing and presentation_endogenous lipid antigen via MHC class Ib
+0048007,antigen processing and presentation_exogenous lipid antigen via MHC class Ib
 0048008,platelet-derived growth factor receptor signaling pathway
 0048009,insulin-like growth factor receptor signaling pathway
 0048010,vascular endothelial growth factor receptor signaling pathway
@@ -12213,16 +12213,16 @@
 0048021,regulation of melanin biosynthetic process
 0048022,negative regulation of melanin biosynthetic process
 0048023,positive regulation of melanin biosynthetic process
-0048024,regulation of nuclear mRNA splicing, via spliceosome
-0048025,negative regulation of nuclear mRNA splicing, via spliceosome
-0048026,positive regulation of nuclear mRNA splicing, via spliceosome
+0048024,regulation of nuclear mRNA splicing_via spliceosome
+0048025,negative regulation of nuclear mRNA splicing_via spliceosome
+0048026,positive regulation of nuclear mRNA splicing_via spliceosome
 0048033,heme o metabolic process
 0048034,heme O biosynthetic process
 0048035,heme o catabolic process
 0048036,central complex development
 0048041,focal adhesion formation
-0048042,regulation of oviposition, post-mating
-0048047,mating behavior, sex discrimination
+0048042,regulation of oviposition_post-mating
+0048047,mating behavior_sex discrimination
 0048048,embryonic eye morphogenesis
 0048050,post-embryonic eye morphogenesis
 0048052,R1/R6 cell differentiation
@@ -12234,7 +12234,7 @@
 0048058,compound eye corneal lens development
 0048060,negative gravitaxis
 0048061,positive gravitaxis
-0048065,male courtship behavior, veined wing extension
+0048065,male courtship behavior_veined wing extension
 0048066,pigmentation during development
 0048067,cuticle pigmentation
 0048069,eye pigmentation
@@ -12267,7 +12267,7 @@
 0048096,chromatin-mediated maintenance of transcription
 0048097,long-term maintenance of gene activation
 0048098,antennal joint development
-0048099,anterior/posterior lineage restriction, imaginal disc
+0048099,anterior/posterior lineage restriction_imaginal disc
 0048100,wing disc anterior/posterior pattern formation
 0048102,autophagic cell death
 0048103,somatic stem cell division
@@ -12298,15 +12298,15 @@
 0048151,hyperphosphorylation
 0048152,S100 beta biosynthetic process
 0048153,S100 alpha biosynthetic process
-0048158,oogonium stage, oogenesis
-0048159,primary oocyte stage, oogenesis
-0048160,primary follicle stage, oogenesis
-0048161,double layer follicle stage, oogenesis
-0048162,multi-layer follicle stage, oogenesis
-0048163,scattered antral spaces stage, oogenesis
-0048164,distinct antral spaces stage, oogenesis
-0048165,fused antrum stage, oogenesis
-0048166,mature follicle stage, oogenesis
+0048158,oogonium stage_oogenesis
+0048159,primary oocyte stage_oogenesis
+0048160,primary follicle stage_oogenesis
+0048161,double layer follicle stage_oogenesis
+0048162,multi-layer follicle stage_oogenesis
+0048163,scattered antral spaces stage_oogenesis
+0048164,distinct antral spaces stage_oogenesis
+0048165,fused antrum stage_oogenesis
+0048166,mature follicle stage_oogenesis
 0048167,regulation of synaptic plasticity
 0048168,regulation of neuronal synaptic plasticity
 0048169,regulation of long-term neuronal synaptic plasticity
@@ -12325,17 +12325,17 @@
 0048195,Golgi membrane priming complex assembly
 0048197,Golgi membrane coat protein complex assembly
 0048198,Golgi vesicle bud deformation and release
-0048199,vesicle targeting, to, from or within Golgi
+0048199,vesicle targeting_to_from or within Golgi
 0048200,Golgi transport vesicle coating
-0048201,vesicle targeting, plasma membrane to endosome
+0048201,vesicle targeting_plasma membrane to endosome
 0048202,clathrin coating of Golgi vesicle
-0048203,vesicle targeting, trans-Golgi to endosome
-0048204,vesicle targeting, inter-Golgi cisterna
+0048203,vesicle targeting_trans-Golgi to endosome
+0048204,vesicle targeting_inter-Golgi cisterna
 0048205,COPI coating of Golgi vesicle
-0048206,vesicle targeting, cis-Golgi to rough ER
-0048207,vesicle targeting, rough ER to cis-Golgi
+0048206,vesicle targeting_cis-Golgi to rough ER
+0048207,vesicle targeting_rough ER to cis-Golgi
 0048208,COPII coating of Golgi vesicle
-0048209,regulation of vesicle targeting, to, from or within Golgi
+0048209,regulation of vesicle targeting_to_from or within Golgi
 0048210,Golgi vesicle fusion to target membrane
 0048211,Golgi vesicle docking
 0048212,Golgi vesicle uncoating
@@ -12609,21 +12609,21 @@
 0048570,notochord morphogenesis
 0048571,long-day photoperiodism
 0048572,short-day photoperiodism
-0048573,photoperiodism, flowering
-0048574,long-day photoperiodism, flowering
-0048575,short-day photoperiodism, flowering
-0048576,positive regulation of short-day photoperiodism, flowering
-0048577,negative regulation of short-day photoperiodism, flowering
-0048578,positive regulation of long-day photoperiodism, flowering
-0048579,negative regulation of long-day photoperiodism, flowering
+0048573,photoperiodism_flowering
+0048574,long-day photoperiodism_flowering
+0048575,short-day photoperiodism_flowering
+0048576,positive regulation of short-day photoperiodism_flowering
+0048577,negative regulation of short-day photoperiodism_flowering
+0048578,positive regulation of long-day photoperiodism_flowering
+0048579,negative regulation of long-day photoperiodism_flowering
 0048580,regulation of post-embryonic development
 0048581,negative regulation of post-embryonic development
 0048582,positive regulation of post-embryonic development
 0048583,regulation of response to stimulus
 0048584,positive regulation of response to stimulus
 0048585,negative regulation of response to stimulus
-0048586,regulation of long-day photoperiodism, flowering
-0048587,regulation of short-day photoperiodism, flowering
+0048586,regulation of long-day photoperiodism_flowering
+0048587,regulation of short-day photoperiodism_flowering
 0048588,developmental cell growth
 0048589,developmental growth
 0048590,non-developmental growth
@@ -12675,10 +12675,10 @@
 0048646,anatomical structure formation
 0048647,polyphenic determination
 0048648,caste determination
-0048649,caste determination, influence by genetic factors
-0048650,caste determination, influence by environmental factors
-0048651,polyphenic determination, influence by environmental factors
-0048652,polyphenic determination, influence by genetic factors
+0048649,caste determination_influence by genetic factors
+0048650,caste determination_influence by environmental factors
+0048651,polyphenic determination_influence by environmental factors
+0048652,polyphenic determination_influence by genetic factors
 0048653,anther development
 0048654,anther morphogenesis
 0048655,tapetal layer morphogenesis
@@ -12971,8 +12971,8 @@
 0050496,peptidyl-L-glutamyl 5-omega-hydroxyceramide ester biosynthetic process from peptidyl-glutamine
 0050650,chondroitin sulfate proteoglycan biosynthetic process
 0050651,dermatan sulfate proteoglycan biosynthetic process
-0050652,dermatan sulfate proteoglycan biosynthetic process, polysaccharide chain biosynthetic process
-0050653,chondroitin sulfate proteoglycan biosynthetic process, polysaccharide chain biosynthetic process
+0050652,dermatan sulfate proteoglycan biosynthetic process_polysaccharide chain biosynthetic process
+0050653,chondroitin sulfate proteoglycan biosynthetic process_polysaccharide chain biosynthetic process
 0050654,chondroitin sulfate proteoglycan metabolic process
 0050655,dermatan sulfate proteoglycan metabolic process
 0050657,nucleic acid transport
@@ -13088,7 +13088,7 @@
 0050798,activated T cell proliferation
 0050799,cocaine biosynthetic process
 0050801,ion homeostasis
-0050802,circadian sleep/wake cycle, sleep
+0050802,circadian sleep/wake cycle_sleep
 0050803,regulation of synapse structure and activity
 0050804,regulation of synaptic transmission
 0050805,negative regulation of synaptic transmission
@@ -13156,7 +13156,7 @@
 0050880,regulation of blood vessel size
 0050881,musculoskeletal movement
 0050882,voluntary musculoskeletal movement
-0050883,musculoskeletal movement, spinal reflex action
+0050883,musculoskeletal movement_spinal reflex action
 0050884,neuromuscular process controlling posture
 0050885,neuromuscular process controlling balance
 0050886,endocrine process
@@ -13248,13 +13248,13 @@
 0050974,detection of mechanical stimulus involved in sensory perception
 0050975,sensory perception of touch
 0050976,detection of mechanical stimulus involved in sensory perception of touch
-0050977,magnetoreception, using chemical stimulus
-0050978,magnetoreception, using electrical stimulus
-0050979,magnetoreception, using mechanical stimulus
+0050977,magnetoreception_using chemical stimulus
+0050978,magnetoreception_using electrical stimulus
+0050979,magnetoreception_using mechanical stimulus
 0050980,detection of light stimulus involved in magnetoreception
 0050981,detection of electrical stimulus
 0050982,detection of mechanical stimulus
-0050983,spermidine catabolic process to deoxyhypusine, using deoxyhypusine synthase
+0050983,spermidine catabolic process to deoxyhypusine_using deoxyhypusine synthase
 0050984,peptidyl-serine sulfation
 0050985,peptidyl-threonine sulfation
 0050986,isopeptide cross-linking via N-(L-isoglutamyl)-glycine
@@ -13289,9 +13289,9 @@
 0051030,snRNA transport
 0051031,tRNA transport
 0051036,regulation of endosome size
-0051037,regulation of transcription, meiotic
-0051038,negative regulation of transcription, meiotic
-0051039,positive regulation of transcription, meiotic
+0051037,regulation of transcription_meiotic
+0051038,negative regulation of transcription_meiotic
+0051039,positive regulation of transcription_meiotic
 0051040,regulation of calcium-independent cell-cell adhesion
 0051041,positive regulation of calcium-independent cell-cell adhesion
 0051042,negative regulation of calcium-independent cell-cell adhesion
@@ -13346,9 +13346,9 @@
 0051105,regulation of DNA ligation
 0051106,positive regulation of DNA ligation
 0051107,negative regulation of DNA ligation
-0051110,peptidyl-histidine uridylylation, to form peptidyl-1'-(phospho-5'-uridine)-L-histidine
+0051110,peptidyl-histidine uridylylation_to form peptidyl-1'-(phospho-5'-uridine)-L-histidine
 0051111,peptidyl-histidine adenylylation
-0051112,peptidyl-histidine adenylylation, to form peptidyl-1'-(phospho-5'-adenosine)-L-histidine
+0051112,peptidyl-histidine adenylylation_to form peptidyl-1'-(phospho-5'-adenosine)-L-histidine
 0051113,enzyme active site formation via 1'-(phospho-5'-adenosine)-L-histidine
 0051114,peptidyl-histidine uridylylation
 0051115,enzyme active site formation via 1'-(phospho-5'-uridine)-L-histidine
@@ -13644,11 +13644,11 @@
 0051479,mannosylglycerate biosynthetic process
 0051480,cytosolic calcium ion homeostasis
 0051481,reduction of cytosolic calcium ion concentration
-0051482,elevation of cytosolic calcium ion concentration during G-protein signaling, coupled to IP3 second messenger (phospholipase C activating)
-0051483,terpenoid biosynthetic process, mevalonate-independent
-0051484,isopentenyl diphosphate biosynthetic process, mevalonate-independent pathway, during terpenoid biosynthetic process
-0051485,terpenoid biosynthetic process, mevalonate-dependent
-0051486,isopentenyl diphosphate biosynthetic process, mevalonate pathway, during terpenoid biosynthetic process
+0051482,elevation of cytosolic calcium ion concentration during G-protein signaling_coupled to IP3 second messenger (phospholipase C activating)
+0051483,terpenoid biosynthetic process_mevalonate-independent
+0051484,isopentenyl diphosphate biosynthetic process_mevalonate-independent pathway_during terpenoid biosynthetic process
+0051485,terpenoid biosynthetic process_mevalonate-dependent
+0051486,isopentenyl diphosphate biosynthetic process_mevalonate pathway_during terpenoid biosynthetic process
 0051487,activation of anaphase-promoting complex during meiotic cell cycle
 0051488,activation of anaphase-promoting complex
 0051489,regulation of filopodium formation
@@ -13677,8 +13677,8 @@
 0051520,termination of bipolar cell growth
 0051521,termination of monopolar cell growth
 0051522,activation of monopolar cell growth
-0051523,cell growth mode switching, monopolar to bipolar
-0051524,cell growth mode switch, bipolar to monopolar
+0051523,cell growth mode switching_monopolar to bipolar
+0051524,cell growth mode switch_bipolar to monopolar
 0051531,NFAT protein import into nucleus
 0051532,regulation of NFAT protein import into nucleus
 0051533,positive regulation of NFAT protein import into nucleus
@@ -13844,16 +13844,16 @@
 0051716,cellular response to stimulus
 0051725,protein amino acid de-ADP-ribosylation
 0051726,regulation of cell cycle
-0051727,cell cycle switching, meiotic to mitotic cell cycle
-0051728,cell cycle switching, mitotic to meiotic cell cycle
-0051729,germline cell cycle switching, mitotic to meiotic cell cycle
-0051754,meiotic sister chromatid cohesion, centromeric
+0051727,cell cycle switching_meiotic to mitotic cell cycle
+0051728,cell cycle switching_mitotic to meiotic cell cycle
+0051729,germline cell cycle switching_mitotic to meiotic cell cycle
+0051754,meiotic sister chromatid cohesion_centromeric
 0051755,meiotic sister chromatid arm separation
 0051756,meiotic sister chromatid centromere separation
 0051757,meiotic sister chromatid separation
 0051758,homologous chromosome movement towards spindle pole during meiosis I
 0051759,sister chromosome movement towards spindle pole during meiosis II
-0051760,meiotic sister chromatid cohesion, arms
+0051760,meiotic sister chromatid cohesion_arms
 0051761,sesquiterpene metabolic process
 0051762,sesquiterpene biosynthetic process
 0051763,sesquiterpene catabolic process
@@ -13904,8 +13904,8 @@
 0051816,acquisition of nutrients from other organism during symbiotic interaction
 0051817,modification of morphology or physiology of other organism during symbiotic interaction
 0051818,disruption of cells of other organism during symbiotic interaction
-0051819,induction of tumor, nodule, or growth in other organism during symbiotic interaction
-0051820,induction of tumor, nodule, or growth containing transformed cells in other organism during symbiotic interaction
+0051819,induction of tumor_nodule_or growth in other organism during symbiotic interaction
+0051820,induction of tumor_nodule_or growth containing transformed cells in other organism during symbiotic interaction
 0051821,dissemination or transmission of organism from other organism during symbiotic interaction
 0051822,dissemination or transmission of organism from other organism by vector during symbiotic interaction
 0051823,regulation of synapse structural plasticity
@@ -13940,7 +13940,7 @@
 0051862,translocation of molecules into symbiont
 0051865,protein autoubiquitination
 0051866,general adaptation syndrome
-0051867,general adaptation syndrome, behavioral process
+0051867,general adaptation syndrome_behavioral process
 0051872,sphingosine catabolic process
 0051873,killing by host of symbiont cells
 0051874,sphinganine-1-phosphate catabolic process
@@ -13988,7 +13988,7 @@
 0051929,positive regulation of calcium ion transport via voltage-gated calcium channel
 0051930,regulation of sensory perception of pain
 0051931,regulation of sensory perception
-0051932,synaptic transmission, GABAergic
+0051932,synaptic transmission_GABAergic
 0051933,amino acid uptake during transmission of nerve impulse
 0051934,catecholamine uptake during transmission of nerve impulse
 0051935,glutamate uptake during transmission of nerve impulse
@@ -14021,9 +14021,9 @@
 0051963,regulation of synaptogenesis
 0051964,negative regulation of synaptogenesis
 0051965,positive regulation of synaptogenesis
-0051966,regulation of synaptic transmission, glutamatergic
-0051967,negative regulation of synaptic transmission, glutamatergic
-0051968,positive regulation of synaptic transmission, glutamatergic
+0051966,regulation of synaptic transmission_glutamatergic
+0051967,negative regulation of synaptic transmission_glutamatergic
+0051968,positive regulation of synaptic transmission_glutamatergic
 0051969,regulation of transmission of nerve impulse
 0051970,negative regulation of transmission of nerve impulse
 0051971,positive regulation of transmission of nerve impulse
@@ -14548,12 +14548,12 @@
 0055058,symmetric neuroblast division
 0055059,asymmetric neuroblast division
 0055060,asymmetric neuroblast division resulting in ganglion mother cell formation
-0055061,di-, tri-valent inorganic anion homeostasis
+0055061,di-_tri-valent inorganic anion homeostasis
 0055062,phosphate ion homeostasis
 0055063,sulfate ion homeostasis
 0055064,chloride ion homeostasis
 0055065,metal ion homeostasis
-0055066,di-, tri-valent inorganic cation homeostasis
+0055066,di-_tri-valent inorganic cation homeostasis
 0055067,monovalent inorganic cation homeostasis
 0055068,cobalt ion homeostasis
 0055069,zinc ion homeostasis
@@ -14572,7 +14572,7 @@
 0055083,monovalent inorganic anion homeostasis
 0055084,fruiting body development in response to starvation
 0055085,transmembrane transport
-0055086,nucleobase, nucleoside and nucleotide metabolic process
+0055086,nucleobase_nucleoside and nucleotide metabolic process
 0055088,lipid homeostasis
 0055089,fatty acid homeostasis
 0055090,acylglycerol homeostasis
@@ -14607,7 +14607,7 @@
 0060009,Sertoli cell development
 0060010,Sertoli cell fate commitment
 0060011,Sertoli cell proliferation
-0060012,synaptic transmission, glycinergic
+0060012,synaptic transmission_glycinergic
 0060013,righting reflex
 0060014,granulosa cell differentiation
 0060015,granulosa cell fate commitment
@@ -14663,9 +14663,9 @@
 0060066,fallopian tube development
 0060067,cervix development
 0060068,vagina development
-0060069,Wnt receptor signaling pathway, regulating spindle positioning
+0060069,Wnt receptor signaling pathway_regulating spindle positioning
 0060070,Wnt receptor signaling pathway through beta-catenin
-0060071,Wnt receptor signaling pathway, planar cell polarity pathway
+0060071,Wnt receptor signaling pathway_planar cell polarity pathway
 0060073,micturition
 0060074,synapse maturation
 0060075,regulation of resting membrane potential
@@ -14680,16 +14680,16 @@
 0060086,circadian temperature homeostasis
 0060087,relaxation of vascular smooth muscle
 0060088,auditory receptor cell stereocilium organization and biogenesis
-0060092,regulation of synaptic transmission, glycinergic
-0060093,negative regulation of synaptic transmission, glycinergic
-0060094,positive regulation of synaptic transmission, glycinergic
-0060095,zinc potentiation of synaptic transmission, glycinergic
-0060096,serotonin secretion, neurotransmission
-0060097,cytoskeletal rearrangement involved in phagocytosis, engulfment
-0060098,membrane reorganization involved in phagocytosis, engulfment
-0060099,regulation of phagocytosis, engulfment
-0060100,positive regulation of phagocytosis, engulfment
-0060101,negative regulation of phagocytosis, engulfment
+0060092,regulation of synaptic transmission_glycinergic
+0060093,negative regulation of synaptic transmission_glycinergic
+0060094,positive regulation of synaptic transmission_glycinergic
+0060095,zinc potentiation of synaptic transmission_glycinergic
+0060096,serotonin secretion_neurotransmission
+0060097,cytoskeletal rearrangement involved in phagocytosis_engulfment
+0060098,membrane reorganization involved in phagocytosis_engulfment
+0060099,regulation of phagocytosis_engulfment
+0060100,positive regulation of phagocytosis_engulfment
+0060101,negative regulation of phagocytosis_engulfment
 0060112,generation of ovulation cycle rhythm
 0060113,inner ear receptor cell differentiation
 0060114,vestibular receptor cell differentiation
@@ -14736,11 +14736,11 @@
 0060155,platelet dense granule organization and biogenesis
 0060156,milk ejection
 0060157,urinary bladder development
-0060158,dopamine receptor, phospholipase C activating pathway
+0060158,dopamine receptor_phospholipase C activating pathway
 0060159,regulation of dopamine receptor signaling pathway
 0060160,negative regulation of dopamine receptor signaling pathway
 0060161,positive regulation of dopamine receptor signaling pathway
-0060162,negative regulation of dopamine receptor, phospholipase C activating pathway
+0060162,negative regulation of dopamine receptor_phospholipase C activating pathway
 0060163,subpallium neuron fate commitment
 0060164,regulation of timing of neuron differentiation
 0060165,regulation of timing of subpallium neuron differentiation

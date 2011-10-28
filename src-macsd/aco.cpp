@@ -85,7 +85,7 @@ NDominatedSet & ACO::ejecuta (string &filename) {
     inicial[0].inicial();
    
     for (unsigned int n = 1; n < PARA.MOACO_numHormigas * 10; n++) {
-//         cout << "Inicial: " << n << endl;
+//        cout << "Inicial: " << n << endl;
         vector < CANDIDATE > dondeir;
         inicial.push_back(this->hormigas[0]->subEst());
 		inicial[n].inicial();
@@ -99,6 +99,8 @@ NDominatedSet & ACO::ejecuta (string &filename) {
         for (unsigned int i = 0; i < x; i++) {
             // candidatas posibles a ser elegidas en este paso de la hormiga
             candidatas = inicial[n].ejesNoUtilizados();
+
+cout << x << ' ' << candidatas.size() << endl;
                          
 	    cout << inicial[n] << endl;
 	    for (vector<CANDIDATE>::iterator it = candidatas.begin(); it != candidatas.end(); ++it)
